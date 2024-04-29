@@ -1,0 +1,52 @@
+{
+	"entity": {
+			"sensor": {
+			
+				"actual_supply_fan" : {
+					"name": "Actual Supply Fan"
+				},
+				"actual_exhaust_fan": {
+					"name": "Actual Exhaust Fan"
+				},
+				"airquality": {
+					"name": "Airquality"
+				},
+				"balance": {
+					"name": "Balance"
+				},
+				"actual_supply_temp": {
+					"name": "Actual supply temp"
+				},
+				"actual_exhaust_temp": {
+					"name": "Actual exhaust temp"
+				},
+				"actual_mode": {
+					"name": "Actual mode"
+				}
+				}
+		
+	},
+	"config": {
+		"step": {
+			"user": {
+				"title": "Add new Itho devices",
+				"description": "This custom integration expects ithohru, ithowpu and ithoautotemp as state topics",
+				"data": {
+					"id": "Home ",
+					"use_wpu": "Create WPU sensors",
+					"use_hru": "Create HRU sensors",
+					"use_autotemp": "Create Autotemp sensors",
+					"use_remotes" : "Create CO2 sensors"
+					
+				}
+			}
+		},
+		"abort": {
+			"already_configured": "[%key:common::config_flow::abort::already_configured_service%]"
+		},
+		"error": {
+			"cannot_connect": "[%key:common::config_flow::error::cannot_connect%]"
+		}
+	}
+	
+}
