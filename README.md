@@ -17,6 +17,9 @@ It creates the commony used sensors and uses a predefined MQTT state topic to di
 3. Create up to two Remotes (CO2 sensors)
 4. Autotemp config flow (but doesnt create sensors yet)
 
+Overall: translations are available in English for now. NL to follow
+
+
 ## How to install
 1. Create /usr/share/hassio/homeassistant/custom_components/itho
 2. Git clone or download / extract the content of this repo to that folder
@@ -37,6 +40,7 @@ It creates the commony used sensors and uses a predefined MQTT state topic to di
 ### TODO:
 * Create 4 sensors per room for autotemp for power kW, power %, set point temp, actual temp
 * Create CVE sensors (e.g. speed). 
+* Update of NL translations
 * Add project to HACS
 
 
