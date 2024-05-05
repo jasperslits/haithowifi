@@ -1,6 +1,7 @@
 ## Home Assistant sensor component/integration for Itho Wifi
-Requires add-on from https://github.com/arjenhiemstra/ithowifi
-Tested with WPU 5GHRU-350 (non-CVE) devices
+Requires add-on from https://github.com/arjenhiemstra/ithowifi and MQTT integration with Home Assistant. 
+
+Tested with WPU 5G, 2 CO2 sensors, HRU-350 (non-CVE) devices
 
 ### Use-case
 Full auto-discovery from the add-on to Home Assistant is the best experience but as this is not there yet, this add-on should eliminate the manual creation via YAML of sensors for:
@@ -9,22 +10,26 @@ Full auto-discovery from the add-on to Home Assistant is the best experience but
 * CO2 sensors for supported remotes
 * WPU like pump percentage, boiler temp, from / to source temps etc
 
-It creates the commony used sensors and uses a predefined MQTT state topic to distinct the devies. 
+It creates the commony used sensors and uses a predefined MQTT state topic to distinct the devices.
+
+This custom integration should become obsolete once full auto-discovery has the same capabilities. 
 
 ### What works / should work
 1. Create WPU sensors
 2. Create NONCVE sensors
 3. Create up to two Remotes (CO2 sensors)
-4. Autotemp config flow (but doesnt create sensors yet)
+4. Autotemp config flow for up to 8 rooms
 
 Overall: translations are available in English for now. NL to follow
 
 ## How to install
-1. Create /usr/share/hassio/homeassistant/custom_components/itho
-2. Git clone or download / extract the content of this repo to that folder
-3. Restart Home Assistant
-4. Go to Integrations
-5. Add Itho integration
+1. In the Add-On from Arjen: Update the add-on MQTT configuration to use ithohru for NON-CVE, ithowpu for Heatpump/WPU and ithotemp for Autotemp. 
+2. On the system running Home Assistant: Create /usr/share/hassio/homeassistant/custom_components/itho
+3. Git clone or download / extract the content of this repo to that folder
+4. Restart Home Assistant
+5. Go to Integrations
+6. Add Itho integration
+7. Enable the devices you want to configure
 
 ### Screenshots
 1. Add integration
@@ -40,11 +45,11 @@ Overall: translations are available in English for now. NL to follow
 <img width="984" alt="image" src="https://github.com/jasperslits/haithowifi/assets/30024136/652e97ad-d9f0-43a3-991b-840af8935356">
 
 ### TODO:
-* Create CVE sensors (e.g. speed).
-* Add binary sensors for bypass
+* Create CVE sensors (e.g. speed, humidity).
+* Add binary sensors for bypass of HRU
 * Update of NL translations
-* Add project to HACS
-* Add reconfigure
+* Submit project for HACS integration
+* Add reconfigure to config flow
 
 
 
