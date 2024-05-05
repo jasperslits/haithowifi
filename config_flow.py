@@ -40,13 +40,15 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_remotes(self,info=None):
         if info is not None:
             self.config.update(info)
-            _LOGGER.warning("String is " + str(self.config))
-            await self.async_set_unique_id(self.config["id"])
-            self._abort_if_unique_id_configured()
-            return self.async_create_entry(
+            if self.config[CONF_USE_AUTOTEMP]: 
+                return await self.async_step_rooms()
+            else:
+                await self.async_set_unique_id(self.config["id"])
+                self._abort_if_unique_id_configured()
+                return self.async_create_entry(
                     title="Itho Add-on for " + self.config["id"],
                     data=self.config
-            )
+                )
 
         itho_schema = vol.Schema({
             vol.Required(CONF_REMOTE_1, default="Remote 1"): str,
@@ -80,13 +82,12 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_user(self, info=None):
         
         if info is not None:
+            self.config.update(info)
             if info[CONF_USE_REMOTES]: 
-                _LOGGER.warning("Use Remotes")
-                self.config.update(info)
                 return await self.async_step_remotes()
             else:
                 if info[CONF_USE_AUTOTEMP]:
-                     return await self.async_step_autotemp()
+                    return await self.async_step_rooms()
                 else:
                     await self.async_set_unique_id(info["id"])
                     self._abort_if_unique_id_configured()
@@ -97,7 +98,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         options = list(CVE_TYPES.keys())
         itho_schema = vol.Schema({
         vol.Required(CONF_ID, default="home"): str,
-        vol.Required(CONF_CVE_TYPE,default=["none"]): selector({
+        vol.Required(CONF_CVE_TYPE,default="none"): selector({
                 "select": {
                     "options": options,
                     "multiple": False,

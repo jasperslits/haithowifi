@@ -1,10 +1,10 @@
 {
   "domain": "ithoaddon",
-  "name": "ithoaddon",
+  "name": "Itho Add-on",
   "version": "1.0",
   "config_flow": true,
-  "documentation": "https://github.com/jasperslits/afvalinfo",
-  "issue_tracker": "https://github.com/jasperslits/afvalinfo/issues",
+  "documentation": "https://github.com/jasperslits/haithowifi/",
+  "issue_tracker": "https://github.com/jasperslits/haithowifi/issues",
   "dependencies": [],
   "iot_class": "local_push",
   "mqtt": ["ithohru/#"],

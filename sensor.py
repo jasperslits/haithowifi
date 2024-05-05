@@ -11,7 +11,9 @@ from homeassistant.components.sensor import SensorEntity
 from homeassistant.core import HomeAssistant, callback
 
 import json
+import copy
 from .const.const import *
+from .const.const import _LOGGER
 from .definitions import HRUSENSORS,WPUSENSORS,AUTOTEMPSENSORS, IthoSensorEntityDescription
 """
     _LOGGER,
@@ -59,12 +61,22 @@ async def _create_remotes(config_entry: ConfigEntry):
         device_class="carbon_dioxide",
         native_unit_of_measurement="ppm",
         state_class="measurement"))
+
     return REMOTES
     
 async def _create_autotemprooms(config_entry: ConfigEntry):
-    default_rooms = AUTOTEMPSENSORS
-    configured_rooms = default_rooms
-    return configured_rooms
+    cfg = config_entry.data
+    configured_sensors = []
+    for x in range(1, 8):
+        template_sensors = copy.deepcopy(list(AUTOTEMPSENSORS))
+        room = cfg["room"+str(x)]
+        if room != "":
+            for sensor in template_sensors:
+                sensor.json_field = sensor.json_field.replace("X",str(x))
+                sensor.translation_key = sensor.translation_key.replace("X",room)
+                configured_sensors.append(sensor)
+
+    return configured_sensors
 
 async def _create_fan_sensors(config_entry: ConfigEntry,aot: AddOnType):
     if aot == AddOnType.CVE:
@@ -72,7 +84,6 @@ async def _create_fan_sensors(config_entry: ConfigEntry,aot: AddOnType):
 
     if aot == AddOnType.NONCVE:
         default_fans = HRUSENSORS
-    default_fans = HRUSENSORS
     configured_fans = default_fans
     return configured_fans
 
@@ -82,14 +93,11 @@ async def async_setup_entry(
     config_entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
- #   _LOGGER.warning("String is " + str(config_entry.data))
-    """Set up Itho Reader sensors from config entry."""
+    """Set up Itho add-on sensors from config entry based on their type."""
     if config_entry.data[CONF_CVE_TYPE] == "noncve":
         async_add_entities(IthoSensor(description, config_entry,AddOnType.NONCVE) for description in await _create_fan_sensors(config_entry,AddOnType.NONCVE))
     if config_entry.data[CONF_CVE_TYPE] == "cve":
         async_add_entities(IthoSensor(description, config_entry,AddOnType.CVE) for description in await _create_fan_sensors(config_entry,AddOnType.CVE))
-   #     _LOGGER.warning("CVE")
-    #    async_add_entities(IthoSensor(description, config_entry,AddOnType.HRU) for description in _create_fan_sensors(config_entry))
     if config_entry.data[CONF_USE_WPU]:
         async_add_entities(IthoSensor(description, config_entry,AddOnType.WPU) for description in WPUSENSORS)
     if config_entry.data[CONF_USE_REMOTES]:
@@ -98,7 +106,7 @@ async def async_setup_entry(
         async_add_entities(IthoSensor(description, config_entry,AddOnType.AUTOTEMP) for description in await _create_autotemprooms(config_entry))
 
 class IthoSensor(SensorEntity):
-    """Representation of a Itho sensor that is updated via MQTT."""
+    """Representation of a Itho add-on sensor that is updated via MQTT."""
 
     _attr_has_entity_name = True
     entity_description: IthoSensorEntityDescription
@@ -124,11 +132,9 @@ class IthoSensor(SensorEntity):
         @callback
         def message_received(message):
             """Handle new MQTT messages."""
-           # _LOGGER.info(message)
             if message.payload == "":
                 self._attr_native_value = None
             elif self.entity_description.state is not None:
-                # Perform optional additional parsing
                 self._attr_native_value = self.entity_description.state(message.payload)
             else:
                 payload = json.loads(message.payload)

@@ -19,7 +19,7 @@ from homeassistant.const import (
 
 from .const.const import MQTT_STATETOPIC
 
-@dataclass(frozen=True)
+@dataclass(frozen=False)
 class IthoSensorEntityDescription(SensorEntityDescription):
     """Sensor entity description for Itho."""
 
@@ -130,31 +130,31 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field = "Room X power % (%)",
         key=MQTT_STATETOPIC["autotemp"],
-        translation_key="room_x_power_percent",
+        translation_key="Room X power % (%)",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Room X actual temp",
+        json_field = "Room X temp",
         key=MQTT_STATETOPIC["autotemp"],
-        translation_key="room_x_actual_temp",
+        translation_key="Room X actual temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Room X power kW",
+        json_field = "Room X power kW (kW)",
         key=MQTT_STATETOPIC["autotemp"],
-        translation_key="actual_x_",
+        translation_key="Room X power kW",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Room X power % (%)",
+        json_field = "Room X setp",
         key=MQTT_STATETOPIC["autotemp"],
-        translation_key="actual_supply_temp",
+        translation_key= "Room X setpoint temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
