@@ -1,6 +1,6 @@
 ## Home Assistant sensor component/integration for Itho Wifi
 Requires add-on from https://github.com/arjenhiemstra/ithowifi
-Tested with WPU 5G and HRU-350 (non-CVE) devices
+Tested with WPU 5GHRU-350 (non-CVE) devices
 
 ### Use-case
 Full auto-discovery from the add-on to Home Assistant is the best experience but as this is not there yet, this add-on should eliminate the manual creation via YAML of sensors for:
@@ -19,7 +19,6 @@ It creates the commony used sensors and uses a predefined MQTT state topic to di
 
 Overall: translations are available in English for now. NL to follow
 
-
 ## How to install
 1. Create /usr/share/hassio/homeassistant/custom_components/itho
 2. Git clone or download / extract the content of this repo to that folder
@@ -34,14 +33,21 @@ Overall: translations are available in English for now. NL to follow
 2. Define remotes for CO2 monitoring
 <img width="478" alt="image" src="https://github.com/jasperslits/haithowifi/assets/30024136/cc075268-0b94-42e9-9789-1bb0c4d28069">
 
-3. Created sensors
+3. Define rooms for autotemp
+<img width="410" alt="image" src="https://github.com/jasperslits/haithowifi/assets/30024136/73d8c25d-5364-4b59-af09-8e74c83d0468">
+
+4. Created sensors
 <img width="984" alt="image" src="https://github.com/jasperslits/haithowifi/assets/30024136/652e97ad-d9f0-43a3-991b-840af8935356">
 
 ### TODO:
-* Create 4 sensors per room for autotemp for power kW, power %, set point temp, actual temp
-* Create CVE sensors (e.g. speed). 
+* Create CVE sensors (e.g. speed).
+* Add binary sensors for bypass
 * Update of NL translations
 * Add project to HACS
+* Add reconfigure
+
+
+
 
 
 
