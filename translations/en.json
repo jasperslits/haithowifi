@@ -32,12 +32,36 @@
 				"title": "Add new Itho devices",
 				"description": "This custom integration expects ithohru, ithowpu and ithoautotemp as state topics",
 				"data": {
-					"id": "Home ",
+					"id": "Home",
 					"use_wpu": "Create WPU sensors",
-					"use_hru": "Create HRU sensors",
+					"cvetype": "Itho fan type",
 					"use_autotemp": "Create Autotemp sensors",
 					"use_remotes" : "Create CO2 sensors"
 					
+				}
+			},
+			"remotes": {
+				"title": "Configure Remote names",
+				"description": "Names of the remotes as defined in the add-on under Remotes",
+				"data": {
+				
+					"remote1": "Remote 1",
+					"remote2": "Remote 2"
+				}
+			},
+			"rooms": {
+				"title": "Configure room names",
+				"description": "Names of the rooms as shown under Status",
+				"data": {
+
+					"room1": "Room 1",
+					"room2": "Room 2",
+					"room3": "Room 3",
+					"room4": "Room 4",
+					"room5": "Room 5",
+					"room6": "Room 6",
+					"room7": "Room 7",
+					"room8": "Room 8"
 				}
 			}
 		},
@@ -47,6 +71,13 @@
 		"error": {
 			"cannot_connect": "[%key:common::config_flow::error::cannot_connect%]"
 		}
-	}
+	},
+	"selector": {
+		"cveselect": {
+			"options": {
+				"none": "None",
+				"noncve": "Non-CVE",
+				"cve": "CVE"
+			}}}
 	
 }
