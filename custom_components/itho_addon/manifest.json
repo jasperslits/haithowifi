@@ -1,16 +1,16 @@
 {
   "domain": "itho_addon",
   "name": "Itho Add-on",
-  "version": "1.0",
-  "config_flow": true,
-  "documentation": "https://github.com/jasperslits/haithowifi/",
-  "issue_tracker": "https://github.com/jasperslits/haithowifi/issues",
-  "dependencies": [],
-  "iot_class": "local_push",
-  "mqtt": ["ithohru/#"],
   "codeowners": [
     "@jasperslits"
   ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/jasperslits/haithowifi/",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/jasperslits/haithowifi/issues",
+  "mqtt": ["ithohru/#"],
   "requirements": [
-  ]
+  ],
+  "version": "1.0"
 }
