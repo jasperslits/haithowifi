@@ -5,7 +5,8 @@ Tested with WPU 5G, 2 CO2 sensors, HRU-350 (non-CVE) devices
 
 ### Use-case
 Full auto-discovery from the add-on to Home Assistant is the best experience but as this is not there yet, this add-on should eliminate the manual creation via YAML of sensors for:
-* CVE / Non-CVE like Actual mode, supply temp, RPM
+* Non-CVE like Actual mode, supply temp, Supply / Exhaust RPM
+* CVE like humidity, temperature, speed
 * Autotemp like power kW, power %, set point temp, actual temp per room
 * CO2 sensors for supported remotes
 * WPU like pump percentage, boiler temp, from / to source temps etc
@@ -16,9 +17,10 @@ This custom integration should become obsolete once full auto-discovery has the 
 
 ### What works / should work
 1. Create WPU sensors
-2. Create NONCVE sensors
-3. Create up to two Remotes (CO2 sensors)
-4. Autotemp config flow for up to 8 rooms
+2. Create NONCVE / HRU sensors
+3. Create CVE sensors
+4. Create up to two Remotes (CO2 sensors)
+5. Create Auto temp sensors
 
 Overall: translations are available in English for now. NL to follow
 
@@ -44,8 +46,11 @@ Overall: translations are available in English for now. NL to follow
 4. Created sensors
 <img width="984" alt="image" src="https://github.com/jasperslits/haithowifi/assets/30024136/652e97ad-d9f0-43a3-991b-840af8935356">
 
+5. CVE sensors
+<img width="983" alt="image" src="https://github.com/jasperslits/haithowifi/assets/30024136/45b33a5f-50bc-476c-9a78-8df7af71fdd1">
+
+
 ### TODO:
-* Create CVE sensors (e.g. speed, humidity).
 * Add binary sensors for bypass of HRU
 * Update of NL translations
 * Submit project for HACS integration
