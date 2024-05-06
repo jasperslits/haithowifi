@@ -5,7 +5,7 @@
     "@jasperslits"
   ],
   "config_flow": true,
-  "dependencies": [],
+  "dependencies": ["mqtt"],
   "documentation": "https://github.com/jasperslits/haithowifi/",
   "iot_class": "local_push",
   "issue_tracker": "https://github.com/jasperslits/haithowifi/issues",
