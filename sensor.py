@@ -14,7 +14,7 @@ import json
 import copy
 from .const.const import *
 from .const.const import _LOGGER
-from .definitions import HRUSENSORS,WPUSENSORS,AUTOTEMPSENSORS, IthoSensorEntityDescription
+from .definitions import CVESENSORS,NONCVESENSORS,WPUSENSORS,AUTOTEMPSENSORS, IthoSensorEntityDescription
 """
     _LOGGER,
     DOMAIN,
@@ -34,11 +34,7 @@ from .definitions import HRUSENSORS,WPUSENSORS,AUTOTEMPSENSORS, IthoSensorEntity
 )
 """
 
-
-
-
-
-async def _create_remotes(config_entry: ConfigEntry):
+def _create_remotes(config_entry: ConfigEntry):
     
     cfg = config_entry.data
     
@@ -64,7 +60,7 @@ async def _create_remotes(config_entry: ConfigEntry):
 
     return REMOTES
     
-async def _create_autotemprooms(config_entry: ConfigEntry):
+def _create_autotemprooms(config_entry: ConfigEntry):
     cfg = config_entry.data
     configured_sensors = []
     for x in range(1, 8):
@@ -78,16 +74,6 @@ async def _create_autotemprooms(config_entry: ConfigEntry):
 
     return configured_sensors
 
-async def _create_fan_sensors(config_entry: ConfigEntry,aot: AddOnType):
-    if aot == AddOnType.CVE:
-        default_fans = HRUSENSORS
-
-    if aot == AddOnType.NONCVE:
-        default_fans = HRUSENSORS
-    configured_fans = default_fans
-    return configured_fans
-
-
 async def async_setup_entry(
     _: HomeAssistant,
     config_entry: ConfigEntry,
@@ -95,15 +81,15 @@ async def async_setup_entry(
 ) -> None:
     """Set up Itho add-on sensors from config entry based on their type."""
     if config_entry.data[CONF_CVE_TYPE] == "noncve":
-        async_add_entities(IthoSensor(description, config_entry,AddOnType.NONCVE) for description in await _create_fan_sensors(config_entry,AddOnType.NONCVE))
+        async_add_entities(IthoSensor(description, config_entry,AddOnType.NONCVE) for description in NONCVESENSORS)
     if config_entry.data[CONF_CVE_TYPE] == "cve":
-        async_add_entities(IthoSensor(description, config_entry,AddOnType.CVE) for description in await _create_fan_sensors(config_entry,AddOnType.CVE))
+        async_add_entities(IthoSensor(description, config_entry,AddOnType.CVE) for description in CVESENSORS)
     if config_entry.data[CONF_USE_WPU]:
         async_add_entities(IthoSensor(description, config_entry,AddOnType.WPU) for description in WPUSENSORS)
     if config_entry.data[CONF_USE_REMOTES]:
-        async_add_entities(IthoSensor(description, config_entry,AddOnType.REMOTES) for description in await _create_remotes(config_entry))
+        async_add_entities(IthoSensor(description, config_entry,AddOnType.REMOTES) for description in _create_remotes(config_entry))
     if config_entry.data[CONF_USE_AUTOTEMP]:
-        async_add_entities(IthoSensor(description, config_entry,AddOnType.AUTOTEMP) for description in await _create_autotemprooms(config_entry))
+        async_add_entities(IthoSensor(description, config_entry,AddOnType.AUTOTEMP) for description in _create_autotemprooms(config_entry))
 
 class IthoSensor(SensorEntity):
     """Representation of a Itho add-on sensor that is updated via MQTT."""
@@ -126,6 +112,11 @@ class IthoSensor(SensorEntity):
     def name(self):
         return self.entity_description.translation_key.replace("_"," ").capitalize()
 
+    @property
+    def icon(self):
+        if self.entity_description.native_unit_of_measurement in UNITTYPE_ICONS:
+            return UNITTYPE_ICONS[self.entity_description.native_unit_of_measurement]
+
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
 
@@ -138,15 +129,18 @@ class IthoSensor(SensorEntity):
                 self._attr_native_value = self.entity_description.state(message.payload)
             else:
                 payload = json.loads(message.payload)
-                value = payload[self.entity_description.json_field]
-                if self.aot == AddOnType.NONCVE and self.entity_description.json_field == "Actual Mode":
-                    value = HRU_ACTUAL_MODE[value]
-                
-                if self.aot == AddOnType.WPU and self.entity_description.json_field == "Status":
-                    value = WPU_STATUS[value]
+                if self.entity_description.json_field not in payload:
+                    value = None
+                else:
+                    value = payload[self.entity_description.json_field]
+                    if self.aot == AddOnType.NONCVE and self.entity_description.json_field == "Actual Mode":
+                        value = HRU_ACTUAL_MODE[value]
+                    
+                    if self.aot == AddOnType.WPU and self.entity_description.json_field == "Status":
+                        value = WPU_STATUS[value]
 
-                if self.aot == AddOnType.REMOTES:
-                    value = value["co2"]
+                    if self.aot == AddOnType.REMOTES:
+                        value = value["co2"]
 
                 self._attr_native_value = value
 

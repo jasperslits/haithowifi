@@ -162,7 +162,37 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
 
     )
 
-HRUSENSORS: tuple[IthoSensorEntityDescription, ...] = (
+CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
+    IthoSensorEntityDescription(
+        json_field = "Fan setpoint (rpm)",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="fan_setpoint_rpm",
+        native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+	IthoSensorEntityDescription(
+        json_field = "hum",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="humidity",
+        native_unit_of_measurement=PERCENTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field = "Ventilation setpoint (%)",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="ventilation_setpoint_percentage",
+        native_unit_of_measurement=PERCENTAGE,
+    ),
+    IthoSensorEntityDescription(
+        json_field = "temp",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="temp",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ))
+
+NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field = "Supply temp (°C)",
         key=MQTT_STATETOPIC["hru"],

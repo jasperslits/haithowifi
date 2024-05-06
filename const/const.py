@@ -18,6 +18,12 @@ CVE_TYPES = {
     "cve": ["cve", "mdi:fan"]
 }
 
+UNITTYPE_ICONS = {
+    "rpm": "mdi:speedometer",
+    "hum": "mdi:water-percent",
+    "%": "mdi:percent-outline"
+}
+
 DOMAIN = "ithoaddon"
 CONF_ID = "id"
 MQTT_STATETOPIC = {"hru": "ithohru/ithostatus", "wpu": "ithowpu/ithostatus", "remotes": "ithohru/remotesinfo","autotemp": "ithotemp/ithostatus" }
