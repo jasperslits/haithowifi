@@ -1,5 +1,5 @@
 {
-  "domain": "ithoaddon",
+  "domain": "itho_addon",
   "name": "Itho Add-on",
   "version": "1.0",
   "config_flow": true,
