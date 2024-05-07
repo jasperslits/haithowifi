@@ -1,7 +1,12 @@
 ## Home Assistant sensor component/integration for Itho Wifi
 Requires add-on from https://github.com/arjenhiemstra/ithowifi and MQTT integration with Home Assistant. 
 
-Tested with WPU 5G, 2 CO2 sensors, HRU-350 (non-CVE) devices
+This simplifies the integration by creating the sensors for the various Itho Daalderop devices: Heatpump WPU 5G, HRU-350 and related devices, CVE boxes, Autotemp units for floor heating. 
+For best user experience it should be used with the auto-discovery for the CVE / non-CVE devices in the add-on. 
+
+This custom component has no relation with the Itho Daalderop company.
+
+Note: The 'add-on' here in the context is the add-on to the Itho Daalderop units, not an Add-on in Home Assistant. 
 
 ### Use-case
 Full auto-discovery from the add-on to Home Assistant is the best experience but as this is not there yet, this add-on should eliminate the manual creation via YAML of sensors for:
@@ -16,10 +21,10 @@ It creates the commony used sensors and uses a predefined MQTT state topic to di
 This custom integration should become obsolete once full auto-discovery has the same capabilities. 
 
 ### What works / should work
-1. Create WPU sensors
-2. Create NONCVE / HRU sensors
-3. Create CVE sensors
-4. Create up to two Remotes (CO2 sensors)
+1. Create Heatpump WPU sensors
+2. Create NONCVE / HRU Fan sensors
+3. Create CVE fan sensors
+4. Create up to two Remotes for monitoring CO2 levels
 5. Create Auto temp sensors
 
 Overall: translations are available in English for now. NL to follow
@@ -27,7 +32,9 @@ Overall: translations are available in English for now. NL to follow
 ## How to install
 1. In the Add-On from Arjen: Update the add-on MQTT configuration to use ithohru for NON-CVE, ithowpu for Heatpump/WPU and ithotemp for Autotemp. 
 2. On the system running Home Assistant: Create /usr/share/hassio/homeassistant/custom_components/itho
-3. Git clone or download / extract the content of this repo to that folder
+3. Install: 
+3a) Git clone or download the content to custom_components in the /usr/share/hassio/homeassistant directory
+3b) Install the component via HACS
 4. Restart Home Assistant
 5. Go to Integrations
 6. Add Itho integration
