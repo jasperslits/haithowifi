@@ -24,7 +24,7 @@ UNITTYPE_ICONS = {
     "%": "mdi:percent-outline"
 }
 
-DOMAIN = "ithoaddon"
+DOMAIN = "ithodaalderop"
 CONF_ID = "id"
 MQTT_STATETOPIC = {"hru": "ithohru/ithostatus", "wpu": "ithowpu/ithostatus", "remotes": "ithohru/remotesinfo","autotemp": "ithotemp/ithostatus" }
 CONF_ENABLED_SENSORS = "ithohru/remotesinfo"
