@@ -22,8 +22,11 @@
 				},
 				"actual_mode": {
 					"name": "Actual mode"
+				},
+				"remaining_override_timer": {
+					"name": "Remaining override timer"
 				}
-				}
+			}
 		
 	},
 	"config": {
