@@ -12,6 +12,7 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.const import (
     UnitOfTemperature,
+    UnitOfTime,
     UnitOfPressure,
     REVOLUTIONS_PER_MINUTE,
     PERCENTAGE
@@ -237,11 +238,16 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-     IthoSensorEntityDescription(
+    IthoSensorEntityDescription(
         json_field = "Actual Mode",
         key=MQTT_STATETOPIC["hru"],
         translation_key="actual_mode"
     ),
-    
-    
+    IthoSensorEntityDescription(
+        json_field = "Remaining override timer (Sec)",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="remaining_override_timer",
+        native_unit_of_measurement=UnitOfTime.SECONDS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
 )
