@@ -4,6 +4,7 @@ from homeassistant.core import HomeAssistant
 
 PLATFORMS = [Platform.SENSOR]
 
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up the Itho Wifi add-on integration."""
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
