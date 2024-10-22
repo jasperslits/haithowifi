@@ -25,10 +25,10 @@ from .const.const import (
     CONF_AUTOTEMP_ROOM6,
     CONF_AUTOTEMP_ROOM7,
     CONF_AUTOTEMP_ROOM8,
-    
 )
 
 import voluptuous as vol
+
 
 class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
@@ -37,10 +37,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Initialize the Itho Add-on flow."""
         self.config: dict[str, Any] = {}
 
-    async def async_step_remotes(self,info=None):
+    async def async_step_remotes(self, info=None):
         if info is not None:
             self.config.update(info)
-            if self.config[CONF_USE_AUTOTEMP]: 
+            if self.config[CONF_USE_AUTOTEMP]:
                 return await self.async_step_rooms()
             else:
                 await self.async_set_unique_id(self.config["id"])
@@ -55,17 +55,16 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             vol.Optional(CONF_REMOTE_2, default="Remote 2"): str
         })
         return self.async_show_form(step_id="remotes", data_schema=itho_schema)
-    
-    async def async_step_rooms(self,info=None):
+
+    async def async_step_rooms(self, info=None):
         if info is not None:
             self.config.update(info)
             await self.async_set_unique_id(self.config["id"])
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
-                    title="Itho Add-on for " + self.config["id"],
-                    data=self.config
+                title="Itho Add-on for " + self.config["id"],
+                data=self.config
             )
-
 
         itho_schema = vol.Schema({
             vol.Required(CONF_AUTOTEMP_ROOM1, default="Room 1"): str,
@@ -80,10 +79,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(step_id="rooms", data_schema=itho_schema)
 
     async def async_step_user(self, info=None):
-        
+
         if info is not None:
             self.config.update(info)
-            if info[CONF_USE_REMOTES]: 
+            if info[CONF_USE_REMOTES]:
                 return await self.async_step_remotes()
             else:
                 if info[CONF_USE_AUTOTEMP]:
@@ -97,20 +96,18 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     )
         options = list(CVE_TYPES.keys())
         itho_schema = vol.Schema({
-        vol.Required(CONF_ID, default="home"): str,
-        vol.Required(CONF_CVE_TYPE,default="none"): selector({
+            vol.Required(CONF_ID, default="home"): str,
+            vol.Required(CONF_CVE_TYPE, default="none"): selector({
                 "select": {
                     "options": options,
                     "multiple": False,
                     "translation_key": "cveselect"
-                    }
+                }
             }),
-        vol.Required(CONF_USE_REMOTES,default=False): cv.boolean,
-        vol.Required(CONF_USE_WPU,default=False): cv.boolean,
-        vol.Required(CONF_USE_AUTOTEMP,default=False): cv.boolean,
+            vol.Required(CONF_USE_REMOTES, default=False): cv.boolean,
+            vol.Required(CONF_USE_WPU, default=False): cv.boolean,
+            vol.Required(CONF_USE_AUTOTEMP, default=False): cv.boolean,
         })
-        
-        return self.async_show_form(
-              step_id="user", data_schema=itho_schema)
 
- 
+        return self.async_show_form(
+            step_id="user", data_schema=itho_schema)

@@ -20,16 +20,18 @@ from homeassistant.const import (
 
 from .const.const import MQTT_STATETOPIC
 
+
 @dataclass(frozen=False)
 class IthoSensorEntityDescription(SensorEntityDescription):
     """Sensor entity description for Itho."""
 
     state: Callable | None = None
-    json_field : str | None = None
+    json_field: str | None = None
+
 
 WPUSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
-        json_field = "CV pressure (Bar)",
+        json_field="CV pressure (Bar)",
         key=MQTT_STATETOPIC["wpu"],
         translation_key="cv_pressure",
         device_class=SensorDeviceClass.PRESSURE,
@@ -37,70 +39,70 @@ WPUSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Flow sensor (lt_hr)",
+        json_field="Flow sensor (lt_hr)",
         key=MQTT_STATETOPIC["wpu"],
         translation_key="flow_sensor",
         state_class=SensorStateClass.MEASUREMENT,
     ),
-     IthoSensorEntityDescription(
-        json_field = "Heat demand thermost. (%)",
+    IthoSensorEntityDescription(
+        json_field="Heat demand thermost. (%)",
         key=MQTT_STATETOPIC["wpu"],
         translation_key="heat_demand",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "CV return temp (°C)",
+        json_field="CV return temp (°C)",
         key=MQTT_STATETOPIC["wpu"],
         translation_key="cv_return_temp",
-         device_class=SensorDeviceClass.TEMPERATURE,
+        device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Boiler temp up (°C)",
+        json_field="Boiler temp up (°C)",
         key=MQTT_STATETOPIC["wpu"],
         translation_key="boiler_temp_up",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-     IthoSensorEntityDescription(
-        json_field = "Status",
+    IthoSensorEntityDescription(
+        json_field="Status",
         key=MQTT_STATETOPIC["wpu"],
         translation_key="status"
     ),
     IthoSensorEntityDescription(
-        json_field = "Room temp (°C)",
+        json_field="Room temp (°C)",
         key=MQTT_STATETOPIC["wpu"],
         translation_key="room_temp",
-     device_class=SensorDeviceClass.TEMPERATURE,
+        device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Cv pump (%)",
+        json_field="Cv pump (%)",
         key=MQTT_STATETOPIC["wpu"],
         translation_key="cv_pump_percent",
-      native_unit_of_measurement=PERCENTAGE,
+        native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Well pump (%)",
+        json_field="Well pump (%)",
         key=MQTT_STATETOPIC["wpu"],
         translation_key="well_pump_percent",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Boiler pump (%)",
+        json_field="Boiler pump (%)",
         key=MQTT_STATETOPIC["wpu"],
         translation_key="boiler_pump_percent",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-       IthoSensorEntityDescription(
-        json_field = "Temp to source (°C)",
+    IthoSensorEntityDescription(
+        json_field="Temp to source (°C)",
         key=MQTT_STATETOPIC["wpu"],
         translation_key="temp_to_source",
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -108,15 +110,15 @@ WPUSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Temp from source (°C)",
+        json_field="Temp from source (°C)",
         key=MQTT_STATETOPIC["wpu"],
         translation_key="temp_from_source",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-     IthoSensorEntityDescription(
-        json_field = "Requested room temp (°C)",
+    IthoSensorEntityDescription(
+        json_field="Requested room temp (°C)",
         key=MQTT_STATETOPIC["wpu"],
         translation_key="requested_room_temp",
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -124,12 +126,12 @@ WPUSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
     ),
     # Requested room temp (°C)
-   # // Boiler temp up (°C)
+    # // Boiler temp up (°C)
 )
 
 AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
-        json_field = "Room X power % (%)",
+        json_field="Room X power % (%)",
         key=MQTT_STATETOPIC["autotemp"],
         translation_key="Room X power % (%)",
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -137,7 +139,7 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Room X temp",
+        json_field="Room X temp",
         key=MQTT_STATETOPIC["autotemp"],
         translation_key="Room X actual temp",
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -145,7 +147,7 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Room X power kW (kW)",
+        json_field="Room X power kW (kW)",
         key=MQTT_STATETOPIC["autotemp"],
         translation_key="Room X power kW",
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -153,57 +155,57 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Room X setp",
+        json_field="Room X setp",
         key=MQTT_STATETOPIC["autotemp"],
-        translation_key= "Room X setpoint temp",
+        translation_key="Room X setpoint temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-
-    )
+)
 
 CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
-        json_field = "Fan setpoint (rpm)",
+        json_field="Fan setpoint (rpm)",
         key=MQTT_STATETOPIC["hru"],
         translation_key="fan_setpoint_rpm",
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-	IthoSensorEntityDescription(
-        json_field = "hum",
+    IthoSensorEntityDescription(
+        json_field="hum",
         key=MQTT_STATETOPIC["hru"],
         translation_key="humidity",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Ventilation setpoint (%)",
+        json_field="Ventilation setpoint (%)",
         key=MQTT_STATETOPIC["hru"],
         translation_key="ventilation_setpoint_percentage",
         native_unit_of_measurement=PERCENTAGE,
     ),
     IthoSensorEntityDescription(
-        json_field = "temp",
+        json_field="temp",
         key=MQTT_STATETOPIC["hru"],
         translation_key="temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
-    ))
+    )
+)
 
 NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
-        json_field = "Supply temp (°C)",
+        json_field="Supply temp (°C)",
         key=MQTT_STATETOPIC["hru"],
         translation_key="actual_supply_temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-	IthoSensorEntityDescription(
-        json_field = "Exhaust temp (°C)",
+    IthoSensorEntityDescription(
+        json_field="Exhaust temp (°C)",
         key=MQTT_STATETOPIC["hru"],
         translation_key="actual_exhaust_temp",
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -211,40 +213,40 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Supply fan (RPM)",
+        json_field="Supply fan (RPM)",
         key=MQTT_STATETOPIC["hru"],
         translation_key="actual_supply_fan",
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Exhaust fan (RPM)",
+        json_field="Exhaust fan (RPM)",
         key=MQTT_STATETOPIC["hru"],
         translation_key="actual_exhaust_fan",
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Balance (%)",
+        json_field="Balance (%)",
         key=MQTT_STATETOPIC["hru"],
         translation_key="balance",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Air Quality (%)",
+        json_field="Air Quality (%)",
         key=MQTT_STATETOPIC["hru"],
         translation_key="airquality",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field = "Actual Mode",
+        json_field="Actual Mode",
         key=MQTT_STATETOPIC["hru"],
         translation_key="actual_mode"
     ),
     IthoSensorEntityDescription(
-        json_field = "Remaining override timer (Sec)",
+        json_field="Remaining override timer (Sec)",
         key=MQTT_STATETOPIC["hru"],
         translation_key="remaining_override_timer",
         native_unit_of_measurement=UnitOfTime.SECONDS,

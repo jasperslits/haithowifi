@@ -1,6 +1,7 @@
 import logging
 from enum import IntEnum
 
+
 class AddOnType(IntEnum):
     CVE = 1
     WPU = 2
@@ -8,9 +9,32 @@ class AddOnType(IntEnum):
     REMOTES = 4
     NONCVE = 5
 
-HRU_ACTUAL_MODE = {1: "low", 2: "medium", 3: "high",24: "auto",25: "autonight"}
-WPU_STATUS = { 0: "Init", 1: "Off", 2: "CV",3: "Boiler",4: "Cooling",5: "Venting"}
-ADDONS = {1: "CVE", 2: "WPU", 3: "AUTOTEMP", 4: "REMOTES",5: "NONCVE"}
+
+HRU_ACTUAL_MODE = {
+    1: "low",
+    2: "medium",
+    3: "high",
+    13: "timer",
+    24: "auto",
+    25: "autonight"
+}
+
+WPU_STATUS = {
+    0: "Init",
+    1: "Off",
+    2: "CV",
+    3: "Boiler",
+    4: "Cooling",
+    5: "Venting"
+}
+
+ADDONS = {
+    1: "CVE",
+    2: "WPU",
+    3: "AUTOTEMP",
+    4: "REMOTES",
+    5: "NONCVE"
+}
 
 CVE_TYPES = {
     "none": ["none", "mdi:fan"],
@@ -44,7 +68,6 @@ CONF_AUTOTEMP_ROOM8 = "room8"
 
 CONF_REMOTE_1 = "remote1"
 CONF_REMOTE_2 = "remote2"
-
 
 
 _LOGGER = logging.getLogger(__name__)
