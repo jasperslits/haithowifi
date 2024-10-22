@@ -25,6 +25,9 @@
             },
             "remaining_override_timer": {
                 "name": "Remaining Override Timer"
+            },
+            "bypass_position": {
+                "name": "Bypass Position"
             }
         }
         
