@@ -28,6 +28,9 @@
             },
             "bypass_position": {
                 "name": "Bypass Position"
+            },
+            "global_fault_code": {
+                "name": "Global Fault Code"
             }
         }
         
