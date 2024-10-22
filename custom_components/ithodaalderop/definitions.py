@@ -251,5 +251,15 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="remaining_override_timer",
         native_unit_of_measurement=UnitOfTime.SECONDS,
         state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Bypass position",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="bypass_position"
+    ),
+    IthoSensorEntityDescription(
+        json_field="Global fault code",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="global_fault_code"
     )
 )
