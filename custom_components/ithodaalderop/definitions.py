@@ -124,7 +124,7 @@ WPUSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
-    ),
+    )
     # Requested room temp (°C)
     # // Boiler temp up (°C)
 )
@@ -161,7 +161,7 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
-    ),
+    )
 )
 
 CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
@@ -251,5 +251,5 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="remaining_override_timer",
         native_unit_of_measurement=UnitOfTime.SECONDS,
         state_class=SensorStateClass.MEASUREMENT,
-    ),
+    )
 )

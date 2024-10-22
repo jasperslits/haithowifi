@@ -50,7 +50,12 @@ UNITTYPE_ICONS = {
 
 DOMAIN = "ithodaalderop"
 CONF_ID = "id"
-MQTT_STATETOPIC = {"hru": "ithohru/ithostatus", "wpu": "ithowpu/ithostatus", "remotes": "ithohru/remotesinfo","autotemp": "ithotemp/ithostatus" }
+MQTT_STATETOPIC = {
+    "hru": "ithohru/ithostatus",
+    "wpu": "ithowpu/ithostatus",
+    "remotes": "ithohru/remotesinfo",
+    "autotemp": "ithotemp/ithostatus"
+}
 CONF_ENABLED_SENSORS = "ithohru/remotesinfo"
 CONF_CVE_TYPE = "cvetype"
 CONF_USE_WPU = "use_wpu"

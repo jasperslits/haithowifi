@@ -101,7 +101,7 @@ class IthoSensor(SensorEntity):
     entity_description: IthoSensorEntityDescription
 
     def __init__(
-        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry,aot: AddOnType
+        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry, aot: AddOnType
     ) -> None:
         """Initialize the sensor."""
         self.entity_description = description
