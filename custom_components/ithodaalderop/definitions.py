@@ -8,7 +8,11 @@ from dataclasses import dataclass
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntityDescription,
-    SensorStateClass,
+    SensorStateClass
+)
+from homeassistant.components.binary_sensor import (
+    BinarySensorDeviceClass,
+    BinarySensorEntityDescription
 )
 from homeassistant.const import (
     UnitOfTemperature,
@@ -24,6 +28,14 @@ from .const.const import MQTT_STATETOPIC
 @dataclass(frozen=False)
 class IthoSensorEntityDescription(SensorEntityDescription):
     """Sensor entity description for Itho."""
+
+    state: Callable | None = None
+    json_field: str | None = None
+
+
+@dataclass(frozen=False)
+class IthoBinarySensorEntityDescription(BinarySensorEntityDescription):
+    """Binary Sensor entity description for Itho."""
 
     state: Callable | None = None
     json_field: str | None = None
@@ -195,6 +207,15 @@ CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
     )
 )
 
+NONCVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
+    IthoBinarySensorEntityDescription(
+        json_field="Bypass position",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="bypass_position",
+        device_class=BinarySensorDeviceClass.OPENING
+    ),
+)
+
 NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Supply temp (°C)",
@@ -251,11 +272,6 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="remaining_override_timer",
         native_unit_of_measurement=UnitOfTime.SECONDS,
         state_class=SensorStateClass.MEASUREMENT,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Bypass position",
-        key=MQTT_STATETOPIC["hru"],
-        translation_key="bypass_position"
     ),
     IthoSensorEntityDescription(
         json_field="Global fault code",

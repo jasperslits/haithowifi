@@ -15,23 +15,6 @@ import copy
 from .const.const import *
 from .const.const import _LOGGER
 from .definitions import CVESENSORS, NONCVESENSORS, WPUSENSORS, AUTOTEMPSENSORS, IthoSensorEntityDescription
-"""
-    _LOGGER,
-    DOMAIN,
-    CONF_REMOTE_1,
-    CONF_REMOTE_2,
-    MQTT_STATETOPIC,
-    CONF_ID,
-    HRU_ACTUAL_MODE,
-    WPU_STATUS,
-    CONF_CVE_TYPE,
-    CONF_USE_WPU,
-    CONF_USE_AUTOTEMP,
-    CONF_USE_REMOTES,
-    AddOnType,
-    ADDONS,
-)
-"""
 
 
 def _create_remotes(config_entry: ConfigEntry):

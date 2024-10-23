@@ -42,6 +42,9 @@ CVE_TYPES = {
     "cve": ["cve", "mdi:fan"]
 }
 
+DEVICETYPE_ICONS = {
+    "valve": "mdi:valve"
+}
 UNITTYPE_ICONS = {
     "rpm": "mdi:speedometer",
     "hum": "mdi:water-percent",

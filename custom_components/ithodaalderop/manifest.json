@@ -2,7 +2,8 @@
   "domain": "ithodaalderop",
   "name": "Itho Add-on",
   "codeowners": [
-    "@jasperslits"
+    "@jasperslits",
+    "@benjamin-dcs"
   ],
   "config_flow": true,
   "dependencies": ["mqtt"],
