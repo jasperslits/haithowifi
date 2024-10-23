@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Sensor component for Itho
+Binary Sensor component for Itho
 Author: Benjamin
 """
 from homeassistant.config_entries import ConfigEntry
@@ -11,8 +11,8 @@ from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.core import HomeAssistant, callback
 
 import json
-from .const.const import *
-from .const.const import _LOGGER
+from .const import *
+from .const import _LOGGER
 from .definitions import NONCVEBINARYSENSORS, IthoBinarySensorEntityDescription
 
 

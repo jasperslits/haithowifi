@@ -22,7 +22,7 @@ from homeassistant.const import (
     PERCENTAGE
 )
 
-from .const.const import MQTT_STATETOPIC
+from .const import MQTT_STATETOPIC
 
 
 @dataclass(frozen=False)
