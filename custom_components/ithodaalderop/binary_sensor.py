@@ -70,6 +70,8 @@ class IthoBinarySensor(BinarySensorEntity):
 
                 self._attr_is_on = value
 
+            self.async_write_ha_state()
+
         await mqtt.async_subscribe(
             self.hass, self.entity_description.key, message_received, 1
         )
