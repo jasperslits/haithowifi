@@ -6,7 +6,7 @@ Author: Jasper Slits
 from homeassistant.helpers.selector import selector
 from homeassistant.helpers import config_validation as cv
 from homeassistant import config_entries
-from .const.const import (
+from .const import (
     _LOGGER,
     DOMAIN,
     CONF_ID,

@@ -12,8 +12,8 @@ from homeassistant.core import HomeAssistant, callback
 
 import json
 import copy
-from .const.const import *
-from .const.const import _LOGGER
+from .const import *
+from .const import _LOGGER
 from .definitions import CVESENSORS, NONCVESENSORS, WPUSENSORS, AUTOTEMPSENSORS, IthoSensorEntityDescription
 
 
