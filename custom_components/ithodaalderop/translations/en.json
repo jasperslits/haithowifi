@@ -43,6 +43,7 @@
                 "data": {
                     "id": "Home id",
                     "cvetype": "Fan type",
+                    "use_remotes": "Remotes",
                     "use_wpu": "WPU",
                     "use_autotemp": "Auto temp"
                 
