@@ -31,6 +31,9 @@
             },
             "global_fault_code": {
                 "name": "Global Fault Code"
+            },
+            "airfilter_counter": {
+                "name": "Airfilter Counter"
             }
         }
         

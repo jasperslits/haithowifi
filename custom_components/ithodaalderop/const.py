@@ -19,6 +19,11 @@ HRU_ACTUAL_MODE = {
     25: "autonight"
 }
 
+HRU_GLOBAL_FAULT_CODE = {
+    0: "No error",
+    7: "Filters dirty"
+}
+
 WPU_STATUS = {
     0: "Init",
     1: "Off",
