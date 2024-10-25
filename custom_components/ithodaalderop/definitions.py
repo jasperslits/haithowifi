@@ -277,5 +277,12 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Global fault code",
         key=MQTT_STATETOPIC["hru"],
         translation_key="global_fault_code"
+    ),
+    IthoSensorEntityDescription(
+        json_field="Airfilter counter",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="airfilter_counter",
+        native_unit_of_measurement=UnitOfTime.HOURS,
+        state_class=SensorStateClass.TOTAL_INCREASING
     )
 )
