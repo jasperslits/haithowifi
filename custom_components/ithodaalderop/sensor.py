@@ -85,7 +85,8 @@ class IthoSensor(SensorEntity):
     _attr_has_entity_name = True
     entity_description: IthoSensorEntityDescription
 
-    _filter_replaced = None
+    _filter_last_maintaince = None
+    _filter_next_maintaince_estimate = None
     _global_fault_code_description = None
 
     def __init__(
@@ -113,10 +114,10 @@ class IthoSensor(SensorEntity):
 
         if self._global_fault_code_description is not None:
             return {"Description": self._global_fault_code_description}
-        if self._filter_replaced is not None and self._filter_replace_estimate is not None:
+        if self._filter_last_maintaince is not None and self._filter_next_maintaince_estimate is not None:
             return {
-                "Replaced": self._filter_replaced,
-                "Replace Estimate": self._filter_replace_estimate
+                "Last Maintaince": self._filter_last_maintaince,
+                "Next Maintaince Estimate": self._filter_next_maintaince_estimate
                 }
 
     async def async_added_to_hass(self) -> None:
@@ -140,8 +141,8 @@ class IthoSensor(SensorEntity):
 
                     if self.aot == AddOnType.NONCVE and self.entity_description.json_field == "Airfilter counter":
                         try:
-                            self._filter_replaced = datetime.now() - timedelta(hours=int(value))
-                            self._filter_replace_estimate = datetime.now() + timedelta(days=180, hours=-int(value))
+                            self._filter_last_maintaince = datetime.now() - timedelta(hours=int(value))
+                            self._filter_next_maintaince_estimate = datetime.now() + timedelta(days=180, hours=-int(value))
                         except Exceptio as e:
                             _LOGGER.error(f"failed to parse value for 'Airfilter counter'\n{e}")
 
