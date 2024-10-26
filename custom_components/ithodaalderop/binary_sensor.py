@@ -49,7 +49,10 @@ class IthoBinarySensor(BinarySensorEntity):
     @property
     def icon(self):
         if self.entity_description.translation_key in ["bypass_position",]:
-            return DEVICETYPE_ICONS["valve"]
+            if self._attr_is_on:
+                return DEVICETYPE_ICONS["valve_on"]
+            else:
+                return DEVICETYPE_ICONS["valve_off"]
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
