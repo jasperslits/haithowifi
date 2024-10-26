@@ -23,11 +23,45 @@ This custom integration should become obsolete once full auto-discovery via the 
 ### Available sensors
 | Device | Sensor | Attributes |
 |---|---|---|
-| HRU |||
-|| Global Fault Code | Descripton |
-| WPU |||
+| **Autotemp** |||
+|| Room X power % (%) ||
+|| Room X power kW (kW) ||
+|| Room X setp ||
+|| Room X temp ||
+| **CVE** |||
+|| Fan setpoint (rpm) ||
+|| Humidity ||
+|| Temperature ||
+|| Ventilation setpoint (%) ||
+| **NONCVE (HRU)** |||
+|| Actual Mode ||
+|| Air Quality (%) ||
+|| Airfilter counter |Last Maintenance|
+||| Next Maintenance Estimate |
+|| Balance (%) ||
+|| Bypass position ||
+|| Exhaust fan (RPM) ||
+|| Exhaust temp (°C) ||
+|| Global fault code | Description |
+|| Remaining override timer (Sec) ||
+|| Supply fan (RPM) ||
+|| Supply temp (°C) ||
+| **WPU** |||
+|| Boiler pump (%) ||
+|| Boiler temp up (°C) ||
 || CV pressure (Bar) ||
+|| Cv pump (%) ||
+|| CV return temp (°C) ||
+|| Flow sensor (lt_hr) ||
+|| Heat demand thermost. (%) ||
+|| Status ||
+|| Temp from source (°C) ||
+|| Temp to source (°C) ||
+|| Requested room temp (°C) ||
+|| Room temp (°C) ||
+|| Well pump (%) ||
 
+Missing a sensor? Feel free to create an [issue](https://github.com/jasperslits/haithowifi/issues)
 
 ### Prerequisites
 1. Working WiFi add-on connected to the Itho device(s)
