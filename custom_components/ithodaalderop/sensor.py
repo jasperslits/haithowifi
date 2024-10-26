@@ -136,21 +136,22 @@ class IthoSensor(SensorEntity):
                     value = None
                 else:
                     value = payload[self.entity_description.json_field]
-                    if self.aot == AddOnType.NONCVE and self.entity_description.json_field == "Actual Mode":
-                        value = HRU_ACTUAL_MODE[value]
+                    if self.aot == AddOnType.NONCVE:
+                        if self.entity_description.json_field == "Actual Mode":
+                            value = HRU_ACTUAL_MODE[value]
 
-                    if self.aot == AddOnType.NONCVE and self.entity_description.json_field == "Airfilter counter":
-                        try:
-                            self._filter_last_maintenance = datetime.now() - timedelta(hours=int(value))
-                            self._filter_next_maintenance_estimate = datetime.now() + timedelta(days=180, hours=-int(value))
-                        except Exceptio as e:
-                            _LOGGER.error(f"failed to parse value for 'Airfilter counter'\n{e}")
+                        if self.entity_description.json_field == "Airfilter counter":
+                            try:
+                                self._filter_last_maintenance = datetime.now() - timedelta(hours=int(value))
+                                self._filter_next_maintenance_estimate = datetime.now() + timedelta(days=180, hours=-int(value))
+                            except Exceptio as e:
+                                _LOGGER.error(f"failed to parse value for 'Airfilter counter'\n{e}")
 
-                    if self.aot == AddOnType.NONCVE and self.entity_description.json_field == "Global fault code":
-                        try:
-                            self._global_fault_code_description = HRU_GLOBAL_FAULT_CODE[int(value)]
-                        except Exception as e:
-                            self._global_fault_code_description = "Unknown fault code"
+                        if self.entity_description.json_field == "Global fault code":
+                            try:
+                                self._global_fault_code_description = HRU_GLOBAL_FAULT_CODE[int(value)]
+                            except Exception as e:
+                                self._global_fault_code_description = "Unknown fault code"
 
                     if self.aot == AddOnType.WPU and self.entity_description.json_field == "Status":
                         value = WPU_STATUS[value]
