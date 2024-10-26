@@ -7,7 +7,6 @@ from homeassistant.helpers.selector import selector
 from homeassistant.helpers import config_validation as cv
 from homeassistant import config_entries
 from .const import (
-    _LOGGER,
     DOMAIN,
     CONF_ID,
     CONF_USE_AUTOTEMP,
@@ -46,7 +45,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 await self.async_set_unique_id(self.config["id"])
                 self._abort_if_unique_id_configured()
                 return self.async_create_entry(
-                    title="Itho Add-on for " + self.config["id"],
+                    title="Itho WiFi Add-on for " + self.config["id"],
                     data=self.config
                 )
 
@@ -62,7 +61,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             await self.async_set_unique_id(self.config["id"])
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
-                title="Itho Add-on for " + self.config["id"],
+                title="Itho WiFi Add-on for " + self.config["id"],
                 data=self.config
             )
 
@@ -91,7 +90,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     await self.async_set_unique_id(info["id"])
                     self._abort_if_unique_id_configured()
                     return self.async_create_entry(
-                        title="Itho Add-on for " + info["id"],
+                        title="Itho WiFi Add-on for " + info["id"],
                         data=info
                     )
         options = list(CVE_TYPES.keys())

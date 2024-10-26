@@ -1,6 +1,7 @@
 import logging
 from enum import IntEnum
 
+_LOGGER = logging.getLogger(__name__)
 
 class AddOnType(IntEnum):
     CVE = 1
@@ -81,6 +82,3 @@ CONF_AUTOTEMP_ROOM8 = "room8"
 
 CONF_REMOTE_1 = "remote1"
 CONF_REMOTE_2 = "remote2"
-
-
-_LOGGER = logging.getLogger(__name__)

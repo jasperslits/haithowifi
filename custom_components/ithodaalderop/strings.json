@@ -9,7 +9,7 @@
                 "name": "Actual Exhaust Fan"
             },
             "airquality": {
-                "name": "Airquality"
+                "name": "Air Quality"
             },
             "balance": {
                 "name": "Balance"
@@ -42,7 +42,7 @@
         "step": {
             "user": {
                 "title": "Add new Itho devices",
-                "description": "Config flow for Itho",
+                "description": "Config flow for Itho WiFi Add-on",
                 "data": {
                     "id": "Home id",
                     "cvetype": "Fan type",

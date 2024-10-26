@@ -3,37 +3,37 @@
         "sensor": {
             
             "actual_supply_fan" : {
-                "name": "Actual Supply Fan"
+                "name": "Actuele Aanvoer Ventilator"
             },
             "actual_exhaust_fan": {
-                "name": "Actual Exhaust Fan"
+                "name": "Actuele Afvoer Ventilator"
             },
             "airquality": {
-                "name": "Airquality"
+                "name": "Lucht kwaliteit"
             },
             "balance": {
-                "name": "Balance"
+                "name": "Balans"
             },
             "actual_supply_temp": {
-                "name": "Actual Supply Temp"
+                "name": "Actuele Aanvoer Temp"
             },
             "actual_exhaust_temp": {
-                "name": "Actual Exhaust Temp"
+                "name": "Actuele Afvoer Temp"
             },
             "actual_mode": {
-                "name": "Actual Mode"
+                "name": "Huidige Mode"
             },
             "remaining_override_timer": {
-                "name": "Remaining Override Timer"
+                "name": "Resterende Override Timer"
             },
             "bypass_position": {
-                "name": "Bypass Position"
+                "name": "Bypass Positie"
             },
             "global_fault_code": {
-                "name": "Global Fault Code"
+                "name": "Globale Foute Code"
             },
             "airfilter_counter": {
-                "name": "Airfilter Counter"
+                "name": "Luchtfilter Teller"
             }
         }
         
@@ -41,37 +41,37 @@
     "config": {
         "step": {
             "user": {
-                "title": "Add new Itho devices",
-                "description": "Config flow for Itho",
+                "title": "Voeg nieuwe Itho apparaten toe",
+                "description": "Configuratie stappen voor Itho",
                 "data": {
-                    "id": "Home id",
-                    "cvetype": "Fan type",
-                    "use_remotes": "CO2 Remotes",
+                    "id": "Huis id",
+                    "cvetype": "Ventilator type",
+                    "use_remotes": "CO2 afstandsbedieningen",
                     "use_wpu": "WPU",
                     "use_autotemp": "Auto temp"
                 
                 }
             },
             "remotes": {
-                "title": "Add new Itho devices",
-                "description": "Config flow for Itho",
+                "title": "Voeg nieuwe Itho afstandsbedieningen toe",
+                "description": "Configuratie stappen for Itho",
                 "data": {
-                    "remote1": "Remote 1",
-                    "remote2": "Remote 2"
+                    "remote1": "Afstandsbediening 1",
+                    "remote2": "Afstandsbediening 2"
                 }
             },
             "rooms": {
-                "title": "Add new Itho devices",
-                "description": "Config flow for Itho",
+                "title": "Voeg nieuwe Itho ruimtes toe",
+                "description": "Configuratie stappen voor Itho",
                 "data": {
-                    "room1": "Room 1",
-                    "room2": "Room 2",
-                    "room3": "Room 3",
-                    "room4": "Room 4",
-                    "room5": "Room 5",
-                    "room6": "Room 6",
-                    "room7": "Room 7",
-                    "room8": "Room 8"
+                    "room1": "Ruimte1",
+                    "room2": "Ruimte2",
+                    "room3": "Ruimte3",
+                    "room4": "Ruimte4",
+                    "room5": "Ruimte5",
+                    "room6": "Ruimte6",
+                    "room7": "Ruimte7",
+                    "room8": "Ruimte8"
                 }
             }
 
@@ -86,7 +86,7 @@
     "selector": {
         "cveselect": {
             "options": {
-                "none" : "No fan",
+                "none" : "Geen ventilator",
                 "noncve" : "Non-CVE (HRU)",
                 "cve": "CVE (ECO box)"
             }
