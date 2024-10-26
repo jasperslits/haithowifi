@@ -1,83 +1,95 @@
 {
-	"entity": {
-			"sensor": {
-			
-				"actual_supply_fan" : {
-					"name": "Actual Supply Fan"
-				},
-				"actual_exhaust_fan": {
-					"name": "Actual Exhaust Fan"
-				},
-				"airquality": {
-					"name": "Airquality"
-				},
-				"balance": {
-					"name": "Balance"
-				},
-				"actual_supply_temp": {
-					"name": "Actual supply temp"
-				},
-				"actual_exhaust_temp": {
-					"name": "Actual exhaust temp"
-				},
-				"actual_mode": {
-					"name": "Actual mode"
-				}
-				}
-		
-	},
-	"config": {
-		"step": {
-			"user": {
-				"title": "Add new Itho devices",
-				"description": "This custom integration expects ithohru, ithowpu and ithoautotemp as state topics",
-				"data": {
-					"id": "Home",
-					"use_wpu": "Create WPU sensors",
-					"cvetype": "Itho fan type",
-					"use_autotemp": "Create Autotemp sensors",
-					"use_remotes" : "Create CO2 sensors"
-					
-				}
-			},
-			"remotes": {
-				"title": "Configure Remote names",
-				"description": "Names of the remotes as defined in the add-on under Remotes",
-				"data": {
-				
-					"remote1": "Remote 1",
-					"remote2": "Remote 2"
-				}
-			},
-			"rooms": {
-				"title": "Configure room names",
-				"description": "Names of the rooms as shown under Status",
-				"data": {
+    "entity": {
+        "sensor": {
+            
+            "actual_supply_fan" : {
+                "name": "Actual Supply Fan"
+            },
+            "actual_exhaust_fan": {
+                "name": "Actual Exhaust Fan"
+            },
+            "airquality": {
+                "name": "Airquality"
+            },
+            "balance": {
+                "name": "Balance"
+            },
+            "actual_supply_temp": {
+                "name": "Actual Supply Temp"
+            },
+            "actual_exhaust_temp": {
+                "name": "Actual Exhaust Temp"
+            },
+            "actual_mode": {
+                "name": "Actual Mode"
+            },
+            "remaining_override_timer": {
+                "name": "Remaining Override Timer"
+            },
+            "bypass_position": {
+                "name": "Bypass Position"
+            },
+            "global_fault_code": {
+                "name": "Global Fault Code"
+            },
+            "airfilter_counter": {
+                "name": "Airfilter Counter"
+            }
+        }
+        
+    },
+    "config": {
+        "step": {
+            "user": {
+                "title": "Add new Itho devices",
+                "description": "Config flow for Itho",
+                "data": {
+                    "id": "Home id",
+                    "cvetype": "Fan type",
+                    "use_remotes": "CO2 Remotes",
+                    "use_wpu": "WPU",
+                    "use_autotemp": "Auto temp"
+                
+                }
+            },
+            "remotes": {
+                "title": "Add new Itho devices",
+                "description": "Config flow for Itho",
+                "data": {
+                    "remote1": "Remote 1",
+                    "remote2": "Remote 2"
+                }
+            },
+            "rooms": {
+                "title": "Add new Itho devices",
+                "description": "Config flow for Itho",
+                "data": {
+                    "room1": "Room 1",
+                    "room2": "Room 2",
+                    "room3": "Room 3",
+                    "room4": "Room 4",
+                    "room5": "Room 5",
+                    "room6": "Room 6",
+                    "room7": "Room 7",
+                    "room8": "Room 8"
+                }
+            }
 
-					"room1": "Room 1",
-					"room2": "Room 2",
-					"room3": "Room 3",
-					"room4": "Room 4",
-					"room5": "Room 5",
-					"room6": "Room 6",
-					"room7": "Room 7",
-					"room8": "Room 8"
-				}
-			}
-		},
-		"abort": {
-			"already_configured": "[%key:common::config_flow::abort::already_configured_service%]"
-		},
-		"error": {
-			"cannot_connect": "[%key:common::config_flow::error::cannot_connect%]"
-		}
-	},
-	"selector": {
-		"cveselect": {
-			"options": {
-				"none": "None",
-				"noncve": "Non-CVE",
-				"cve": "CVE"
-			}}}
-	
+        },
+        "abort": {
+            "already_configured": "[%key:common::config_flow::abort::already_configured_service%]"
+        },
+        "error": {
+            "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]"
+        }
+    },
+    "selector": {
+        "cveselect": {
+            "options": {
+                "none" : "No fan",
+                "noncve" : "Non-CVE (HRU)",
+                "cve": "CVE (ECO box)"
+            }
+        }
+    }
 }

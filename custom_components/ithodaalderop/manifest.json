@@ -2,7 +2,8 @@
   "domain": "ithodaalderop",
   "name": "Itho Add-on",
   "codeowners": [
-    "@jasperslits"
+    "@jasperslits",
+    "@benjamin-dcs"
   ],
   "config_flow": true,
   "dependencies": ["mqtt"],
@@ -12,5 +13,5 @@
   "mqtt": ["ithohru/#"],
   "requirements": [
   ],
-  "version": "1.0"
+  "version": "1.2"
 }
