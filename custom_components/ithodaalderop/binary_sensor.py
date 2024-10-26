@@ -69,7 +69,6 @@ class IthoBinarySensor(BinarySensorEntity):
                 if self.entity_description.json_field not in payload:
                     value = None
                 else:
-                    _LOGGER.debug(payload[self.entity_description.json_field])
                     value = bool(payload[self.entity_description.json_field])
 
                 self._attr_is_on = value
