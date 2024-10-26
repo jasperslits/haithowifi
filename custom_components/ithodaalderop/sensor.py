@@ -142,8 +142,8 @@ class IthoSensor(SensorEntity):
 
                         if self.entity_description.json_field == "Airfilter counter":
                             try:
-                                self._filter_last_maintenance = datetime.now() - timedelta(hours=int(value))
-                                self._filter_next_maintenance_estimate = datetime.now() + timedelta(days=180, hours=-int(value))
+                                self._filter_last_maintenance = (datetime.now() - timedelta(hours=int(value))).date()
+                                self._filter_next_maintenance_estimate = (datetime.now() + timedelta(days=180, hours=-int(value))).date()
                             except Exceptio as e:
                                 _LOGGER.error(f"failed to parse value for 'Airfilter counter'\n{e}")
 
