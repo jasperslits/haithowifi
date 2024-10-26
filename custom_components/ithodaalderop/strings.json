@@ -42,7 +42,7 @@
         "step": {
             "user": {
                 "title": "Add new Itho devices",
-                "description": "Config flow for Itho WiFi Add-on",
+                "description": "Select the devices you want to configure",
                 "data": {
                     "id": "Home id",
                     "cvetype": "Fan type",
@@ -53,16 +53,16 @@
                 }
             },
             "remotes": {
-                "title": "Add new Itho devices",
-                "description": "Config flow for Itho",
+                "title": "Add remotes",
+                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item",
                 "data": {
                     "remote1": "Remote 1",
                     "remote2": "Remote 2"
                 }
             },
             "rooms": {
-                "title": "Add new Itho devices",
-                "description": "Config flow for Itho",
+                "title": "Add Autotemp rooms",
+                "description": "Provide a name for each room defined in the autotemp unit. E.g. living room, bedroom 1",
                 "data": {
                     "room1": "Room 1",
                     "room2": "Room 2",

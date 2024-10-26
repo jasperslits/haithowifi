@@ -30,7 +30,7 @@
                 "name": "Bypass Positie"
             },
             "global_fault_code": {
-                "name": "Globale Foute Code"
+                "name": "Globale Fout Code"
             },
             "airfilter_counter": {
                 "name": "Luchtfilter Teller"
@@ -54,7 +54,7 @@
             },
             "remotes": {
                 "title": "Voeg nieuwe Itho afstandsbedieningen toe",
-                "description": "Configuratie stappen for Itho",
+                "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices",
                 "data": {
                     "remote1": "Afstandsbediening 1",
                     "remote2": "Afstandsbediening 2"
@@ -62,7 +62,7 @@
             },
             "rooms": {
                 "title": "Voeg nieuwe Itho ruimtes toe",
-                "description": "Configuratie stappen voor Itho",
+                "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer",
                 "data": {
                     "room1": "Ruimte1",
                     "room2": "Ruimte2",
