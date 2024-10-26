@@ -49,7 +49,8 @@ CVE_TYPES = {
 }
 
 DEVICETYPE_ICONS = {
-    "valve": "mdi:valve"
+    "valve_on": "mdi:valve-open",
+    "valve_off": "mdi:valve-closed"
 }
 UNITTYPE_ICONS = {
     "rpm": "mdi:speedometer",
