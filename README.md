@@ -20,6 +20,15 @@ It creates the commonly used sensors and uses a predefined MQTT state topic to d
 
 This custom integration should become obsolete once full auto-discovery via the Itho Add-on has the same capabilities. 
 
+### Available sensors
+| Device | Sensor | Attributes |
+|---|---|---|
+| HRU |||
+|| Global Fault Code | Descripton |
+| WPU |||
+|| CV pressure (Bar) ||
+
+
 ### Prerequisites
 1. Working WiFi add-on connected to the Itho device(s)
 2. State topics for MQTT like table below
