@@ -1,42 +1,88 @@
 {
     "entity": {
         "sensor": {
-            
-            "actual_supply_fan" : {
-                "name": "Actuele Aanvoer Ventilator"
-            },
             "actual_exhaust_fan": {
                 "name": "Actuele Afvoer Ventilator"
             },
-            "airquality": {
-                "name": "Lucht kwaliteit"
-            },
-            "balance": {
-                "name": "Balans"
-            },
-            "actual_supply_temp": {
-                "name": "Actuele Aanvoer Temp"
-            },
             "actual_exhaust_temp": {
-                "name": "Actuele Afvoer Temp"
+                "name": "Actuele Afvoer Temperatuur"
             },
             "actual_mode": {
                 "name": "Huidige Mode"
             },
-            "remaining_override_timer": {
-                "name": "Resterende Override Timer"
+            "actual_supply_fan" : {
+                "name": "Actuele Aanvoer Ventilator"
+            },
+            "actual_supply_temp": {
+                "name": "Actuele Aanvoer Temperatuur"
+            },
+            "airfilter_counter": {
+                "name": "Luchtfilter Teller"
+            },
+            "airquality": {
+                "name": "Luchtkwaliteit"
+            },
+            "balance": {
+                "name": "Balans"
+            },
+            "boiler_pump_percent": {
+                "name": "Boiler Pomp"
+            },
+            "boiler_temp_up": {
+                "name": "Boiler Temperatuur"
             },
             "bypass_position": {
                 "name": "Bypass Positie"
             },
+            "cv_pressure": {
+                "name": "CV Druk"
+            },
+            "cv_pump_percent": {
+                "name": "CV Pomp"
+            },
+            "cv_return_temp": {
+                "name": "CV Afvoer Temperatuur"
+            },
+            "fan_setpoint_rpm": {
+                "name": "Fan Stand"
+            },
+            "flow_sensor": {
+                "name": "Stroomsnelheid"
+            },
             "global_fault_code": {
                 "name": "Globale Fout Code"
             },
-            "airfilter_counter": {
-                "name": "Luchtfilter Teller"
+            "heat_demand": {
+                "name": "Warmtevraag Thermostaat"
+            },
+            "humidity": {
+                "name": "Luchtvochtigheid"
+            },
+            "remaining_override_timer": {
+                "name": "Resterende Override Timer"
+            },
+            "requested_room_temp": {
+                "name": "Gevraagde Kamertemperatuur"
+            },
+            "room_temp": {
+                "name": "Kamertemperatuur"
+            },
+            "status": {
+                "name": "Status"
+            },
+            "temp": {
+                "name": "Temperatuur"
+            },
+            "temp_from_source": {
+                "name": "Temperatuur vanuit Source"
+            },
+            "temp_to_source": {
+                "name": "Temperatuur naar Source"
+            },
+            "well_pump_percent": {
+                "name": "Bronpomp"
             }
         }
-        
     },
     "config": {
         "step": {
@@ -74,7 +120,6 @@
                     "room8": "Ruimte8"
                 }
             }
-
         },
         "abort": {
             "already_configured": "[%key:common::config_flow::abort::already_configured_service%]"
