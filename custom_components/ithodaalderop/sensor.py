@@ -52,10 +52,11 @@ def _create_autotemprooms(config_entry: ConfigEntry):
     for x in range(1, 8):
         template_sensors = copy.deepcopy(list(AUTOTEMPSENSORS))
         room = cfg["room" + str(x)]
-        if room != "":
+        if room != "" and room != "Room "+str(x):
+
             for sensor in template_sensors:
                 sensor.json_field = sensor.json_field.replace("X", str(x))
-                sensor.translation_key = sensor.translation_key.replace("X", room)
+                sensor.translation_key = sensor.translation_key.replace("Room X", room)
                 configured_sensors.append(sensor)
 
     return configured_sensors
