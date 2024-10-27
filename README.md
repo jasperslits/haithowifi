@@ -26,7 +26,7 @@ This custom integration should become obsolete once full auto-discovery via the 
 | **Autotemp** |||
 || Room X power % (%) ||
 || Room X power kW (kW) ||
-|| Room X setp ||
+|| Room X setpoinit ||
 || Room X temp ||
 | **CVE** |||
 || Fan setpoint (rpm) ||
