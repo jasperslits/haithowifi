@@ -17,6 +17,7 @@ from homeassistant.components.binary_sensor import (
 from homeassistant.const import (
     UnitOfTemperature,
     UnitOfTime,
+    UnitOfPower,
     UnitOfPressure,
     REVOLUTIONS_PER_MINUTE,
     PERCENTAGE
@@ -146,8 +147,8 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Room X power % (%)",
         key=MQTT_STATETOPIC["autotemp"],
         translation_key="Room X power % (%)",
-        device_class=SensorDeviceClass.TEMPERATURE,
-        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        device_class=SensorDeviceClass.POWER_FACTOR,
+        native_unit_of_measurement="%",
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
@@ -162,8 +163,8 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Room X power kW (kW)",
         key=MQTT_STATETOPIC["autotemp"],
         translation_key="Room X power kW",
-        device_class=SensorDeviceClass.TEMPERATURE,
-        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        device_class=SensorDeviceClass.POWER,
+        native_unit_of_measurement=UnitOfPower.KILO_WATT,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
