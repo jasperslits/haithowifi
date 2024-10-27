@@ -55,6 +55,7 @@ def _create_autotemprooms(config_entry: ConfigEntry):
         if room != "":
             for sensor in template_sensors:
                 sensor.json_field = sensor.json_field.replace("X", str(x))
+                # TODO: translation key won't exist for replace("X", room)
                 sensor.translation_key = sensor.translation_key.replace("X", room)
                 configured_sensors.append(sensor)
 

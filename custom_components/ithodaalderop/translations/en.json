@@ -1,21 +1,8 @@
 {
     "entity": {
         "sensor": {
-            
-            "actual_supply_fan" : {
-                "name": "Actual Supply Fan"
-            },
             "actual_exhaust_fan": {
                 "name": "Actual Exhaust Fan"
-            },
-            "airquality": {
-                "name": "Air Quality"
-            },
-            "balance": {
-                "name": "Balance"
-            },
-            "actual_supply_temp": {
-                "name": "Actual Supply Temp"
             },
             "actual_exhaust_temp": {
                 "name": "Actual Exhaust Temp"
@@ -23,20 +10,79 @@
             "actual_mode": {
                 "name": "Actual Mode"
             },
-            "remaining_override_timer": {
-                "name": "Remaining Override Timer"
+            "actual_supply_fan" : {
+                "name": "Actual Supply Fan"
+            },
+            "actual_supply_temp": {
+                "name": "Actual Supply Temp"
+            },
+            "airfilter_counter": {
+                "name": "Airfilter Counter"
+            },
+            "airquality": {
+                "name": "Air Quality"
+            },
+            "balance": {
+                "name": "Balance"
+            },
+            "boiler_pump_percent": {
+                "name": "Boiler Pump"
+            },
+            "boiler_temp_up": {
+                "name": "Boiler Temp Up"
             },
             "bypass_position": {
                 "name": "Bypass Position"
             },
+            "cv_pressure": {
+                "name": "CV Pressure"
+            },
+            "cv_pump_percent": {
+                "name": "CV Pump"
+            },
+            "cv_return_temp": {
+                "name": "CV Return Temp"
+            },
+            "fan_setpoint_rpm": {
+                "name": "Fan Setpoint"
+            },
+            "flow_sensor": {
+                "name": "Flow"
+            },
             "global_fault_code": {
                 "name": "Global Fault Code"
             },
-            "airfilter_counter": {
-                "name": "Airfilter Counter"
+            "heat_demand": {
+                "name": "Heat Demand Thermostat"
+            },
+            "humidity": {
+                "name": "Humidity"
+            },
+            "remaining_override_timer": {
+                "name": "Remaining Override Timer"
+            },
+            "requested_room_temp": {
+                "name": "Requested Toom Temp"
+            },
+            "room_temp": {
+                "name": "Room Temp"
+            },
+            "status": {
+                "name": "Status"
+            },
+            "temp": {
+                "name": "Temp"
+            },
+            "temp_from_source": {
+                "name": "Temp from Source"
+            },
+            "temp_to_source": {
+                "name": "Temp to Source"
+            },
+            "well_pump_percent": {
+                "name": "Well Pump"
             }
         }
-        
     },
     "config": {
         "step": {
@@ -74,7 +120,6 @@
                     "room8": "Room 8"
                 }
             }
-
         },
         "abort": {
             "already_configured": "[%key:common::config_flow::abort::already_configured_service%]"
