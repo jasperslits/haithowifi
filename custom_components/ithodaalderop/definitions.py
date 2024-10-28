@@ -263,6 +263,22 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="global_fault_code"
     ),
     IthoSensorEntityDescription(
+        json_field="Highest received CO2 value (Ppm)",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="highest_received_co2_value",
+        native_unit_of_measurement=PERCENTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False
+    ),
+    IthoSensorEntityDescription(
+        json_field="Highest received RH value (%RH)",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="highest_received_rh_value",
+        native_unit_of_measurement=PERCENTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False
+    ),
+    IthoSensorEntityDescription(
         json_field="Remaining override timer (Sec)",
         key=MQTT_STATETOPIC["hru"],
         translation_key="remaining_override_timer",

@@ -55,6 +55,9 @@
             "heat_demand": {
                 "name": "Heat Demand Thermostat"
             },
+            "highest_received_co2_value": {
+                "name": "Highest Received CO2 Value"
+            },
             "highest_received_rh_value": {
                 "name": "Highest Received RH Value"
             },
