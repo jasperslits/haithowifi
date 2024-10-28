@@ -55,6 +55,9 @@
             "heat_demand": {
                 "name": "Warmtevraag Thermostaat"
             },
+            "highest_received_rh_value": {
+                "name": "Hoogste RH waarde"
+            },
             "humidity": {
                 "name": "Luchtvochtigheid"
             },
