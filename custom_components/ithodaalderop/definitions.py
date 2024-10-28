@@ -19,6 +19,7 @@ from homeassistant.const import (
     UnitOfTime,
     UnitOfPower,
     UnitOfPressure,
+    CONCENTRATION_PARTS_PER_MILLION,
     REVOLUTIONS_PER_MINUTE,
     PERCENTAGE
 )
@@ -266,7 +267,7 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Highest received CO2 value (Ppm)",
         key=MQTT_STATETOPIC["hru"],
         translation_key="highest_received_co2_value",
-        native_unit_of_measurement=PERCENTAGE,
+        native_unit_of_measurement=CONCENTRATION_PARTS_PER_MILLION,
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False
     ),
