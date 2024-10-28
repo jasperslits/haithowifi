@@ -43,6 +43,8 @@ This custom integration should become obsolete once full auto-discovery via the 
 || Exhaust fan (RPM) ||
 || Exhaust temp (°C) ||
 || Global fault code | Description |
+|| Highest received CO2 value (Ppm) (disabled by default) ||
+|| Highest received RH value (%RH) (disabled by default) ||
 || Remaining override timer (Sec) ||
 || Supply fan (RPM) ||
 || Supply temp (°C) ||
