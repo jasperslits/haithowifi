@@ -228,7 +228,7 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Actual Mode",
         key=MQTT_STATETOPIC["hru"],
         translation_key="actual_mode",
-        icon="mdi:knob"
+        icon="mdi:knob",
     ),
     IthoSensorEntityDescription(
         json_field="Airfilter counter",
@@ -271,6 +271,7 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Global fault code",
         key=MQTT_STATETOPIC["hru"],
         translation_key="global_fault_code",
+        icon="mdi:alert-circle-outline",
     ),
     IthoSensorEntityDescription(
         json_field="Highest received CO2 value (Ppm)",
