@@ -162,7 +162,10 @@ class IthoSensor(SensorEntity):
                     if self.aot == AddOnType.REMOTES:
                         value = value["co2"]
 
-                self._attr_native_value = value
+                if self.entity_description.json_field == "Highest received RH value (%RH)":
+                    self._attr_native_value = round(float(value) / 2.55, 0)
+                else:
+                    self._attr_native_value = value
 
             self.async_write_ha_state()
 
