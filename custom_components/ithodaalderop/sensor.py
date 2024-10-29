@@ -52,7 +52,7 @@ def _create_autotemprooms(config_entry: ConfigEntry):
     for x in range(1, 8):
         template_sensors = copy.deepcopy(list(AUTOTEMPSENSORS))
         room = cfg["room" + str(x)]
-        if room != "" and room != "Room "+str(x):
+        if room != "" and room != "Room " + str(x):
 
             for sensor in template_sensors:
                 sensor.json_field = sensor.json_field.replace("X", str(x))
@@ -106,7 +106,9 @@ class IthoSensor(SensorEntity):
 
     @property
     def icon(self):
-        if self.entity_description.native_unit_of_measurement in UNITTYPE_ICONS:
+        if self.entity_description.icon is not None:
+            return self.entity_description.icon
+        elif self.entity_description.native_unit_of_measurement in UNITTYPE_ICONS:
             return UNITTYPE_ICONS[self.entity_description.native_unit_of_measurement]
 
     @property
@@ -119,7 +121,7 @@ class IthoSensor(SensorEntity):
             return {
                 "Last Maintenance": self._filter_last_maintenance,
                 "Next Maintenance Estimate": self._filter_next_maintenance_estimate
-                }
+            }
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""

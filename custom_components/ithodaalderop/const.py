@@ -3,6 +3,7 @@ from enum import IntEnum
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class AddOnType(IntEnum):
     CVE = 1
     WPU = 2
@@ -17,12 +18,12 @@ HRU_ACTUAL_MODE = {
     3: "high",
     13: "timer",
     24: "auto",
-    25: "autonight"
+    25: "autonight",
 }
 
 HRU_GLOBAL_FAULT_CODE = {
     0: "No error",
-    7: "Filters dirty"
+    7: "Filters dirty",
 }
 
 WPU_STATUS = {
@@ -31,7 +32,7 @@ WPU_STATUS = {
     2: "CV",
     3: "Boiler",
     4: "Cooling",
-    5: "Venting"
+    5: "Venting",
 }
 
 ADDONS = {
@@ -39,23 +40,19 @@ ADDONS = {
     2: "WPU",
     3: "AUTOTEMP",
     4: "REMOTES",
-    5: "NONCVE"
+    5: "NONCVE",
 }
 
 CVE_TYPES = {
     "none": ["none", "mdi:fan"],
     "noncve": ["noncve", "mdi:fan"],
-    "cve": ["cve", "mdi:fan"]
+    "cve": ["cve", "mdi:fan"],
 }
 
-DEVICETYPE_ICONS = {
-    "valve_on": "mdi:valve-open",
-    "valve_off": "mdi:valve-closed"
-}
 UNITTYPE_ICONS = {
-    "rpm": "mdi:speedometer",
+    "%": "mdi:percent-outline",
     "hum": "mdi:water-percent",
-    "%": "mdi:percent-outline"
+    "rpm": "mdi:speedometer",
 }
 
 DOMAIN = "ithodaalderop"
@@ -64,7 +61,7 @@ MQTT_STATETOPIC = {
     "hru": "ithohru/ithostatus",
     "wpu": "ithowpu/ithostatus",
     "remotes": "ithohru/remotesinfo",
-    "autotemp": "ithotemp/ithostatus"
+    "autotemp": "ithotemp/ithostatus",
 }
 CONF_ENABLED_SENSORS = "ithohru/remotesinfo"
 CONF_CVE_TYPE = "cvetype"
