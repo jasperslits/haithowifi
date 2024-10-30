@@ -162,8 +162,8 @@ class IthoSensor(SensorEntity):
                     if self.aot == AddOnType.REMOTES:
                         value = value["co2"]
 
-                if self.entity_description.json_field == "Highest received RH value (%RH)":
-                    self._attr_native_value = round(float(value) / 2.55, 0)
+                if self.entity_description.json_field == "Highest received RH value (%RH)" and float(value) > 100:
+                    _LOGGER.warning(f"Received invalid value '{value}' for 'Highest received RH value (%RH)'")
                 else:
                     self._attr_native_value = value
 
