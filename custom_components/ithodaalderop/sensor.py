@@ -16,7 +16,13 @@ import json
 
 from .const import *
 from .const import _LOGGER
-from .definitions import CVESENSORS, NONCVESENSORS, WPUSENSORS, AUTOTEMPSENSORS, IthoSensorEntityDescription
+from .definitions import (
+    CVESENSORS,
+    NONCVESENSORS,
+    WPUSENSORS,
+    AUTOTEMPSENSORS,
+    IthoSensorEntityDescription,
+)
 
 
 def _create_remotes(config_entry: ConfigEntry):
@@ -89,6 +95,7 @@ class IthoSensor(SensorEntity):
     _filter_last_maintenance = None
     _filter_next_maintenance_estimate = None
     _global_fault_code_description = None
+    _rh_error_description = None
 
     def __init__(
         self, description: IthoSensorEntityDescription, config_entry: ConfigEntry, aot: AddOnType
@@ -116,11 +123,19 @@ class IthoSensor(SensorEntity):
         """Return the state attributes."""
 
         if self._global_fault_code_description is not None:
-            return {"Description": self._global_fault_code_description}
+            return {
+                "Description": self._global_fault_code_description,
+            }
+
         if self._filter_last_maintenance is not None and self._filter_next_maintenance_estimate is not None:
             return {
                 "Last Maintenance": self._filter_last_maintenance,
-                "Next Maintenance Estimate": self._filter_next_maintenance_estimate
+                "Next Maintenance Estimate": self._filter_next_maintenance_estimate,
+            }
+
+        if self._rh_error_description is not None:
+            return {
+                "Error Description": self._rh_error_description,
             }
 
     async def async_added_to_hass(self) -> None:
@@ -151,10 +166,7 @@ class IthoSensor(SensorEntity):
                                 _LOGGER.error(f"failed to parse value for 'Airfilter counter'\n{e}")
 
                         if self.entity_description.json_field == "Global fault code":
-                            try:
-                                self._global_fault_code_description = HRU_GLOBAL_FAULT_CODE[int(value)]
-                            except Exception as e:
-                                self._global_fault_code_description = "Unknown fault code"
+                            self._global_fault_code_description = HRU_GLOBAL_FAULT_CODE.get(int(value), "Unknown fault code")
 
                     if self.aot == AddOnType.WPU and self.entity_description.json_field == "Status":
                         value = WPU_STATUS[value]
@@ -162,8 +174,13 @@ class IthoSensor(SensorEntity):
                     if self.aot == AddOnType.REMOTES:
                         value = value["co2"]
 
-                if self.entity_description.json_field == "Highest received RH value (%RH)" and float(value) > 100:
-                    self._attr_native_value = None
+                if self.entity_description.json_field == "Highest received RH value (%RH)":
+                    if float(value) > 100:
+                        self._attr_native_value = None
+                        self._rh_error_description = RH_ERROR_CODE.get(int(value), "Unknown Error")
+                    else:
+                        self._attr_native_value = value
+                        self._rh_error_description = ""
                 else:
                     self._attr_native_value = value
 
