@@ -26,6 +26,26 @@ HRU_GLOBAL_FAULT_CODE = {
     7: "Filters dirty",
 }
 
+RH_ERROR_CODE = {
+    239: "Not Available",
+    240: "Shorted Sensor",
+    241: "Open Sensor",
+    242: "Not Available Error",
+    243: "Out Of Range High",
+    244: "Out Of Range Low",
+    245: "Not Reliable",
+    246: "Reserved Error",
+    247: "Reserved Error",
+    248: "Reserved Error",
+    249: "Reserved Error",
+    250: "Reserved Error",
+    251: "Reserved Error",
+    252: "Reserved Error",
+    253: "Reserved Error",
+    254: "Reserved Error",
+    255: "Unknown Error",
+}
+
 WPU_STATUS = {
     0: "Init",
     1: "Off",
