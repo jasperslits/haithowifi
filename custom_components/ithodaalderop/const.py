@@ -24,6 +24,7 @@ HRU_ACTUAL_MODE = {
 HRU_GLOBAL_FAULT_CODE = {
     0: "No error",
     7: "Filters dirty",
+    11: "(External) Sensor error",
 }
 
 RH_ERROR_CODE = {
