@@ -21,6 +21,8 @@ HRU_ACTUAL_MODE = {
     25: "autonight",
 }
 
+# Based on user-experience. No codelist availble in the Itho Servicetool
+# For any additions/feedback, please create an issue in the repo of the integration
 HRU_GLOBAL_FAULT_CODE = {
     0: "No error",
     7: "Filters dirty",
