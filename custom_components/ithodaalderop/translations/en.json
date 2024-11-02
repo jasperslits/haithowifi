@@ -104,6 +104,19 @@
                 
                 }
             },
+             "reconfigure": {
+                "title": "Reconfigure new Itho devices",
+                "description": "Select the devices you want to reconfigure",
+                "data": {
+                    "id": "Home id",
+                    "cvetype": "Fan type",
+                    "use_remotes": "CO2 Remotes",
+                    "use_wpu": "WPU",
+                    "use_autotemp": "Auto temp"
+                
+                }
+            },
+
             "remotes": {
                 "title": "Add new Itho remotes",
                 "description": "Enter the names of the remotes as defined in the 'RF devices' menu item",
@@ -131,6 +144,7 @@
             "already_configured": "[%key:common::config_flow::abort::already_configured_service%]"
         },
         "error": {
+		"reconfigure_successful": "Re-configuration was successful",	
             "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]"
         }
     },

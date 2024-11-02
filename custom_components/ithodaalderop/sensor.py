@@ -28,27 +28,17 @@ from .definitions import (
 def _create_remotes(config_entry: ConfigEntry):
 
     cfg = config_entry.data
-
-    if cfg[CONF_REMOTE_1] != "":
-        REMOTES = [
-            IthoSensorEntityDescription(
-                json_field=cfg[CONF_REMOTE_1],
+    REMOTES = []
+    for x in range(1, 5):
+        remote = cfg["remote" + str(x)]
+        if remote != "" and remote != "Remote " + str(x):
+             REMOTES.append(IthoSensorEntityDescription(
+                json_field=remote,
                 key=MQTT_STATETOPIC["remotes"],
-                translation_key=cfg[CONF_REMOTE_1],
-                device_class="carbon_dioxide",
-                native_unit_of_measurement="ppm",
-                state_class="measurement")]
-
-    if cfg[CONF_REMOTE_2] != "":
-        REMOTES.append(
-            IthoSensorEntityDescription(
-                json_field=cfg[CONF_REMOTE_2],
-                key=MQTT_STATETOPIC["remotes"],
-                translation_key=cfg[CONF_REMOTE_2],
+                translation_key=remote,
                 device_class="carbon_dioxide",
                 native_unit_of_measurement="ppm",
                 state_class="measurement"))
-
     return REMOTES
 
 
