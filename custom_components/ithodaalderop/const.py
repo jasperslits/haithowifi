@@ -102,9 +102,10 @@ CONF_AUTOTEMP_ROOM7 = "room7"
 CONF_AUTOTEMP_ROOM8 = "room8"
 
 CONF_REMOTE_1 = "remote1"
-CONF_REMOTE_3 = "remote2"
-CONF_REMOTE_4 = "remote3"
-CONF_REMOTE_5 = "remote4"
-CONF_REMOTE_6 = "remote5"
+CONF_REMOTE_2 = "remote2"
+CONF_REMOTE_3 = "remote3"
+CONF_REMOTE_4 = "remote4"
+CONF_REMOTE_5 = "remote5"
+CONF_REMOTE_6 = "remote6"
 
 

@@ -122,7 +122,10 @@
                 "description": "Enter the names of the remotes as defined in the 'RF devices' menu item",
                 "data": {
                     "remote1": "Remote 1",
-                    "remote2": "Remote 2"
+                    "remote2": "Remote 2",
+		    "remote3": "Remote 3",
+		    "remote4": "Remote 4",
+		    "remote5": "Remote 5"
                 }
             },
             "rooms": {

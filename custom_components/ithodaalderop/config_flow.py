@@ -78,11 +78,11 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 )
             
         itho_schema = vol.Schema({
-            vol.Required(CONF_REMOTE_1, default=info[CONF_REMOTE_1]): str,
-            vol.Optional(CONF_REMOTE_2, default=info[CONF_REMOTE_2]): str,
-            vol.Optional(CONF_REMOTE_3, default=info[CONF_REMOTE_3]): str,
-            vol.Optional(CONF_REMOTE_4, default=info[CONF_REMOTE_4]): str,
-            vol.Optional(CONF_REMOTE_5, default=info[CONF_REMOTE_5]): str
+            vol.Required(CONF_REMOTE_1, default=self._get_reconfigure_value(CONF_REMOTE_1,"Remote 1")): str,
+            vol.Optional(CONF_REMOTE_2, default=self._get_reconfigure_value(CONF_REMOTE_2,"Remote 2")): str,
+            vol.Optional(CONF_REMOTE_3, default=self._get_reconfigure_value(CONF_REMOTE_3,"Remote 3")): str,
+            vol.Optional(CONF_REMOTE_4, default=self._get_reconfigure_value(CONF_REMOTE_4,"Remote 4")): str,
+            vol.Optional(CONF_REMOTE_5, default=self._get_reconfigure_value(CONF_REMOTE_5,"Remote 5")): str,
         })          
         return self.async_show_form(step_id="remotes", data_schema=itho_schema)
 
@@ -109,6 +109,12 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         })
         return self.async_show_form(step_id="rooms", data_schema=itho_schema)
 
+    def _get_reconfigure_value(self,param,default): 
+        if param in self.config:
+            return self.config[param]
+        else:
+            return default
+
     async def async_step_rooms_reconfigure(self, info=None):
         if info is not None:
             self.config.update(info)
@@ -120,14 +126,14 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             )
 
         itho_schema = vol.Schema({
-            vol.Required(CONF_AUTOTEMP_ROOM1, default=info[CONF_AUTOTEMP_ROOM1]): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM2, default=info[CONF_AUTOTEMP_ROOM2]): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM3, default=info[CONF_AUTOTEMP_ROOM3]): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM4, default="Room 4"): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM5, default="Room 5"): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM6, default="Room 6"): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM7, default="Room 7"): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM8, default="Room 8"): str,
+            vol.Required(CONF_AUTOTEMP_ROOM1, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM1,"Room 1")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM2, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM2,"Room 2")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM3, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM3,"Room 3")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM4, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM4,"Room 4")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM5, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM5,"Room 5")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM6, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM6,"Room 6")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM7, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM7,"Room 7")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM8, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM8,"Room 8")): str,
         })
         return self.async_show_form(step_id="rooms", data_schema=itho_schema)
 
