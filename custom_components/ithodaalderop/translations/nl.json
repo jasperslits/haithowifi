@@ -109,21 +109,24 @@
                 "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices",
                 "data": {
                     "remote1": "Afstandsbediening 1",
-                    "remote2": "Afstandsbediening 2"
+                    "remote2": "Afstandsbediening 2",
+		    "remote3": "Afstandsbediening 3",
+		    "remote4": "Afstandsbediening 4",
+		    "remote5": "Afstandsbediening 5"
                 }
             },
             "rooms": {
                 "title": "Voeg nieuwe Itho ruimtes toe",
                 "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer",
                 "data": {
-                    "room1": "Ruimte1",
-                    "room2": "Ruimte2",
-                    "room3": "Ruimte3",
-                    "room4": "Ruimte4",
-                    "room5": "Ruimte5",
-                    "room6": "Ruimte6",
-                    "room7": "Ruimte7",
-                    "room8": "Ruimte8"
+                    "room1": "Ruimte 1",
+                    "room2": "Ruimte 2",
+                    "room3": "Ruimte 3",
+                    "room4": "Ruimte 4",
+                    "room5": "Ruimte 5",
+                    "room6": "Ruimte 6",
+                    "room7": "Ruimte 7",
+                    "room8": "Ruimte 8"
                 }
             }
         },

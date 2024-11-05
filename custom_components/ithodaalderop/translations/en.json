@@ -104,16 +104,58 @@
                 
                 }
             },
+             "reconfigure": {
+                "title": "Reconfigure new Itho devices",
+                "description": "Select the devices you want to reconfigure",
+                "data": {
+                    "id": "Home id",
+                    "cvetype": "Fan type",
+                    "use_remotes": "CO2 Remotes",
+                    "use_wpu": "WPU",
+                    "use_autotemp": "Auto temp"
+                
+                }
+            },
+
             "remotes": {
                 "title": "Add new Itho remotes",
                 "description": "Enter the names of the remotes as defined in the 'RF devices' menu item",
                 "data": {
                     "remote1": "Remote 1",
-                    "remote2": "Remote 2"
+                    "remote2": "Remote 2",
+		    "remote3": "Remote 3",
+		    "remote4": "Remote 4",
+		    "remote5": "Remote 5"
                 }
             },
+            "remotes_reconfigure": {
+                "title": "Reconfigure Itho remotes",
+                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item",
+                "data": {
+                    "remote1": "Remote 1",
+                    "remote2": "Remote 2",
+                    "remote3": "Remote 3",
+                    "remote4": "Remote 4",
+                    "remote5": "Remote 5"
+                }
+            },		
+
             "rooms": {
-                "title": "Add new Itho devices",
+                "title": "Add new autotemp rooms",
+                "description": "Provide a name for each room defined in the autotemp unit. E.g. living room",
+                "data": {
+                    "room1": "Room 1",
+                    "room2": "Room 2",
+                    "room3": "Room 3",
+                    "room4": "Room 4",
+                    "room5": "Room 5",
+                    "room6": "Room 6",
+                    "room7": "Room 7",
+                    "room8": "Room 8"
+                }
+            },
+	    "rooms_reconfigure": {
+                "title": "Reconfigure autotemp rooms",
                 "description": "Provide a name for each room defined in the autotemp unit. E.g. living room",
                 "data": {
                     "room1": "Room 1",
@@ -128,8 +170,9 @@
             }
         },
         "abort": {
-            "already_configured": "[%key:common::config_flow::abort::already_configured_service%]"
-        },
+            "already_configured": "[%key:common::config_flow::abort::already_configured_service%]",
+            "reconfigure_successful": "Re-configuration was successful" 		
+	},
         "error": {
             "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]"
         }

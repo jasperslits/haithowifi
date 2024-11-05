@@ -11,8 +11,7 @@ from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.core import HomeAssistant, callback
 
 import json
-from .const import *
-from .const import _LOGGER
+from .const import CONF_CVE_TYPE,AddOnType,ADDONS
 from .definitions import NONCVEBINARYSENSORS, IthoBinarySensorEntityDescription
 
 
