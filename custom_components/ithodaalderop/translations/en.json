@@ -170,7 +170,7 @@
             }
         },
         "abort": {
-            "already_configured": "[%key:common::config_flow::abort::already_configured_service%]",
+            "already_configured": "Itho integration is already configured",
             "reconfigure_successful": "Re-configuration was successful" 		
 	},
         "error": {
