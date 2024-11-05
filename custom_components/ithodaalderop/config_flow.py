@@ -12,7 +12,6 @@ from homeassistant import config_entries
 from .const import (
     _LOGGER,
     DOMAIN,
-    CONF_ID,
     CONF_USE_AUTOTEMP,
     CONF_USE_WPU,
     CONF_USE_REMOTES,
@@ -51,10 +50,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             if self.config[CONF_USE_AUTOTEMP]:
                 return await self.async_step_rooms()
             else:
-                await self.async_set_unique_id(self.config["id"])
+                await self.async_set_unique_id("ithoaddon")
                 self._abort_if_unique_id_configured()
                 return self.async_create_entry(
-                    title="Itho WiFi Add-on for " + self.config["id"],
+                    title="Itho WiFi Add-on",
                     data=self.config
                 )
 
@@ -88,10 +87,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_rooms(self, info=None):
         if info is not None:
             self.config.update(info)
-            await self.async_set_unique_id(self.config["id"])
+            await self.async_set_unique_id("ithoaddon")
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
-                title="Itho WiFi Add-on for " + self.config["id"],
+                title="Itho WiFi Add-on",
                 data=self.config
             )
 
@@ -140,15 +139,14 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 if info[CONF_USE_AUTOTEMP]:
                     return await self.async_step_rooms()
                 else:
-                    await self.async_set_unique_id(info["id"])
+                    await self.async_set_unique_id("ithoaddon")
                     self._abort_if_unique_id_configured()
                     return self.async_create_entry(
-                        title="Itho WiFi Add-on for " + info["id"],
+                        title="Itho WiFi Add-on",
                         data=info
                     )
         options = list(CVE_TYPES.keys())
         itho_schema = vol.Schema({
-            vol.Required(CONF_ID, default="home"): str,
             vol.Required(CONF_CVE_TYPE, default="none"): selector({
                 "select": {
                     "options": options,
@@ -186,7 +184,6 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self.config.update(entry_data)
         options = list(CVE_TYPES.keys())
         itho_schema = vol.Schema({
-            vol.Required(CONF_ID, default=entry_data[CONF_ID]): str,
             vol.Required(CONF_CVE_TYPE, default=entry_data[CONF_CVE_TYPE]): selector({
                 "select": {
                     "options": options,
