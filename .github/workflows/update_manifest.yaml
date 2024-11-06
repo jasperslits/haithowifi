@@ -29,9 +29,10 @@ jobs:
 
     - name: Commit changes
       run: |
+        git branch update-manifest
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git branch update-manifest
         git add custom_components/ithodaalderop/manifest.json
         git commit -m "Update version to $VERSION"
         git push
+  
