@@ -165,7 +165,7 @@ class IthoSensor(SensorEntity):
                         value = value["co2"]
 
                 if self.entity_description.json_field == "Highest received RH value (%RH)":
-                    if float(value) > 100:
+                    if value.isnumeric() and float(value) > 100:
                         self._attr_native_value = None
                         self._rh_error_description = RH_ERROR_CODE.get(int(value), "Unknown Error")
                     else:
