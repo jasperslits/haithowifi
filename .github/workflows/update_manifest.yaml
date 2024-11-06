@@ -21,6 +21,10 @@ jobs:
         VERSION="${VERSION#v}"
         echo "VERSION=$VERSION" >> $GITHUB_ENV
 
+    - name: Create and switch to new branch
+      run: |
+        git checkout -b update-manifest
+
     - name: Update version in manifest.json
       run: |
         # Read manifest.json, update the version, and overwrite the file
