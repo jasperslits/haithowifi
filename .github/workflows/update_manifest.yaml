@@ -24,8 +24,8 @@ jobs:
     - name: Update version in manifest.json
       run: |
         # Read manifest.json, update the version, and overwrite the file
-        jq ".version = \"$VERSION\"" manifest.json > manifest_tmp.json
-        mv manifest_tmp.json manifest.json
+        jq ".version = \"$VERSION\"" custom_components/ithodaalderop/manifest.json > custom_components/ithodaalderop/manifest_tmp.json
+        mv custom_components/ithodaalderop/manifest_tmp.json custom_components/ithodaalderop/manifest.json
 
     - name: Commit changes
       run: |
