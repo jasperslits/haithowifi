@@ -1,3 +1,5 @@
+"""Consts for Itho add-on."""
+
 import logging
 from enum import IntEnum
 
@@ -5,6 +7,8 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class AddOnType(IntEnum):
+    """Enum for Add-on types."""
+
     CVE = 1
     WPU = 2
     AUTOTEMP = 3
