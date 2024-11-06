@@ -129,7 +129,7 @@ class IthoSensor(SensorEntity):
         return None
 
     @property
-    def extra_state_attributes(self) -> []|None:
+    def extra_state_attributes(self) -> list[str]|None:
         """Return the state attributes."""
 
         if self._global_fault_code_description is not None:
