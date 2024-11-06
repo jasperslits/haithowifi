@@ -58,6 +58,7 @@ class IthoBinarySensor(BinarySensorEntity):
             return self.entity_description.icon_off
         if self.entity_description.icon is not None:
             return self.entity_description.icon
+        return None
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""

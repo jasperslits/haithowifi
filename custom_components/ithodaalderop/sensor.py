@@ -147,6 +147,7 @@ class IthoSensor(SensorEntity):
             return {
                 "Error Description": self._rh_error_description,
             }
+        return None
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
