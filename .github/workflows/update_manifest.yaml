@@ -1,0 +1,37 @@
+name: Update Version in Manifest
+
+on:
+  push:
+    tags:
+      - 'v*.*'  # Matches tags in the format "vx.y"
+
+jobs:
+  update-manifest:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Get version from tag
+      id: get_version
+      run: |
+        # Extracts the version number from the tag (e.g., "v1.2" -> "1.2")
+        VERSION="${GITHUB_REF##*/}"
+        VERSION="${VERSION#v}"
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+    - name: Update version in manifest.json
+      run: |
+        # Read manifest.json, update the version, and overwrite the file
+        jq ".version = \"$VERSION\"" manifest.json > manifest_tmp.json
+        mv manifest_tmp.json manifest.json
+
+    - name: Commit changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git branch update-manifest
+        git add manifest.json
+        git commit -m "Update version to $VERSION"
+        git push
