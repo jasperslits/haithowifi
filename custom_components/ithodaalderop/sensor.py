@@ -1,31 +1,45 @@
 #!/usr/bin/env python3
+"""Sensor component for Itho WiFi addon.
+
+Author: Jasper
 """
-Sensor component for Itho
-Author: Jasper Slits
-"""
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.components import mqtt
-from homeassistant.components.sensor import SensorEntity
-from homeassistant.core import HomeAssistant, callback
 
 import copy
-from datetime import datetime, timedelta
 import json
+from datetime import datetime, timedelta
 
-from .const import *
-from .const import _LOGGER
+from homeassistant.components import mqtt
+from homeassistant.components.sensor import SensorEntity
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
+from .const import (
+    _LOGGER,
+    ADDONS,
+    CONF_CVE_TYPE,
+    CONF_USE_AUTOTEMP,
+    CONF_USE_REMOTES,
+    CONF_USE_WPU,
+    HRU_ACTUAL_MODE,
+    HRU_GLOBAL_FAULT_CODE,
+    MQTT_STATETOPIC,
+    RH_ERROR_CODE,
+    UNITTYPE_ICONS,
+    WPU_STATUS,
+    AddOnType,
+)
 from .definitions import (
+    AUTOTEMPSENSORS,
     CVESENSORS,
     NONCVESENSORS,
     WPUSENSORS,
-    AUTOTEMPSENSORS,
     IthoSensorEntityDescription,
 )
 
 
 def _create_remotes(config_entry: ConfigEntry):
+    """Create remotes for CO2 monitoring."""
 
     cfg = config_entry.data
     REMOTES = []
@@ -43,6 +57,8 @@ def _create_remotes(config_entry: ConfigEntry):
 
 
 def _create_autotemprooms(config_entry: ConfigEntry):
+    """Create autotemp rooms for configured entries."""
+
     cfg = config_entry.data
     configured_sensors = []
     for x in range(1, 8):
@@ -98,18 +114,22 @@ class IthoSensor(SensorEntity):
         self.aot = aot
 
     @property
-    def name(self):
+    def name(self) -> str:
+        """Generate name for the sensor."""
         return self.entity_description.translation_key.replace("_", " ").capitalize()
 
     @property
-    def icon(self):
+    def icon(self) -> str|None:
+        """Pick the right icon."""
+
         if self.entity_description.icon is not None:
             return self.entity_description.icon
-        elif self.entity_description.native_unit_of_measurement in UNITTYPE_ICONS:
+        if self.entity_description.native_unit_of_measurement in UNITTYPE_ICONS:
             return UNITTYPE_ICONS[self.entity_description.native_unit_of_measurement]
+        return None
 
     @property
-    def extra_state_attributes(self):
+    def extra_state_attributes(self) -> list[str]|None:
         """Return the state attributes."""
 
         if self._global_fault_code_description is not None:
@@ -127,6 +147,7 @@ class IthoSensor(SensorEntity):
             return {
                 "Error Description": self._rh_error_description,
             }
+        return None
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
@@ -152,7 +173,7 @@ class IthoSensor(SensorEntity):
                             try:
                                 self._filter_last_maintenance = (datetime.now() - timedelta(hours=int(value))).date()
                                 self._filter_next_maintenance_estimate = (datetime.now() + timedelta(days=180, hours=-int(value))).date()
-                            except Exceptio as e:
+                            except ValueError as e:
                                 _LOGGER.error(f"failed to parse value for 'Airfilter counter'\n{e}")
 
                         if self.entity_description.json_field == "Global fault code":

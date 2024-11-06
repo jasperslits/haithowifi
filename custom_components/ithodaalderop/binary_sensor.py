@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""
-Binary Sensor component for Itho
+"""Binary Sensor component for Itho.
+
 Author: Benjamin
 """
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
+import json
+
 from homeassistant.components import mqtt
 from homeassistant.components.binary_sensor import BinarySensorEntity
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-import json
-from .const import CONF_CVE_TYPE,AddOnType,ADDONS
+from .const import ADDONS, CONF_CVE_TYPE, AddOnType
 from .definitions import NONCVEBINARYSENSORS, IthoBinarySensorEntityDescription
 
 
@@ -43,20 +43,22 @@ class IthoBinarySensor(BinarySensorEntity):
 
     @property
     def name(self):
+        """Name for the binary sensor."""
         return self.entity_description.translation_key.replace("_", " ").capitalize()
 
     @property
     def icon(self):
+        """Icon for binary sensor."""
         if (
             self.entity_description.icon_off is not None
             and self.entity_description.icon_on is not None
         ):
             if self._attr_is_on:
                 return self.entity_description.icon_on
-            else:
-                return self.entity_description.icon_off
-        elif self.entity_description.icon is not None:
+            return self.entity_description.icon_off
+        if self.entity_description.icon is not None:
             return self.entity_description.icon
+        return None
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""

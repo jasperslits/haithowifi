@@ -5,23 +5,23 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass
 
+from homeassistant.components.binary_sensor import (
+    BinarySensorDeviceClass,
+    BinarySensorEntityDescription,
+)
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntityDescription,
-    SensorStateClass
-)
-from homeassistant.components.binary_sensor import (
-    BinarySensorDeviceClass,
-    BinarySensorEntityDescription
+    SensorStateClass,
 )
 from homeassistant.const import (
-    UnitOfTemperature,
-    UnitOfTime,
+    CONCENTRATION_PARTS_PER_MILLION,
+    PERCENTAGE,
+    REVOLUTIONS_PER_MINUTE,
     UnitOfPower,
     UnitOfPressure,
-    CONCENTRATION_PARTS_PER_MILLION,
-    REVOLUTIONS_PER_MINUTE,
-    PERCENTAGE
+    UnitOfTemperature,
+    UnitOfTime,
 )
 
 from .const import MQTT_STATETOPIC
