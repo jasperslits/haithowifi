@@ -1,5 +1,5 @@
 name: Update Version in Manifest
-# v99.4
+# v99.5
 on:
   push:
     tags:
@@ -39,9 +39,10 @@ jobs:
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git pull
         git add custom_components/ithodaalderop/manifest.json
         git commit -m "Update manifest version to $VERSION"
-        # git push origin update-manifest
+
 
     - name: Push changes
       env:
