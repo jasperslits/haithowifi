@@ -29,9 +29,13 @@ This custom integration should become obsolete once full auto-discovery via the 
 || Room X setpoint ||
 || Room X temp ||
 | **CVE** |||
-|| Fan setpoint (rpm) ||
+|| Error ||
+|| Fan Setpoint (rpm) ||
+|| Fan Speed (rpm) ||
+|| Filter dirty ||
 || Humidity ||
 || Temperature ||
+|| Total Operating Time ||
 || Ventilation setpoint (%) ||
 | **NONCVE (HRU)** |||
 || Actual Mode ||
