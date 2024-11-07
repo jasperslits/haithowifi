@@ -43,8 +43,17 @@
             "cv_return_temp": {
                 "name": "CV Return Temp"
             },
+            "error": {
+                "name": "Error"
+            },
             "fan_setpoint_rpm": {
                 "name": "Fan Setpoint"
+            },
+            "fan_speed": {
+                "name": "Fan Speed"
+            },
+            "filter_dirty": {
+                "name": "Filter Dirty"
             },
             "flow_sensor": {
                 "name": "Flow"
@@ -84,6 +93,9 @@
             },
             "temp_to_source": {
                 "name": "Temp to Source"
+            },
+            "total_operation": {
+                "name": "Total Operating Time"
             },
             "well_pump_percent": {
                 "name": "Well Pump"

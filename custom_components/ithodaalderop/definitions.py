@@ -181,13 +181,54 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
 )
 
+CVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
+    IthoBinarySensorEntityDescription(
+        json_field="Filter dirty",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="filter_dirty",
+        device_class=BinarySensorDeviceClass.PROBLEM,
+        icon_off="mdi:air-filter",
+        icon_on="mdi:vacuum-outline",
+    ),
+)
+
 CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
+    IthoSensorEntityDescription(
+        json_field="Error",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="error",
+    ),
     IthoSensorEntityDescription(
         json_field="Fan setpoint (rpm)",
         key=MQTT_STATETOPIC["hru"],
         translation_key="fan_setpoint_rpm",
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Fan speed (rpm)",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="fan_speed",
+        native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Highest CO2 concentration (ppm)",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="highest_received_co2_value",
+        native_unit_of_measurement=CONCENTRATION_PARTS_PER_MILLION,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False,
+        icon="mdi:molecule-co2",
+    ),
+    IthoSensorEntityDescription(
+        json_field="Highest RH concentration (%)",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="highest_received_rh_value",
+        native_unit_of_measurement=PERCENTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="hum",
@@ -203,6 +244,13 @@ CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Total operation (hours)",
+        key=MQTT_STATETOPIC["hru"],
+        translation_key="temp",
+        native_unit_of_measurement=UnitOfTime.HOURS,
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     IthoSensorEntityDescription(
         json_field="Ventilation setpoint (%)",

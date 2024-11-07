@@ -43,8 +43,17 @@
             "cv_return_temp": {
                 "name": "CV Afvoer Temperatuur"
             },
+            "error": {
+                "name": "Error"
+            },
             "fan_setpoint_rpm": {
                 "name": "Fan Stand"
+            },
+            "fan_speed": {
+                "name": "Fan Snelheid"
+            },
+            "filter_dirty": {
+                "name": "Filter Vuil"
             },
             "flow_sensor": {
                 "name": "Stroomsnelheid"
