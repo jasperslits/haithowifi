@@ -12,7 +12,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
-    AddOnType
+    AddOnType,
     ADDONS,
     CONF_CVE_TYPE,
     MQTT_BASETOPIC,
