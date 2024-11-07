@@ -44,7 +44,6 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self.config: dict[str, Any] = {}
         self.entry: config_entries.ConfigEntry
 
-
     async def async_step_remotes(self, info=None):
         """Configure up to 5 remotes."""
         if info is not None:
@@ -76,14 +75,13 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return self.async_update_reload_and_abort(self.entry, data=self.config, reason="reconfigure_successful")
 
         itho_schema = vol.Schema({
-            vol.Required(CONF_REMOTE_1, default=self._get_reconfigure_value(CONF_REMOTE_1,"Remote 1")): str,
-            vol.Optional(CONF_REMOTE_2, default=self._get_reconfigure_value(CONF_REMOTE_2,"Remote 2")): str,
-            vol.Optional(CONF_REMOTE_3, default=self._get_reconfigure_value(CONF_REMOTE_3,"Remote 3")): str,
-            vol.Optional(CONF_REMOTE_4, default=self._get_reconfigure_value(CONF_REMOTE_4,"Remote 4")): str,
-            vol.Optional(CONF_REMOTE_5, default=self._get_reconfigure_value(CONF_REMOTE_5,"Remote 5")): str,
+            vol.Required(CONF_REMOTE_1, default=self._get_reconfigure_value(CONF_REMOTE_1, "Remote 1")): str,
+            vol.Optional(CONF_REMOTE_2, default=self._get_reconfigure_value(CONF_REMOTE_2, "Remote 2")): str,
+            vol.Optional(CONF_REMOTE_3, default=self._get_reconfigure_value(CONF_REMOTE_3, "Remote 3")): str,
+            vol.Optional(CONF_REMOTE_4, default=self._get_reconfigure_value(CONF_REMOTE_4, "Remote 4")): str,
+            vol.Optional(CONF_REMOTE_5, default=self._get_reconfigure_value(CONF_REMOTE_5, "Remote 5")): str,
         })
         return self.async_show_form(step_id="remotes_reconfigure", data_schema=itho_schema)
-
 
     async def async_step_rooms(self, info=None):
         """Configure rooms for autotemp."""
@@ -146,11 +144,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 title="Itho WiFi Add-on",
                 data=info
             )
-        options = list(CVE_TYPES.keys())
         itho_schema = vol.Schema({
             vol.Required(CONF_CVE_TYPE, default="none"): selector({
                 "select": {
-                    "options": options,
+                    "options": CVE_TYPES,
                     "multiple": False,
                     "translation_key": "cveselect"
                 }
@@ -162,7 +159,6 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="user", data_schema=itho_schema)
-
 
     async def async_step_reconfigure(self, info: Mapping[str, Any] | None = None):
         """Reconfigure config flow."""
@@ -183,11 +179,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def _redo_configuration(self, entry_data: Mapping[str, Any]):
         """Reconfigure config flow with schema."""
         self.config.update(entry_data)
-        options = list(CVE_TYPES.keys())
         itho_schema = vol.Schema({
             vol.Required(CONF_CVE_TYPE, default=entry_data[CONF_CVE_TYPE]): selector({
                 "select": {
-                    "options": options,
+                    "options": CVE_TYPES,
                     "multiple": False,
                     "translation_key": "cveselect"
                 }
@@ -198,5 +193,4 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         })
 
         return self.async_show_form(
-                         step_id="reconfigure", data_schema=itho_schema)
-
+            step_id="reconfigure", data_schema=itho_schema)

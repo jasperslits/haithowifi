@@ -84,13 +84,13 @@ async def async_setup_entry(
     """Set up Itho add-on sensors from config entry based on their type."""
     if config_entry.data[CONF_CVE_TYPE] == "noncve":
         for description in NONCVESENSORS:
-            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_CVE_TYPE]]}/{MQTT_STATETOPIC["hru"]}"
+            description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
             async_add_entities(IthoSensor(description, config_entry, AddOnType.NONCVE))
 
     if config_entry.data[CONF_CVE_TYPE] == "cve":
         for description in CVESENSORS:
-            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_CVE_TYPE]]}/{MQTT_STATETOPIC["cve"]}"
-            async_add_entities(IthoSensor(description, config_entry, AddOnType.NONCVE))
+            description.key = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
+            async_add_entities(IthoSensor(description, config_entry, AddOnType.CVE))
 
     if config_entry.data[CONF_USE_WPU]:
         for description in WPUSENSORS:
