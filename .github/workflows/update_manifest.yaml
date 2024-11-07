@@ -27,7 +27,7 @@ jobs:
 
     - name: Create and switch to new branch
       run: |
-        git checkout -b update-manifest
+        git checkout -b "update-manifest-$VERSION"
 
     - name: Update version in manifest.json
       run: |
@@ -39,7 +39,6 @@ jobs:
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git pull origin main
         git add custom_components/ithodaalderop/manifest.json
         git commit -m "Update manifest version to $VERSION"
 
@@ -66,6 +65,11 @@ jobs:
     #       console.log(`Created pull request #${pr.number}`);
 
     - name: create pull request
-      run: gh pr create -B main -H update-manifest --title "Update manifest version to $VERSION" --body "This PR updates the manifest version."
+      run: |
+        gh pr create 
+          --title "Update manifest version to $VERSION"
+          --body "This PR updates the manifest version."
+          --base main 
+          --head update-manifest  
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
