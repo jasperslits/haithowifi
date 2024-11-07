@@ -23,6 +23,7 @@ from .const import (
     CONF_USE_WPU,
     HRU_ACTUAL_MODE,
     HRU_GLOBAL_FAULT_CODE,
+    MQTT_BASETOPIC,
     MQTT_STATETOPIC,
     RH_ERROR_CODE,
     UNITTYPE_ICONS,
@@ -46,9 +47,9 @@ def _create_remotes(config_entry: ConfigEntry):
     for x in range(1, 5):
         remote = cfg["remote" + str(x)]
         if remote != "" and remote != "Remote " + str(x):
-             REMOTES.append(IthoSensorEntityDescription(
+            REMOTES.append(IthoSensorEntityDescription(
                 json_field=remote,
-                key=MQTT_STATETOPIC["remotes"],
+                key=f"{MQTT_BASETOPIC[config_entry.data[CONF_CVE_TYPE]]}/{MQTT_STATETOPIC["remotes"]}",
                 translation_key=remote,
                 device_class="carbon_dioxide",
                 native_unit_of_measurement="ppm",
@@ -67,6 +68,7 @@ def _create_autotemprooms(config_entry: ConfigEntry):
         if room != "" and room != "Room " + str(x):
 
             for sensor in template_sensors:
+                sensor.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
                 sensor.json_field = sensor.json_field.replace("X", str(x))
                 sensor.translation_key = sensor.translation_key.replace("Room X", room)
                 configured_sensors.append(sensor)
@@ -81,13 +83,23 @@ async def async_setup_entry(
 ) -> None:
     """Set up Itho add-on sensors from config entry based on their type."""
     if config_entry.data[CONF_CVE_TYPE] == "noncve":
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.NONCVE) for description in NONCVESENSORS)
+        for description in NONCVESENSORS:
+            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_CVE_TYPE]]}/{MQTT_STATETOPIC["hru"]}"
+            async_add_entities(IthoSensor(description, config_entry, AddOnType.NONCVE))
+
     if config_entry.data[CONF_CVE_TYPE] == "cve":
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.CVE) for description in CVESENSORS)
+        for description in CVESENSORS:
+            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_CVE_TYPE]]}/{MQTT_STATETOPIC["cve"]}"
+            async_add_entities(IthoSensor(description, config_entry, AddOnType.NONCVE))
+
     if config_entry.data[CONF_USE_WPU]:
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.WPU) for description in WPUSENSORS)
+        for description in WPUSENSORS:
+            description.key = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
+            async_add_entities(IthoSensor(description, config_entry, AddOnType.WPU) for description in WPUSENSORS)
+
     if config_entry.data[CONF_USE_REMOTES]:
         async_add_entities(IthoSensor(description, config_entry, AddOnType.REMOTES) for description in _create_remotes(config_entry))
+
     if config_entry.data[CONF_USE_AUTOTEMP]:
         async_add_entities(IthoSensor(description, config_entry, AddOnType.AUTOTEMP) for description in _create_autotemprooms(config_entry))
 
