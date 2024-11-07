@@ -1,5 +1,5 @@
 name: Update Version in Manifest
-# v99.9
+# v99.11
 on:
   push:
     tags:
@@ -23,11 +23,12 @@ jobs:
         # Extracts the version number from the tag (e.g., "v1.2" -> "1.2")
         VERSION="${GITHUB_REF##*/}"
         VERSION="${VERSION#v}"
+        BRANCH="update-manifest-${VERSION//./_}"
         echo "VERSION=$VERSION" >> $GITHUB_ENV
 
     - name: Create and switch to new branch
       run: |
-        git checkout -b "update-manifest-$VERSION"
+        git checkout -b $BRANCH
 
     - name: Update version in manifest.json
       run: |
@@ -47,7 +48,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git push origin update-manifest
+        git push origin $BRANCH
 
     # - name: Create Pull Request
     #   uses: actions/github-script@v7
@@ -70,6 +71,6 @@ jobs:
           --title "Update manifest version to $VERSION"
           --body "This PR updates the manifest version."
           --base main 
-          --head update-manifest  
+          --head $BRANCH
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
