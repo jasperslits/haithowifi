@@ -1,5 +1,5 @@
 name: Update Version in Manifest
-# v99.11
+# v99.12
 on:
   push:
     tags:
@@ -24,7 +24,10 @@ jobs:
         VERSION="${GITHUB_REF##*/}"
         VERSION="${VERSION#v}"
         BRANCH="update-manifest-${VERSION//./_}"
+        echo "$VERSION"
+        echo "$BRANCH"
         echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "BRANCH=$BRANCH" >> $GITHUB_ENV
 
     - name: Create and switch to new branch
       run: |
