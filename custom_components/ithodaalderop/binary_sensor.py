@@ -22,7 +22,9 @@ async def async_setup_entry(
 ) -> None:
     """Set up Itho add-on binary sensors from config entry based on their type."""
     if config_entry.data[CONF_CVE_TYPE] == "noncve":
-        async_add_entities(IthoBinarySensor(description, config_entry, AddOnType.NONCVE) for description in NONCVEBINARYSENSORS)
+        for description in NONCVEBINARYSENSORS:
+            description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
+            async_add_entities(IthoSensor(description, config_entry, AddOnType.NONCVE))
 
 
 class IthoBinarySensor(BinarySensorEntity):
