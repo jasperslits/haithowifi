@@ -11,7 +11,13 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import ADDONS, CONF_CVE_TYPE, AddOnType
+from .const import (
+    AddOnType
+    ADDONS,
+    CONF_CVE_TYPE,
+    MQTT_BASETOPIC,
+    MQTT_STATETOPIC,
+)
 from .definitions import NONCVEBINARYSENSORS, IthoBinarySensorEntityDescription
 
 
@@ -24,7 +30,7 @@ async def async_setup_entry(
     if config_entry.data[CONF_CVE_TYPE] == "noncve":
         for description in NONCVEBINARYSENSORS:
             description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
-            async_add_entities(IthoSensor(description, config_entry, AddOnType.NONCVE))
+            async_add_entities(IthoBinarySensor(description, config_entry, AddOnType.NONCVE))
 
 
 class IthoBinarySensor(BinarySensorEntity):

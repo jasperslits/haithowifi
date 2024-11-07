@@ -15,6 +15,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
+    AddOnType,
     _LOGGER,
     ADDONS,
     CONF_CVE_TYPE,
@@ -28,7 +29,6 @@ from .const import (
     RH_ERROR_CODE,
     UNITTYPE_ICONS,
     WPU_STATUS,
-    AddOnType,
 )
 from .definitions import (
     AUTOTEMPSENSORS,
