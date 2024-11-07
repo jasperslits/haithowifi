@@ -1,9 +1,13 @@
 name: Update version in manifest.json
 
+# on:
+#   push:
+#     tags:
+#       - 'v*.*'  # Matches tags in the format "vx.y"
+
 on:
-  push:
-    tags:
-      - 'v*.*'  # Matches tags in the format "vx.y"
+  release:
+    types: [created]
 
 jobs:
   update-manifest:
@@ -13,15 +17,20 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    # Only run for draft releases. 
+    # For published release it's too late to update the manifest file
+    if: github.event.release.draft == true
+
     steps:
     - name: Check out repository
       uses: actions/checkout@v4
 
-    - name: Get version from tag
+    - name: Get version from release
       id: get_version
       run: |
         # Extracts the version number from the tag (e.g., "v1.2" -> "1.2")
-        VERSION="${GITHUB_REF##*/}"
+        # VERSION="${GITHUB_REF##*/}"
+        VERSION="${{ github.event.release.tag_name }}"
         VERSION="${VERSION#v}"
         BRANCH="update-manifest-${VERSION//./-}"
         echo "$VERSION"
