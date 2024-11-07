@@ -24,8 +24,6 @@ from homeassistant.const import (
     UnitOfTime,
 )
 
-from .const import MQTT_STATETOPIC
-
 
 @dataclass(frozen=False)
 class IthoSensorEntityDescription(SensorEntityDescription):

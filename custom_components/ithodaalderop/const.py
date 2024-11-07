@@ -91,7 +91,7 @@ MQTT_BASETOPIC = {
     "autotemp": "ithotemp",
 }
 MQTT_STATETOPIC = {
-    "cve": "ithostatus"
+    "cve": "ithostatus",
     "hru": "ithostatus",
     "wpu": "ithostatus",
     "remotes": "remotesinfo",
