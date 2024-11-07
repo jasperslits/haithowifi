@@ -1,5 +1,5 @@
 name: Update Version in Manifest
-# v99.12
+# v99.14
 on:
   push:
     tags:
@@ -70,10 +70,10 @@ jobs:
 
     - name: create pull request
       run: |
-        gh pr create 
-          --title "Update manifest version to $VERSION"
-          --body "This PR updates the manifest version."
-          --base main 
+        gh pr create \
+          --title "Update manifest version to $VERSION" \
+          --body "This PR updates the manifest version." \
+          --base main \
           --head "$BRANCH"
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
