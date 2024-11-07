@@ -6,12 +6,15 @@
     "@benjamin-dcs"
   ],
   "config_flow": true,
-  "dependencies": ["mqtt"],
+  "dependencies": [
+    "mqtt"
+  ],
   "documentation": "https://github.com/jasperslits/haithowifi/",
   "iot_class": "local_push",
   "issue_tracker": "https://github.com/jasperslits/haithowifi/issues",
-  "mqtt": ["ithohru/#"],
-  "requirements": [
+  "mqtt": [
+    "ithohru/#"
   ],
-  "version": "1.4"
+  "requirements": [],
+  "version": "99.16"
 }
