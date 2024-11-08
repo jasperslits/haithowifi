@@ -31,6 +31,7 @@ class IthoSensorEntityDescription(SensorEntityDescription):
 
     state: Callable | None = None
     json_field: str | None = None
+    key: str | None = None
     icon: str | None = None
 
 
@@ -40,6 +41,7 @@ class IthoBinarySensorEntityDescription(BinarySensorEntityDescription):
 
     state: Callable | None = None
     json_field: str | None = None
+    key: str | None = None
     icon: str | None = None
     icon_off: str | None = None
     icon_on: str | None = None
