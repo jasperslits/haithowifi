@@ -43,18 +43,19 @@ def _create_remotes(config_entry: ConfigEntry):
     """Create remotes for CO2 monitoring."""
 
     cfg = config_entry.data
-    REMOTES = []
+    remotes = []
     for x in range(1, 5):
         remote = cfg["remote" + str(x)]
         if remote != "" and remote != "Remote " + str(x):
-            REMOTES.append(IthoSensorEntityDescription(
+            _LOGGER.debug(f"Subscribing '{remote}' to '{MQTT_BASETOPIC[config_entry.data[CONF_CVE_TYPE]]}/{MQTT_STATETOPIC["remotes"]}'")
+            remotes.append(IthoSensorEntityDescription(
                 json_field=remote,
                 key=f"{MQTT_BASETOPIC[config_entry.data[CONF_CVE_TYPE]]}/{MQTT_STATETOPIC["remotes"]}",
                 translation_key=remote,
                 device_class="carbon_dioxide",
                 native_unit_of_measurement="ppm",
                 state_class="measurement"))
-    return REMOTES
+    return remotes
 
 
 def _create_autotemprooms(config_entry: ConfigEntry):
@@ -107,6 +108,7 @@ async def async_setup_entry(
 
     async_add_entities(sensors)
 
+
 class IthoSensor(SensorEntity):
     """Representation of a Itho add-on sensor that is updated via MQTT."""
 
@@ -134,7 +136,7 @@ class IthoSensor(SensorEntity):
         return self.entity_description.translation_key.replace("_", " ").capitalize()
 
     @property
-    def icon(self) -> str|None:
+    def icon(self) -> str | None:
         """Pick the right icon."""
 
         if self.entity_description.icon is not None:
@@ -144,7 +146,7 @@ class IthoSensor(SensorEntity):
         return None
 
     @property
-    def extra_state_attributes(self) -> list[str]|None:
+    def extra_state_attributes(self) -> list[str] | None:
         """Return the state attributes."""
 
         if self._global_fault_code_description is not None:
