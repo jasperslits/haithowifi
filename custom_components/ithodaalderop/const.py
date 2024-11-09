@@ -15,6 +15,12 @@ class AddOnType(IntEnum):
     REMOTES = 4
     NONCVE = 5
 
+ADDON_TYPES = {
+    "cve": "HRU WTW",
+    "noncve": "CVE",
+    "autotemp": "Autotemp",
+    "wpu": "WPU"
+}
 
 HRU_ACTUAL_MODE = {
     1: "low",
@@ -92,9 +98,9 @@ MQTT_STATETOPIC = {
 }
 CONF_ENABLED_SENSORS = "ithohru/remotesinfo"
 CONF_CVE_TYPE = "cvetype"
-CONF_USE_WPU = "use_wpu"
-CONF_USE_AUTOTEMP = "use_autotemp"
 CONF_USE_REMOTES = "use_remotes"
+
+CONF_ADDON_TYPE = "addontype"
 
 CONF_AUTOTEMP_ROOM1 = "room1"
 CONF_AUTOTEMP_ROOM2 = "room2"

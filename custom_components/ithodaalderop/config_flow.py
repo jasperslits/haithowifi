@@ -12,6 +12,8 @@ from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.selector import selector
 
 from .const import (
+    ADDON_TYPES,
+    CONF_ADDON_TYPE,
     CONF_AUTOTEMP_ROOM1,
     CONF_AUTOTEMP_ROOM2,
     CONF_AUTOTEMP_ROOM3,
@@ -26,11 +28,10 @@ from .const import (
     CONF_REMOTE_3,
     CONF_REMOTE_4,
     CONF_REMOTE_5,
-    CONF_USE_AUTOTEMP,
     CONF_USE_REMOTES,
-    CONF_USE_WPU,
     CVE_TYPES,
     DOMAIN,
+    _LOGGER
 )
 
 
@@ -49,9 +50,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Configure up to 5 remotes."""
         if info is not None:
             self.config.update(info)
-            if self.config[CONF_USE_AUTOTEMP]:
-                return await self.async_step_rooms()
-            await self.async_set_unique_id("ithoaddon")
+            await self.async_set_unique_id(self.config[CONF_ADDON_TYPE])
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
                 title="Itho WiFi Add-on",
@@ -71,8 +70,6 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Reconfigure up to 5 remotes."""
         if info is not None:
             self.config.update(info)
-            if self.config[CONF_USE_AUTOTEMP]:
-                return await self.async_step_rooms_reconfigure()
             return self.async_update_reload_and_abort(self.entry, data=self.config, reason="reconfigure_successful")
 
         itho_schema = vol.Schema({
@@ -89,7 +86,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Configure rooms for autotemp."""
         if info is not None:
             self.config.update(info)
-            await self.async_set_unique_id("ithoaddon")
+            await self.async_set_unique_id(self.config[CONF_ADDON_TYPE])
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
                 title="Itho WiFi Add-on",
@@ -136,28 +133,26 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Configure main step."""
         if info is not None:
             self.config.update(info)
-            if info[CONF_USE_REMOTES]:
+            if info[CONF_ADDON_TYPE] == "cve" or info[CONF_ADDON_TYPE] == "noncve":
                 return await self.async_step_remotes()
-            if info[CONF_USE_AUTOTEMP]:
+            if info[CONF_ADDON_TYPE] == "autotemp":
                 return await self.async_step_rooms()
-            await self.async_set_unique_id("ithoaddon")
+            await self.async_set_unique_id(self.config[CONF_ADDON_TYPE])
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
                 title="Itho WiFi Add-on",
                 data=info
             )
-        options = list(CVE_TYPES.keys())
+        options = list(ADDON_TYPES.keys())
+        _LOGGER.warn(options)
         itho_schema = vol.Schema({
-            vol.Required(CONF_CVE_TYPE, default="none"): selector({
+            vol.Required(CONF_ADDON_TYPE): selector({
                 "select": {
                     "options": options,
                     "multiple": False,
-                    "translation_key": "cveselect"
+                    "translation_key": "addonselect"
                 }
             }),
-            vol.Required(CONF_USE_REMOTES, default=False): cv.boolean,
-            vol.Required(CONF_USE_WPU, default=False): cv.boolean,
-            vol.Required(CONF_USE_AUTOTEMP, default=False): cv.boolean,
         })
 
         return self.async_show_form(
@@ -172,9 +167,9 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self.config.update(entry.data)
         if info:
             self.config.update(info)
-            if info[CONF_USE_REMOTES]:
+            if info[CONF_ADDON_TYPE] == "cve" or info[CONF_ADDON_TYPE] == "noncve" :
                 return await self.async_step_remotes_reconfigure()
-            if info[CONF_USE_AUTOTEMP]:
+            if info[CONF_ADDON_TYPE] == "autotemp":
                 return await self.async_step_rooms_reconfigure()
             return self.async_update_reload_and_abort(self.entry, data=info, reason="reconfigure_successful")
 
@@ -183,18 +178,16 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def _redo_configuration(self, entry_data: Mapping[str, Any]):
         """Reconfigure config flow with schema."""
         self.config.update(entry_data)
-        options = list(CVE_TYPES.keys())
+        options = list(ADDON_TYPES.keys())
+        _LOGGER.warn(options)
         itho_schema = vol.Schema({
-            vol.Required(CONF_CVE_TYPE, default=entry_data[CONF_CVE_TYPE]): selector({
+            vol.Required(CONF_ADDON_TYPE, default=entry_data[CONF_ADDON_TYPE]): selector({
                 "select": {
                     "options": options,
                     "multiple": False,
-                    "translation_key": "cveselect"
+                    "translation_key": "addonselect"
                 }
             }),
-            vol.Required(CONF_USE_REMOTES, default=entry_data[CONF_USE_REMOTES]): cv.boolean,
-            vol.Required(CONF_USE_WPU, default=entry_data[CONF_USE_WPU]): cv.boolean,
-            vol.Required(CONF_USE_AUTOTEMP, default=entry_data[CONF_USE_AUTOTEMP]): cv.boolean,
         })
 
         return self.async_show_form(

@@ -96,11 +96,7 @@
                 "title": "Add new Itho devices",
                 "description": "Select the devices you want to configure",
                 "data": {
-                    "id": "Home id",
-                    "cvetype": "Fan type",
-                    "use_remotes": "CO2 Remotes",
-                    "use_wpu": "WPU",
-                    "use_autotemp": "Auto temp"
+                    "addontype": "Type of add-on to configure"
                 
                 }
             },
@@ -178,11 +174,12 @@
         }
     },
     "selector": {
-        "cveselect": {
+        "addonselect": {
             "options": {
-                "none" : "No fan",
                 "noncve" : "Non-CVE (HRU)",
-                "cve": "CVE (ECO box)"
+                "cve": "CVE (ECO box)",
+                "autotemp": "Autotemp",
+                "wpu": "WPU"
             }
         }
     }
