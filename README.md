@@ -2,11 +2,17 @@
 Requires WiFi add-on from https://github.com/arjenhiemstra/ithowifi and [MQTT](https://www.home-assistant.io/integrations/mqtt/) integration with Home Assistant. 
 
 This simplifies the integration by creating the sensors for the various Itho Daalderop devices: Heatpump WPU 5G, HRU-350 and related devices, CVE boxes, Autotemp units for floor heating. 
-For best user experience it should be used with the auto-discovery for the CVE / non-CVE devices in the add-on. 
+Combine this integration with the Home Assistant auto-discovery in the MQTT configuration for the CVE / non-CVE devices in the add-on. 
 
 This custom component has no affiliation with the Itho Daalderop company or with Arjen Hiemstra's Itho WiFi add-on.
-
 Note: The 'add-on' here in the context is the ESP32 add-on to the Itho Daalderop units, not an Add-on in Home Assistant. 
+
+### What can be configured via this Integration
+1. Heatpump WPU sensors
+2. NONCVE / HRU sensors
+3. CVE sensors
+4. Up to 5 remotes for monitoring CO2 levels
+5. Up to 8 autotemp rooms using custom room names instead of Room 1, Room 2
 
 ### Use-case
 Full auto-discovery from the WiFi add-on to Home Assistant is the best experience but as this is not there yet, this integration should eliminate the manual creation via YAML of sensors for:
@@ -16,9 +22,7 @@ Full auto-discovery from the WiFi add-on to Home Assistant is the best experienc
 * CO2 sensors for supported remotes
 * WPU like Pump Percentage, Boiler Temp, From / To Source Temps, Operating Mode etc
 
-It creates the commonly used sensors and uses a predefined MQTT state topic to distinct the devices.
-
-This custom integration should become obsolete once full auto-discovery via the Itho Add-on has the same capabilities. 
+It creates a device and commonly used sensors and uses a predefined MQTT state topic to distinct the devices.
 
 ### Available sensors
 | Device | Sensor | Attributes |
@@ -77,22 +81,15 @@ Missing a sensor? Feel free to create an [issue](https://github.com/jasperslits/
 | Autotemp  | ithotemp  |
 | Remotes | ithohru |
 
-### What works / should work
-1. Create Heatpump WPU sensors
-2. Create NONCVE / HRU Fan sensors
-3. Create CVE fan sensors
-4. Create up to two Remotes for monitoring CO2 levels
-5. Create Auto temp sensors and manage rooms
-
 ## How to install
-1. In the Add-On from Arjen: Update the add-on MQTT configuration and set MQTT Base Topic to `ithohru` for NON-CVE, `ithowpu` for Heatpump/WPU and `ithotemp` for Autotemp. 
+1. In the Add-On from Arjen: Update the add-on MQTT configuration and set MQTT Base Topic as per below above
 2. On the system running Home Assistant: Create /usr/share/hassio/homeassistant/custom_components/ithodaalderop
 3. Install the component via HACS custom repo. See https://hacs.xyz/docs/faq/custom_repositories/ and use Integration in the dropdown and https://github.com/jasperslits/haithowifi/ as name **OR** 
 4. Git clone or download the content to custom_components in the /usr/share/hassio/homeassistant/custom_components/ithodaalderop directory 
 5. Restart Home Assistant
 6. Go to Integrations
 7. Search for Itho Add-on integration
-8. Enable the devices you want to configure
+8. Add an entry for each device
 
 ### Screenshots
 1. Add integration
@@ -111,5 +108,7 @@ Missing a sensor? Feel free to create an [issue](https://github.com/jasperslits/
 <img width="983" alt="image" src="https://github.com/jasperslits/haithowifi/assets/30024136/45b33a5f-50bc-476c-9a78-8df7af71fdd1">
 
 ### TODO:
-* Submit project for HACS integration. In progress via https://github.com/hacs/default/pull/2494
-* Add reconfigure to config flow
+* Add Integration to HACS default (waiting for https://github.com/hacs/default/pull/2494)
+* Explore adding Fan without autodiscovery
+
+
