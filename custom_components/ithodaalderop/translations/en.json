@@ -94,21 +94,21 @@
         "step": {
             "user": {
                 "title": "Add new Itho devices",
-                "description": "Select the devices you want to configure. Repeat the configuration for every physical add-on present.",
+                "description": "Select the device you want to configure. Repeat the configuration for every physical add-on present. This integration creates commonly used sensors for each device.",
                 "data": {
-                    "addontype": "Type of add-on to configure"
+                    "addontype": "Select the type of add-on to configure."
                 }
             },
             "reconfigure": {
                 "title": "Reconfigure Itho devices",
-                "description": "Select the devices you want to reconfigure. Repeat the configuration for every physical add-on present.",
+                "description": "Select the device you want to reconfigure. Repeat the configuration for every physical add-on present.",
                 "data": {
-                    "addontype": "Type of add-on to reconfigure"
+                    "addontype": "Select the type of add-on to reconfigure."
                 }
             },
             "remotes": {
                 "title": "Add new Itho remotes",
-                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item or press 'Submit' to skip",
+                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item of WiFi Add-on or press 'Submit' to skip.",
                 "data": {
                     "remote1": "Remote 1",
                     "remote2": "Remote 2",
@@ -119,7 +119,7 @@
             },
             "remotes_reconfigure": {
                 "title": "Reconfigure Itho remotes",
-                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item or press 'Submit' to skip",
+                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item of WiFi Add-on or press 'Submit' to skip.",
                 "data": {
                     "remote1": "Remote 1",
                     "remote2": "Remote 2",
@@ -130,7 +130,7 @@
             },
             "rooms": {
                 "title": "Add new autotemp rooms",
-                "description": "Provide a name for each room defined in the autotemp unit. E.g. living room",
+                "description": "Provide a name for each room defined in the autotemp unit. E.g. living room or bedroom.",
                 "data": {
                     "room1": "Room 1",
                     "room2": "Room 2",
@@ -144,7 +144,7 @@
             },
             "rooms_reconfigure": {
                 "title": "Reconfigure autotemp rooms",
-                "description": "Provide a name for each room defined in the autotemp unit. E.g. living room",
+                "description": "Provide a name for each room defined in the autotemp unit. E.g. living room or bedroom.",
                 "data": {
                     "room1": "Room 1",
                     "room2": "Room 2",

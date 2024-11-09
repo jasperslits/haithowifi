@@ -18,7 +18,7 @@ class AddOnType(IntEnum):
 ADDON_TYPES = {
     "noncve": "HRU WTW",
     "cve": "CVE",
-    "autotemp": "Autotemp",
+    "autotemp": "Autotemp floor heating",
     "wpu": "WPU heatpump"
 }
 
@@ -81,7 +81,6 @@ CVE_TYPES = {
     "cve": ["cve", "mdi:fan"],
 }
 
-
 UNITTYPE_ICONS = {
     "%": "mdi:percent-outline",
     "hum": "mdi:water-percent",
@@ -96,6 +95,7 @@ MQTT_BASETOPIC = {
     "wpu": "ithowpu",
     "autotemp": "ithotemp",
 }
+
 MQTT_STATETOPIC = {
     "cve": "ithostatus",
     "noncve": "ithostatus",
@@ -103,7 +103,7 @@ MQTT_STATETOPIC = {
     "autotemp": "ithostatus",
     "remotes": "remotesinfo",
 }
-CONF_ENABLED_SENSORS = "ithohru/remotesinfo"
+
 CONF_ADDON_TYPE = "addontype"
 
 CONF_AUTOTEMP_ROOM1 = "room1"
@@ -120,4 +120,3 @@ CONF_REMOTE_2 = "remote2"
 CONF_REMOTE_3 = "remote3"
 CONF_REMOTE_4 = "remote4"
 CONF_REMOTE_5 = "remote5"
-CONF_REMOTE_6 = "remote6"
