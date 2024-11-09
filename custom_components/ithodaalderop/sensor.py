@@ -44,10 +44,9 @@ def _create_remotes(config_entry: ConfigEntry):
     for x in range(1, 5):
         remote = cfg["remote" + str(x)]
         if remote != "" and remote != "Remote " + str(x):
-            _LOGGER.debug(f"Subscribing '{remote}' to '{MQTT_BASETOPIC[config_entry.data[CONF_CVE_TYPE]]}/{MQTT_STATETOPIC["remotes"]}'")
             remotes.append(IthoSensorEntityDescription(
                 json_field=remote,
-                key=f"{MQTT_BASETOPIC[config_entry.data[CONF_CVE_TYPE]]}/{MQTT_STATETOPIC["remotes"]}",
+                key=f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remotes"]}",
                 translation_key=remote,
                 device_class="carbon_dioxide",
                 native_unit_of_measurement="ppm",

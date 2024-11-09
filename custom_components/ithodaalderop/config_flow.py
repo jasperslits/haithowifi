@@ -136,7 +136,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 title="Itho WiFi Add-on for " + ADDON_TYPES[self.config[CONF_ADDON_TYPE]],
                 data=info
             )
-          
+
         options = list(ADDON_TYPES.keys())
         itho_schema = vol.Schema({
             vol.Required(CONF_ADDON_TYPE): selector({
