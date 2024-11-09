@@ -10,7 +10,7 @@
             "actual_mode": {
                 "name": "Actual Mode"
             },
-            "actual_supply_fan" : {
+            "actual_supply_fan": {
                 "name": "Actual Supply Fan"
             },
             "actual_supply_temp": {
@@ -97,36 +97,18 @@
                 "description": "Select the devices you want to configure",
                 "data": {
                     "addontype": "Type of add-on to configure"
-                
                 }
             },
-             "reconfigure": {
-                "title": "Reconfigure new Itho devices",
+            "reconfigure": {
+                "title": "Reconfigure Itho devices",
                 "description": "Select the devices you want to reconfigure",
                 "data": {
-                    "id": "Home id",
-                    "cvetype": "Fan type",
-                    "use_remotes": "CO2 Remotes",
-                    "use_wpu": "WPU",
-                    "use_autotemp": "Auto temp"
-                
+                    "addontype": "Type of add-on to configure"
                 }
             },
-
             "remotes": {
                 "title": "Add new Itho remotes",
-                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item",
-                "data": {
-                    "remote1": "Remote 1",
-                    "remote2": "Remote 2",
-		    "remote3": "Remote 3",
-		    "remote4": "Remote 4",
-		    "remote5": "Remote 5"
-                }
-            },
-            "remotes_reconfigure": {
-                "title": "Reconfigure Itho remotes",
-                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item",
+                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item or press 'Submit' to skip",
                 "data": {
                     "remote1": "Remote 1",
                     "remote2": "Remote 2",
@@ -134,8 +116,18 @@
                     "remote4": "Remote 4",
                     "remote5": "Remote 5"
                 }
-            },		
-
+            },
+            "remotes_reconfigure": {
+                "title": "Reconfigure Itho remotes",
+                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item or press 'Submit' to skip",
+                "data": {
+                    "remote1": "Remote 1",
+                    "remote2": "Remote 2",
+                    "remote3": "Remote 3",
+                    "remote4": "Remote 4",
+                    "remote5": "Remote 5"
+                }
+            },
             "rooms": {
                 "title": "Add new autotemp rooms",
                 "description": "Provide a name for each room defined in the autotemp unit. E.g. living room",
@@ -150,7 +142,7 @@
                     "room8": "Room 8"
                 }
             },
-	    "rooms_reconfigure": {
+            "rooms_reconfigure": {
                 "title": "Reconfigure autotemp rooms",
                 "description": "Provide a name for each room defined in the autotemp unit. E.g. living room",
                 "data": {
@@ -167,19 +159,16 @@
         },
         "abort": {
             "already_configured": "Itho integration is already configured",
-            "reconfigure_successful": "Re-configuration was successful" 		
-	},
-        "error": {
-            "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]"
+            "reconfigure_successful": "Re-configuration was successful"
         }
     },
     "selector": {
         "addonselect": {
             "options": {
-                "noncve" : "Non-CVE (HRU)",
+                "noncve": "Non-CVE (HRU)",
                 "cve": "CVE (ECO box)",
-                "autotemp": "Autotemp",
-                "wpu": "WPU"
+                "autotemp": "Autotemp floor heating",
+                "wpu": "WPU heatpump"
             }
         }
     }
