@@ -60,10 +60,11 @@ def _create_autotemprooms(config_entry: ConfigEntry):
     cfg = config_entry.data
     configured_sensors = []
     for x in range(1, 8):
+        _LOGGER.warn("Range " + str(x))
         template_sensors = copy.deepcopy(list(AUTOTEMPSENSORS))
         room = cfg["room" + str(x)]
         if room != "" and room != "Room " + str(x):
-
+            _LOGGER.warn("Room " + str(x))
             for sensor in template_sensors:
                 sensor.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
                 sensor.json_field = sensor.json_field.replace("X", str(x))
@@ -94,12 +95,16 @@ async def async_setup_entry(
             description.key = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
             sensors.append(IthoSensor(description, config_entry, AddOnType.CVE))
 
-        (sensors.append(IthoSensor(description, config_entry, AddOnType.REMOTES)) for description in _create_remotes(config_entry))
+    if config_entry.data[CONF_ADDON_TYPE] in ["cve","noncve"]:
+            sensors.append(IthoSensor(description, config_entry, AddOnType.REMOTES) for description in _create_remotes(config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "wpu":
         for description in WPUSENSORS:
             description.key = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
             sensors.append(IthoSensor(description, config_entry, AddOnType.WPU))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
+        sensors.append(IthoSensor(description, config_entry, AddOnType.AUTOTEMP) for description in _create_autotemprooms(config_entry))
 
     async_add_entities(sensors)
 

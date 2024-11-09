@@ -126,7 +126,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Configure main step."""
         if info is not None:
             self.config.update(info)
-            if info[CONF_ADDON_TYPE] == "cve" or info[CONF_ADDON_TYPE] == "noncve":
+            if info[CONF_ADDON_TYPE] in ["cve","noncve"]:
                 return await self.async_step_remotes()
             if info[CONF_ADDON_TYPE] == "autotemp":
                 return await self.async_step_rooms()
@@ -157,7 +157,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         assert entry
         self.entry = entry
         self.config.update(entry.data)
-        if self.config[CONF_ADDON_TYPE] == "cve" or self.config[CONF_ADDON_TYPE] == "noncve" :
+        if self.config[CONF_ADDON_TYPE]  in ["cve","noncve"]:
                 return await self.async_step_remotes_reconfigure()
         if self.config[CONF_ADDON_TYPE] == "autotemp":
                 return await self.async_step_rooms_reconfigure()
