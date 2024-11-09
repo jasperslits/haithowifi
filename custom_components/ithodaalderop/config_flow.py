@@ -159,30 +159,9 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         assert entry
         self.entry = entry
         self.config.update(entry.data)
-        if info:
-            self.config.update(info)
-            if info[CONF_ADDON_TYPE] == "cve" or info[CONF_ADDON_TYPE] == "noncve" :
+        if self.config[CONF_ADDON_TYPE] == "cve" or self.config[CONF_ADDON_TYPE] == "noncve" :
                 return await self.async_step_remotes_reconfigure()
-            if info[CONF_ADDON_TYPE] == "autotemp":
-                return await self.async_step_rooms_reconfigure()
-            return self.async_update_reload_and_abort(self.entry, data=info, reason="reconfigure_successful")
-
-        return await self._redo_configuration(self.entry.data)
-
-    async def _redo_configuration(self, entry_data: Mapping[str, Any]):
-        """Reconfigure config flow with schema."""
-        self.config.update(entry_data)
-        options = list(ADDON_TYPES.keys())
-        itho_schema = vol.Schema({
-            vol.Required(CONF_ADDON_TYPE, default=entry_data[CONF_ADDON_TYPE]): selector({
-                "select": {
-                    "options": options,
-                    "multiple": False,
-                    "translation_key": "addonselect"
-                }
-            }),
-        })
-
-        return self.async_show_form(
-                         step_id="reconfigure", data_schema=itho_schema)
+        if self.config[CONF_ADDON_TYPE] == "autotemp":
+            return await self.async_step_rooms_reconfigure()
+        return self.async_update_reload_and_abort(self.entry, data=self.config, reason="reconfigure_successful")
 
