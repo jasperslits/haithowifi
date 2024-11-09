@@ -77,7 +77,6 @@ ADDONS = {
 }
 
 CVE_TYPES = {
-    "none": ["none", "mdi:fan"],
     "noncve": ["noncve", "mdi:fan"],
     "cve": ["cve", "mdi:fan"],
 }
@@ -89,17 +88,21 @@ UNITTYPE_ICONS = {
 }
 
 DOMAIN = "ithodaalderop"
-CONF_ID = "id"
+
+MQTT_BASETOPIC = {
+    "cve": "ithocve",
+    "noncve": "ithohru",
+    "wpu": "ithowpu",
+    "autotemp": "ithotemp",
+}
 MQTT_STATETOPIC = {
-    "hru": "ithohru/ithostatus",
-    "wpu": "ithowpu/ithostatus",
-    "remotes": "ithohru/remotesinfo",
-    "autotemp": "ithotemp/ithostatus",
+    "cve": "ithostatus",
+    "noncve": "ithostatus",
+    "wpu": "ithostatus",
+    "autotemp": "ithostatus",
+    "remotes": "remotesinfo",
 }
 CONF_ENABLED_SENSORS = "ithohru/remotesinfo"
-CONF_CVE_TYPE = "cvetype"
-CONF_USE_REMOTES = "use_remotes"
-
 CONF_ADDON_TYPE = "addontype"
 
 CONF_AUTOTEMP_ROOM1 = "room1"

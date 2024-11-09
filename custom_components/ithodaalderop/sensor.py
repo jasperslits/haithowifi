@@ -20,6 +20,7 @@ from .const import (
     CONF_ADDON_TYPE,
     HRU_ACTUAL_MODE,
     HRU_GLOBAL_FAULT_CODE,
+    MQTT_BASETOPIC,
     MQTT_STATETOPIC,
     RH_ERROR_CODE,
     UNITTYPE_ICONS,
@@ -77,17 +78,29 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Itho add-on sensors from config entry based on their type."""
-    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.NONCVE) for description in NONCVESENSORS)
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.REMOTES) for description in _create_remotes(config_entry))
-    if config_entry.data[CONF_ADDON_TYPE] == "cve":
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.CVE) for description in CVESENSORS)
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.REMOTES) for description in _create_remotes(config_entry))
-    if config_entry.data[CONF_ADDON_TYPE] == "wpu":
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.WPU) for description in WPUSENSORS)
-    if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.AUTOTEMP) for description in _create_autotemprooms(config_entry))
 
+    sensors = []
+    # TODO: This can probably be simplified after refactoring of configflow / itho units
+    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
+        for description in NONCVESENSORS:
+            description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
+            sensors.append(IthoSensor(description, config_entry, AddOnType.NONCVE))
+
+        (sensors.append(IthoSensor(description, config_entry, AddOnType.REMOTES)) for description in _create_remotes(config_entry))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "cve":
+        for description in CVESENSORS:
+            description.key = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
+            sensors.append(IthoSensor(description, config_entry, AddOnType.CVE))
+        
+        (sensors.append(IthoSensor(description, config_entry, AddOnType.REMOTES)) for description in _create_remotes(config_entry))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "wpu":
+        for description in WPUSENSORS:
+            description.key = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
+            sensors.append(IthoSensor(description, config_entry, AddOnType.WPU))
+
+    async_add_entities(sensors)
 
 class IthoSensor(SensorEntity):
     """Representation of a Itho add-on sensor that is updated via MQTT."""
