@@ -17,10 +17,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from .const import (
     _LOGGER,
     ADDONS,
-    CONF_CVE_TYPE,
-    CONF_USE_AUTOTEMP,
-    CONF_USE_REMOTES,
-    CONF_USE_WPU,
+    CONF_ADDON_TYPE,
     HRU_ACTUAL_MODE,
     HRU_GLOBAL_FAULT_CODE,
     MQTT_STATETOPIC,
@@ -80,15 +77,15 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Itho add-on sensors from config entry based on their type."""
-    if config_entry.data[CONF_CVE_TYPE] == "noncve":
+    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
         async_add_entities(IthoSensor(description, config_entry, AddOnType.NONCVE) for description in NONCVESENSORS)
-    if config_entry.data[CONF_CVE_TYPE] == "cve":
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.CVE) for description in CVESENSORS)
-    if config_entry.data[CONF_USE_WPU]:
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.WPU) for description in WPUSENSORS)
-    if config_entry.data[CONF_USE_REMOTES]:
         async_add_entities(IthoSensor(description, config_entry, AddOnType.REMOTES) for description in _create_remotes(config_entry))
-    if config_entry.data[CONF_USE_AUTOTEMP]:
+    if config_entry.data[CONF_ADDON_TYPE] == "cve":
+        async_add_entities(IthoSensor(description, config_entry, AddOnType.CVE) for description in CVESENSORS)
+        async_add_entities(IthoSensor(description, config_entry, AddOnType.REMOTES) for description in _create_remotes(config_entry))
+    if config_entry.data[CONF_ADDON_TYPE] == "wpu":
+        async_add_entities(IthoSensor(description, config_entry, AddOnType.WPU) for description in WPUSENSORS)
+    if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
         async_add_entities(IthoSensor(description, config_entry, AddOnType.AUTOTEMP) for description in _create_autotemprooms(config_entry))
 
 

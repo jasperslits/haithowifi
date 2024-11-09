@@ -71,7 +71,7 @@
                 "name": "Requested Toom Temp"
             },
             "room_temp": {
-                "name": "Room Temp"
+                "name": "Room Temperature"
             },
             "status": {
                 "name": "Status"
@@ -86,7 +86,7 @@
                 "name": "Temp to Source"
             },
             "well_pump_percent": {
-                "name": "Well Pump"
+                "name": "Well Pump percent"
             }
         }
     },
@@ -94,16 +94,16 @@
         "step": {
             "user": {
                 "title": "Add new Itho devices",
-                "description": "Select the devices you want to configure",
+                "description": "Select the devices you want to configure. Repeat the configuration for every physical add-on present.",
                 "data": {
                     "addontype": "Type of add-on to configure"
                 }
             },
             "reconfigure": {
                 "title": "Reconfigure Itho devices",
-                "description": "Select the devices you want to reconfigure",
+                "description": "Select the devices you want to reconfigure. Repeat the configuration for every physical add-on present.",
                 "data": {
-                    "addontype": "Type of add-on to configure"
+                    "addontype": "Type of add-on to reconfigure"
                 }
             },
             "remotes": {

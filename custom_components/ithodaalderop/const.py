@@ -16,10 +16,10 @@ class AddOnType(IntEnum):
     NONCVE = 5
 
 ADDON_TYPES = {
-    "cve": "HRU WTW",
-    "noncve": "CVE",
+    "noncve": "HRU WTW",
+    "cve": "CVE",
     "autotemp": "Autotemp",
-    "wpu": "WPU"
+    "wpu": "WPU heatpump"
 }
 
 HRU_ACTUAL_MODE = {

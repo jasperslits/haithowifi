@@ -11,7 +11,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import ADDONS, CONF_CVE_TYPE, AddOnType
+from .const import ADDONS, CONF_ADDON_TYPE, AddOnType
 from .definitions import NONCVEBINARYSENSORS, IthoBinarySensorEntityDescription
 
 
@@ -21,7 +21,7 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Itho add-on binary sensors from config entry based on their type."""
-    if config_entry.data[CONF_CVE_TYPE] == "noncve":
+    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
         async_add_entities(IthoBinarySensor(description, config_entry, AddOnType.NONCVE) for description in NONCVEBINARYSENSORS)
 
 

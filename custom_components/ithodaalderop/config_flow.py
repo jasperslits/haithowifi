@@ -8,7 +8,6 @@ from typing import Any
 
 import voluptuous as vol
 from homeassistant import config_entries
-from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.selector import selector
 
 from .const import (
@@ -22,16 +21,12 @@ from .const import (
     CONF_AUTOTEMP_ROOM6,
     CONF_AUTOTEMP_ROOM7,
     CONF_AUTOTEMP_ROOM8,
-    CONF_CVE_TYPE,
     CONF_REMOTE_1,
     CONF_REMOTE_2,
     CONF_REMOTE_3,
     CONF_REMOTE_4,
     CONF_REMOTE_5,
-    CONF_USE_REMOTES,
-    CVE_TYPES,
     DOMAIN,
-    _LOGGER
 )
 
 
@@ -53,7 +48,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             await self.async_set_unique_id(self.config[CONF_ADDON_TYPE])
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
-                title="Itho WiFi Add-on",
+                title="Itho WiFi Add-on for " + ADDON_TYPES[self.config[CONF_ADDON_TYPE]],
                 data=self.config
             )
 
@@ -64,7 +59,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             vol.Optional(CONF_REMOTE_4, default="Remote 4"): str,
             vol.Optional(CONF_REMOTE_5, default="Remote 5"): str
         })
-        return self.async_show_form(step_id="remotes", data_schema=itho_schema)
+        return self.async_show_form(step_id="remotes", data_schema=itho_schema,last_step=True)
 
     async def async_step_remotes_reconfigure(self, info=None):
         """Reconfigure up to 5 remotes."""
@@ -79,7 +74,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             vol.Optional(CONF_REMOTE_4, default=self._get_reconfigure_value(CONF_REMOTE_4,"Remote 4")): str,
             vol.Optional(CONF_REMOTE_5, default=self._get_reconfigure_value(CONF_REMOTE_5,"Remote 5")): str,
         })
-        return self.async_show_form(step_id="remotes_reconfigure", data_schema=itho_schema)
+        return self.async_show_form(step_id="remotes_reconfigure", data_schema=itho_schema,last_step=True)
 
 
     async def async_step_rooms(self, info=None):
@@ -89,7 +84,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             await self.async_set_unique_id(self.config[CONF_ADDON_TYPE])
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
-                title="Itho WiFi Add-on",
+                title="Itho WiFi Add-on for " + ADDON_TYPES[self.config[CONF_ADDON_TYPE]],
                 data=self.config
             )
 
@@ -103,7 +98,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             vol.Optional(CONF_AUTOTEMP_ROOM7, default="Room 7"): str,
             vol.Optional(CONF_AUTOTEMP_ROOM8, default="Room 8"): str,
         })
-        return self.async_show_form(step_id="rooms", data_schema=itho_schema)
+        return self.async_show_form(step_id="rooms", data_schema=itho_schema,last_step=True)
 
     def _get_reconfigure_value(self,param,default):
         """Get reconfigure value."""
@@ -127,7 +122,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             vol.Optional(CONF_AUTOTEMP_ROOM7, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM7,"Room 7")): str,
             vol.Optional(CONF_AUTOTEMP_ROOM8, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM8,"Room 8")): str,
         })
-        return self.async_show_form(step_id="rooms_reconfigure", data_schema=itho_schema)
+        return self.async_show_form(step_id="rooms_reconfigure", data_schema=itho_schema,last_step=True)
 
     async def async_step_user(self, info=None):
         """Configure main step."""
@@ -140,11 +135,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             await self.async_set_unique_id(self.config[CONF_ADDON_TYPE])
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
-                title="Itho WiFi Add-on",
+                title="Itho WiFi Add-on for " + ADDON_TYPES[self.config[CONF_ADDON_TYPE]],
                 data=info
             )
         options = list(ADDON_TYPES.keys())
-        _LOGGER.warn(options)
         itho_schema = vol.Schema({
             vol.Required(CONF_ADDON_TYPE): selector({
                 "select": {
@@ -179,7 +173,6 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Reconfigure config flow with schema."""
         self.config.update(entry_data)
         options = list(ADDON_TYPES.keys())
-        _LOGGER.warn(options)
         itho_schema = vol.Schema({
             vol.Required(CONF_ADDON_TYPE, default=entry_data[CONF_ADDON_TYPE]): selector({
                 "select": {
