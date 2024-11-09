@@ -33,7 +33,6 @@ async def async_setup_entry(
             description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
             sensors.append(IthoBinarySensor(description, config_entry, AddOnType.NONCVE))
 
-
 class IthoBinarySensor(BinarySensorEntity):
     """Representation of a Itho add-on binary sensor that is updated via MQTT."""
 

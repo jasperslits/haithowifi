@@ -1,0 +1,16 @@
+{
+    "beneden": {
+        "timestamp": 1729788742,
+        "lastcmd": 6,
+        "lastcmdmsg": "IthoHigh",
+        "co2": 596,
+        "pir": 1
+    },
+    "boven": {
+        "timestamp": 1729794371,
+        "lastcmd": 11,
+        "lastcmdmsg": "IthoAuto",
+        "co2": 535,
+        "pir": 1
+    }
+}
