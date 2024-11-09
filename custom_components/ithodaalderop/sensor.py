@@ -12,12 +12,14 @@ from homeassistant.components import mqtt
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
     _LOGGER,
     ADDONS,
     CONF_ADDON_TYPE,
+    DOMAIN,
     HRU_ACTUAL_MODE,
     HRU_GLOBAL_FAULT_CODE,
     MQTT_BASETOPIC,
@@ -60,11 +62,9 @@ def _create_autotemprooms(config_entry: ConfigEntry):
     cfg = config_entry.data
     configured_sensors = []
     for x in range(1, 8):
-        _LOGGER.warn("Range " + str(x))
         template_sensors = copy.deepcopy(list(AUTOTEMPSENSORS))
         room = cfg["room" + str(x)]
         if room != "" and room != "Room " + str(x):
-            _LOGGER.warn("Room " + str(x))
             for sensor in template_sensors:
                 sensor.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
                 sensor.json_field = sensor.json_field.replace("X", str(x))
@@ -124,6 +124,13 @@ class IthoSensor(SensorEntity):
     ) -> None:
         """Initialize the sensor."""
         self.entity_description = description
+
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, ADDONS[aot])},
+            manufacturer = "Arjen Hiemstra",
+            model = "CVE" if aot == AddOnType.CVE else "NONCVE",
+            name="Itho WiFi-Addon - " + ADDONS[aot]
+        )
 
         self.entity_id = f"sensor.{ADDONS[aot].lower()}_{description.translation_key}"
         self._attr_unique_id = f"{config_entry.entry_id}-{description.translation_key}"
