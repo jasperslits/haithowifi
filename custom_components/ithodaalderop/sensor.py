@@ -92,7 +92,7 @@ async def async_setup_entry(
         for description in CVESENSORS:
             description.key = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
             sensors.append(IthoSensor(description, config_entry, AddOnType.CVE))
-        
+
         (sensors.append(IthoSensor(description, config_entry, AddOnType.REMOTES)) for description in _create_remotes(config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "wpu":
