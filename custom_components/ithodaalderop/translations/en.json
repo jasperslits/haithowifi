@@ -10,7 +10,7 @@
             "actual_mode": {
                 "name": "Actual Mode"
             },
-            "actual_supply_fan" : {
+            "actual_supply_fan": {
                 "name": "Actual Supply Fan"
             },
             "actual_supply_temp": {
@@ -71,7 +71,7 @@
                 "name": "Requested Toom Temp"
             },
             "room_temp": {
-                "name": "Room Temp"
+                "name": "Room Temperature"
             },
             "status": {
                 "name": "Status"
@@ -86,7 +86,7 @@
                 "name": "Temp to Source"
             },
             "well_pump_percent": {
-                "name": "Well Pump"
+                "name": "Well Pump percent"
             }
         }
     },
@@ -94,43 +94,21 @@
         "step": {
             "user": {
                 "title": "Add new Itho devices",
-                "description": "Select the devices you want to configure",
+                "description": "Select the devices you want to configure. Repeat the configuration for every physical add-on present.",
                 "data": {
-                    "id": "Home id",
-                    "cvetype": "Fan type",
-                    "use_remotes": "CO2 Remotes",
-                    "use_wpu": "WPU",
-                    "use_autotemp": "Auto temp"
-                
+                    "addontype": "Type of add-on to configure"
                 }
             },
-             "reconfigure": {
-                "title": "Reconfigure new Itho devices",
-                "description": "Select the devices you want to reconfigure",
+            "reconfigure": {
+                "title": "Reconfigure Itho devices",
+                "description": "Select the devices you want to reconfigure. Repeat the configuration for every physical add-on present.",
                 "data": {
-                    "id": "Home id",
-                    "cvetype": "Fan type",
-                    "use_remotes": "CO2 Remotes",
-                    "use_wpu": "WPU",
-                    "use_autotemp": "Auto temp"
-                
+                    "addontype": "Type of add-on to reconfigure"
                 }
             },
-
             "remotes": {
                 "title": "Add new Itho remotes",
-                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item",
-                "data": {
-                    "remote1": "Remote 1",
-                    "remote2": "Remote 2",
-		    "remote3": "Remote 3",
-		    "remote4": "Remote 4",
-		    "remote5": "Remote 5"
-                }
-            },
-            "remotes_reconfigure": {
-                "title": "Reconfigure Itho remotes",
-                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item",
+                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item or press 'Submit' to skip",
                 "data": {
                     "remote1": "Remote 1",
                     "remote2": "Remote 2",
@@ -138,8 +116,18 @@
                     "remote4": "Remote 4",
                     "remote5": "Remote 5"
                 }
-            },		
-
+            },
+            "remotes_reconfigure": {
+                "title": "Reconfigure Itho remotes",
+                "description": "Enter the names of the remotes as defined in the 'RF devices' menu item or press 'Submit' to skip",
+                "data": {
+                    "remote1": "Remote 1",
+                    "remote2": "Remote 2",
+                    "remote3": "Remote 3",
+                    "remote4": "Remote 4",
+                    "remote5": "Remote 5"
+                }
+            },
             "rooms": {
                 "title": "Add new autotemp rooms",
                 "description": "Provide a name for each room defined in the autotemp unit. E.g. living room",
@@ -154,7 +142,7 @@
                     "room8": "Room 8"
                 }
             },
-	    "rooms_reconfigure": {
+            "rooms_reconfigure": {
                 "title": "Reconfigure autotemp rooms",
                 "description": "Provide a name for each room defined in the autotemp unit. E.g. living room",
                 "data": {
@@ -171,18 +159,16 @@
         },
         "abort": {
             "already_configured": "Itho integration is already configured",
-            "reconfigure_successful": "Re-configuration was successful" 		
-	},
-        "error": {
-            "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]"
+            "reconfigure_successful": "Re-configuration was successful"
         }
     },
     "selector": {
-        "cveselect": {
+        "addonselect": {
             "options": {
-                "none" : "No fan",
-                "noncve" : "Non-CVE (HRU)",
-                "cve": "CVE (ECO box)"
+                "noncve": "Non-CVE (HRU)",
+                "cve": "CVE (ECO box)",
+                "autotemp": "Autotemp floor heating",
+                "wpu": "WPU heatpump"
             }
         }
     }

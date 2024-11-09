@@ -10,7 +10,7 @@
             "actual_mode": {
                 "name": "Huidige Mode"
             },
-            "actual_supply_fan" : {
+            "actual_supply_fan": {
                 "name": "Actuele Aanvoer Ventilator"
             },
             "actual_supply_temp": {
@@ -101,7 +101,6 @@
                     "use_remotes": "CO2 afstandsbedieningen",
                     "use_wpu": "WPU",
                     "use_autotemp": "Auto temp"
-                
                 }
             },
             "remotes": {
@@ -110,9 +109,9 @@
                 "data": {
                     "remote1": "Afstandsbediening 1",
                     "remote2": "Afstandsbediening 2",
-		    "remote3": "Afstandsbediening 3",
-		    "remote4": "Afstandsbediening 4",
-		    "remote5": "Afstandsbediening 5"
+                    "remote3": "Afstandsbediening 3",
+                    "remote4": "Afstandsbediening 4",
+                    "remote5": "Afstandsbediening 5"
                 }
             },
             "remotes_reconfigure": {
@@ -126,8 +125,7 @@
                     "remote5": "Afstandsbediening 5"
                 }
             },
-
-   "rooms_reconfigure": {
+            "rooms_reconfigure": {
                 "title": "Wijzig Itho ruimtes",
                 "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer",
                 "data": {
@@ -157,17 +155,17 @@
             }
         },
         "abort": {
-       		 "already_configured": "Itho integratie is al geconfigureerd",
-		 "reconfigure_successful": "Herconfiguratie was succesvol" 
-	},
-        "error": {
-        }
+            "already_configured": "Itho integratie is al geconfigureerd",
+            "reconfigure_successful": "Herconfiguratie was succesvol"
+        },
+        "error": {}
     },
     "selector": {
-        "cveselect": {
+        "addonselect": {
             "options": {
-                "none" : "Geen ventilator",
-                "noncve" : "Non-CVE (HRU)",
+                "wpu": "WPU Warmtepomp",
+                "autotemp": "Autotemp vloerverwarming",
+                "noncve": "Non-CVE (HRU)",
                 "cve": "CVE (ECO box)"
             }
         }

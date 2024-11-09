@@ -13,7 +13,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
     ADDONS,
-    CONF_CVE_TYPE,
+    CONF_ADDON_TYPE,
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
     AddOnType,
@@ -28,14 +28,10 @@ async def async_setup_entry(
 ) -> None:
     """Set up Itho add-on binary sensors from config entry based on their type."""
     sensors = []
-    if config_entry.data[CONF_CVE_TYPE] == "noncve":
+    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
         for description in NONCVEBINARYSENSORS:
             description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
             sensors.append(IthoBinarySensor(description, config_entry, AddOnType.NONCVE))
-
-    async_add_entities(sensors)
-
-
 
 class IthoBinarySensor(BinarySensorEntity):
     """Representation of a Itho add-on binary sensor that is updated via MQTT."""
@@ -80,8 +76,7 @@ class IthoBinarySensor(BinarySensorEntity):
             """Handle new MQTT messages."""
             if message.payload == "":
                 self._attr_native_value = None
-            # elif self.entity_description.state is not None:
-            #     self._attr_native_value = bool(self.entity_description.state(message.payload))
+
             else:
                 payload = json.loads(message.payload)
                 if self.entity_description.json_field not in payload:

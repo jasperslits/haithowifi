@@ -15,6 +15,12 @@ class AddOnType(IntEnum):
     REMOTES = 4
     NONCVE = 5
 
+ADDON_TYPES = {
+    "noncve": "HRU WTW",
+    "cve": "CVE",
+    "autotemp": "Autotemp",
+    "wpu": "WPU heatpump"
+}
 
 HRU_ACTUAL_MODE = {
     1: "low",
@@ -70,11 +76,11 @@ ADDONS = {
     5: "NONCVE",
 }
 
-CVE_TYPES = [
-    "none",
-    "noncve",
-    "cve",
-]
+CVE_TYPES = {
+    "noncve": ["noncve", "mdi:fan"],
+    "cve": ["cve", "mdi:fan"],
+}
+
 
 UNITTYPE_ICONS = {
     "%": "mdi:percent-outline",
@@ -83,7 +89,7 @@ UNITTYPE_ICONS = {
 }
 
 DOMAIN = "ithodaalderop"
-CONF_ID = "id"
+
 MQTT_BASETOPIC = {
     "cve": "ithocve",
     "noncve": "ithohru",
@@ -98,10 +104,7 @@ MQTT_STATETOPIC = {
     "remotes": "remotesinfo",
 }
 CONF_ENABLED_SENSORS = "ithohru/remotesinfo"
-CONF_CVE_TYPE = "cvetype"
-CONF_USE_WPU = "use_wpu"
-CONF_USE_AUTOTEMP = "use_autotemp"
-CONF_USE_REMOTES = "use_remotes"
+CONF_ADDON_TYPE = "addontype"
 
 CONF_AUTOTEMP_ROOM1 = "room1"
 CONF_AUTOTEMP_ROOM2 = "room2"
