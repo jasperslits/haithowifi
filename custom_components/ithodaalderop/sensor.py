@@ -4,10 +4,10 @@
 Author: Jasper
 """
 
-from datetime import datetime, timedelta
-
 import copy
 import json
+
+from datetime import datetime, timedelta
 
 from homeassistant.components import mqtt
 from homeassistant.components.sensor import SensorEntity
