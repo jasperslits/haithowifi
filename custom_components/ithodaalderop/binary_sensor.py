@@ -20,7 +20,11 @@ from .const import (
     MQTT_STATETOPIC,
     AddOnType,
 )
-from .definitions import NONCVEBINARYSENSORS, IthoBinarySensorEntityDescription
+from .definitions import (
+    AUTOTEMPBINARYSENSORS
+    NONCVEBINARYSENSORS,
+    IthoBinarySensorEntityDescription
+)
 
 
 async def async_setup_entry(
@@ -34,6 +38,11 @@ async def async_setup_entry(
         for description in NONCVEBINARYSENSORS:
             description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
             sensors.append(IthoBinarySensor(description, config_entry, AddOnType.NONCVE))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
+        for description in AUTOTEMPBINARYSENSORS:
+            description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            sensors.append(IthoBinarySensor(description, config_entry, AddOnType.AUTOTEMP))
 
     async_add_entities(sensors)
 

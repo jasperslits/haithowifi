@@ -43,6 +43,9 @@
             "cv_return_temp": {
                 "name": "CV Afvoer Temperatuur"
             },
+            "empty_battery": {
+                "name": "Battery Leeg"
+            },
             "error": {
                 "name": "Error"
             },
@@ -72,6 +75,9 @@
             },
             "humidity": {
                 "name": "Luchtvochtigheid"
+            },
+            "mode": {
+                "name": "Mode"
             },
             "remaining_override_timer": {
                 "name": "Resterende Override Timer"

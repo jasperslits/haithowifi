@@ -43,6 +43,9 @@
             "cv_return_temp": {
                 "name": "CV Return Temp"
             },
+            "empty_battery": {
+                "name": "Empty Battery"
+            },
             "error": {
                 "name": "Error"
             },
@@ -72,6 +75,9 @@
             },
             "humidity": {
                 "name": "Humidity"
+            },
+            "mode": {
+                "name": "Mode"
             },
             "remaining_override_timer": {
                 "name": "Remaining Override Timer"

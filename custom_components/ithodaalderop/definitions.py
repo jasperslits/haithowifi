@@ -47,93 +47,97 @@ class IthoBinarySensorEntityDescription(BinarySensorEntityDescription):
     icon_on: str | None = None
 
 
-WPUSENSORS: tuple[IthoSensorEntityDescription, ...] = (
+CVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
+    IthoBinarySensorEntityDescription(
+        json_field="Filter dirty",
+        translation_key="filter_dirty",
+        device_class=BinarySensorDeviceClass.PROBLEM,
+        icon_off="mdi:air-filter",
+        icon_on="mdi:vacuum-outline",
+    ),
+)
+
+CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
-        json_field="Boiler pump (%)",
-        translation_key="boiler_pump_percent",
+        json_field="Error",
+        translation_key="error",
+    ),
+    IthoSensorEntityDescription(
+        json_field="Fan setpoint (rpm)",
+        translation_key="fan_setpoint_rpm",
+        native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Fan speed (rpm)",
+        translation_key="fan_speed",
+        native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Highest CO2 concentration (ppm)",
+        translation_key="highest_received_co2_value",
+        native_unit_of_measurement=CONCENTRATION_PARTS_PER_MILLION,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False,
+        icon="mdi:molecule-co2",
+    ),
+    IthoSensorEntityDescription(
+        json_field="Highest RH concentration (%)",
+        translation_key="highest_received_rh_value",
+        native_unit_of_measurement=PERCENTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False,
+    ),
+    IthoSensorEntityDescription(
+        json_field="hum",
+        translation_key="humidity",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field="Boiler temp up (°C)",
-        translation_key="boiler_temp_up",
+        json_field="temp",
+        translation_key="temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field="CV pressure (Bar)",
-        translation_key="cv_pressure",
-        device_class=SensorDeviceClass.PRESSURE,
-        native_unit_of_measurement=UnitOfPressure.BAR,
-        state_class=SensorStateClass.MEASUREMENT,
+        json_field="Total operation (hours)",
+        translation_key="temp",
+        native_unit_of_measurement=UnitOfTime.HOURS,
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     IthoSensorEntityDescription(
-        json_field="Cv pump (%)",
-        translation_key="cv_pump_percent",
+        json_field="Ventilation setpoint (%)",
+        translation_key="ventilation_setpoint_percentage",
         native_unit_of_measurement=PERCENTAGE,
-        state_class=SensorStateClass.MEASUREMENT,
     ),
-    IthoSensorEntityDescription(
-        json_field="CV return temp (°C)",
-        translation_key="cv_return_temp",
-        device_class=SensorDeviceClass.TEMPERATURE,
-        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Flow sensor (lt_hr)",
-        translation_key="flow_sensor",
-        state_class=SensorStateClass.MEASUREMENT,
-        icon="mdi:waves-arrow-right",
-    ),
-    IthoSensorEntityDescription(
-        json_field="Heat demand thermost. (%)",
-        translation_key="heat_demand",
-        native_unit_of_measurement=PERCENTAGE,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Requested room temp (°C)",
-        translation_key="requested_room_temp",
-        device_class=SensorDeviceClass.TEMPERATURE,
-        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Room temp (°C)",
-        translation_key="room_temp",
-        device_class=SensorDeviceClass.TEMPERATURE,
-        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Status",
-        translation_key="status",
-    ),
-    IthoSensorEntityDescription(
-        json_field="Temp to source (°C)",
-        translation_key="temp_to_source",
-        device_class=SensorDeviceClass.TEMPERATURE,
-        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Temp from source (°C)",
-        translation_key="temp_from_source",
-        device_class=SensorDeviceClass.TEMPERATURE,
-        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Well pump (%)",
-        translation_key="well_pump_percent",
-        native_unit_of_measurement=PERCENTAGE,
-        state_class=SensorStateClass.MEASUREMENT,
+)
+
+AUTOTEMPBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
+    IthoBinarySensorEntityDescription(
+        json_field="Empty battery ( 0=OK )",
+        translation_key="empty_battery",
+        device_class=BinarySensorDeviceClass.BATTERY,
+        icon_off="mdi:battery",
+        icon_on="mdi:battery-low",
     ),
 )
 
 AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
+    IthoSensorEntityDescription(
+        json_field="Error",
+        translation_key="error",
+    ),
+    IthoSensorEntityDescription(
+        json_field="Mode",
+        translation_key="mode",
+    ),
+)
+
+AUTOTEMPROOMSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Room X power % (%)",
         translation_key="Room X power % (%)",
@@ -164,80 +168,6 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
 )
 
-CVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
-    IthoBinarySensorEntityDescription(
-        json_field="Filter dirty",
-        key=MQTT_STATETOPIC["hru"],
-        translation_key="filter_dirty",
-        device_class=BinarySensorDeviceClass.PROBLEM,
-        icon_off="mdi:air-filter",
-        icon_on="mdi:vacuum-outline",
-    ),
-)
-
-CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
-    IthoSensorEntityDescription(
-        json_field="Error",
-        key=MQTT_STATETOPIC["hru"],
-        translation_key="error",
-    ),
-    IthoSensorEntityDescription(
-        json_field="Fan setpoint (rpm)",
-        translation_key="fan_setpoint_rpm",
-        native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Fan speed (rpm)",
-        key=MQTT_STATETOPIC["hru"],
-        translation_key="fan_speed",
-        native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
-        state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=False,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Highest CO2 concentration (ppm)",
-        key=MQTT_STATETOPIC["hru"],
-        translation_key="highest_received_co2_value",
-        native_unit_of_measurement=CONCENTRATION_PARTS_PER_MILLION,
-        state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=False,
-        icon="mdi:molecule-co2",
-    ),
-    IthoSensorEntityDescription(
-        json_field="Highest RH concentration (%)",
-        key=MQTT_STATETOPIC["hru"],
-        translation_key="highest_received_rh_value",
-        native_unit_of_measurement=PERCENTAGE,
-        state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=False,
-    ),
-    IthoSensorEntityDescription(
-        json_field="hum",
-        translation_key="humidity",
-        native_unit_of_measurement=PERCENTAGE,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    IthoSensorEntityDescription(
-        json_field="temp",
-        translation_key="temp",
-        device_class=SensorDeviceClass.TEMPERATURE,
-        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Total operation (hours)",
-        key=MQTT_STATETOPIC["hru"],
-        translation_key="temp",
-        native_unit_of_measurement=UnitOfTime.HOURS,
-        state_class=SensorStateClass.TOTAL_INCREASING,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Ventilation setpoint (%)",
-        translation_key="ventilation_setpoint_percentage",
-        native_unit_of_measurement=PERCENTAGE,
-    ),
-)
 
 NONCVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     IthoBinarySensorEntityDescription(
@@ -325,6 +255,96 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="actual_supply_temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+)
+
+WPUSENSORS: tuple[IthoSensorEntityDescription, ...] = (
+    IthoSensorEntityDescription(
+        json_field="Boiler pump (%)",
+        translation_key="boiler_pump_percent",
+        native_unit_of_measurement=PERCENTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Boiler temp up (°C)",
+        translation_key="boiler_temp_up",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="CV pressure (Bar)",
+        translation_key="cv_pressure",
+        device_class=SensorDeviceClass.PRESSURE,
+        native_unit_of_measurement=UnitOfPressure.BAR,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Cv pump (%)",
+        translation_key="cv_pump_percent",
+        native_unit_of_measurement=PERCENTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="CV return temp (°C)",
+        translation_key="cv_return_temp",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Error",
+        translation_key="error",
+    ),
+    IthoSensorEntityDescription(
+        json_field="Flow sensor (lt_hr)",
+        translation_key="flow_sensor",
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:waves-arrow-right",
+    ),
+    IthoSensorEntityDescription(
+        json_field="Heat demand thermost. (%)",
+        translation_key="heat_demand",
+        native_unit_of_measurement=PERCENTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Requested room temp (°C)",
+        translation_key="requested_room_temp",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Room temp (°C)",
+        translation_key="room_temp",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Status",
+        translation_key="status",
+    ),
+    IthoSensorEntityDescription(
+        json_field="Temp to source (°C)",
+        translation_key="temp_to_source",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Temp from source (°C)",
+        translation_key="temp_from_source",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Well pump (%)",
+        translation_key="well_pump_percent",
+        native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
 )
