@@ -12,17 +12,17 @@ from homeassistant.components import mqtt
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
     _LOGGER,
     ADDONS,
-    CONF_CVE_TYPE,
-    CONF_USE_AUTOTEMP,
-    CONF_USE_REMOTES,
-    CONF_USE_WPU,
+    CONF_ADDON_TYPE,
+    DOMAIN,
     HRU_ACTUAL_MODE,
     HRU_GLOBAL_FAULT_CODE,
+    MQTT_BASETOPIC,
     MQTT_STATETOPIC,
     RH_ERROR_CODE,
     UNITTYPE_ICONS,
@@ -42,18 +42,18 @@ def _create_remotes(config_entry: ConfigEntry):
     """Create remotes for CO2 monitoring."""
 
     cfg = config_entry.data
-    REMOTES = []
+    remotes = []
     for x in range(1, 5):
         remote = cfg["remote" + str(x)]
         if remote != "" and remote != "Remote " + str(x):
-             REMOTES.append(IthoSensorEntityDescription(
+            remotes.append(IthoSensorEntityDescription(
                 json_field=remote,
-                key=MQTT_STATETOPIC["remotes"],
+                key=f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remotes"]}",
                 translation_key=remote,
                 device_class="carbon_dioxide",
                 native_unit_of_measurement="ppm",
                 state_class="measurement"))
-    return REMOTES
+    return remotes
 
 
 def _create_autotemprooms(config_entry: ConfigEntry):
@@ -65,8 +65,8 @@ def _create_autotemprooms(config_entry: ConfigEntry):
         template_sensors = copy.deepcopy(list(AUTOTEMPSENSORS))
         room = cfg["room" + str(x)]
         if room != "" and room != "Room " + str(x):
-
             for sensor in template_sensors:
+                sensor.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
                 sensor.json_field = sensor.json_field.replace("X", str(x))
                 sensor.translation_key = sensor.translation_key.replace("Room X", room)
                 configured_sensors.append(sensor)
@@ -80,16 +80,34 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Itho add-on sensors from config entry based on their type."""
-    if config_entry.data[CONF_CVE_TYPE] == "noncve":
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.NONCVE) for description in NONCVESENSORS)
-    if config_entry.data[CONF_CVE_TYPE] == "cve":
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.CVE) for description in CVESENSORS)
-    if config_entry.data[CONF_USE_WPU]:
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.WPU) for description in WPUSENSORS)
-    if config_entry.data[CONF_USE_REMOTES]:
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.REMOTES) for description in _create_remotes(config_entry))
-    if config_entry.data[CONF_USE_AUTOTEMP]:
-        async_add_entities(IthoSensor(description, config_entry, AddOnType.AUTOTEMP) for description in _create_autotemprooms(config_entry))
+
+    sensors = []
+    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
+        for description in NONCVESENSORS:
+            description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
+            sensors.append(IthoSensor(description, config_entry, AddOnType.NONCVE))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "cve":
+        for description in CVESENSORS:
+            description.key = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
+            sensors.append(IthoSensor(description, config_entry, AddOnType.CVE))
+
+    if config_entry.data[CONF_ADDON_TYPE] in ["cve", "noncve"]:
+        for description in _create_remotes(config_entry):
+            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remotes"]}"
+            sensors.append(IthoSensor(description, config_entry, AddOnType.REMOTES))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "wpu":
+        for description in WPUSENSORS:
+            description.key = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
+            sensors.append(IthoSensor(description, config_entry, AddOnType.WPU))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
+        for description in _create_autotemprooms(config_entry):
+            description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            sensors.append(IthoSensor(description, config_entry, AddOnType.AUTOTEMP))
+
+    async_add_entities(sensors)
 
 
 class IthoSensor(SensorEntity):
@@ -109,6 +127,13 @@ class IthoSensor(SensorEntity):
         """Initialize the sensor."""
         self.entity_description = description
 
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, ADDONS[aot])},
+            manufacturer="Arjen Hiemstra",
+            model="CVE" if aot == AddOnType.CVE else "NONCVE",
+            name="Itho WiFi-Addon - " + ADDONS[aot]
+        )
+
         self.entity_id = f"sensor.{ADDONS[aot].lower()}_{description.translation_key}"
         self._attr_unique_id = f"{config_entry.entry_id}-{description.translation_key}"
         self.aot = aot
@@ -119,7 +144,7 @@ class IthoSensor(SensorEntity):
         return self.entity_description.translation_key.replace("_", " ").capitalize()
 
     @property
-    def icon(self) -> str|None:
+    def icon(self) -> str | None:
         """Pick the right icon."""
 
         if self.entity_description.icon is not None:
@@ -129,7 +154,7 @@ class IthoSensor(SensorEntity):
         return None
 
     @property
-    def extra_state_attributes(self) -> list[str]|None:
+    def extra_state_attributes(self) -> list[str] | None:
         """Return the state attributes."""
 
         if self._global_fault_code_description is not None:

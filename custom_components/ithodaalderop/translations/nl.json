@@ -10,7 +10,7 @@
             "actual_mode": {
                 "name": "Huidige Mode"
             },
-            "actual_supply_fan" : {
+            "actual_supply_fan": {
                 "name": "Actuele Aanvoer Ventilator"
             },
             "actual_supply_temp": {
@@ -103,30 +103,14 @@
         "step": {
             "user": {
                 "title": "Voeg nieuwe Itho apparaten toe",
-                "description": "Configuratie stappen voor Itho",
+                "description": "Configuratie stappen voor Itho. Herhaal deze configuratie voor iedere fysieke add-on die gebruikt wordt. Deze integratie maakt automatisch de meest gebruikelijke sensors aan.",
                 "data": {
-                    "id": "Huis id",
-                    "cvetype": "Ventilator type",
-                    "use_remotes": "CO2 afstandsbedieningen",
-                    "use_wpu": "WPU",
-                    "use_autotemp": "Auto temp"
-                
+                    "addontype": "Add-on type"
                 }
             },
             "remotes": {
                 "title": "Voeg nieuwe Itho afstandsbedieningen toe",
-                "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices",
-                "data": {
-                    "remote1": "Afstandsbediening 1",
-                    "remote2": "Afstandsbediening 2",
-		    "remote3": "Afstandsbediening 3",
-		    "remote4": "Afstandsbediening 4",
-		    "remote5": "Afstandsbediening 5"
-                }
-            },
-            "remotes_reconfigure": {
-                "title": "Wijzig Itho afstandsbedieningen",
-                "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices",
+                "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices. Klik op 'Verzenden' zonder iets te wijzigen om dit over te slaan.",
                 "data": {
                     "remote1": "Afstandsbediening 1",
                     "remote2": "Afstandsbediening 2",
@@ -135,10 +119,20 @@
                     "remote5": "Afstandsbediening 5"
                 }
             },
-
-   "rooms_reconfigure": {
+            "remotes_reconfigure": {
+                "title": "Wijzig Itho afstandsbedieningen",
+                "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices. ",
+                "data": {
+                    "remote1": "Afstandsbediening 1",
+                    "remote2": "Afstandsbediening 2",
+                    "remote3": "Afstandsbediening 3",
+                    "remote4": "Afstandsbediening 4",
+                    "remote5": "Afstandsbediening 5"
+                }
+            },
+            "rooms_reconfigure": {
                 "title": "Wijzig Itho ruimtes",
-                "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer",
+                "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer or slaapkamer ouders.",
                 "data": {
                     "room1": "Ruimte 1",
                     "room2": "Ruimte 2",
@@ -166,17 +160,17 @@
             }
         },
         "abort": {
-       		 "already_configured": "Itho integratie is al geconfigureerd",
-		 "reconfigure_successful": "Herconfiguratie was succesvol" 
-	},
-        "error": {
-        }
+            "already_configured": "Itho integratie is al geconfigureerd",
+            "reconfigure_successful": "Herconfiguratie was succesvol"
+        },
+        "error": {}
     },
     "selector": {
-        "cveselect": {
+        "addonselect": {
             "options": {
-                "none" : "Geen ventilator",
-                "noncve" : "Non-CVE (HRU)",
+                "wpu": "WPU Warmtepomp",
+                "autotemp": "Autotemp vloerverwarming",
+                "noncve": "Non-CVE (HRU)",
                 "cve": "CVE (ECO box)"
             }
         }

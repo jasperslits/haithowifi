@@ -9,9 +9,17 @@ from homeassistant.components import mqtt
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import ADDONS, CONF_CVE_TYPE, AddOnType
+from .const import (
+    ADDONS,
+    CONF_ADDON_TYPE,
+    DOMAIN,
+    MQTT_BASETOPIC,
+    MQTT_STATETOPIC,
+    AddOnType,
+)
 from .definitions import NONCVEBINARYSENSORS, IthoBinarySensorEntityDescription
 
 
@@ -21,8 +29,13 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Itho add-on binary sensors from config entry based on their type."""
-    if config_entry.data[CONF_CVE_TYPE] == "noncve":
-        async_add_entities(IthoBinarySensor(description, config_entry, AddOnType.NONCVE) for description in NONCVEBINARYSENSORS)
+    sensors = []
+    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
+        for description in NONCVEBINARYSENSORS:
+            description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
+            sensors.append(IthoBinarySensor(description, config_entry, AddOnType.NONCVE))
+
+    async_add_entities(sensors)
 
 
 class IthoBinarySensor(BinarySensorEntity):
@@ -36,6 +49,13 @@ class IthoBinarySensor(BinarySensorEntity):
     ) -> None:
         """Initialize the binary sensor."""
         self.entity_description = description
+
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, ADDONS[aot])},
+            manufacturer="Arjen Hiemstra",
+            model="CVE" if aot == AddOnType.CVE else "NONCVE",
+            name="Itho WiFi-Addon - " + ADDONS[aot]
+        )
 
         self.entity_id = f"binary_sensor.{ADDONS[aot].lower()}_{description.translation_key}"
         self._attr_unique_id = f"{config_entry.entry_id}-{description.translation_key}"
@@ -68,8 +88,7 @@ class IthoBinarySensor(BinarySensorEntity):
             """Handle new MQTT messages."""
             if message.payload == "":
                 self._attr_native_value = None
-            # elif self.entity_description.state is not None:
-            #     self._attr_native_value = bool(self.entity_description.state(message.payload))
+
             else:
                 payload = json.loads(message.payload)
                 if self.entity_description.json_field not in payload:
