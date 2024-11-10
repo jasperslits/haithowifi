@@ -6,7 +6,6 @@ Author: Jasper
 
 import copy
 import json
-
 from datetime import datetime, timedelta
 
 from homeassistant.components import mqtt
@@ -23,17 +22,17 @@ from .const import (
     AUTOTEMP_STATUS,
     CONF_ADDON_TYPE,
     DOMAIN,
+    MQTT_BASETOPIC,
+    MQTT_STATETOPIC,
     NONCVE_ACTUAL_MODE,
     NONCVE_GLOBAL_FAULT_CODE,
     NONCVE_RH_ERROR_CODE,
-    MQTT_BASETOPIC,
-    MQTT_STATETOPIC,
     UNITTYPE_ICONS,
     AddOnType,
 )
 from .definitions import (
-    AUTOTEMPSENSORS,
     AUTOTEMPROOMSENSORS,
+    AUTOTEMPSENSORS,
     CVESENSORS,
     NONCVESENSORS,
     WPUSENSORS,
