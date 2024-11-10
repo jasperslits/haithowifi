@@ -58,7 +58,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             vol.Optional(CONF_REMOTE_4, default="Remote 4"): str,
             vol.Optional(CONF_REMOTE_5, default="Remote 5"): str
         })
-        return self.async_show_form(step_id="remotes", data_schema=itho_schema,last_step=True)
+        return self.async_show_form(step_id="remotes", data_schema=itho_schema, last_step=True)
 
     async def async_step_remotes_reconfigure(self, info=None):
         """Reconfigure up to 5 remotes."""
@@ -73,7 +73,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             vol.Optional(CONF_REMOTE_4, default=self._get_reconfigure_value(CONF_REMOTE_4, "Remote 4")): str,
             vol.Optional(CONF_REMOTE_5, default=self._get_reconfigure_value(CONF_REMOTE_5, "Remote 5")): str,
         })
-        return self.async_show_form(step_id="remotes_reconfigure", data_schema=itho_schema,last_step=True)
+        return self.async_show_form(step_id="remotes_reconfigure", data_schema=itho_schema, last_step=True)
 
     async def async_step_rooms(self, info=None):
         """Configure rooms for autotemp."""
@@ -96,7 +96,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             vol.Optional(CONF_AUTOTEMP_ROOM7, default="Room 7"): str,
             vol.Optional(CONF_AUTOTEMP_ROOM8, default="Room 8"): str,
         })
-        return self.async_show_form(step_id="rooms", data_schema=itho_schema,last_step=True)
+        return self.async_show_form(step_id="rooms", data_schema=itho_schema, last_step=True)
 
     def _get_reconfigure_value(self, param, default):
         """Get reconfigure value."""
@@ -120,13 +120,13 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             vol.Optional(CONF_AUTOTEMP_ROOM7, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM7, "Room 7")): str,
             vol.Optional(CONF_AUTOTEMP_ROOM8, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM8, "Room 8")): str,
         })
-        return self.async_show_form(step_id="rooms_reconfigure", data_schema=itho_schema,last_step=True)
+        return self.async_show_form(step_id="rooms_reconfigure", data_schema=itho_schema, last_step=True)
 
     async def async_step_user(self, info=None):
         """Configure main step."""
         if info is not None:
             self.config.update(info)
-            if info[CONF_ADDON_TYPE] in ["cve","noncve"]:
+            if info[CONF_ADDON_TYPE] in ["cve", "noncve"]:
                 return await self.async_step_remotes()
             if info[CONF_ADDON_TYPE] == "autotemp":
                 return await self.async_step_rooms()
@@ -157,8 +157,8 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         assert entry
         self.entry = entry
         self.config.update(entry.data)
-        if self.config[CONF_ADDON_TYPE]  in ["cve","noncve"]:
-                return await self.async_step_remotes_reconfigure()
+        if self.config[CONF_ADDON_TYPE] in ["cve", "noncve"]:
+            return await self.async_step_remotes_reconfigure()
         if self.config[CONF_ADDON_TYPE] == "autotemp":
-                return await self.async_step_rooms_reconfigure()
+            return await self.async_step_rooms_reconfigure()
         return self.async_update_reload_and_abort(self.entry, data=self.config, reason="reconfigure_successful")

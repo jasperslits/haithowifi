@@ -37,6 +37,7 @@ async def async_setup_entry(
 
     async_add_entities(sensors)
 
+
 class IthoBinarySensor(BinarySensorEntity):
     """Representation of a Itho add-on binary sensor that is updated via MQTT."""
 
@@ -51,8 +52,8 @@ class IthoBinarySensor(BinarySensorEntity):
 
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, ADDONS[aot])},
-            manufacturer = "Arjen Hiemstra",
-            model = "CVE" if aot == AddOnType.CVE else "NONCVE",
+            manufacturer="Arjen Hiemstra",
+            model="CVE" if aot == AddOnType.CVE else "NONCVE",
             name="Itho WiFi-Addon - " + ADDONS[aot]
         )
 

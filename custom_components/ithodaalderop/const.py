@@ -15,6 +15,7 @@ class AddOnType(IntEnum):
     REMOTES = 4
     NONCVE = 5
 
+
 ADDON_TYPES = {
     "noncve": "HRU WTW",
     "cve": "CVE",
