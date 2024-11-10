@@ -5,8 +5,8 @@ Author: Jasper
 """
 
 import copy
-import json
 from datetime import datetime, timedelta
+import json
 
 from homeassistant.components import mqtt
 from homeassistant.components.sensor import SensorEntity
@@ -16,7 +16,6 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
-    _LOGGER,
     ADDONS,
     AUTOTEMP_ERROR,
     AUTOTEMP_MODE,

@@ -21,9 +21,9 @@ from .const import (
     AddOnType,
 )
 from .definitions import (
-    AUTOTEMPBINARYSENSORS
+    AUTOTEMPBINARYSENSORS,
     NONCVEBINARYSENSORS,
-    IthoBinarySensorEntityDescription
+    IthoBinarySensorEntityDescription,
 )
 
 
