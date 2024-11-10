@@ -44,7 +44,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Configure up to 5 remotes."""
         if info is not None:
             self.config.update(info)
-            await self.async_set_unique_id(self.config[CONF_ADDON_TYPE])
+            await self.async_set_unique_id(f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}")
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
                 title="Itho WiFi Add-on for " + ADDON_TYPES[self.config[CONF_ADDON_TYPE]],
@@ -79,7 +79,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Configure rooms for autotemp."""
         if info is not None:
             self.config.update(info)
-            await self.async_set_unique_id(self.config[CONF_ADDON_TYPE])
+            await self.async_set_unique_id(f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}")
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
                 title="Itho WiFi Add-on for " + ADDON_TYPES[self.config[CONF_ADDON_TYPE]],
@@ -130,7 +130,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 return await self.async_step_remotes()
             if info[CONF_ADDON_TYPE] == "autotemp":
                 return await self.async_step_rooms()
-            await self.async_set_unique_id(self.config[CONF_ADDON_TYPE])
+            await self.async_set_unique_id(f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}")
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
                 title="Itho WiFi Add-on for " + ADDON_TYPES[self.config[CONF_ADDON_TYPE]],
