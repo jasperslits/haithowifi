@@ -16,21 +16,23 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
-    _LOGGER,
     ADDON_TYPES,
     ADDONS,
+    AUTOTEMP_ERROR,
+    AUTOTEMP_MODE,
+    AUTOTEMP_STATUS,
     CONF_ADDON_TYPE,
     DOMAIN,
-    HRU_ACTUAL_MODE,
-    HRU_GLOBAL_FAULT_CODE,
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
-    RH_ERROR_CODE,
+    NONCVE_ACTUAL_MODE,
+    NONCVE_GLOBAL_FAULT_CODE,
+    NONCVE_RH_ERROR_CODE,
     UNITTYPE_ICONS,
-    WPU_STATUS,
     AddOnType,
 )
 from .definitions import (
+    AUTOTEMPROOMSENSORS,
     AUTOTEMPSENSORS,
     CVESENSORS,
     NONCVESENSORS,
@@ -63,7 +65,7 @@ def _create_autotemprooms(config_entry: ConfigEntry):
     cfg = config_entry.data
     configured_sensors = []
     for x in range(1, 8):
-        template_sensors = copy.deepcopy(list(AUTOTEMPSENSORS))
+        template_sensors = copy.deepcopy(list(AUTOTEMPROOMSENSORS))
         room = cfg["room" + str(x)]
         if room != "" and room != "Room " + str(x):
             for sensor in template_sensors:
@@ -104,7 +106,7 @@ async def async_setup_entry(
             sensors.append(IthoSensor(description, config_entry, AddOnType.WPU))
 
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
-        for description in _create_autotemprooms(config_entry):
+        for description in AUTOTEMPSENSORS + _create_autotemprooms(config_entry):
             description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
             sensors.append(IthoSensor(description, config_entry, AddOnType.AUTOTEMP))
 
@@ -117,10 +119,10 @@ class IthoSensor(SensorEntity):
     _attr_has_entity_name = True
     entity_description: IthoSensorEntityDescription
 
-    _filter_last_maintenance = None
-    _filter_next_maintenance_estimate = None
-    _global_fault_code_description = None
-    _rh_error_description = None
+    _noncve_filter_last_maintenance = None
+    _noncve_filter_next_maintenance_estimate = None
+    _noncve_global_fault_code_description = None
+    _noncve_rh_error_description = None
 
     def __init__(
         self, description: IthoSensorEntityDescription, config_entry: ConfigEntry, aot: AddOnType
@@ -158,20 +160,20 @@ class IthoSensor(SensorEntity):
     def extra_state_attributes(self) -> list[str] | None:
         """Return the state attributes."""
 
-        if self._global_fault_code_description is not None:
+        if self._noncve_global_fault_code_description is not None:
             return {
-                "Description": self._global_fault_code_description,
+                "Description": self._noncve_global_fault_code_description,
             }
 
-        if self._filter_last_maintenance is not None and self._filter_next_maintenance_estimate is not None:
+        if self._noncve_filter_last_maintenance is not None and self._noncve_filter_next_maintenance_estimate is not None:
             return {
-                "Last Maintenance": self._filter_last_maintenance,
-                "Next Maintenance Estimate": self._filter_next_maintenance_estimate,
+                "Last Maintenance": self._noncve_filter_last_maintenance,
+                "Next Maintenance Estimate": self._noncve_filter_next_maintenance_estimate,
             }
 
-        if self._rh_error_description is not None:
+        if self._noncve_rh_error_description is not None:
             return {
-                "Error Description": self._rh_error_description,
+                "Error Description": self._noncve_rh_error_description,
             }
         return None
 
@@ -191,33 +193,45 @@ class IthoSensor(SensorEntity):
                     value = None
                 else:
                     value = payload[self.entity_description.json_field]
+                    json_field = self.entity_description.json_field
+
+                    if self.aot == AddOnType.AUTOTEMP:
+                        if json_field == "Error":
+                            value = AUTOTEMP_ERROR.get(value, f"Unknown error: ({value})")
+
+                        if json_field == "Mode":
+                            value = AUTOTEMP_MODE.get(value, f"Unknown mode: ({value})")
+
+                        if json_field == "Status":
+                            value = AUTOTEMP_STATUS.get(value, f"Unknown status: ({value})")
+
                     if self.aot == AddOnType.NONCVE:
-                        if self.entity_description.json_field == "Actual Mode":
-                            value = HRU_ACTUAL_MODE[value]
+                        if json_field == "Actual Mode":
+                            value = NONCVE_ACTUAL_MODE.get(value, f"Unknown mode: ({value})")
 
-                        if self.entity_description.json_field == "Airfilter counter":
-                            try:
-                                self._filter_last_maintenance = (datetime.now() - timedelta(hours=int(value))).date()
-                                self._filter_next_maintenance_estimate = (datetime.now() + timedelta(days=180, hours=-int(value))).date()
-                            except ValueError as e:
-                                _LOGGER.error(f"failed to parse value for 'Airfilter counter'\n{e}")
+                        if json_field == "Airfilter counter":
+                            if value.isnumeric():
+                                self._noncve_filter_last_maintenance = (datetime.now() - timedelta(hours=int(value))).date()
+                                self._noncve_filter_next_maintenance_estimate = (datetime.now() + timedelta(days=180, hours=-int(value))).date()
+                            else:
+                                self._noncve_filter_last_maintenance = f"Invalid value: {value}"
+                                self._noncve_filter_next_maintenance_estimate = ""
 
-                        if self.entity_description.json_field == "Global fault code":
-                            self._global_fault_code_description = HRU_GLOBAL_FAULT_CODE.get(int(value), "Unknown fault code")
-
-                    if self.aot == AddOnType.WPU and self.entity_description.json_field == "Status":
-                        value = WPU_STATUS[value]
+                        if json_field == "Global fault code":
+                            self._noncve_global_fault_code_description = NONCVE_GLOBAL_FAULT_CODE.get(int(value), f"Unknown fault code: ({value})")
 
                     if self.aot == AddOnType.REMOTES:
                         value = value["co2"]
 
-                if self.entity_description.json_field == "Highest received RH value (%RH)":
+                # RH values can be over 100% RH. This indicates an error state.
+                if (self.aot == AddOnType.NONCVE
+                        and json_field == "Highest received RH value (%RH)"):
                     if value.isnumeric() and float(value) > 100:
                         self._attr_native_value = None
-                        self._rh_error_description = RH_ERROR_CODE.get(int(value), "Unknown Error")
+                        self._noncve_rh_error_description = NONCVE_RH_ERROR_CODE.get(int(value), f"Unknown error: ({value})")
                     else:
                         self._attr_native_value = value
-                        self._rh_error_description = ""
+                        self._noncve_rh_error_description = ""
                 else:
                     self._attr_native_value = value
 

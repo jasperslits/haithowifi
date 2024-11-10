@@ -28,14 +28,21 @@ It creates a device and commonly used sensors and uses a predefined MQTT state t
 | Device | Sensor | Attributes |
 |---|---|---|
 | **Autotemp** |||
+|| Empty battery ||
+|| Error ||
+|| Mode ||
 || Room X power % (%) ||
 || Room X power kW (kW) ||
 || Room X setpoint ||
 || Room X temp ||
 | **CVE** |||
-|| Fan setpoint (rpm) ||
+|| Error ||
+|| Fan Setpoint (rpm) ||
+|| Fan Speed (rpm) ||
+|| Filter dirty ||
 || Humidity ||
 || Temperature ||
+|| Total Operating Time ||
 || Ventilation setpoint (%) ||
 | **NONCVE (HRU)** |||
 || Actual Mode ||
@@ -71,15 +78,15 @@ Missing a sensor? Feel free to create an [issue](https://github.com/jasperslits/
 
 ### Prerequisites
 1. Working WiFi add-on connected to the Itho device(s)
-2. State topics for MQTT like table below
+2. [MQTT HA Integration](https://www.home-assistant.io/integrations/mqtt/)
+3. State topics for MQTT like table below
 
 | Device  | MQTT base topic   | 
 |---|---|
+| Autotemp  | ithotemp  |
+| CVE  | ithocve  |
 | HRU  | ithohru  | 
 | WPU  | ithowpu  |
-| CVE  | ithohru  |
-| Autotemp  | ithotemp  |
-| Remotes | ithohru |
 
 ## How to install
 1. In the Add-On from Arjen: Update the add-on MQTT configuration and set MQTT Base Topic as per below above

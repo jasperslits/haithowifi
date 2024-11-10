@@ -43,8 +43,20 @@
             "cv_return_temp": {
                 "name": "CV Afvoer Temperatuur"
             },
+            "empty_battery": {
+                "name": "Battery Leeg"
+            },
+            "error": {
+                "name": "Error"
+            },
             "fan_setpoint_rpm": {
                 "name": "Fan Stand"
+            },
+            "fan_speed": {
+                "name": "Fan Snelheid"
+            },
+            "filter_dirty": {
+                "name": "Filter Vuil"
             },
             "flow_sensor": {
                 "name": "Stroomsnelheid"
@@ -63,6 +75,9 @@
             },
             "humidity": {
                 "name": "Luchtvochtigheid"
+            },
+            "mode": {
+                "name": "Mode"
             },
             "remaining_override_timer": {
                 "name": "Resterende Override Timer"

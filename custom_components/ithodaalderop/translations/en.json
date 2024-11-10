@@ -43,8 +43,20 @@
             "cv_return_temp": {
                 "name": "CV Return Temp"
             },
+            "empty_battery": {
+                "name": "Empty Battery"
+            },
+            "error": {
+                "name": "Error"
+            },
             "fan_setpoint_rpm": {
                 "name": "Fan Setpoint"
+            },
+            "fan_speed": {
+                "name": "Fan Speed"
+            },
+            "filter_dirty": {
+                "name": "Filter Dirty"
             },
             "flow_sensor": {
                 "name": "Flow"
@@ -63,6 +75,9 @@
             },
             "humidity": {
                 "name": "Humidity"
+            },
+            "mode": {
+                "name": "Mode"
             },
             "remaining_override_timer": {
                 "name": "Remaining Override Timer"
@@ -84,6 +99,9 @@
             },
             "temp_to_source": {
                 "name": "Temp to Source"
+            },
+            "total_operation": {
+                "name": "Total Operating Time"
             },
             "well_pump_percent": {
                 "name": "Well Pump percent"
