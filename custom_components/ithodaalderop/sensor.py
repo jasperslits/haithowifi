@@ -215,7 +215,7 @@ class IthoSensor(SensorEntity):
                         if json_field == "Global fault code":
                             _description = ""
                             if str(value).isnumeric():
-                                _description = NONCVE_GLOBAL_FAULT_CODE.get(int(value), "Unknown fault code"),
+                                _description = NONCVE_GLOBAL_FAULT_CODE.get(int(value), "Unknown fault code")
 
                             self._extra_state_attributes = {
                                 "Description": _description,
