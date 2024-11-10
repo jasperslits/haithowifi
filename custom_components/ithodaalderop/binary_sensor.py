@@ -13,6 +13,7 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
+    ADDON_TYPES,
     ADDONS,
     CONF_ADDON_TYPE,
     DOMAIN,
@@ -51,10 +52,10 @@ class IthoBinarySensor(BinarySensorEntity):
         self.entity_description = description
 
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, ADDONS[aot])},
+            identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
             manufacturer="Arjen Hiemstra",
             model="CVE" if aot == AddOnType.CVE else "NONCVE",
-            name="Itho WiFi-Addon - " + ADDONS[aot]
+            name="Itho WiFi-Addon - " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
         )
 
         self.entity_id = f"binary_sensor.{ADDONS[aot].lower()}_{description.translation_key}"
