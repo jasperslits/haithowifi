@@ -20,7 +20,6 @@ from .const import (
     ADDONS,
     AUTOTEMP_ERROR,
     AUTOTEMP_MODE,
-    AUTOTEMP_STATUS,
     CONF_ADDON_TYPE,
     DOMAIN,
     MQTT_BASETOPIC,
@@ -190,12 +189,16 @@ class IthoSensor(SensorEntity):
                             }
                             value = AUTOTEMP_MODE.get(value, "Unknown mode")
 
-                        if json_field == "Status":
-                            self._extra_state_attributes = {
-                                "Code": value,
-                            }
-                            value = AUTOTEMP_STATUS.get(value, "Unknown status")
-
+                        if json_field == "State off":
+                            if value == 1:
+                                value = "Off"
+                            if payload["State cool"] == 1:
+                                value = "Cooling"
+                            if payload["State heating"] == 1:
+                                value = "Heating"
+                            if payload["state hand"] == 1:
+                                value = "Hand"
+         
                     if self.aot == AddOnType.NONCVE:
                         if json_field == "Actual Mode":
                             self._extra_state_attributes = {

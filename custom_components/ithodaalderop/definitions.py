@@ -66,6 +66,10 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Mode",
         translation_key="mode",
     ),
+        IthoSensorEntityDescription(
+        json_field="State off",
+        translation_key="state",
+    ),
 )
 
 AUTOTEMPROOMSENSORS: tuple[IthoSensorEntityDescription, ...] = (
