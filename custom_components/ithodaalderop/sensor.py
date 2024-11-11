@@ -179,24 +179,28 @@ class IthoSensor(SensorEntity):
                     if self.aot == AddOnType.AUTOTEMP:
                         if json_field == "Error":
                             self._extra_state_attributes = {
-                                "Description": AUTOTEMP_ERROR.get(value, "Unknown error"),
+                                "Code": value,
                             }
+                            value = AUTOTEMP_ERROR.get(value, "Unknown error")
 
                         if json_field == "Mode":
                             self._extra_state_attributes = {
-                                "Description": AUTOTEMP_MODE.get(value, "Unknown mode"),
+                                "Code": value,
                             }
+                            value = AUTOTEMP_MODE.get(value, "Unknown mode")
 
                         if json_field == "Status":
                             self._extra_state_attributes = {
-                                "Description": AUTOTEMP_STATUS.get(value, "Unknown status"),
+                                "Code": value,
                             }
+                            value = AUTOTEMP_STATUS.get(value, "Unknown status")
 
                     if self.aot == AddOnType.NONCVE:
                         if json_field == "Actual Mode":
                             self._extra_state_attributes = {
-                                "Description": NONCVE_ACTUAL_MODE.get(value, "Unknown mode"),
+                                "Code": value
                             }
+                            value = NONCVE_ACTUAL_MODE.get(value, "Unknown mode")
 
                         if json_field == "Airfilter counter":
                             _last_maintenance = ""
