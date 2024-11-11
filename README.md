@@ -29,13 +29,13 @@ It creates a device and commonly used sensors and uses a predefined MQTT state t
 |---|---|---|
 | **Autotemp** |||
 || Empty battery ||
-|| Error | Description |
-|| Mode | Description |
+|| Error | Code |
+|| Mode | Code |
 || Room X power % (%) ||
 || Room X power kW (kW) ||
 || Room X setpoint ||
 || Room X temp ||
-|| Status | Description |
+|| Status | Code |
 | **CVE** |||
 || Error ||
 || Fan Setpoint (rpm) ||
@@ -46,7 +46,7 @@ It creates a device and commonly used sensors and uses a predefined MQTT state t
 || Total Operating Time ||
 || Ventilation setpoint (%) ||
 | **NONCVE (HRU)** |||
-|| Actual Mode | Description |
+|| Actual Mode | Code |
 || Air Quality (%) ||
 || Airfilter counter | Last Maintenance |
 ||| Next Maintenance Estimate |
