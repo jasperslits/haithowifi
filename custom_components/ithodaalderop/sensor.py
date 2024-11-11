@@ -29,6 +29,7 @@ from .const import (
     NONCVE_GLOBAL_FAULT_CODE,
     NONCVE_RH_ERROR_CODE,
     UNITTYPE_ICONS,
+    WPU_STATUS,
     AddOnType,
 )
 from .definitions import (
@@ -239,6 +240,21 @@ class IthoSensor(SensorEntity):
 
                     if self.aot == AddOnType.REMOTES:
                         value = value["co2"]
+
+                    if self.aot == AddOnType.WPU:
+                        if json_field == "Status":
+                            value = WPU_STATUS.get(int(value), "Unknown status")
+                        if json_field == "ECO selected on thermostat":
+                            if value == 1:
+                                value = "Eco"
+                            if payload["Comfort selected on thermostat"] == 1:
+                                value = "Comfort"
+                            if payload["Boiler boost from thermostat"] == 1:
+                                value = "Boost"
+                            if payload["Boiler blocked from thermostat"] == 1:
+                                value = "Off"
+                            if payload["Venting from thermostat"] == 1:
+                                value = "Venting"
 
             self._attr_native_value = value
             self.async_write_ha_state()

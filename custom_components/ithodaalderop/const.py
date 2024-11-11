@@ -113,6 +113,15 @@ AUTOTEMP_STATUS = {
     5: "Venting",
 }
 
+WPU_STATUS = {
+    0: "Init",
+    1: "Off",
+    2: "CV",
+    3: "Boiler",
+    4: "Cooling",
+    5: "Venting",
+}
+
 NONCVE_ACTUAL_MODE = {
     1: "low",
     2: "medium",

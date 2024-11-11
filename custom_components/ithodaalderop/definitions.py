@@ -327,6 +327,10 @@ WPUSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="status",
     ),
     IthoSensorEntityDescription(
+        json_field="ECO selected on thermostat",
+        translation_key="thermostat",
+    ),
+    IthoSensorEntityDescription(
         json_field="Temp to source (°C)",
         translation_key="temp_to_source",
         device_class=SensorDeviceClass.TEMPERATURE,
