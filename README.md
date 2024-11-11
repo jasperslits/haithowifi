@@ -14,12 +14,16 @@ Note: The 'add-on' here in the context is the ESP32 add-on to the Itho Daalderop
 4. Up to 5 remotes for monitoring CO2 levels
 5. Up to 8 autotemp rooms using custom room names instead of Room 1, Room 2
 
+### Not (yet) supported
+The fan entity is not supported yet. To add this to Home Assistant enable the Auto-discovery in Arjen's module under MQTT settings or manually configured it. 
+See https://github.com/arjenhiemstra/ithowifi/wiki/Home-Assistant the wiki for details
+
 ### Use-case
 Full auto-discovery from the WiFi add-on to Home Assistant is the best experience but as this is not there yet, this integration should eliminate the manual creation via YAML of sensors for:
 * Non-CVE like Actual mode, Supply Temp, Supply / Exhaust RPM, Bypass 
 * CVE like Humidity, Temperature, Speed
 * Autotemp like Power kW, Power %, Set Point Temp, Actual Temp per Room
-* CO2 sensors for supported remotes
+* CO2 concencration for supported remotes
 * WPU like Pump Percentage, Boiler Temp, From / To Source Temps, Operating Mode etc
 
 It creates a device and commonly used sensors and uses a predefined MQTT state topic to distinct the devices.
