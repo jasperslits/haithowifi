@@ -198,7 +198,7 @@ class IthoSensor(SensorEntity):
                                 value = "Heating"
                             if payload["state hand"] == 1:
                                 value = "Hand"
-         
+
                     if self.aot == AddOnType.NONCVE:
                         if json_field == "Actual Mode":
                             self._extra_state_attributes = {
