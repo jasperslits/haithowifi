@@ -29,12 +29,13 @@ It creates a device and commonly used sensors and uses a predefined MQTT state t
 |---|---|---|
 | **Autotemp** |||
 || Empty battery ||
-|| Error ||
-|| Mode ||
+|| Error | Description |
+|| Mode | Description |
 || Room X power % (%) ||
 || Room X power kW (kW) ||
 || Room X setpoint ||
 || Room X temp ||
+|| Status | Description |
 | **CVE** |||
 || Error ||
 || Fan Setpoint (rpm) ||
@@ -45,9 +46,9 @@ It creates a device and commonly used sensors and uses a predefined MQTT state t
 || Total Operating Time ||
 || Ventilation setpoint (%) ||
 | **NONCVE (HRU)** |||
-|| Actual Mode ||
+|| Actual Mode | Description |
 || Air Quality (%) ||
-|| Airfilter counter |Last Maintenance|
+|| Airfilter counter | Last Maintenance |
 ||| Next Maintenance Estimate |
 || Balance (%) ||
 || Bypass position ||
@@ -55,7 +56,7 @@ It creates a device and commonly used sensors and uses a predefined MQTT state t
 || Exhaust temp (°C) ||
 || Global fault code | Description |
 || Highest received CO2 value (Ppm) (disabled by default) ||
-|| Highest received RH value (%RH) (disabled by default) ||
+|| Highest received RH value (%RH) (disabled by default) | Error Description |
 || Remaining override timer (Sec) ||
 || Supply fan (RPM) ||
 || Supply temp (°C) ||
