@@ -12,7 +12,7 @@ class AddOnType(IntEnum):
     CVE = 1
     WPU = 2
     AUTOTEMP = 3
-    REMOTES = 4
+    REMOTE = 4
     NONCVE = 5
 
 
@@ -28,7 +28,7 @@ ADDONS = {
     1: "CVE",
     2: "WPU",
     3: "AUTOTEMP",
-    4: "REMOTES",
+    4: "REMOTE",
     5: "NONCVE",
 }
 
@@ -57,7 +57,7 @@ MQTT_STATETOPIC = {
     "noncve": "ithostatus",
     "wpu": "ithostatus",
     "autotemp": "ithostatus",
-    "remotes": "remotesinfo",
+    "remote": "remotesinfo",
 }
 
 CONF_ADDON_TYPE = "addontype"

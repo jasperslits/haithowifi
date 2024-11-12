@@ -53,7 +53,7 @@ def _create_remotes(config_entry: ConfigEntry):
             remotes.append(
                 IthoSensorEntityDescription(
                     json_field=remote,
-                    key=f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remotes"]}",
+                    key=f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}",
                     translation_key=remote,
                     device_class="carbon_dioxide",
                     native_unit_of_measurement="ppm",
@@ -107,24 +107,20 @@ async def async_setup_entry(
 
     if config_entry.data[CONF_ADDON_TYPE] in ["cve", "noncve"]:
         for description in _create_remotes(config_entry):
-            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remotes"]}"
-            sensors.append(
-                IthoSensorRemotes(description, config_entry, AddOnType.REMOTES)
-            )
+            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}"
+            sensors.append(IthoSensorRemote(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "wpu":
         for description in WPUSENSORS:
             description.key = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
-            sensors.append(IthoSensorWPU(description, config_entry, AddOnType.WPU))
+            sensors.append(IthoSensorWPU(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
         for description in list(AUTOTEMPSENSORS) + _create_autotemprooms(config_entry):
             description.key = (
                 f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
             )
-            sensors.append(
-                IthoSensorAutotemp(description, config_entry, AddOnType.AUTOTEMP)
-            )
+            sensors.append(IthoSensorAutotemp(description, config_entry))
 
     async_add_entities(sensors)
 
@@ -168,17 +164,14 @@ class IthoBaseSensor(SensorEntity):
         return None
 
 
-class IthoSensorRemotes(IthoBaseSensor):
-    """Representation of Itho add-on sensor for Remotes that is updated via MQTT."""
+class IthoSensorRemote(IthoBaseSensor):
+    """Representation of Itho add-on sensor for a Remote that is updated via MQTT."""
 
     def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry,
-        aot: AddOnType,
+        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
     ) -> None:
-        """Construct sensor for Remotes."""
-        super().__init__(description, config_entry, aot)
+        """Construct sensor for Remote."""
+        super().__init__(description, config_entry, AddOnType.REMOTE)
 
     @property
     def name(self) -> str:
@@ -214,13 +207,10 @@ class IthoSensorAutotemp(IthoBaseSensor):
     """Representation of Itho add-on sensor for Autotemp data that is updated via MQTT."""
 
     def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry,
-        aot: AddOnType,
+        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
     ) -> None:
         """Construct sensor for Autotemp."""
-        super().__init__(description, config_entry, aot)
+        super().__init__(description, config_entry, AddOnType.AUTOTEMP)
 
     @property
     def name(self) -> str:
@@ -278,13 +268,10 @@ class IthoSensorWPU(IthoBaseSensor):
     """Representation of Itho add-on sensor for WPU that is updated via MQTT."""
 
     def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry,
-        aot: AddOnType,
+        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
     ) -> None:
         """Construct sensor for WPU."""
-        super().__init__(description, config_entry, aot)
+        super().__init__(description, config_entry, AddOnType.WPU)
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
