@@ -66,6 +66,10 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Mode",
         translation_key="mode",
     ),
+        IthoSensorEntityDescription(
+        json_field="State off",
+        translation_key="state",
+    ),
 )
 
 AUTOTEMPROOMSENSORS: tuple[IthoSensorEntityDescription, ...] = (
@@ -325,6 +329,10 @@ WPUSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Status",
         translation_key="status",
+    ),
+    IthoSensorEntityDescription(
+        json_field="ECO selected on thermostat",
+        translation_key="thermostat",
     ),
     IthoSensorEntityDescription(
         json_field="Temp to source (°C)",
