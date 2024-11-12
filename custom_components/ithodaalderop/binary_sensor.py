@@ -13,6 +13,7 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
+    _LOGGER,
     ADDONS,
     CONF_ADDON_TYPE,
     DOMAIN,
@@ -33,6 +34,11 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Itho add-on binary sensors from config entry based on their type."""
+
+    if not await mqtt.async_wait_for_mqtt_client(_):
+        _LOGGER.error("MQTT integration is not available")
+        return
+
     sensors = []
     if config_entry.data[CONF_ADDON_TYPE] == "noncve":
         for description in NONCVEBINARYSENSORS:
