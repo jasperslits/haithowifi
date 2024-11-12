@@ -104,15 +104,6 @@ AUTOTEMP_MODE = {
     5: "Manual operation",
 }
 
-AUTOTEMP_STATUS = {
-    0: "Init",
-    1: "Off",
-    2: "CV",
-    3: "Boiler",
-    4: "Cooling",
-    5: "Venting",
-}
-
 NONCVE_ACTUAL_MODE = {
     1: "low",
     2: "medium",
@@ -149,3 +140,13 @@ NONCVE_RH_ERROR_CODE = {
     254: "Reserved Error",
     255: "Unknown Error",
 }
+
+WPU_STATUS = {
+    0: "Init",
+    1: "Off",
+    2: "CV",
+    3: "Boiler",
+    4: "Cooling",
+    5: "Venting",
+}
+

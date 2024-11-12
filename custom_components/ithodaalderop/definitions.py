@@ -47,6 +47,62 @@ class IthoBinarySensorEntityDescription(BinarySensorEntityDescription):
     icon_on: str | None = None
 
 
+AUTOTEMPBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
+    IthoBinarySensorEntityDescription(
+        json_field="Empty battery ( 0=OK )",
+        translation_key="empty_battery",
+        device_class=BinarySensorDeviceClass.BATTERY,
+        icon_off="mdi:battery",
+        icon_on="mdi:battery-low",
+    ),
+)
+
+AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
+    IthoSensorEntityDescription(
+        json_field="Error",
+        translation_key="error",
+    ),
+    IthoSensorEntityDescription(
+        json_field="Mode",
+        translation_key="mode",
+    ),
+        IthoSensorEntityDescription(
+        json_field="State off",
+        translation_key="state",
+    ),
+)
+
+AUTOTEMPROOMSENSORS: tuple[IthoSensorEntityDescription, ...] = (
+    IthoSensorEntityDescription(
+        json_field="Room X power % (%)",
+        translation_key="Room X power % (%)",
+        device_class=SensorDeviceClass.POWER_FACTOR,
+        native_unit_of_measurement="%",
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Room X power kW (kW)",
+        translation_key="Room X power kW",
+        device_class=SensorDeviceClass.POWER,
+        native_unit_of_measurement=UnitOfPower.KILO_WATT,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Room X setp",
+        translation_key="Room X setpoint temp",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Room X temp",
+        translation_key="Room X actual temp",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+)
+
 CVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     IthoBinarySensorEntityDescription(
         json_field="Filter dirty",
@@ -115,59 +171,6 @@ CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
     ),
 )
-
-AUTOTEMPBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
-    IthoBinarySensorEntityDescription(
-        json_field="Empty battery ( 0=OK )",
-        translation_key="empty_battery",
-        device_class=BinarySensorDeviceClass.BATTERY,
-        icon_off="mdi:battery",
-        icon_on="mdi:battery-low",
-    ),
-)
-
-AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
-    IthoSensorEntityDescription(
-        json_field="Error",
-        translation_key="error",
-    ),
-    IthoSensorEntityDescription(
-        json_field="Mode",
-        translation_key="mode",
-    ),
-)
-
-AUTOTEMPROOMSENSORS: tuple[IthoSensorEntityDescription, ...] = (
-    IthoSensorEntityDescription(
-        json_field="Room X power % (%)",
-        translation_key="Room X power % (%)",
-        device_class=SensorDeviceClass.POWER_FACTOR,
-        native_unit_of_measurement="%",
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Room X power kW (kW)",
-        translation_key="Room X power kW",
-        device_class=SensorDeviceClass.POWER,
-        native_unit_of_measurement=UnitOfPower.KILO_WATT,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Room X setp",
-        translation_key="Room X setpoint temp",
-        device_class=SensorDeviceClass.TEMPERATURE,
-        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Room X temp",
-        translation_key="Room X actual temp",
-        device_class=SensorDeviceClass.TEMPERATURE,
-        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-)
-
 
 NONCVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     IthoBinarySensorEntityDescription(
@@ -326,6 +329,10 @@ WPUSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Status",
         translation_key="status",
+    ),
+    IthoSensorEntityDescription(
+        json_field="ECO selected on thermostat",
+        translation_key="thermostat",
     ),
     IthoSensorEntityDescription(
         json_field="Temp to source (°C)",

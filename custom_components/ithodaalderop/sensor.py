@@ -17,10 +17,10 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
     _LOGGER,
+    ADDON_TYPES,
     ADDONS,
     AUTOTEMP_ERROR,
     AUTOTEMP_MODE,
-    AUTOTEMP_STATUS,
     CONF_ADDON_TYPE,
     DOMAIN,
     MQTT_BASETOPIC,
@@ -29,6 +29,7 @@ from .const import (
     NONCVE_GLOBAL_FAULT_CODE,
     NONCVE_RH_ERROR_CODE,
     UNITTYPE_ICONS,
+    WPU_STATUS,
     AddOnType,
 )
 from .definitions import (
@@ -110,7 +111,7 @@ async def async_setup_entry(
             sensors.append(IthoSensor(description, config_entry, AddOnType.WPU))
 
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
-        for description in AUTOTEMPSENSORS + _create_autotemprooms(config_entry):
+        for description in list(AUTOTEMPSENSORS) + _create_autotemprooms(config_entry):
             description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
             sensors.append(IthoSensor(description, config_entry, AddOnType.AUTOTEMP))
 
@@ -123,10 +124,7 @@ class IthoSensor(SensorEntity):
     _attr_has_entity_name = True
     entity_description: IthoSensorEntityDescription
 
-    _noncve_filter_last_maintenance = None
-    _noncve_filter_next_maintenance_estimate = None
-    _noncve_global_fault_code_description = None
-    _noncve_rh_error_description = None
+    _extra_state_attributes = None
 
     def __init__(
         self, description: IthoSensorEntityDescription, config_entry: ConfigEntry, aot: AddOnType
@@ -135,10 +133,10 @@ class IthoSensor(SensorEntity):
         self.entity_description = description
 
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, ADDONS[aot])},
+            identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
             manufacturer="Arjen Hiemstra",
             model="CVE" if aot == AddOnType.CVE else "NONCVE",
-            name="Itho WiFi-Addon - " + ADDONS[aot]
+            name="Itho WiFi-Addon - " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
         )
 
         self.entity_id = f"sensor.{ADDONS[aot].lower()}_{description.translation_key}"
@@ -163,23 +161,7 @@ class IthoSensor(SensorEntity):
     @property
     def extra_state_attributes(self) -> list[str] | None:
         """Return the state attributes."""
-
-        if self._noncve_global_fault_code_description is not None:
-            return {
-                "Description": self._noncve_global_fault_code_description,
-            }
-
-        if self._noncve_filter_last_maintenance is not None and self._noncve_filter_next_maintenance_estimate is not None:
-            return {
-                "Last Maintenance": self._noncve_filter_last_maintenance,
-                "Next Maintenance Estimate": self._noncve_filter_next_maintenance_estimate,
-            }
-
-        if self._noncve_rh_error_description is not None:
-            return {
-                "Error Description": self._noncve_rh_error_description,
-            }
-        return None
+        return self._extra_state_attributes
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
@@ -188,9 +170,9 @@ class IthoSensor(SensorEntity):
         def message_received(message):
             """Handle new MQTT messages."""
             if message.payload == "":
-                self._attr_native_value = None
+                value = None
             elif self.entity_description.state is not None:
-                self._attr_native_value = self.entity_description.state(message.payload)
+                value = self.entity_description.state(message.payload)
             else:
                 payload = json.loads(message.payload)
                 if self.entity_description.json_field not in payload:
@@ -201,44 +183,88 @@ class IthoSensor(SensorEntity):
 
                     if self.aot == AddOnType.AUTOTEMP:
                         if json_field == "Error":
-                            value = AUTOTEMP_ERROR.get(value, f"Unknown error: ({value})")
+                            self._extra_state_attributes = {
+                                "Code": value,
+                            }
+                            value = AUTOTEMP_ERROR.get(value, "Unknown error")
 
                         if json_field == "Mode":
-                            value = AUTOTEMP_MODE.get(value, f"Unknown mode: ({value})")
+                            self._extra_state_attributes = {
+                                "Code": value,
+                            }
+                            value = AUTOTEMP_MODE.get(value, "Unknown mode")
 
-                        if json_field == "Status":
-                            value = AUTOTEMP_STATUS.get(value, f"Unknown status: ({value})")
+                        if json_field == "State off":
+                            if value == 1:
+                                value = "Off"
+                            if payload["State cool"] == 1:
+                                value = "Cooling"
+                            if payload["State heating"] == 1:
+                                value = "Heating"
+                            if payload["state hand"] == 1:
+                                value = "Hand"
 
                     if self.aot == AddOnType.NONCVE:
                         if json_field == "Actual Mode":
-                            value = NONCVE_ACTUAL_MODE.get(value, f"Unknown mode: ({value})")
+                            self._extra_state_attributes = {
+                                "Code": value
+                            }
+                            value = NONCVE_ACTUAL_MODE.get(value, "Unknown mode")
 
                         if json_field == "Airfilter counter":
-                            if value.isnumeric():
-                                self._noncve_filter_last_maintenance = (datetime.now() - timedelta(hours=int(value))).date()
-                                self._noncve_filter_next_maintenance_estimate = (datetime.now() + timedelta(days=180, hours=-int(value))).date()
+                            _last_maintenance = ""
+                            _next_maintenance_estimate = ""
+                            if str(value).isnumeric():
+                                _last_maintenance = (datetime.now() - timedelta(hours=int(value))).date()
+                                _next_maintenance_estimate = (datetime.now() + timedelta(days=180, hours=-int(value))).date()
                             else:
-                                self._noncve_filter_last_maintenance = f"Invalid value: {value}"
-                                self._noncve_filter_next_maintenance_estimate = ""
+                                _last_maintenance = "Invalid value"
+
+                            self._extra_state_attributes = {
+                                "Last Maintenance": _last_maintenance,
+                                "Next Maintenance Estimate": _next_maintenance_estimate,
+                            }
 
                         if json_field == "Global fault code":
-                            self._noncve_global_fault_code_description = NONCVE_GLOBAL_FAULT_CODE.get(int(value), f"Unknown fault code: ({value})")
+                            _description = ""
+                            if str(value).isnumeric():
+                                _description = NONCVE_GLOBAL_FAULT_CODE.get(int(value), "Unknown fault code")
+
+                            self._extra_state_attributes = {
+                                "Description": _description,
+                            }
+
+                        if json_field == "Highest received RH value (%RH)":
+                            _error_description = ""
+                            if str(value).isnumeric() and float(value) > 100:
+                                value = None
+                                _error_description = NONCVE_RH_ERROR_CODE.get(int(value), "Unknown error")
+                            else:
+                                _error_description = ""
+
+                            self._extra_state_attributes = {
+                                "Error Description": _error_description,
+                            }
 
                     if self.aot == AddOnType.REMOTES:
                         value = value["co2"]
 
-                # RH values can be over 100% RH. This indicates an error state.
-                if (self.aot == AddOnType.NONCVE
-                        and json_field == "Highest received RH value (%RH)"):
-                    if value.isnumeric() and float(value) > 100:
-                        self._attr_native_value = None
-                        self._noncve_rh_error_description = NONCVE_RH_ERROR_CODE.get(int(value), f"Unknown error: ({value})")
-                    else:
-                        self._attr_native_value = value
-                        self._noncve_rh_error_description = ""
-                else:
-                    self._attr_native_value = value
+                    if self.aot == AddOnType.WPU:
+                        if json_field == "Status":
+                            value = WPU_STATUS.get(int(value), "Unknown status")
+                        if json_field == "ECO selected on thermostat":
+                            if value == 1:
+                                value = "Eco"
+                            if payload["Comfort selected on thermostat"] == 1:
+                                value = "Comfort"
+                            if payload["Boiler boost from thermostat"] == 1:
+                                value = "Boost"
+                            if payload["Boiler blocked from thermostat"] == 1:
+                                value = "Off"
+                            if payload["Venting from thermostat"] == 1:
+                                value = "Venting"
 
+            self._attr_native_value = value
             self.async_write_ha_state()
 
         await mqtt.async_subscribe(
