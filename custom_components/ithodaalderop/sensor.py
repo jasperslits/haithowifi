@@ -79,14 +79,14 @@ def _create_autotemprooms(config_entry: ConfigEntry):
 
 
 async def async_setup_entry(
-    _: HomeAssistant,
+    hass: HomeAssistant,
     config_entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Itho add-on sensors from config entry based on their type."""
 
-    if not await mqtt.async_wait_for_mqtt_client(_):
-        _LOGGER.error("MQTT integration is not available")
+    if not await mqtt.async_wait_for_mqtt_client(hass):
+        _LOGGER.critical("MQTT integration is not available")
         return
 
     sensors = []
