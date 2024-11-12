@@ -1,184 +1,187 @@
 {
-    "entity": {
-        "sensor": {
-            "actual_exhaust_fan": {
-                "name": "Actuele Afvoer Ventilator"
-            },
-            "actual_exhaust_temp": {
-                "name": "Actuele Afvoer Temperatuur"
-            },
-            "actual_mode": {
-                "name": "Huidige Mode"
-            },
-            "actual_supply_fan": {
-                "name": "Actuele Aanvoer Ventilator"
-            },
-            "actual_supply_temp": {
-                "name": "Actuele Aanvoer Temperatuur"
-            },
-            "airfilter_counter": {
-                "name": "Luchtfilter Teller"
-            },
-            "airquality": {
-                "name": "Luchtkwaliteit"
-            },
-            "balance": {
-                "name": "Balans"
-            },
-            "boiler_pump_percent": {
-                "name": "Boiler Pomp"
-            },
-            "boiler_temp_up": {
-                "name": "Boiler Temperatuur"
-            },
-            "bypass_position": {
-                "name": "Bypass Positie"
-            },
-            "cv_pressure": {
-                "name": "CV Druk"
-            },
-            "cv_pump_percent": {
-                "name": "CV Pomp"
-            },
-            "cv_return_temp": {
-                "name": "CV Afvoer Temperatuur"
-            },
-            "empty_battery": {
-                "name": "Battery Leeg"
-            },
-            "error": {
-                "name": "Error"
-            },
-            "fan_setpoint_rpm": {
-                "name": "Fan Stand"
-            },
-            "fan_speed": {
-                "name": "Fan Snelheid"
-            },
-            "filter_dirty": {
-                "name": "Filter Vuil"
-            },
-            "flow_sensor": {
-                "name": "Stroomsnelheid"
-            },
-            "global_fault_code": {
-                "name": "Globale Fout Code"
-            },
-            "heat_demand": {
-                "name": "Warmtevraag Thermostaat"
-            },
-            "highest_received_co2_value": {
-                "name": "Hoogste CO2 waarde"
-            },
-            "highest_received_rh_value": {
-                "name": "Hoogste RH waarde"
-            },
-            "humidity": {
-                "name": "Luchtvochtigheid"
-            },
-            "mode": {
-                "name": "Mode"
-            },
-            "remaining_override_timer": {
-                "name": "Resterende Override Timer"
-            },
-            "requested_room_temp": {
-                "name": "Gevraagde Kamertemperatuur"
-            },
-            "room_temp": {
-                "name": "Kamertemperatuur"
-            },
-            "status": {
-                "name": "Status"
-            },
-            "temp": {
-                "name": "Temperatuur"
-            },
-            "temp_from_source": {
-                "name": "Temperatuur vanuit Source"
-            },
-            "temp_to_source": {
-                "name": "Temperatuur naar Source"
-            },
-            "well_pump_percent": {
-                "name": "Bronpomp"
-            }
-        }
-    },
-    "config": {
-        "step": {
-            "user": {
-                "title": "Voeg nieuwe Itho apparaten toe",
-                "description": "Configuratie stappen voor Itho. Herhaal deze configuratie voor iedere fysieke add-on die gebruikt wordt. Deze integratie maakt automatisch de meest gebruikelijke sensors aan.",
-                "data": {
-                    "addontype": "Add-on type"
-                }
-            },
-            "remotes": {
-                "title": "Voeg nieuwe Itho afstandsbedieningen toe",
-                "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices. Klik op 'Verzenden' zonder iets te wijzigen om dit over te slaan.",
-                "data": {
-                    "remote1": "Afstandsbediening 1",
-                    "remote2": "Afstandsbediening 2",
-                    "remote3": "Afstandsbediening 3",
-                    "remote4": "Afstandsbediening 4",
-                    "remote5": "Afstandsbediening 5"
-                }
-            },
-            "remotes_reconfigure": {
-                "title": "Wijzig Itho afstandsbedieningen",
-                "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices. ",
-                "data": {
-                    "remote1": "Afstandsbediening 1",
-                    "remote2": "Afstandsbediening 2",
-                    "remote3": "Afstandsbediening 3",
-                    "remote4": "Afstandsbediening 4",
-                    "remote5": "Afstandsbediening 5"
-                }
-            },
-            "rooms_reconfigure": {
-                "title": "Wijzig Itho ruimtes",
-                "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer or slaapkamer ouders.",
-                "data": {
-                    "room1": "Ruimte 1",
-                    "room2": "Ruimte 2",
-                    "room3": "Ruimte 3",
-                    "room4": "Ruimte 4",
-                    "room5": "Ruimte 5",
-                    "room6": "Ruimte 6",
-                    "room7": "Ruimte 7",
-                    "room8": "Ruimte 8"
-                }
-            },
-            "rooms": {
-                "title": "Voeg nieuwe Itho ruimtes toe",
-                "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer",
-                "data": {
-                    "room1": "Ruimte 1",
-                    "room2": "Ruimte 2",
-                    "room3": "Ruimte 3",
-                    "room4": "Ruimte 4",
-                    "room5": "Ruimte 5",
-                    "room6": "Ruimte 6",
-                    "room7": "Ruimte 7",
-                    "room8": "Ruimte 8"
-                }
-            }
-        },
-        "abort": {
-            "already_configured": "Itho integratie is al geconfigureerd",
-            "reconfigure_successful": "Herconfiguratie was succesvol"
-        },
-        "error": {}
-    },
-    "selector": {
-        "addonselect": {
-            "options": {
-                "wpu": "WPU Warmtepomp",
-                "autotemp": "Autotemp vloerverwarming",
-                "noncve": "Non-CVE (HRU)",
-                "cve": "CVE (ECO box)"
-            }
-        }
+  "entity": {
+    "sensor": {
+      "actual_exhaust_fan": {
+        "name": "Actuele Afvoer Ventilator"
+      },
+      "actual_exhaust_temp": {
+        "name": "Actuele Afvoer Temperatuur"
+      },
+      "actual_mode": {
+        "name": "Huidige Mode"
+      },
+      "actual_supply_fan": {
+        "name": "Actuele Aanvoer Ventilator"
+      },
+      "actual_supply_temp": {
+        "name": "Actuele Aanvoer Temperatuur"
+      },
+      "airfilter_counter": {
+        "name": "Luchtfilter Teller"
+      },
+      "airquality": {
+        "name": "Luchtkwaliteit"
+      },
+      "balance": {
+        "name": "Balans"
+      },
+      "boiler_pump_percent": {
+        "name": "Boiler Pomp"
+      },
+      "boiler_temp_up": {
+        "name": "Boiler Temperatuur"
+      },
+      "bypass_position": {
+        "name": "Bypass Positie"
+      },
+      "cv_pressure": {
+        "name": "CV Druk"
+      },
+      "cv_pump_percent": {
+        "name": "CV Pomp"
+      },
+      "cv_return_temp": {
+        "name": "CV Afvoer Temperatuur"
+      },
+      "empty_battery": {
+        "name": "Battery Leeg"
+      },
+      "error": {
+        "name": "Error"
+      },
+      "fan_setpoint_rpm": {
+        "name": "Fan Stand"
+      },
+      "fan_speed": {
+        "name": "Fan Snelheid"
+      },
+      "filter_dirty": {
+        "name": "Filter Vuil"
+      },
+      "flow_sensor": {
+        "name": "Stroomsnelheid"
+      },
+      "global_fault_code": {
+        "name": "Globale Fout Code"
+      },
+      "heat_demand": {
+        "name": "Warmtevraag Thermostaat"
+      },
+      "highest_received_co2_value": {
+        "name": "Hoogste CO2 waarde"
+      },
+      "highest_received_rh_value": {
+        "name": "Hoogste RH waarde"
+      },
+      "humidity": {
+        "name": "Luchtvochtigheid"
+      },
+      "mode": {
+        "name": "Mode"
+      },
+      "remaining_override_timer": {
+        "name": "Resterende Override Timer"
+      },
+      "requested_room_temp": {
+        "name": "Gevraagde Kamertemperatuur"
+      },
+      "room_temp": {
+        "name": "Kamertemperatuur"
+      },
+      "status": {
+        "name": "Status"
+      },
+      "temp": {
+        "name": "Temperatuur"
+      },
+      "temp_from_source": {
+        "name": "Temperatuur vanuit Source"
+      },
+      "temp_to_source": {
+        "name": "Temperatuur naar Source"
+      },
+      "thermostat": {
+        "name": "Thermostat"
+      },
+      "well_pump_percent": {
+        "name": "Bronpomp"
+      }
     }
+  },
+  "config": {
+    "step": {
+      "user": {
+        "title": "Voeg nieuwe Itho apparaten toe",
+        "description": "Configuratie stappen voor Itho. Herhaal deze configuratie voor iedere fysieke add-on die gebruikt wordt. Deze integratie maakt automatisch de meest gebruikelijke sensors aan.",
+        "data": {
+          "addontype": "Add-on type"
+        }
+      },
+      "remotes": {
+        "title": "Voeg nieuwe Itho afstandsbedieningen toe",
+        "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices. Klik op 'Verzenden' zonder iets te wijzigen om dit over te slaan.",
+        "data": {
+          "remote1": "Afstandsbediening 1",
+          "remote2": "Afstandsbediening 2",
+          "remote3": "Afstandsbediening 3",
+          "remote4": "Afstandsbediening 4",
+          "remote5": "Afstandsbediening 5"
+        }
+      },
+      "remotes_reconfigure": {
+        "title": "Wijzig Itho afstandsbedieningen",
+        "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices. ",
+        "data": {
+          "remote1": "Afstandsbediening 1",
+          "remote2": "Afstandsbediening 2",
+          "remote3": "Afstandsbediening 3",
+          "remote4": "Afstandsbediening 4",
+          "remote5": "Afstandsbediening 5"
+        }
+      },
+      "rooms_reconfigure": {
+        "title": "Wijzig Itho ruimtes",
+        "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer or slaapkamer ouders.",
+        "data": {
+          "room1": "Ruimte 1",
+          "room2": "Ruimte 2",
+          "room3": "Ruimte 3",
+          "room4": "Ruimte 4",
+          "room5": "Ruimte 5",
+          "room6": "Ruimte 6",
+          "room7": "Ruimte 7",
+          "room8": "Ruimte 8"
+        }
+      },
+      "rooms": {
+        "title": "Voeg nieuwe Itho ruimtes toe",
+        "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer",
+        "data": {
+          "room1": "Ruimte 1",
+          "room2": "Ruimte 2",
+          "room3": "Ruimte 3",
+          "room4": "Ruimte 4",
+          "room5": "Ruimte 5",
+          "room6": "Ruimte 6",
+          "room7": "Ruimte 7",
+          "room8": "Ruimte 8"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Itho integratie is al geconfigureerd",
+      "reconfigure_successful": "Herconfiguratie was succesvol"
+    },
+    "error": {}
+  },
+  "selector": {
+    "addonselect": {
+      "options": {
+        "wpu": "WPU Warmtepomp",
+        "autotemp": "Autotemp vloerverwarming",
+        "noncve": "Non-CVE (HRU)",
+        "cve": "CVE (ECO box)"
+      }
+    }
+  }
 }
