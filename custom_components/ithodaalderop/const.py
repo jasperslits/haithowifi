@@ -5,6 +5,8 @@ from enum import IntEnum
 
 _LOGGER = logging.getLogger(__name__)
 
+DOMAIN = "ithodaalderop"
+
 
 class AddOnType(IntEnum):
     """Enum for Add-on types."""
@@ -17,12 +19,11 @@ class AddOnType(IntEnum):
 
 
 ADDON_TYPES = {
-    "noncve": "HRU WTW",
+    "noncve": "HRU",
     "cve": "CVE",
     "autotemp": "Autotemp",
     "wpu": "WPU heatpump"
 }
-
 
 ADDONS = {
     1: "CVE",
@@ -43,7 +44,6 @@ UNITTYPE_ICONS = {
     "rpm": "mdi:speedometer",
 }
 
-DOMAIN = "ithodaalderop"
 
 MQTT_BASETOPIC = {
     "cve": "ithocve",
@@ -149,4 +149,3 @@ WPU_STATUS = {
     4: "Cooling",
     5: "Venting",
 }
-

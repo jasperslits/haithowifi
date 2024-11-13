@@ -82,6 +82,9 @@
       "remaining_override_timer": {
         "name": "Resterende Override Timer"
       },
+      "remote": {
+        "name": "Afstandsbediening - {remote_name}"
+      },
       "requested_room_temp": {
         "name": "Gevraagde Kamertemperatuur"
       },

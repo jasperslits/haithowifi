@@ -82,6 +82,9 @@
       "remaining_override_timer": {
         "name": "Remaining Override Timer"
       },
+      "remote": {
+        "name": "Remote - {remote_name}"
+      },
       "requested_room_temp": {
         "name": "Requested Toom Temp"
       },
