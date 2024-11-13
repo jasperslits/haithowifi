@@ -5,8 +5,8 @@ Author: Jasper
 """
 
 import copy
-import json
 from datetime import datetime, timedelta
+import json
 
 from homeassistant.components import mqtt
 from homeassistant.components.sensor import SensorEntity
@@ -18,7 +18,6 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from .const import (
     _LOGGER,
     ADDON_TYPES,
-    ADDONS,
     AUTOTEMP_ERROR,
     AUTOTEMP_MODE,
     CONF_ADDON_TYPE,
@@ -140,19 +139,24 @@ class IthoBaseSensor(SensorEntity):
         description: IthoSensorEntityDescription,
         config_entry: ConfigEntry,
         aot: AddOnType,
+        unique_id: str | None = None,
     ) -> None:
         """Initialize the sensor."""
         self.entity_description = description
 
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
-            manufacturer="Arjen Hiemstra",
-            model="CVE" if aot == AddOnType.CVE else "NONCVE",
-            name="Itho " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
+            manufacturer="Itho Daalderop",
+            model=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
+            name="Itho " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]] + " - ",
         )
 
-        # self.entity_id = f"sensor.{ADDONS[aot].lower()}_{description.translation_key}"
-        self._attr_unique_id = f"{config_entry.entry_id}-{description.translation_key}"
+        if unique_id is not None:
+            self._attr_unique_id = unique_id
+        else:
+            self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}"
+
+        self.entity_id = f"sensor.{self._attr_unique_id}"
         self.aot = aot
 
     @property
@@ -173,12 +177,8 @@ class IthoSensorRemote(IthoBaseSensor):
         self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
     ) -> None:
         """Construct sensor for Remote."""
-        super().__init__(description, config_entry, AddOnType.REMOTE)
-
-    # @property
-    # def name(self) -> str:
-    #     """Generate name for the sensor."""
-    #     return self.entity_description.translation_key.replace("_", " ").capitalize()
+        unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.name.lower()}"
+        super().__init__(description, config_entry, AddOnType.REMOTE, unique_id)
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""

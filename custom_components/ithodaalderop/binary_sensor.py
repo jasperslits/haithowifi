@@ -16,7 +16,6 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from .const import (
     _LOGGER,
     ADDON_TYPES,
-    ADDONS,
     CONF_ADDON_TYPE,
     DOMAIN,
     MQTT_BASETOPIC,
@@ -83,10 +82,8 @@ class IthoBinarySensor(BinarySensorEntity):
             name="Itho " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
         )
 
-        self.entity_id = (
-            f"binary_sensor.{ADDONS[aot].lower()}_{description.translation_key}"
-        )
-        self._attr_unique_id = f"{config_entry.entry_id}-{description.translation_key}"
+        self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}"
+        self.entity_id = f"binary_sensor.{self._attr_unique_id}"
         self.aot = aot
 
     @property
@@ -110,8 +107,7 @@ class IthoBinarySensor(BinarySensorEntity):
         def message_received(message):
             """Handle new MQTT messages."""
             if message.payload == "":
-                self._attr_native_value = None
-
+                value = None
             else:
                 payload = json.loads(message.payload)
                 if self.entity_description.json_field not in payload:
@@ -119,8 +115,7 @@ class IthoBinarySensor(BinarySensorEntity):
                 else:
                     value = bool(payload[self.entity_description.json_field])
 
-                self._attr_is_on = value
-
+            self._attr_is_on = value
             self.async_write_ha_state()
 
         await mqtt.async_subscribe(
