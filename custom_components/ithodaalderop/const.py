@@ -1,7 +1,7 @@
 """Consts for Itho add-on."""
 
-import logging
 from enum import IntEnum
+import logging
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -22,7 +22,7 @@ ADDON_TYPES = {
     "noncve": "HRU",
     "cve": "CVE",
     "autotemp": "Autotemp",
-    "wpu": "WPU heatpump"
+    "wpu": "WPU heatpump",
 }
 
 CVE_TYPES = {
