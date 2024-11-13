@@ -227,11 +227,6 @@ class IthoSensorAutotemp(IthoBaseSensor):
             unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.suffix.lower()}"
         super().__init__(description, config_entry, AddOnType.AUTOTEMP, unique_id)
 
-    # @property
-    # def name(self) -> str:
-    #     """Generate name for the sensor."""
-    #     return self.entity_description.translation_key.replace("_", " ").capitalize()
-
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
 
