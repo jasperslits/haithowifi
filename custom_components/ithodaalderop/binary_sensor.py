@@ -3,6 +3,7 @@
 
 Author: Benjamin
 """
+
 import json
 
 from homeassistant.components import mqtt
@@ -37,19 +38,25 @@ async def async_setup_entry(
     """Set up Itho add-on binary sensors from config entry based on their type."""
 
     if not await mqtt.async_wait_for_mqtt_client(hass):
-        _LOGGER.critical("MQTT integration is not available")
+        _LOGGER.error("MQTT integration is not available")
         return
 
     sensors = []
     if config_entry.data[CONF_ADDON_TYPE] == "noncve":
         for description in NONCVEBINARYSENSORS:
             description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
-            sensors.append(IthoBinarySensor(description, config_entry, AddOnType.NONCVE))
+            sensors.append(
+                IthoBinarySensor(description, config_entry, AddOnType.NONCVE)
+            )
 
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
         for description in AUTOTEMPBINARYSENSORS:
-            description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
-            sensors.append(IthoBinarySensor(description, config_entry, AddOnType.AUTOTEMP))
+            description.key = (
+                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            )
+            sensors.append(
+                IthoBinarySensor(description, config_entry, AddOnType.AUTOTEMP)
+            )
 
     async_add_entities(sensors)
 
@@ -61,7 +68,10 @@ class IthoBinarySensor(BinarySensorEntity):
     entity_description: IthoBinarySensorEntityDescription
 
     def __init__(
-        self, description: IthoBinarySensorEntityDescription, config_entry: ConfigEntry, aot: AddOnType
+        self,
+        description: IthoBinarySensorEntityDescription,
+        config_entry: ConfigEntry,
+        aot: AddOnType,
     ) -> None:
         """Initialize the binary sensor."""
         self.entity_description = description
@@ -70,17 +80,14 @@ class IthoBinarySensor(BinarySensorEntity):
             identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
             manufacturer="Arjen Hiemstra",
             model="CVE" if aot == AddOnType.CVE else "NONCVE",
-            name="Itho WiFi-Addon - " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
+            name="Itho " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
         )
 
-        self.entity_id = f"binary_sensor.{ADDONS[aot].lower()}_{description.translation_key}"
+        self.entity_id = (
+            f"binary_sensor.{ADDONS[aot].lower()}_{description.translation_key}"
+        )
         self._attr_unique_id = f"{config_entry.entry_id}-{description.translation_key}"
         self.aot = aot
-
-    @property
-    def name(self):
-        """Name for the binary sensor."""
-        return self.entity_description.translation_key.replace("_", " ").capitalize()
 
     @property
     def icon(self):
