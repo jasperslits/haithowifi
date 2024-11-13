@@ -19,7 +19,7 @@ class AddOnType(IntEnum):
 ADDON_TYPES = {
     "noncve": "HRU WTW",
     "cve": "CVE",
-    "autotemp": "Autotemp floor heating",
+    "autotemp": "Autotemp",
     "wpu": "WPU heatpump"
 }
 
