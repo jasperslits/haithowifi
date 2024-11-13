@@ -48,7 +48,7 @@ def _create_remotes(config_entry: ConfigEntry):
     remotes = []
     for x in range(1, 5):
         remote = cfg["remote" + str(x)]
-        if remote != "" and remote != "Remote " + str(x):
+        if remote not in ("", "Remote " + str(x)):
             remotes.append(
                 IthoSensorEntityDescription(
                     json_field=remote,
@@ -72,13 +72,12 @@ def _create_autotemprooms(config_entry: ConfigEntry):
     for x in range(1, 8):
         template_sensors = copy.deepcopy(list(AUTOTEMPROOMSENSORS))
         room = cfg["room" + str(x)]
-        if room != "" and room != "Room " + str(x):
+        if room not in ("", "Room " + str(x)):
             for sensor in template_sensors:
                 sensor.json_field = sensor.json_field.replace("X", str(x))
                 sensor.key = (
                     f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
                 )
-                # sensor.translation_key = sensor.translation_key.replace("Room X", room)
                 sensor.suffix = room
                 sensor.translation_placeholders = {"room": room}
                 room_sensors.append(sensor)
