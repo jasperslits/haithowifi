@@ -54,7 +54,9 @@ def _create_remotes(config_entry: ConfigEntry):
                 IthoSensorEntityDescription(
                     json_field=remote,
                     key=f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}",
-                    translation_key=remote,
+                    name=remote,
+                    translation_key="remote",
+                    translation_placeholders={"remote_name": remote},
                     device_class="carbon_dioxide",
                     native_unit_of_measurement="ppm",
                     state_class="measurement",
@@ -149,7 +151,7 @@ class IthoBaseSensor(SensorEntity):
             name="Itho " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
         )
 
-        self.entity_id = f"sensor.{ADDONS[aot].lower()}_{description.translation_key}"
+        # self.entity_id = f"sensor.{ADDONS[aot].lower()}_{description.translation_key}"
         self._attr_unique_id = f"{config_entry.entry_id}-{description.translation_key}"
         self.aot = aot
 
@@ -173,10 +175,10 @@ class IthoSensorRemote(IthoBaseSensor):
         """Construct sensor for Remote."""
         super().__init__(description, config_entry, AddOnType.REMOTE)
 
-    @property
-    def name(self) -> str:
-        """Generate name for the sensor."""
-        return self.entity_description.translation_key.replace("_", " ").capitalize()
+    # @property
+    # def name(self) -> str:
+    #     """Generate name for the sensor."""
+    #     return self.entity_description.translation_key.replace("_", " ").capitalize()
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
