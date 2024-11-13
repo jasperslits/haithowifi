@@ -5,8 +5,8 @@ Author: Jasper
 """
 
 import copy
-from datetime import datetime, timedelta
 import json
+from datetime import datetime, timedelta
 
 from homeassistant.components import mqtt
 from homeassistant.components.sensor import SensorEntity
