@@ -1,7 +1,7 @@
 """Consts for Itho add-on."""
 
-from enum import IntEnum
 import logging
+from enum import IntEnum
 
 _LOGGER = logging.getLogger(__name__)
 
