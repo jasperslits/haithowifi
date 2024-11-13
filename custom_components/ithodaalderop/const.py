@@ -25,14 +25,6 @@ ADDON_TYPES = {
     "wpu": "WPU heatpump",
 }
 
-ADDONS = {
-    1: "CVE",
-    2: "WPU",
-    3: "AUTOTEMP",
-    4: "REMOTE",
-    5: "NONCVE",
-}
-
 CVE_TYPES = {
     "noncve": ["noncve", "mdi:fan"],
     "cve": ["cve", "mdi:fan"],

@@ -5,8 +5,8 @@ Author: Jasper
 """
 
 import copy
-import json
 from datetime import datetime, timedelta
+import json
 
 from homeassistant.components import mqtt
 from homeassistant.components.sensor import SensorEntity
@@ -53,7 +53,7 @@ def _create_remotes(config_entry: ConfigEntry):
                 IthoSensorEntityDescription(
                     json_field=remote,
                     key=f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}",
-                    name=remote,
+                    suffix=remote,
                     translation_key="remote",
                     translation_placeholders={"remote_name": remote},
                     device_class="carbon_dioxide",
@@ -68,20 +68,22 @@ def _create_autotemprooms(config_entry: ConfigEntry):
     """Create autotemp rooms for configured entries."""
 
     cfg = config_entry.data
-    configured_sensors = []
+    room_sensors = []
     for x in range(1, 8):
         template_sensors = copy.deepcopy(list(AUTOTEMPROOMSENSORS))
         room = cfg["room" + str(x)]
         if room != "" and room != "Room " + str(x):
             for sensor in template_sensors:
+                sensor.json_field = sensor.json_field.replace("X", str(x))
                 sensor.key = (
                     f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
                 )
-                sensor.json_field = sensor.json_field.replace("X", str(x))
-                sensor.translation_key = sensor.translation_key.replace("Room X", room)
-                configured_sensors.append(sensor)
+                # sensor.translation_key = sensor.translation_key.replace("Room X", room)
+                sensor.suffix = room
+                sensor.translation_placeholders = {"room": room}
+                room_sensors.append(sensor)
 
-    return configured_sensors
+    return room_sensors
 
 
 async def async_setup_entry(
@@ -117,11 +119,17 @@ async def async_setup_entry(
             sensors.append(IthoSensorWPU(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
-        for description in list(AUTOTEMPSENSORS) + _create_autotemprooms(config_entry):
+        for description in list(AUTOTEMPSENSORS):
             description.key = (
                 f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
             )
             sensors.append(IthoSensorAutotemp(description, config_entry))
+
+        for description in _create_autotemprooms(config_entry):
+            description.key = (
+                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            )
+            sensors.append(IthoSensorAutotempRoom(description, config_entry))
 
     async_add_entities(sensors)
 
@@ -177,7 +185,7 @@ class IthoSensorRemote(IthoBaseSensor):
         self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
     ) -> None:
         """Construct sensor for Remote."""
-        unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.name.lower()}"
+        unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.suffix.lower()}"
         super().__init__(description, config_entry, AddOnType.REMOTE, unique_id)
 
     async def async_added_to_hass(self) -> None:
@@ -209,15 +217,20 @@ class IthoSensorAutotemp(IthoBaseSensor):
     """Representation of Itho add-on sensor for Autotemp data that is updated via MQTT."""
 
     def __init__(
-        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
+        self,
+        description: IthoSensorEntityDescription,
+        config_entry: ConfigEntry,
+        unique_id: str | None = None,
     ) -> None:
         """Construct sensor for Autotemp."""
-        super().__init__(description, config_entry, AddOnType.AUTOTEMP)
+        if description.suffix is not None:
+            unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.suffix.lower()}"
+        super().__init__(description, config_entry, AddOnType.AUTOTEMP, unique_id)
 
-    @property
-    def name(self) -> str:
-        """Generate name for the sensor."""
-        return self.entity_description.translation_key.replace("_", " ").capitalize()
+    # @property
+    # def name(self) -> str:
+    #     """Generate name for the sensor."""
+    #     return self.entity_description.translation_key.replace("_", " ").capitalize()
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
@@ -264,6 +277,17 @@ class IthoSensorAutotemp(IthoBaseSensor):
         await mqtt.async_subscribe(
             self.hass, self.entity_description.key, message_received, 1
         )
+
+
+class IthoSensorAutotempRoom(IthoSensorAutotemp):
+    """Representation of Itho add-on room sensor for Autotemp data that is updated via MQTT."""
+
+    def __init__(
+        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
+    ) -> None:
+        """Construct sensor for Autotemp."""
+        unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.suffix.lower()}"
+        super().__init__(description, config_entry, unique_id)
 
 
 class IthoSensorWPU(IthoBaseSensor):

@@ -22,6 +22,18 @@
       "airquality": {
         "name": "Luchtkwaliteit"
       },
+      "autotemp_room_actual_temp": {
+        "name": "{room} - Actuele Temperatuur"
+      },
+      "autotemp_room_power_%": {
+        "name": "{room} - Vermogen (%)"
+      },
+      "autotemp_room_power_kw": {
+        "name": "{room} - Vermogen (kW)"
+      },
+      "autotemp_room_setpoint_temp": {
+        "name": "{room} - Temperatuur Instelling"
+      },
       "balance": {
         "name": "Balans"
       },
@@ -90,6 +102,9 @@
       },
       "room_temp": {
         "name": "Kamertemperatuur"
+      },
+      "state": {
+        "name": "Staat"
       },
       "status": {
         "name": "Status"
