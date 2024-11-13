@@ -25,7 +25,7 @@
       "autotemp_room_actual_temp": {
         "name": "{room} - Actual Temp"
       },
-      "autotemp_room_power_%": {
+      "autotemp_room_power_perc": {
         "name": "{room} - Power (%)"
       },
       "autotemp_room_power_kw": {

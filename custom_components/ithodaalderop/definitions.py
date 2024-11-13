@@ -77,7 +77,7 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
 AUTOTEMPROOMSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Room X power % (%)",
-        translation_key="autotemp_room_power_%",
+        translation_key="autotemp_room_power_perc%",
         device_class=SensorDeviceClass.POWER_FACTOR,
         native_unit_of_measurement="%",
         state_class=SensorStateClass.MEASUREMENT,
