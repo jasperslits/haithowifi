@@ -44,18 +44,12 @@ async def async_setup_entry(
     if config_entry.data[CONF_ADDON_TYPE] == "noncve":
         for description in NONCVEBINARYSENSORS:
             description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
-            sensors.append(
-                IthoBinarySensor(description, config_entry, AddOnType.NONCVE)
-            )
+            sensors.append(IthoBinarySensor(description, config_entry, AddOnType.NONCVE))
 
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
         for description in AUTOTEMPBINARYSENSORS:
-            description.key = (
-                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
-            )
-            sensors.append(
-                IthoBinarySensor(description, config_entry, AddOnType.AUTOTEMP)
-            )
+            description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            sensors.append(IthoBinarySensor(description, config_entry, AddOnType.AUTOTEMP))
 
     async_add_entities(sensors)
 
@@ -77,9 +71,9 @@ class IthoBinarySensor(BinarySensorEntity):
 
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
-            manufacturer="Arjen Hiemstra",
-            model="CVE" if aot == AddOnType.CVE else "NONCVE",
-            name="Itho " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
+            manufacturer="Itho Daalderop",
+            model=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
+            name="Itho Daalderop " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
         )
 
         self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}"

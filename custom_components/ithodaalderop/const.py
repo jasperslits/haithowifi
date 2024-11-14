@@ -22,7 +22,7 @@ ADDON_TYPES = {
     "noncve": "HRU",
     "cve": "CVE",
     "autotemp": "Autotemp",
-    "wpu": "WPU heatpump",
+    "wpu": "WPU",
 }
 
 CVE_TYPES = {
@@ -35,7 +35,6 @@ UNITTYPE_ICONS = {
     "hum": "mdi:water-percent",
     "rpm": "mdi:speedometer",
 }
-
 
 MQTT_BASETOPIC = {
     "cve": "ithocve",

@@ -1,5 +1,10 @@
 {
   "entity": {
+    "binary_sensor": {
+      "bypass_position": {
+        "name": "Bypass Position"
+      }
+    },
     "sensor": {
       "actual_exhaust_fan": {
         "name": "Actual Exhaust Fan"
@@ -30,9 +35,6 @@
       },
       "boiler_temp_up": {
         "name": "Boiler Temp Up"
-      },
-      "bypass_position": {
-        "name": "Bypass Position"
       },
       "cv_pressure": {
         "name": "CV Pressure"

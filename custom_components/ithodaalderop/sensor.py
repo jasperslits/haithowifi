@@ -151,7 +151,7 @@ class IthoBaseSensor(SensorEntity):
             identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
             manufacturer="Itho Daalderop",
             model=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
-            name="Itho " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]] + " - ",
+            name="Itho Daalderop " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
         )
 
         if unique_id is not None:
