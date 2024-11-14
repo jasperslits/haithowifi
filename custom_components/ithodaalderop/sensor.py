@@ -119,15 +119,11 @@ async def async_setup_entry(
 
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
         for description in list(AUTOTEMPSENSORS):
-            description.key = (
-                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
-            )
+            description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
             sensors.append(IthoSensorAutotemp(description, config_entry))
 
         for description in _create_autotemprooms(config_entry):
-            description.key = (
-                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
-            )
+            description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
             sensors.append(IthoSensorAutotempRoom(description, config_entry))
 
     async_add_entities(sensors)
@@ -181,7 +177,9 @@ class IthoSensorRemote(IthoBaseSensor):
     """Representation of Itho add-on sensor for a Remote that is updated via MQTT."""
 
     def __init__(
-        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
+        self,
+        description: IthoSensorEntityDescription,
+        config_entry: ConfigEntry
     ) -> None:
         """Construct sensor for Remote."""
         unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.affix.lower()}"
@@ -277,7 +275,9 @@ class IthoSensorAutotempRoom(IthoSensorAutotemp):
     """Representation of Itho add-on room sensor for Autotemp data that is updated via MQTT."""
 
     def __init__(
-        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
+        self,
+        description: IthoSensorEntityDescription,
+        config_entry: ConfigEntry
     ) -> None:
         """Construct sensor for Autotemp."""
         unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.affix.lower()}"
@@ -288,7 +288,9 @@ class IthoSensorWPU(IthoBaseSensor):
     """Representation of Itho add-on sensor for WPU that is updated via MQTT."""
 
     def __init__(
-        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
+        self,
+        description: IthoSensorEntityDescription,
+        config_entry: ConfigEntry
     ) -> None:
         """Construct sensor for WPU."""
         super().__init__(description, config_entry, AddOnType.WPU)
