@@ -2,7 +2,7 @@
   "entity": {
     "binary_sensor": {
       "bypass_position": {
-        "name": "Bypass Position"
+        "name": "Bypass Positie"
       },
       "filter_dirty": {
         "name": "Filter Vuil"
