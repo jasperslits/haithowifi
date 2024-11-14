@@ -5,8 +5,8 @@ Author: Jasper
 """
 
 import copy
-import json
 from datetime import datetime, timedelta
+import json
 
 from homeassistant.components import mqtt
 from homeassistant.components.sensor import SensorEntity
@@ -53,7 +53,7 @@ def _create_remotes(config_entry: ConfigEntry):
                 IthoSensorEntityDescription(
                     json_field=remote,
                     key=f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}",
-                    suffix=remote,
+                    affix=remote,
                     translation_key="remote",
                     translation_placeholders={"remote_name": remote},
                     device_class="carbon_dioxide",
@@ -78,7 +78,7 @@ def _create_autotemprooms(config_entry: ConfigEntry):
                 sensor.key = (
                     f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
                 )
-                sensor.suffix = room
+                sensor.affix = room
                 sensor.translation_placeholders = {"room": room}
                 room_sensors.append(sensor)
 
@@ -184,7 +184,7 @@ class IthoSensorRemote(IthoBaseSensor):
         self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
     ) -> None:
         """Construct sensor for Remote."""
-        unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.suffix.lower()}"
+        unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.affix.lower()}"
         super().__init__(description, config_entry, AddOnType.REMOTE, unique_id)
 
     async def async_added_to_hass(self) -> None:
@@ -222,8 +222,8 @@ class IthoSensorAutotemp(IthoBaseSensor):
         unique_id: str | None = None,
     ) -> None:
         """Construct sensor for Autotemp."""
-        if description.suffix is not None:
-            unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.suffix.lower()}"
+        if description.affix is not None:
+            unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.affix.lower()}"
         super().__init__(description, config_entry, AddOnType.AUTOTEMP, unique_id)
 
     async def async_added_to_hass(self) -> None:
@@ -280,7 +280,7 @@ class IthoSensorAutotempRoom(IthoSensorAutotemp):
         self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
     ) -> None:
         """Construct sensor for Autotemp."""
-        unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.suffix.lower()}"
+        unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.affix.lower()}"
         super().__init__(description, config_entry, unique_id)
 
 
