@@ -120,7 +120,8 @@ Missing a sensor? Feel free to create an [issue](https://github.com/jasperslits/
 <img width="463" alt="image" src="https://github.com/user-attachments/assets/f8ebf3cd-c2a9-43a0-96bd-00d235b6d6ca">
 
 6. CVE sensors
-<img width="983" alt="image" src="https://github.com/jasperslits/haithowifi/assets/30024136/45b33a5f-50bc-476c-9a78-8df7af71fdd1">
+<img src="https://github.com/user-attachments/assets/feef6706-28ac-48db-897f-ea780e5d38f9">
+
 
 ### TODO:
 * Add Integration to HACS default (waiting for https://github.com/hacs/default/pull/2494)
