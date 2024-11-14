@@ -22,15 +22,7 @@ ADDON_TYPES = {
     "noncve": "HRU",
     "cve": "CVE",
     "autotemp": "Autotemp",
-    "wpu": "WPU heatpump"
-}
-
-ADDONS = {
-    1: "CVE",
-    2: "WPU",
-    3: "AUTOTEMP",
-    4: "REMOTE",
-    5: "NONCVE",
+    "wpu": "WPU heatpump",
 }
 
 CVE_TYPES = {

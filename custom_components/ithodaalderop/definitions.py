@@ -33,6 +33,7 @@ class IthoSensorEntityDescription(SensorEntityDescription):
     json_field: str | None = None
     key: str | None = None
     icon: str | None = None
+    affix: str | None = None
 
 
 @dataclass(frozen=False)
@@ -45,6 +46,7 @@ class IthoBinarySensorEntityDescription(BinarySensorEntityDescription):
     icon: str | None = None
     icon_off: str | None = None
     icon_on: str | None = None
+    affix: str | None = None
 
 
 AUTOTEMPBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
@@ -75,28 +77,28 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
 AUTOTEMPROOMSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Room X power % (%)",
-        translation_key="Room X power % (%)",
+        translation_key="room_power_perc",
         device_class=SensorDeviceClass.POWER_FACTOR,
         native_unit_of_measurement="%",
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
         json_field="Room X power kW (kW)",
-        translation_key="Room X power kW",
+        translation_key="room_power_kw",
         device_class=SensorDeviceClass.POWER,
         native_unit_of_measurement=UnitOfPower.KILO_WATT,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
         json_field="Room X setp",
-        translation_key="Room X setpoint temp",
+        translation_key="room_setpoint_temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
         json_field="Room X temp",
-        translation_key="Room X actual temp",
+        translation_key="room_actual_temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
@@ -161,7 +163,7 @@ CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Total operation (hours)",
-        translation_key="temp",
+        translation_key="total_operation_time",
         native_unit_of_measurement=UnitOfTime.HOURS,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),

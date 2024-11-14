@@ -5,7 +5,7 @@
         "name": "Actual Exhaust Fan"
       },
       "actual_exhaust_temp": {
-        "name": "Actual Exhaust Temp"
+        "name": "Actual Exhaust Temperature"
       },
       "actual_mode": {
         "name": "Actual Mode"
@@ -14,7 +14,7 @@
         "name": "Actual Supply Fan"
       },
       "actual_supply_temp": {
-        "name": "Actual Supply Temp"
+        "name": "Actual Supply Temperature"
       },
       "airfilter_counter": {
         "name": "Airfilter Counter"
@@ -41,7 +41,7 @@
         "name": "CV Pump"
       },
       "cv_return_temp": {
-        "name": "CV Return Temp"
+        "name": "CV Return Temperature"
       },
       "empty_battery": {
         "name": "Empty Battery"
@@ -86,31 +86,46 @@
         "name": "Remote - {remote_name}"
       },
       "requested_room_temp": {
-        "name": "Requested Toom Temp"
+        "name": "Requested Toom Temperature"
+      },
+      "room_actual_temp": {
+        "name": "{room} - Actual Temperature"
+      },
+      "room_power_perc": {
+        "name": "{room} - Power (%)"
+      },
+      "room_power_kw": {
+        "name": "{room} - Power (kW)"
+      },
+      "room_setpoint_temp": {
+        "name": "{room} - Setpoint Temperature"
       },
       "room_temp": {
         "name": "Room Temperature"
+      },
+      "state": {
+        "name": "State"
       },
       "status": {
         "name": "Status"
       },
       "temp": {
-        "name": "Temp"
+        "name": "Temperature"
       },
       "temp_from_source": {
-        "name": "Temp from Source"
+        "name": "Temperature from Source"
       },
       "temp_to_source": {
-        "name": "Temp to Source"
+        "name": "Temperature to Source"
       },
       "thermostat": {
         "name": "Thermostat"
       },
-      "total_operation": {
+      "total_operation_time": {
         "name": "Total Operating Time"
       },
       "well_pump_percent": {
-        "name": "Well Pump percent"
+        "name": "Well Pump"
       }
     }
   },
