@@ -105,18 +105,21 @@ Missing a sensor? Feel free to create an [issue](https://github.com/jasperslits/
 
 ### Screenshots
 1. Add integration
-<img width="599" alt="image" src="https://github.com/jasperslits/haithowifi/assets/30024136/8c2a7d99-a770-44de-bb9c-52bdd9b0740f">
+<img width="606" alt="image" src="https://github.com/user-attachments/assets/5e32a3e3-a06b-4be0-9681-6a640f486abc">
 
 2. Define remotes for CO2 monitoring
-<img width="478" alt="image" src="https://github.com/jasperslits/haithowifi/assets/30024136/cc075268-0b94-42e9-9789-1bb0c4d28069">
+<img width="612" alt="image" src="https://github.com/user-attachments/assets/d9d2dca1-254c-450b-84a8-a71f5afee608">
 
 3. Define rooms for autotemp
-<img width="410" alt="image" src="https://github.com/jasperslits/haithowifi/assets/30024136/73d8c25d-5364-4b59-af09-8e74c83d0468">
+<img width="612" alt="image" src="https://github.com/user-attachments/assets/cd554cac-3cc7-4c5f-b6fd-7efc7c63b256">
 
-4. Created sensors
-<img width="984" alt="image" src="https://github.com/jasperslits/haithowifi/assets/30024136/652e97ad-d9f0-43a3-991b-840af8935356">
+4. Created devices
+<img width="1031" alt="image" src="https://github.com/user-attachments/assets/2235a880-79e0-4a0e-80f3-134f10af7208">
 
-5. CVE sensors
+5. Created HRU sensors and two remotes
+<img width="463" alt="image" src="https://github.com/user-attachments/assets/f8ebf3cd-c2a9-43a0-96bd-00d235b6d6ca">
+
+6. CVE sensors
 <img width="983" alt="image" src="https://github.com/jasperslits/haithowifi/assets/30024136/45b33a5f-50bc-476c-9a78-8df7af71fdd1">
 
 ### TODO:
