@@ -3,6 +3,9 @@
     "binary_sensor": {
       "bypass_position": {
         "name": "Bypass Position"
+      },
+      "filter_dirty": {
+        "name": "Filter Dirty"
       }
     },
     "sensor": {
@@ -56,9 +59,6 @@
       },
       "fan_speed": {
         "name": "Fan Speed"
-      },
-      "filter_dirty": {
-        "name": "Filter Dirty"
       },
       "flow_sensor": {
         "name": "Flow"
