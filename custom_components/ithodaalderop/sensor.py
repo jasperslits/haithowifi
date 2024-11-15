@@ -153,7 +153,6 @@ class IthoBaseSensor(SensorEntity):
                 identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
                 manufacturer="Itho Daalderop",
                 model=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
-                # name="Itho Daalderop " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
                 name=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
             )
 
@@ -293,7 +292,29 @@ class IthoSensorAutotempRoom(IthoBaseSensor):
             via_device=(DOMAIN, config_entry.data[CONF_ADDON_TYPE]),
         )
 
-        super().__init__(description, config_entry, AddOnType.REMOTE, unique_id, False)
+        super().__init__(description, config_entry, AddOnType.REMOTE, unique_id, use_base_sensor_device=False)
+
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to MQTT events."""
+
+        @callback
+        def message_received(message):
+            """Handle new MQTT messages."""
+            if message.payload == "":
+                value = None
+            elif self.entity_description.state is not None:
+                value = self.entity_description.state(message.payload)
+            else:
+                payload = json.loads(message.payload)
+                json_field = self.entity_description.json_field
+                value = payload.get(json_field, None)
+
+            self._attr_native_value = value
+            self.async_write_ha_state()
+
+        await mqtt.async_subscribe(
+            self.hass, self.entity_description.key, message_received, 1
+        )
 
 
 class IthoSensorWPU(IthoBaseSensor):
