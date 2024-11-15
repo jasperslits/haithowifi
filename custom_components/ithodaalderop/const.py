@@ -1,22 +1,10 @@
 """Consts for Itho add-on."""
 
 import logging
-from enum import IntEnum
 
 _LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "ithodaalderop"
-
-
-class AddOnType(IntEnum):
-    """Enum for Add-on types."""
-
-    AUTOTEMP = 1
-    AUTOTEMP_REMOTE = 2
-    CO2_REMOTE = 3
-    CVE =4
-    NONCVE = 5
-    WPU = 6
 
 ADDON_TYPES = {
     "noncve": "HRU",
