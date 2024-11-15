@@ -22,6 +22,7 @@ from .const import (
     AUTOTEMP_MODE,
     CONF_ADDON_TYPE,
     DOMAIN,
+    MANUFACTURER,
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
     NONCVE_ACTUAL_MODE,
@@ -148,7 +149,7 @@ class IthoBaseSensor(SensorEntity):
         if use_base_sensor_device:
             self._attr_device_info = DeviceInfo(
                 identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
-                manufacturer="Itho Daalderop",
+                manufacturer=MANUFACTURER,
                 model=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
                 name=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
             )
@@ -245,7 +246,7 @@ class IthoSensorAutotempRoom(IthoBaseSensor):
 
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, f"{config_entry.data[CONF_ADDON_TYPE]}_room_{description.affix.lower()}")},
-            manufacturer="Itho Daalderop",
+            manufacturer=MANUFACTURER,
             model=f"{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]} Spider",
             name=f"Spider {description.affix.capitalize()}",
             via_device=(DOMAIN, config_entry.data[CONF_ADDON_TYPE]),

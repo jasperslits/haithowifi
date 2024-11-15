@@ -18,6 +18,7 @@ from .const import (
     ADDON_TYPES,
     CONF_ADDON_TYPE,
     DOMAIN,
+    MANUFACTURER,
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
 )
@@ -69,7 +70,7 @@ class IthoBinarySensor(BinarySensorEntity):
 
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
-            manufacturer="Itho Daalderop",
+            manufacturer=MANUFACTURER,
             model=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
             name="Itho Daalderop " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
         )
