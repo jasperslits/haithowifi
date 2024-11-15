@@ -11,12 +11,12 @@ DOMAIN = "ithodaalderop"
 class AddOnType(IntEnum):
     """Enum for Add-on types."""
 
-    CVE = 1
-    WPU = 2
-    AUTOTEMP = 3
-    REMOTE = 4
+    AUTOTEMP = 1
+    AUTOTEMP_REMOTE = 2
+    CO2_REMOTE = 3
+    CVE =4
     NONCVE = 5
-
+    WPU = 6
 
 ADDON_TYPES = {
     "noncve": "HRU",

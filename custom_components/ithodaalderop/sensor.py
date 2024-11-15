@@ -109,7 +109,7 @@ async def async_setup_entry(
     if config_entry.data[CONF_ADDON_TYPE] in ["cve", "noncve"]:
         for description in _create_remotes(config_entry):
             description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}"
-            sensors.append(IthoSensorRemote(description, config_entry))
+            sensors.append(IthoSensorCO2Remote(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "wpu":
         for description in WPUSENSORS:
@@ -174,7 +174,7 @@ class IthoBaseSensor(SensorEntity):
         return None
 
 
-class IthoSensorRemote(IthoBaseSensor):
+class IthoSensorCO2Remote(IthoBaseSensor):
     """Representation of Itho add-on sensor for a Remote that is updated via MQTT."""
 
     def __init__(
@@ -184,7 +184,7 @@ class IthoSensorRemote(IthoBaseSensor):
     ) -> None:
         """Construct sensor for Remote."""
         unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.affix.lower()}"
-        super().__init__(description, config_entry, AddOnType.REMOTE, unique_id)
+        super().__init__(description, config_entry, AddOnType.CO2_REMOTE, unique_id)
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
@@ -291,7 +291,7 @@ class IthoSensorAutotempRoom(IthoBaseSensor):
             via_device=(DOMAIN, config_entry.data[CONF_ADDON_TYPE]),
         )
 
-        super().__init__(description, config_entry, AddOnType.REMOTE, unique_id, use_base_sensor_device=False)
+        super().__init__(description, config_entry, AddOnType.AUTOTEMP_REMOTE, unique_id, use_base_sensor_device=False)
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
