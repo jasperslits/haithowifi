@@ -7,6 +7,23 @@ Combine this integration with the Home Assistant auto-discovery in the MQTT conf
 This custom component has no affiliation with the Itho Daalderop company or with Arjen Hiemstra's Itho WiFi add-on.
 Note: The 'add-on' here in the context is the ESP32 add-on to the Itho Daalderop units, not an Add-on in Home Assistant. 
 
+### Upgrading from 1.4 or below (+ keeping history):
+Version `2.0.0` includes major improvements that changes the entity id's for all entities within a device. Due to this change old entities will no longer be provided by the integration and no longer work. You will need to reconfigure the integration:
+1. Navigate to `Settings` -> `Devices & Services` and find `Itho WiFi Add-on`.
+2. For each entry press ` ⠇ ` (three dots) and press `Delete`.
+3. Reconfigure a new entry by pressing `ADD DEVICE` for each Itho Wifi Add-on you own.
+
+In order to keep the history from your old entities follow this process for each entity:
+
+
+>_According to https://www.home-assistant.io/blog/2023/04/05/release-20234/#database-scalability_:
+>
+>It may take a while to complete background data migration, depending on the size of your stored data. To ensure Home Assistant keeps history when renaming an entity, wait 24 hours after upgrading before renaming.
+
+1. Rename the entity to the entity-id of the old entity. (For example, change `sensor.itho_hru_actual_exhaust_fan` back to `sensor.noncve_actual_exhaust_fan`)
+2. **Wait 24 hours**
+3. Rename the entity back to the new naming scheme. The history should now be kept with your new entity-id
+
 ### What can be configured via this Integration
 1. Heatpump WPU sensors
 2. NONCVE / HRU sensors
@@ -122,6 +139,8 @@ Missing a sensor? Feel free to create an [issue](https://github.com/jasperslits/
 6. CVE sensors
 <img src="https://github.com/user-attachments/assets/feef6706-28ac-48db-897f-ea780e5d38f9">
 
+7. Autotemp Control Unit + Connected Sensors
+<img width="322" alt="image" src="https://github.com/user-attachments/assets/bcad60cc-5635-4ef1-b792-2d08452d8b33">
 
 ### TODO:
 * Add Integration to HACS default (waiting for https://github.com/hacs/default/pull/2494)
