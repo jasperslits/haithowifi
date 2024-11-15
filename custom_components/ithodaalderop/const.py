@@ -6,6 +6,8 @@ _LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "ithodaalderop"
 
+MANUFACTURER = "Itho Daalderop"
+
 ADDON_TYPES = {
     "noncve": "HRU",
     "cve": "CVE",
