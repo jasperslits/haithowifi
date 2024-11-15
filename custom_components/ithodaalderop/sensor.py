@@ -143,16 +143,19 @@ class IthoBaseSensor(SensorEntity):
         config_entry: ConfigEntry,
         aot: AddOnType,
         unique_id: str | None = None,
+        use_base_sensor_device: bool = True,
     ) -> None:
         """Initialize the sensor."""
         self.entity_description = description
 
-        self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
-            manufacturer="Itho Daalderop",
-            model=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
-            name="Itho Daalderop " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
-        )
+        if use_base_sensor_device:
+            self._attr_device_info = DeviceInfo(
+                identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
+                manufacturer="Itho Daalderop",
+                model=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
+                # name="Itho Daalderop " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
+                name=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
+            )
 
         if unique_id is not None:
             self._attr_unique_id = unique_id
@@ -271,7 +274,7 @@ class IthoSensorAutotemp(IthoBaseSensor):
         )
 
 
-class IthoSensorAutotempRoom(IthoSensorAutotemp):
+class IthoSensorAutotempRoom(IthoBaseSensor):
     """Representation of Itho add-on room sensor for Autotemp data that is updated via MQTT."""
 
     def __init__(
@@ -281,7 +284,16 @@ class IthoSensorAutotempRoom(IthoSensorAutotemp):
     ) -> None:
         """Construct sensor for Autotemp."""
         unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.affix.lower()}"
-        super().__init__(description, config_entry, unique_id)
+
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, f"{config_entry.data[CONF_ADDON_TYPE]}_remote_{description.affix.lower()}")},
+            manufacturer="Itho Daalderop",
+            model=f"{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]} Remote",
+            name=f"{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]} Remote {description.affix.capitalize()}",
+            via_device=(DOMAIN, config_entry.data[CONF_ADDON_TYPE]),
+        )
+
+        super().__init__(description, config_entry, AddOnType.REMOTE, unique_id, False)
 
 
 class IthoSensorWPU(IthoBaseSensor):
