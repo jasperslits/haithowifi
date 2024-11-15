@@ -79,7 +79,6 @@ def _create_autotemprooms(config_entry: ConfigEntry):
                     f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
                 )
                 sensor.affix = room
-                sensor.translation_placeholders = {"room": room}
                 room_sensors.append(sensor)
 
     return room_sensors
@@ -285,10 +284,10 @@ class IthoSensorAutotempRoom(IthoBaseSensor):
         unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.affix.lower()}"
 
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"{config_entry.data[CONF_ADDON_TYPE]}_remote_{description.affix.lower()}")},
+            identifiers={(DOMAIN, f"{config_entry.data[CONF_ADDON_TYPE]}_room_{description.affix.lower()}")},
             manufacturer="Itho Daalderop",
-            model=f"{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]} Remote",
-            name=f"{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]} Remote {description.affix.capitalize()}",
+            model=f"{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]} Spider",
+            name=f"Spider {description.affix.capitalize()}",
             via_device=(DOMAIN, config_entry.data[CONF_ADDON_TYPE]),
         )
 

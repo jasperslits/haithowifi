@@ -77,28 +77,28 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
 AUTOTEMPROOMSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Room X power % (%)",
-        translation_key="room_power_perc",
+        translation_key="power_perc",
         device_class=SensorDeviceClass.POWER_FACTOR,
         native_unit_of_measurement="%",
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
         json_field="Room X power kW (kW)",
-        translation_key="room_power_kw",
+        translation_key="power_kw",
         device_class=SensorDeviceClass.POWER,
         native_unit_of_measurement=UnitOfPower.KILO_WATT,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
         json_field="Room X setp",
-        translation_key="room_setpoint_temp",
+        translation_key="setpoint_temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
         json_field="Room X temp",
-        translation_key="room_actual_temp",
+        translation_key="actual_temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,

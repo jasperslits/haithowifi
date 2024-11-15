@@ -24,6 +24,9 @@
       "actual_supply_temp": {
         "name": "Actuele Aanvoer Temperatuur"
       },
+      "actual_temp": {
+        "name": "Actuele Temperatuur"
+      },
       "airfilter_counter": {
         "name": "Luchtfilter Teller"
       },
@@ -81,6 +84,12 @@
       "mode": {
         "name": "Mode"
       },
+      "power_kw": {
+        "name": "Vermogen (kW)"
+      },
+      "power_perc%": {
+        "name": "Vermogen (%)"
+      },
       "remaining_override_timer": {
         "name": "Resterende Override Timer"
       },
@@ -90,20 +99,11 @@
       "requested_room_temp": {
         "name": "Gevraagde Kamertemperatuur"
       },
-      "room_actual_temp": {
-        "name": "{room} - Actuele Temperatuur"
-      },
-      "room_power_perc%": {
-        "name": "{room} - Vermogen (%)"
-      },
-      "room_power_kw": {
-        "name": "{room} - Vermogen (kW)"
-      },
-      "room_setpoint_temp": {
-        "name": "{room} - Temperatuur Instelling"
-      },
       "room_temp": {
         "name": "Kamertemperatuur"
+      },
+      "setpoint_temp": {
+        "name": "Temperatuur Instelling"
       },
       "state": {
         "name": "Staat"
