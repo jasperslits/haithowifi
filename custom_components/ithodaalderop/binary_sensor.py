@@ -20,7 +20,6 @@ from .const import (
     DOMAIN,
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
-    AddOnType,
 )
 from .definitions import (
     AUTOTEMPBINARYSENSORS,
@@ -44,12 +43,12 @@ async def async_setup_entry(
     if config_entry.data[CONF_ADDON_TYPE] == "noncve":
         for description in NONCVEBINARYSENSORS:
             description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
-            sensors.append(IthoBinarySensor(description, config_entry, AddOnType.NONCVE))
+            sensors.append(IthoBinarySensor(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
         for description in AUTOTEMPBINARYSENSORS:
             description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
-            sensors.append(IthoBinarySensor(description, config_entry, AddOnType.AUTOTEMP))
+            sensors.append(IthoBinarySensor(description, config_entry))
 
     async_add_entities(sensors)
 
@@ -64,7 +63,6 @@ class IthoBinarySensor(BinarySensorEntity):
         self,
         description: IthoBinarySensorEntityDescription,
         config_entry: ConfigEntry,
-        aot: AddOnType,
     ) -> None:
         """Initialize the binary sensor."""
         self.entity_description = description
@@ -78,7 +76,6 @@ class IthoBinarySensor(BinarySensorEntity):
 
         self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}"
         self.entity_id = f"binary_sensor.{self._attr_unique_id}"
-        self.aot = aot
 
     @property
     def icon(self):
