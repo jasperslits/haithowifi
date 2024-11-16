@@ -95,6 +95,9 @@ It creates a device and commonly used sensors and uses a predefined MQTT state t
 || Requested room temp (°C) ||
 || Room temp (°C) ||
 || Well pump (%) ||
+| **All devices** |||
+|| Last Command (disabled by default) ||
+|| Last Command Source (disabled by default) ||
 
 Missing a sensor? Feel free to create an [issue](https://github.com/jasperslits/haithowifi/issues)
 
