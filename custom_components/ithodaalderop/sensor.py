@@ -35,6 +35,7 @@ from .definitions import (
     AUTOTEMPROOMSENSORS,
     AUTOTEMPSENSORS,
     CVESENSORS,
+    LASTCMDSENSORS,
     NONCVESENSORS,
     WPUSENSORS,
     IthoSensorEntityDescription,
@@ -124,6 +125,10 @@ async def async_setup_entry(
         for description in _create_autotemprooms(config_entry):
             description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
             sensors.append(IthoSensorAutotempRoom(description, config_entry))
+
+    for description in LASTCMDSENSORS:
+        description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["last_cmd"]}"
+        sensors.append(IthoSensorWPU(description, config_entry))
 
     async_add_entities(sensors)
 

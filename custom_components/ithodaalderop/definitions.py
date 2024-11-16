@@ -174,6 +174,21 @@ CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
 )
 
+LASTCMDSENSORS: tuple[IthoSensorEntityDescription, ...] = (
+    IthoSensorEntityDescription(
+        json_field="command",
+        translation_key="last_cmd_command",
+        icon="mdi:cog",
+        entity_registry_enabled_default=False,
+    ),
+    IthoSensorEntityDescription(
+        json_field="source",
+        translation_key="last_cmd_source",
+        icon="mdi:target",
+        entity_registry_enabled_default=False,
+    ),
+)
+
 NONCVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     IthoBinarySensorEntityDescription(
         json_field="Bypass position",

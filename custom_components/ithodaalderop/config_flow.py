@@ -40,6 +40,71 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self.config: dict[str, Any] = {}
         self.entry: config_entries.ConfigEntry
 
+    def _get_reconfigure_value(self, param, default):
+        """Get reconfigure value."""
+        if param in self.config:
+            return self.config[param]
+        return default
+
+    async def async_step_user(self, user_input=None):
+        """Configure main step."""
+        if user_input is not None:
+            self.config.update(user_input)
+            if user_input[CONF_ADDON_TYPE] in ["cve", "noncve"]:
+                return await self.async_step_remotes()
+            if user_input[CONF_ADDON_TYPE] == "autotemp":
+                return await self.async_step_rooms()
+            await self.async_set_unique_id(f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}")
+            self._abort_if_unique_id_configured()
+            return self.async_create_entry(
+                title="Itho WiFi Add-on for " + ADDON_TYPES[self.config[CONF_ADDON_TYPE]],
+                data=user_input
+            )
+
+        options = list(ADDON_TYPES.keys())
+        itho_schema = vol.Schema({
+            vol.Required(CONF_ADDON_TYPE): selector({
+                "select": {
+                    "options": options,
+                    "multiple": False,
+                    "translation_key": "addonselect"
+                }
+            }),
+        })
+
+        return self.async_show_form(
+            step_id="user", data_schema=itho_schema)
+
+    async def async_step_reconfigure(self, info: Mapping[str, Any] | None = None):
+        """Reconfigure config flow."""
+        entry = self.hass.config_entries.async_get_entry(self.context["entry_id"])
+        assert entry
+        self.entry = entry
+        self.config.update(entry.data)
+        if self.config[CONF_ADDON_TYPE] in ["cve", "noncve"]:
+            return await self.async_step_remotes_reconfigure()
+        if self.config[CONF_ADDON_TYPE] == "autotemp":
+            return await self.async_step_rooms_reconfigure()
+        return self.async_update_reload_and_abort(self.entry, data=self.config, reason="reconfigure_successful")
+
+    async def async_step_rooms_reconfigure(self, info=None):
+        """Reconfigure rooms for autotemp."""
+        if info is not None:
+            self.config.update(info)
+            return self.async_update_reload_and_abort(self.entry, data=self.config, reason="reconfigure_successful")
+
+        itho_schema = vol.Schema({
+            vol.Required(CONF_AUTOTEMP_ROOM1, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM1, "Room 1")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM2, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM2, "Room 2")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM3, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM3, "Room 3")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM4, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM4, "Room 4")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM5, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM5, "Room 5")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM6, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM6, "Room 6")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM7, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM7, "Room 7")): str,
+            vol.Optional(CONF_AUTOTEMP_ROOM8, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM8, "Room 8")): str,
+        })
+        return self.async_show_form(step_id="rooms_reconfigure", data_schema=itho_schema, last_step=True)
+
     async def async_step_remotes(self, info=None):
         """Configure up to 5 remotes."""
         if info is not None:
@@ -98,67 +163,4 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         })
         return self.async_show_form(step_id="rooms", data_schema=itho_schema, last_step=True)
 
-    def _get_reconfigure_value(self, param, default):
-        """Get reconfigure value."""
-        if param in self.config:
-            return self.config[param]
-        return default
 
-    async def async_step_rooms_reconfigure(self, info=None):
-        """Reconfigure rooms for autotemp."""
-        if info is not None:
-            self.config.update(info)
-            return self.async_update_reload_and_abort(self.entry, data=self.config, reason="reconfigure_successful")
-
-        itho_schema = vol.Schema({
-            vol.Required(CONF_AUTOTEMP_ROOM1, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM1, "Room 1")): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM2, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM2, "Room 2")): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM3, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM3, "Room 3")): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM4, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM4, "Room 4")): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM5, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM5, "Room 5")): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM6, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM6, "Room 6")): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM7, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM7, "Room 7")): str,
-            vol.Optional(CONF_AUTOTEMP_ROOM8, default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM8, "Room 8")): str,
-        })
-        return self.async_show_form(step_id="rooms_reconfigure", data_schema=itho_schema, last_step=True)
-
-    async def async_step_user(self, info=None):
-        """Configure main step."""
-        if info is not None:
-            self.config.update(info)
-            if info[CONF_ADDON_TYPE] in ["cve", "noncve"]:
-                return await self.async_step_remotes()
-            if info[CONF_ADDON_TYPE] == "autotemp":
-                return await self.async_step_rooms()
-            await self.async_set_unique_id(f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}")
-            self._abort_if_unique_id_configured()
-            return self.async_create_entry(
-                title="Itho WiFi Add-on for " + ADDON_TYPES[self.config[CONF_ADDON_TYPE]],
-                data=info
-            )
-
-        options = list(ADDON_TYPES.keys())
-        itho_schema = vol.Schema({
-            vol.Required(CONF_ADDON_TYPE): selector({
-                "select": {
-                    "options": options,
-                    "multiple": False,
-                    "translation_key": "addonselect"
-                }
-            }),
-        })
-
-        return self.async_show_form(
-            step_id="user", data_schema=itho_schema)
-
-    async def async_step_reconfigure(self, info: Mapping[str, Any] | None = None):
-        """Reconfigure config flow."""
-        entry = self.hass.config_entries.async_get_entry(self.context["entry_id"])
-        assert entry
-        self.entry = entry
-        self.config.update(entry.data)
-        if self.config[CONF_ADDON_TYPE] in ["cve", "noncve"]:
-            return await self.async_step_remotes_reconfigure()
-        if self.config[CONF_ADDON_TYPE] == "autotemp":
-            return await self.async_step_rooms_reconfigure()
-        return self.async_update_reload_and_abort(self.entry, data=self.config, reason="reconfigure_successful")
