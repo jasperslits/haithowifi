@@ -27,18 +27,19 @@ UNITTYPE_ICONS = {
 }
 
 MQTT_BASETOPIC = {
+    "autotemp": "ithotemp",
     "cve": "ithocve",
     "noncve": "ithohru",
     "wpu": "ithowpu",
-    "autotemp": "ithotemp",
 }
 
 MQTT_STATETOPIC = {
-    "cve": "ithostatus",
-    "noncve": "ithostatus",
-    "wpu": "ithostatus",
     "autotemp": "ithostatus",
+    "cve": "ithostatus",
+    "last_cmd": "lastcmd",
+    "noncve": "ithostatus",
     "remote": "remotesinfo",
+    "wpu": "ithostatus",
 }
 
 CONF_ADDON_TYPE = "addontype"

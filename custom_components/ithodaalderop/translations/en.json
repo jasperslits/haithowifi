@@ -81,6 +81,12 @@
       "humidity": {
         "name": "Humidity"
       },
+      "last_cmd_command": {
+        "name": "Last Command"
+      },
+      "last_cmd_source": {
+        "name": "Last Command Source"
+      },
       "mode": {
         "name": "Mode"
       },

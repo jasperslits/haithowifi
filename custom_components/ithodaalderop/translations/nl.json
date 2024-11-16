@@ -78,6 +78,12 @@
       "highest_received_rh_value": {
         "name": "Hoogste RH waarde"
       },
+      "last_cmd_command": {
+        "name": "Laatste Commando"
+      },
+      "last_cmd_source": {
+        "name": "Laatste Commando Bron"
+      },
       "humidity": {
         "name": "Luchtvochtigheid"
       },
