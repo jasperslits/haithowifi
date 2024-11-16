@@ -412,7 +412,7 @@ class IthoSensorFan(IthoBaseSensor):
         )
 
 class IthoSensorLastCommand(IthoBaseSensor):
-    """Representation of Itho add-on sensor for WPU that is updated via MQTT."""
+    """Representation of Itho add-on sensor for Last Command that is updated via MQTT."""
 
     def __init__(
         self,
