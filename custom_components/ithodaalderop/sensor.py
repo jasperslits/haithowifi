@@ -128,7 +128,7 @@ async def async_setup_entry(
 
     for description in LASTCMDSENSORS:
         description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["last_cmd"]}"
-        sensors.append(IthoSensorWPU(description, config_entry))
+        sensors.append(IthoSensorLastCommand(description, config_entry))
 
     async_add_entities(sensors)
 
@@ -318,7 +318,6 @@ class IthoSensorCO2Remote(IthoBaseSensor):
             self.hass, self.entity_description.key, message_received, 1
         )
 
-
 class IthoSensorFan(IthoBaseSensor):
     """Representation of a Itho add-on sensor that is updated via MQTT."""
 
@@ -412,6 +411,38 @@ class IthoSensorFan(IthoBaseSensor):
             self.hass, self.entity_description.key, message_received, 1
         )
 
+class IthoSensorLastCommand(IthoBaseSensor):
+    """Representation of Itho add-on sensor for WPU that is updated via MQTT."""
+
+    def __init__(
+        self,
+        description: IthoSensorEntityDescription,
+        config_entry: ConfigEntry
+    ) -> None:
+        """Construct sensor for WPU."""
+        super().__init__(description, config_entry)
+
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to MQTT events."""
+
+        @callback
+        def message_received(message):
+            """Handle new MQTT messages."""
+            if message.payload == "":
+                value = None
+            elif self.entity_description.state is not None:
+                value = self.entity_description.state(message.payload)
+            else:
+                payload = json.loads(message.payload)
+                json_field = self.entity_description.json_field
+                value = payload.get(json_field, None)
+
+            self._attr_native_value = value
+            self.async_write_ha_state()
+
+        await mqtt.async_subscribe(
+            self.hass, self.entity_description.key, message_received, 1
+        )
 
 class IthoSensorWPU(IthoBaseSensor):
     """Representation of Itho add-on sensor for WPU that is updated via MQTT."""
