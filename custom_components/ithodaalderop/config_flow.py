@@ -46,7 +46,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return self.config[param]
         return default
 
-    async def async_step_user(self, user_input=None):
+    async def async_step_user(self, user_input: Mapping[str, Any] | None = None):
         """Configure main step."""
         if user_input is not None:
             self.config.update(user_input)
@@ -75,7 +75,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user", data_schema=itho_schema)
 
-    async def async_step_reconfigure(self, info: Mapping[str, Any] | None = None):
+    async def async_step_reconfigure(self, user_input: Mapping[str, Any] | None = None):
         """Reconfigure config flow."""
         entry = self.hass.config_entries.async_get_entry(self.context["entry_id"])
         assert entry
@@ -87,10 +87,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return await self.async_step_rooms_reconfigure()
         return self.async_update_reload_and_abort(self.entry, data=self.config, reason="reconfigure_successful")
 
-    async def async_step_remotes(self, info=None):
+    async def async_step_remotes(self, user_input: Mapping[str, Any] | None = None):
         """Configure up to 5 remotes."""
-        if info is not None:
-            self.config.update(info)
+        if user_input is not None:
+            self.config.update(user_input)
             await self.async_set_unique_id(f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}")
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
@@ -107,10 +107,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         })
         return self.async_show_form(step_id="remotes", data_schema=itho_schema, last_step=True)
 
-    async def async_step_remotes_reconfigure(self, info=None):
+    async def async_step_remotes_reconfigure(self, user_input: Mapping[str, Any] | None = None):
         """Reconfigure up to 5 remotes."""
-        if info is not None:
-            self.config.update(info)
+        if user_input is not None:
+            self.config.update(user_input)
             return self.async_update_reload_and_abort(self.entry, data=self.config, reason="reconfigure_successful")
 
         itho_schema = vol.Schema({
@@ -122,10 +122,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         })
         return self.async_show_form(step_id="remotes_reconfigure", data_schema=itho_schema, last_step=True)
 
-    async def async_step_rooms(self, info=None):
+    async def async_step_rooms(self, user_input: Mapping[str, Any] | None = None):
         """Configure rooms for autotemp."""
-        if info is not None:
-            self.config.update(info)
+        if user_input is not None:
+            self.config.update(user_input)
             await self.async_set_unique_id(f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}")
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
@@ -145,10 +145,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         })
         return self.async_show_form(step_id="rooms", data_schema=itho_schema, last_step=True)
 
-    async def async_step_rooms_reconfigure(self, info=None):
+    async def async_step_rooms_reconfigure(self, user_input: Mapping[str, Any] | None = None):
         """Reconfigure rooms for autotemp."""
-        if info is not None:
-            self.config.update(info)
+        if user_input is not None:
+            self.config.update(user_input)
             return self.async_update_reload_and_abort(self.entry, data=self.config, reason="reconfigure_successful")
 
         itho_schema = vol.Schema({
