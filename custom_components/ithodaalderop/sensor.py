@@ -112,6 +112,10 @@ async def async_setup_entry(
             description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}"
             sensors.append(IthoSensorCO2Remote(description, config_entry))
 
+        for description in LASTCMDSENSORS:
+            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["last_cmd"]}"
+            sensors.append(IthoSensorLastCommand(description, config_entry))
+
     if config_entry.data[CONF_ADDON_TYPE] == "wpu":
         for description in WPUSENSORS:
             description.key = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
@@ -125,10 +129,6 @@ async def async_setup_entry(
         for description in _create_autotemprooms(config_entry):
             description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
             sensors.append(IthoSensorAutotempRoom(description, config_entry))
-
-    for description in LASTCMDSENSORS:
-        description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["last_cmd"]}"
-        sensors.append(IthoSensorLastCommand(description, config_entry))
 
     async_add_entities(sensors)
 
