@@ -66,6 +66,8 @@ It creates a device and commonly used sensors and uses a predefined MQTT state t
 || Temperature ||
 || Total Operating Time ||
 || Ventilation setpoint (%) ||
+|| Last Command (disabled by default) ||
+|| Last Command Source (disabled by default) ||
 | **NONCVE (HRU)** |||
 || Actual Mode | Code |
 || Air Quality (%) ||
@@ -81,6 +83,8 @@ It creates a device and commonly used sensors and uses a predefined MQTT state t
 || Remaining override timer (Sec) ||
 || Supply fan (RPM) ||
 || Supply temp (°C) ||
+|| Last Command (disabled by default) ||
+|| Last Command Source (disabled by default) ||
 | **WPU** |||
 || Boiler pump (%) ||
 || Boiler temp up (°C) ||
@@ -95,9 +99,6 @@ It creates a device and commonly used sensors and uses a predefined MQTT state t
 || Requested room temp (°C) ||
 || Room temp (°C) ||
 || Well pump (%) ||
-| **All devices** |||
-|| Last Command (disabled by default) ||
-|| Last Command Source (disabled by default) ||
 
 Missing a sensor? Feel free to create an [issue](https://github.com/jasperslits/haithowifi/issues)
 
