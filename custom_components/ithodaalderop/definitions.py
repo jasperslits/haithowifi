@@ -1,4 +1,9 @@
-"""Definitions for Itho sensors added to MQTT."""
+"""Definitions for Itho sensors added to MQTT.
+
+A sensor entity represents passive, read-only data provided by a device. It reflects the current state or measurement of something in the environment without directly interacting with or changing the device.
+A control entity represents interactive elements that allow the user to send commands or configure a device to change its state or behavior.
+A diagnostic entity provides device-specific metadata or operational insights that assist in understanding the device's internal state or functioning but is not directly related to the user's environment.
+"""
 
 from __future__ import annotations
 
@@ -18,6 +23,7 @@ from homeassistant.const import (
     CONCENTRATION_PARTS_PER_MILLION,
     PERCENTAGE,
     REVOLUTIONS_PER_MINUTE,
+    EntityCategory,
     UnitOfPower,
     UnitOfPressure,
     UnitOfTemperature,
@@ -34,6 +40,7 @@ class IthoSensorEntityDescription(SensorEntityDescription):
     key: str | None = None
     icon: str | None = None
     affix: str | None = None
+    entity_category: EntityCategory | None = None
 
 
 @dataclass(frozen=False)
@@ -47,6 +54,7 @@ class IthoBinarySensorEntityDescription(BinarySensorEntityDescription):
     icon_off: str | None = None
     icon_on: str | None = None
     affix: str | None = None
+    entity_category: EntityCategory | None = None
 
 
 AUTOTEMPBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
@@ -54,8 +62,9 @@ AUTOTEMPBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
         json_field="Empty battery ( 0=OK )",
         translation_key="empty_battery",
         device_class=BinarySensorDeviceClass.BATTERY,
-        icon_off="mdi:battery",
-        icon_on="mdi:battery-low",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        # icon_off="mdi:battery",
+        # icon_on="mdi:battery-low",
     ),
 )
 
@@ -63,6 +72,7 @@ AUTOTEMPSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Error",
         translation_key="error",
+        entity_category=EntityCategory.DIAGNOSTIC,
     ),
     IthoSensorEntityDescription(
         json_field="Mode",
@@ -110,6 +120,7 @@ CVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
         json_field="Filter dirty",
         translation_key="filter_dirty",
         device_class=BinarySensorDeviceClass.PROBLEM,
+        entity_category=EntityCategory.DIAGNOSTIC,
         icon_off="mdi:air-filter",
         icon_on="mdi:vacuum-outline",
     ),
@@ -119,6 +130,7 @@ CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Error",
         translation_key="error",
+        entity_category=EntityCategory.DIAGNOSTIC,
     ),
     IthoSensorEntityDescription(
         json_field="Fan setpoint (rpm)",
@@ -166,6 +178,7 @@ CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="total_operation_time",
         native_unit_of_measurement=UnitOfTime.HOURS,
         state_class=SensorStateClass.TOTAL_INCREASING,
+        entity_category=EntityCategory.DIAGNOSTIC,
     ),
     IthoSensorEntityDescription(
         json_field="Ventilation setpoint (%)",
@@ -178,12 +191,14 @@ LASTCMDSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="command",
         translation_key="last_cmd_command",
+        entity_category=EntityCategory.DIAGNOSTIC,
         icon="mdi:cog",
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="source",
         translation_key="last_cmd_source",
+        entity_category=EntityCategory.DIAGNOSTIC,
         icon="mdi:target",
         entity_registry_enabled_default=False,
     ),
@@ -194,6 +209,7 @@ NONCVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
         json_field="Bypass position",
         translation_key="bypass_position",
         device_class=BinarySensorDeviceClass.OPENING,
+        entity_category=EntityCategory.DIAGNOSTIC,
         icon_off="mdi:valve-closed",
         icon_on="mdi:valve-open",
     ),
@@ -210,6 +226,7 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="airfilter_counter",
         native_unit_of_measurement=UnitOfTime.HOURS,
         state_class=SensorStateClass.TOTAL_INCREASING,
+        entity_category=EntityCategory.DIAGNOSTIC,
         icon="mdi:counter",
     ),
     IthoSensorEntityDescription(
@@ -241,6 +258,7 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Global fault code",
         translation_key="global_fault_code",
         icon="mdi:alert-circle-outline",
+        entity_category=EntityCategory.DIAGNOSTIC,
     ),
     IthoSensorEntityDescription(
         json_field="Highest received CO2 value (Ppm)",
@@ -262,6 +280,7 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="remaining_override_timer",
         native_unit_of_measurement=UnitOfTime.SECONDS,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         icon="mdi:timer-outline",
     ),
     IthoSensorEntityDescription(
@@ -316,11 +335,13 @@ WPUSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Error",
         translation_key="error",
+        entity_category=EntityCategory.DIAGNOSTIC,
     ),
     IthoSensorEntityDescription(
         json_field="Flow sensor (lt_hr)",
         translation_key="flow_sensor",
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         icon="mdi:waves-arrow-right",
     ),
     IthoSensorEntityDescription(
