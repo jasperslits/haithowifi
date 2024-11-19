@@ -91,6 +91,7 @@ It creates a device and commonly used sensors and uses a predefined MQTT state t
 || CV pressure (Bar) ||
 || Cv pump (%) ||
 || CV return temp (°C) ||
+|| Error ||
 || Flow sensor (lt_hr) ||
 || Heat demand thermost. (%) ||
 || Status ||
