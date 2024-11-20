@@ -384,7 +384,7 @@ class IthoSensorFan(IthoBaseSensor):
                         if isinstance(value, (int, float) and float(value) > 100:
                             _error_description = "Unknown error"
                             value = None
-                        
+
                         self._extra_state_attributes = {
                             "Error Description": _error_description,
                         }
