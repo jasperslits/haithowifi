@@ -379,6 +379,16 @@ class IthoSensorFan(IthoBaseSensor):
                             "Next Maintenance Estimate": _next_maintenance_estimate,
                         }
 
+                    if json_field == "Air Quality (%)":
+                        _error_description = ""
+                        if (isinstance(value, int) or isinstance(value, float)) and float(value) > 100:
+                            _error_description = "Unknown error"
+                            value = None
+                        
+                        self._extra_state_attributes = {
+                            "Error Description": _error_description,
+                        }
+
                     if json_field == "Global fault code":
                         _description = ""
                         if str(value).isnumeric():
@@ -392,13 +402,9 @@ class IthoSensorFan(IthoBaseSensor):
 
                     if json_field == "Highest received RH value (%RH)":
                         _error_description = ""
-                        if isinstance(value, int) and float(value) > 100:
-                            _error_description = NONCVE_RH_ERROR_CODE.get(
-                                int(value), "Unknown error"
-                            )
+                        if (isinstance(value, int) or isinstance(value, float)) and float(value) > 100:
+                            _error_description = NONCVE_RH_ERROR_CODE.get(int(value), "Unknown error")
                             value = None
-                        else:
-                            _error_description = ""
 
                         self._extra_state_attributes = {
                             "Error Description": _error_description,
