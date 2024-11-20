@@ -381,7 +381,7 @@ class IthoSensorFan(IthoBaseSensor):
 
                     if json_field == "Air Quality (%)":
                         _error_description = ""
-                        if isinstance(value, (int, float) and float(value) > 100:
+                        if isinstance(value, (int, float)) and float(value) > 100:
                             _error_description = "Unknown error"
                             value = None
 
@@ -402,7 +402,7 @@ class IthoSensorFan(IthoBaseSensor):
 
                     if json_field == "Highest received RH value (%RH)":
                         _error_description = ""
-                        if isinstance(value, (int, float) and float(value) > 100:
+                        if isinstance(value, (int, float)) and float(value) > 100:
                             _error_description = NONCVE_RH_ERROR_CODE.get(int(value), "Unknown error")
                             value = None
 
