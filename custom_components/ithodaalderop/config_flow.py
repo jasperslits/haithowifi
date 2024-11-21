@@ -7,6 +7,7 @@ from collections.abc import Mapping
 from typing import Any
 
 import voluptuous as vol
+
 from homeassistant import config_entries
 from homeassistant.helpers.selector import selector
 
