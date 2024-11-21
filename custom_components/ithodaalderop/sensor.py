@@ -76,9 +76,7 @@ def _create_autotemprooms(config_entry: ConfigEntry):
         if room not in ("", "Room " + str(x)):
             for sensor in template_sensors:
                 sensor.json_field = sensor.json_field.replace("X", str(x))
-                sensor.key = (
-                    f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
-                )
+                sensor.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
                 sensor.affix = room
                 room_sensors.append(sensor)
 
@@ -197,38 +195,33 @@ class IthoSensorAutotemp(IthoBaseSensor):
         @callback
         def message_received(message):
             """Handle new MQTT messages."""
-            if message.payload == "":
+            payload = json.loads(message.payload)
+            json_field = self.entity_description.json_field
+            if json_field not in payload:
                 value = None
-            elif self.entity_description.state is not None:
-                value = self.entity_description.state(message.payload)
             else:
-                payload = json.loads(message.payload)
-                json_field = self.entity_description.json_field
-                if json_field not in payload:
-                    value = None
-                else:
-                    value = payload[json_field]
-                    if json_field == "Error":
-                        self._extra_state_attributes = {
-                            "Code": value,
-                        }
-                        value = AUTOTEMP_ERROR.get(value, "Unknown error")
+                value = payload[json_field]
+                if json_field == "Error":
+                    self._extra_state_attributes = {
+                        "Code": value,
+                    }
+                    value = AUTOTEMP_ERROR.get(value, "Unknown error")
 
-                    if json_field == "Mode":
-                        self._extra_state_attributes = {
-                            "Code": value,
-                        }
-                        value = AUTOTEMP_MODE.get(value, "Unknown mode")
+                if json_field == "Mode":
+                    self._extra_state_attributes = {
+                        "Code": value,
+                    }
+                    value = AUTOTEMP_MODE.get(value, "Unknown mode")
 
-                    if json_field == "State off":
-                        if value == 1:
-                            value = "Off"
-                        if payload["State cool"] == 1:
-                            value = "Cooling"
-                        if payload["State heating"] == 1:
-                            value = "Heating"
-                        if payload["state hand"] == 1:
-                            value = "Hand"
+                if json_field == "State off":
+                    if value == 1:
+                        value = "Off"
+                    if payload["State cool"] == 1:
+                        value = "Cooling"
+                    if payload["State heating"] == 1:
+                        value = "Heating"
+                    if payload["state hand"] == 1:
+                        value = "Hand"
 
             self._attr_native_value = value
             self.async_write_ha_state()
@@ -265,14 +258,8 @@ class IthoSensorAutotempRoom(IthoBaseSensor):
         @callback
         def message_received(message):
             """Handle new MQTT messages."""
-            if message.payload == "":
-                value = None
-            elif self.entity_description.state is not None:
-                value = self.entity_description.state(message.payload)
-            else:
-                payload = json.loads(message.payload)
-                json_field = self.entity_description.json_field
-                value = payload.get(json_field, None)
+            payload = json.loads(message.payload)
+            value = payload[self.entity_description.json_field, None]
 
             self._attr_native_value = value
             self.async_write_ha_state()
@@ -300,16 +287,12 @@ class IthoSensorCO2Remote(IthoBaseSensor):
         @callback
         def message_received(message):
             """Handle new MQTT messages."""
-            if message.payload == "":
+            payload = json.loads(message.payload)
+            json_field = self.entity_description.json_field
+            if json_field not in payload:
                 value = None
-            elif self.entity_description.state is not None:
-                value = self.entity_description.state(message.payload)
             else:
-                payload = json.loads(message.payload)
-                if self.entity_description.json_field not in payload:
-                    value = None
-                else:
-                    value = payload[self.entity_description.json_field]["co2"]
+                value = payload[json_field]["co2"]
 
             self._attr_native_value = value
             self.async_write_ha_state()
@@ -345,70 +328,64 @@ class IthoSensorFan(IthoBaseSensor):
         @callback
         def message_received(message):
             """Handle new MQTT messages."""
-            if message.payload == "":
+            payload = json.loads(message.payload)
+            json_field = self.entity_description.json_field
+            if json_field not in payload:
                 value = None
-            elif self.entity_description.state is not None:
-                value = self.entity_description.state(message.payload)
             else:
-                payload = json.loads(message.payload)
-                if self.entity_description.json_field not in payload:
-                    value = None
-                else:
-                    value = payload[self.entity_description.json_field]
-                    json_field = self.entity_description.json_field
+                value = payload[json_field]
+                if json_field == "Actual Mode":
+                    self._extra_state_attributes = {"Code": value}
+                    value = NONCVE_ACTUAL_MODE.get(value, "Unknown mode")
 
-                    if json_field == "Actual Mode":
-                        self._extra_state_attributes = {"Code": value}
-                        value = NONCVE_ACTUAL_MODE.get(value, "Unknown mode")
+                if json_field == "Airfilter counter":
+                    _last_maintenance = ""
+                    _next_maintenance_estimate = ""
+                    if str(value).isnumeric():
+                        _last_maintenance = (
+                            datetime.now() - timedelta(hours=int(value))
+                        ).date()
+                        _next_maintenance_estimate = (
+                            datetime.now() + timedelta(days=180, hours=-int(value))
+                        ).date()
+                    else:
+                        _last_maintenance = "Invalid value"
 
-                    if json_field == "Airfilter counter":
-                        _last_maintenance = ""
-                        _next_maintenance_estimate = ""
-                        if str(value).isnumeric():
-                            _last_maintenance = (
-                                datetime.now() - timedelta(hours=int(value))
-                            ).date()
-                            _next_maintenance_estimate = (
-                                datetime.now() + timedelta(days=180, hours=-int(value))
-                            ).date()
-                        else:
-                            _last_maintenance = "Invalid value"
+                    self._extra_state_attributes = {
+                        "Last Maintenance": _last_maintenance,
+                        "Next Maintenance Estimate": _next_maintenance_estimate,
+                    }
 
-                        self._extra_state_attributes = {
-                            "Last Maintenance": _last_maintenance,
-                            "Next Maintenance Estimate": _next_maintenance_estimate,
-                        }
+                if json_field == "Air Quality (%)":
+                    _error_description = ""
+                    if isinstance(value, (int, float)) and float(value) > 100:
+                        _error_description = "Unknown error"
+                        value = None
 
-                    if json_field == "Air Quality (%)":
-                        _error_description = ""
-                        if isinstance(value, (int, float)) and float(value) > 100:
-                            _error_description = "Unknown error"
-                            value = None
+                    self._extra_state_attributes = {
+                        "Error Description": _error_description,
+                    }
 
-                        self._extra_state_attributes = {
-                            "Error Description": _error_description,
-                        }
+                if json_field == "Global fault code":
+                    _description = ""
+                    if str(value).isnumeric():
+                        _description = NONCVE_GLOBAL_FAULT_CODE.get(
+                            int(value), "Unknown fault code"
+                        )
 
-                    if json_field == "Global fault code":
-                        _description = ""
-                        if str(value).isnumeric():
-                            _description = NONCVE_GLOBAL_FAULT_CODE.get(
-                                int(value), "Unknown fault code"
-                            )
+                    self._extra_state_attributes = {
+                        "Description": _description,
+                    }
 
-                        self._extra_state_attributes = {
-                            "Description": _description,
-                        }
+                if json_field == "Highest received RH value (%RH)":
+                    _error_description = ""
+                    if isinstance(value, (int, float)) and float(value) > 100:
+                        _error_description = NONCVE_RH_ERROR_CODE.get(int(value), "Unknown error")
+                        value = None
 
-                    if json_field == "Highest received RH value (%RH)":
-                        _error_description = ""
-                        if isinstance(value, (int, float)) and float(value) > 100:
-                            _error_description = NONCVE_RH_ERROR_CODE.get(int(value), "Unknown error")
-                            value = None
-
-                        self._extra_state_attributes = {
-                            "Error Description": _error_description,
-                        }
+                    self._extra_state_attributes = {
+                        "Error Description": _error_description,
+                    }
 
             self._attr_native_value = value
             self.async_write_ha_state()
@@ -431,17 +408,12 @@ class IthoSensorLastCommand(IthoBaseSensor):
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
 
+
         @callback
         def message_received(message):
             """Handle new MQTT messages."""
-            if message.payload == "":
-                value = None
-            elif self.entity_description.state is not None:
-                value = self.entity_description.state(message.payload)
-            else:
-                payload = json.loads(message.payload)
-                json_field = self.entity_description.json_field
-                value = payload.get(json_field, None)
+            payload = json.loads(message.payload)
+            value = payload.get(self.entity_description.json_field, None)
 
             self._attr_native_value = value
             self.async_write_ha_state()
@@ -467,30 +439,25 @@ class IthoSensorWPU(IthoBaseSensor):
         @callback
         def message_received(message):
             """Handle new MQTT messages."""
-            if message.payload == "":
+            payload = json.loads(message.payload)
+            json_field = self.entity_description.json_field
+            if json_field not in payload:
                 value = None
-            elif self.entity_description.state is not None:
-                value = self.entity_description.state(message.payload)
             else:
-                payload = json.loads(message.payload)
-                json_field = self.entity_description.json_field
-                if json_field not in payload:
-                    value = None
-                else:
-                    value = payload[json_field]
-                    if json_field == "Status":
-                        value = WPU_STATUS.get(int(value), "Unknown status")
-                    if json_field == "ECO selected on thermostat":
-                        if value == 1:
-                            value = "Eco"
-                        if payload["Comfort selected on thermostat"] == 1:
-                            value = "Comfort"
-                        if payload["Boiler boost from thermostat"] == 1:
-                            value = "Boost"
-                        if payload["Boiler blocked from thermostat"] == 1:
-                            value = "Off"
-                        if payload["Venting from thermostat"] == 1:
-                            value = "Venting"
+                value = payload[json_field]
+                if json_field == "Status":
+                    value = WPU_STATUS.get(int(value), "Unknown status")
+                if json_field == "ECO selected on thermostat":
+                    if value == 1:
+                        value = "Eco"
+                    if payload["Comfort selected on thermostat"] == 1:
+                        value = "Comfort"
+                    if payload["Boiler boost from thermostat"] == 1:
+                        value = "Boost"
+                    if payload["Boiler blocked from thermostat"] == 1:
+                        value = "Off"
+                    if payload["Venting from thermostat"] == 1:
+                        value = "Venting"
 
             self._attr_native_value = value
             self.async_write_ha_state()
