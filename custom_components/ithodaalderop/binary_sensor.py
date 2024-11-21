@@ -48,7 +48,9 @@ async def async_setup_entry(
 
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
         for description in AUTOTEMPBINARYSENSORS:
-            description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            description.key = (
+                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            )
             sensors.append(IthoBinarySensor(description, config_entry))
 
     async_add_entities(sensors)
@@ -99,10 +101,11 @@ class IthoBinarySensor(BinarySensorEntity):
         def message_received(message):
             """Handle new MQTT messages."""
             payload = json.loads(message.payload)
-            if self.entity_description.json_field not in payload:
+            json_field = self.entity_description.json_field
+            if json_field not in payload:
                 value = None
             else:
-                value = bool(payload[self.entity_description.json_field])
+                value = bool(payload[json_field])
 
             self._attr_is_on = value
             self.async_write_ha_state()
