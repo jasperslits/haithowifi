@@ -76,7 +76,9 @@ def _create_autotemprooms(config_entry: ConfigEntry):
         if room not in ("", "Room " + str(x)):
             for sensor in template_sensors:
                 sensor.json_field = sensor.json_field.replace("X", str(x))
-                sensor.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+                sensor.key = (
+                    f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+                )
                 sensor.affix = room
                 room_sensors.append(sensor)
 
@@ -121,11 +123,15 @@ async def async_setup_entry(
 
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
         for description in list(AUTOTEMPSENSORS):
-            description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            description.key = (
+                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            )
             sensors.append(IthoSensorAutotemp(description, config_entry))
 
         for description in _create_autotemprooms(config_entry):
-            description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            description.key = (
+                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            )
             sensors.append(IthoSensorAutotempRoom(description, config_entry))
 
     async_add_entities(sensors)
@@ -162,7 +168,6 @@ class IthoBaseSensor(SensorEntity):
         else:
             self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}"
         self.entity_id = f"sensor.{self._attr_unique_id}"
-
 
     @property
     def icon(self) -> str | None:
@@ -235,22 +240,27 @@ class IthoSensorAutotempRoom(IthoBaseSensor):
     """Representation of Itho add-on room sensor for Autotemp data that is updated via MQTT."""
 
     def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry
+        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
     ) -> None:
         """Construct sensor for Autotemp."""
         unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.affix.lower()}"
 
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"{config_entry.data[CONF_ADDON_TYPE]}_room_{description.affix.lower()}")},
+            identifiers={
+                (
+                    DOMAIN,
+                    f"{config_entry.data[CONF_ADDON_TYPE]}_room_{description.affix.lower()}",
+                )
+            },
             manufacturer=MANUFACTURER,
             model=f"{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]} Spider",
             name=f"Spider {description.affix.capitalize()}",
             via_device=(DOMAIN, config_entry.data[CONF_ADDON_TYPE]),
         )
 
-        super().__init__(description, config_entry, unique_id, use_base_sensor_device=False)
+        super().__init__(
+            description, config_entry, unique_id, use_base_sensor_device=False
+        )
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
@@ -259,7 +269,7 @@ class IthoSensorAutotempRoom(IthoBaseSensor):
         def message_received(message):
             """Handle new MQTT messages."""
             payload = json.loads(message.payload)
-            value = payload[self.entity_description.json_field, None]
+            value = payload.get(self.entity_description.json_field, None)
 
             self._attr_native_value = value
             self.async_write_ha_state()
@@ -273,9 +283,7 @@ class IthoSensorCO2Remote(IthoBaseSensor):
     """Representation of Itho add-on sensor for a Remote that is updated via MQTT."""
 
     def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry
+        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
     ) -> None:
         """Construct sensor for Remote."""
         unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.affix.lower()}"
@@ -300,6 +308,7 @@ class IthoSensorCO2Remote(IthoBaseSensor):
         await mqtt.async_subscribe(
             self.hass, self.entity_description.key, message_received, 1
         )
+
 
 class IthoSensorFan(IthoBaseSensor):
     """Representation of a Itho add-on sensor that is updated via MQTT."""
@@ -380,7 +389,9 @@ class IthoSensorFan(IthoBaseSensor):
                 if json_field == "Highest received RH value (%RH)":
                     _error_description = ""
                     if isinstance(value, (int, float)) and float(value) > 100:
-                        _error_description = NONCVE_RH_ERROR_CODE.get(int(value), "Unknown error")
+                        _error_description = NONCVE_RH_ERROR_CODE.get(
+                            int(value), "Unknown error"
+                        )
                         value = None
 
                     self._extra_state_attributes = {
@@ -394,20 +405,18 @@ class IthoSensorFan(IthoBaseSensor):
             self.hass, self.entity_description.key, message_received, 1
         )
 
+
 class IthoSensorLastCommand(IthoBaseSensor):
     """Representation of Itho add-on sensor for Last Command that is updated via MQTT."""
 
     def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry
+        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
     ) -> None:
         """Construct sensor for WPU."""
         super().__init__(description, config_entry)
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
-
 
         @callback
         def message_received(message):
@@ -422,13 +431,12 @@ class IthoSensorLastCommand(IthoBaseSensor):
             self.hass, self.entity_description.key, message_received, 1
         )
 
+
 class IthoSensorWPU(IthoBaseSensor):
     """Representation of Itho add-on sensor for WPU that is updated via MQTT."""
 
     def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry
+        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
     ) -> None:
         """Construct sensor for WPU."""
         super().__init__(description, config_entry)

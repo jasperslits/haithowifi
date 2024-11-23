@@ -55,13 +55,13 @@
         "name": "Battery Leeg"
       },
       "error": {
-        "name": "Error"
+        "name": "Fout"
       },
       "fan_setpoint_rpm": {
-        "name": "Fan Stand"
+        "name": "Ventilator Stand"
       },
       "fan_speed": {
-        "name": "Fan Snelheid"
+        "name": "Ventilator Snelheid"
       },
       "flow_sensor": {
         "name": "Stroomsnelheid"
@@ -93,7 +93,7 @@
       "power_kw": {
         "name": "Vermogen (kW)"
       },
-      "power_perc%": {
+      "power_perc": {
         "name": "Vermogen (%)"
       },
       "remaining_override_timer": {
@@ -109,10 +109,10 @@
         "name": "Kamertemperatuur"
       },
       "setpoint_temp": {
-        "name": "Temperatuur Instelling"
+        "name": "Ingestelde temperatuur"
       },
       "state": {
-        "name": "Staat"
+        "name": "Status"
       },
       "status": {
         "name": "Status"
@@ -127,7 +127,7 @@
         "name": "Temperatuur naar bron"
       },
       "thermostat": {
-        "name": "Thermostat"
+        "name": "Thermostaat boiler"
       },
       "total_operation_time": {
         "name": "Totale bedrijfstijd"
