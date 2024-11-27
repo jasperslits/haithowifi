@@ -4,6 +4,8 @@ Requires WiFi add-on from https://github.com/arjenhiemstra/ithowifi and [MQTT](h
 This simplifies the integration by creating the sensors for the various Itho Daalderop devices: Heatpump WPU 5G, HRU-350 and related devices, CVE boxes, Autotemp units for floor heating. 
 Combine this integration with the Home Assistant auto-discovery in the MQTT configuration for the CVE / non-CVE devices in the add-on. 
 
+This integration is intended for standard domestic set ups: 1 WPU, 1 CVE or HRU unit, up to 10 rooms connected to autotemp and up to 5 CO2 remotes. More complex setups should be managed via YAML and are out of scope.  
+
 This custom component has no affiliation with the Itho Daalderop company or with Arjen Hiemstra's Itho WiFi add-on.
 Note: The 'add-on' here in the context is the ESP32 add-on to the Itho Daalderop units, not an Add-on in Home Assistant. 
 
@@ -29,7 +31,7 @@ In order to keep the history from your old entities follow this process for each
 2. NONCVE / HRU sensors
 3. CVE sensors
 4. Up to 5 remotes for monitoring CO2 levels
-5. Up to 8 autotemp rooms using custom room names instead of Room 1, Room 2
+5. Up to 10 autotemp rooms using custom room names instead of Room 1, Room 2
 
 ### Not (yet) supported
 The fan entity is not supported yet. To add this to Home Assistant enable the Auto-discovery in Arjen's module under MQTT settings or manually configured it. 
