@@ -152,6 +152,13 @@
           "addontype": "Add-on type"
         }
       },
+      "hru_device": {
+        "title": "Selecteer Non-CVE (HRU) model",
+        "description": "Selecteer het model van uw Itho unit",
+        "data": {
+          "hru_device": "Itho HRU Model"
+        }
+      },
       "remotes": {
         "title": "Voeg nieuwe Itho afstandsbedieningen toe",
         "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices. Klik op 'Verzenden' zonder iets te wijzigen om dit over te slaan.",
@@ -214,9 +221,14 @@
       "options": {
         "autotemp": "Autotemp vloerverwarming",
         "cve": "CVE (ECO box)",
-        "hru350": "HRU ECO 350",
-        "hrueco": "HRU ECO",
+        "noncve": "Non-CVE (HRU)",
         "wpu": "WPU Warmtepomp"
+      }
+    },
+    "hrudeviceselect": {
+      "options": {
+        "hru_eco": "HRU ECO",
+        "hru_eco_350": "HRU ECO 350"
       }
     }
   }

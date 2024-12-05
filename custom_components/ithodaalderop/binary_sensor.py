@@ -17,6 +17,7 @@ from .const import (
     _LOGGER,
     ADDON_TYPES,
     CONF_ADDON_TYPE,
+    CONF_HRU_DEVICE,
     DOMAIN,
     MANUFACTURER,
     MQTT_BASETOPIC,
@@ -49,14 +50,14 @@ async def async_setup_entry(
             )
             sensors.append(IthoBinarySensor(description, config_entry))
 
-    if config_entry.data[CONF_ADDON_TYPE] == "hru350":
-        for description in HRU350BINARYSENSORS:
-            description.key = f"{MQTT_BASETOPIC["hru350"]}/{MQTT_STATETOPIC["hru350"]}"
-            sensors.append(IthoBinarySensor(description, config_entry))
+    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
+        if config_entry.data[CONF_HRU_DEVICE] == "hru_eco":
+            hru_sensors = HRUECOBINARYSENSORS
+        if config_entry.data[CONF_HRU_DEVICE] == "hru_eco_350":
+            hru_sensors = HRU350BINARYSENSORS
 
-    if config_entry.data[CONF_ADDON_TYPE] == "hrueco":
-        for description in HRUECOBINARYSENSORS:
-            description.key = f"{MQTT_BASETOPIC["hrueco"]}/{MQTT_STATETOPIC["hrueco"]}"
+        for description in hru_sensors:
+            description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
             sensors.append(IthoBinarySensor(description, config_entry))
 
     async_add_entities(sensors)

@@ -11,10 +11,11 @@ MANUFACTURER = "Itho Daalderop"
 ADDON_TYPES = {
     "autotemp": "Autotemp",
     "cve": "CVE",
-    "hru350": "HRU ECO 350",
-    "hrueco": "HRU ECO",
+    "noncve": "HRU",
     "wpu": "WPU",
 }
+
+HRU_DEVICES = {"hru_eco": "HRU ECO", "hru_eco_350": "HRU ECO 350"}
 
 UNITTYPE_ICONS = {
     "%": "mdi:percent-outline",
@@ -25,8 +26,7 @@ UNITTYPE_ICONS = {
 MQTT_BASETOPIC = {
     "autotemp": "ithotemp",
     "cve": "ithocve",
-    "hru350": "ithohru",
-    "hrueco": "ithohru",
+    "noncve": "ithohru",
     "wpu": "ithowpu",
 }
 
@@ -34,13 +34,13 @@ MQTT_STATETOPIC = {
     "autotemp": "ithostatus",
     "cve": "ithostatus",
     "last_cmd": "lastcmd",
-    "hru350": "ithostatus",
-    "hrueco": "ithostatus",
+    "noncve": "ithostatus",
     "remote": "remotesinfo",
     "wpu": "ithostatus",
 }
 
 CONF_ADDON_TYPE = "addontype"
+CONF_HRU_DEVICE = "hru_device"
 
 CONF_AUTOTEMP_ROOM1 = "room1"
 CONF_AUTOTEMP_ROOM2 = "room2"
@@ -84,7 +84,7 @@ AUTOTEMP_MODE = {
     5: "Manual operation",
 }
 
-HRU_ACTUAL_MODE = {
+NONCVE_ACTUAL_MODE = {
     1: "low",
     2: "medium",
     3: "high",
@@ -95,13 +95,13 @@ HRU_ACTUAL_MODE = {
 
 # Based on user-experience. No codelist availble in the Itho Servicetool
 # For any additions/feedback, please create an issue in the repo of the integration
-HRU_GLOBAL_FAULT_CODE = {
+NONCVE_GLOBAL_FAULT_CODE = {
     0: "No error",
     7: "Filters dirty",
     11: "(External) Sensor error",
 }
 
-HRU_RH_ERROR_CODE = {
+NONCVE_RH_ERROR_CODE = {
     239: "Not Available",
     240: "Shorted Sensor",
     241: "Open Sensor",
