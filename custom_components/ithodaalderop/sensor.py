@@ -22,21 +22,23 @@ from .const import (
     AUTOTEMP_MODE,
     CONF_ADDON_TYPE,
     DOMAIN,
+    HRU_ACTUAL_MODE,
+    HRU_GLOBAL_FAULT_CODE,
+    HRU_RH_ERROR_CODE,
     MANUFACTURER,
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
-    NONCVE_ACTUAL_MODE,
-    NONCVE_GLOBAL_FAULT_CODE,
-    NONCVE_RH_ERROR_CODE,
     UNITTYPE_ICONS,
     WPU_STATUS,
 )
+
 from .definitions import (
     AUTOTEMPROOMSENSORS,
     AUTOTEMPSENSORS,
     CVESENSORS,
     LASTCMDSENSORS,
-    NONCVESENSORS,
+    HRU350SENSORS,
+    HRUECOSENSORS,
     WPUSENSORS,
     IthoSensorEntityDescription,
 )
@@ -97,30 +99,6 @@ async def async_setup_entry(
         return
 
     sensors = []
-    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
-        for description in NONCVESENSORS:
-            description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
-            sensors.append(IthoSensorFan(description, config_entry))
-
-    if config_entry.data[CONF_ADDON_TYPE] == "cve":
-        for description in CVESENSORS:
-            description.key = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
-            sensors.append(IthoSensorFan(description, config_entry))
-
-    if config_entry.data[CONF_ADDON_TYPE] in ["cve", "noncve"]:
-        for description in _create_remotes(config_entry):
-            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}"
-            sensors.append(IthoSensorCO2Remote(description, config_entry))
-
-        for description in LASTCMDSENSORS:
-            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["last_cmd"]}"
-            sensors.append(IthoSensorLastCommand(description, config_entry))
-
-    if config_entry.data[CONF_ADDON_TYPE] == "wpu":
-        for description in WPUSENSORS:
-            description.key = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
-            sensors.append(IthoSensorWPU(description, config_entry))
-
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
         for description in list(AUTOTEMPSENSORS):
             description.key = (
@@ -133,6 +111,35 @@ async def async_setup_entry(
                 f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
             )
             sensors.append(IthoSensorAutotempRoom(description, config_entry))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "cve":
+        for description in CVESENSORS:
+            description.key = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
+            sensors.append(IthoSensorFan(description, config_entry))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "hru350":
+        for description in HRU350SENSORS:
+            description.key = f"{MQTT_BASETOPIC["hru350"]}/{MQTT_STATETOPIC["hru350"]}"
+            sensors.append(IthoSensorFan(description, config_entry))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "hrueco":
+        for description in HRUECOSENSORS:
+            description.key = f"{MQTT_BASETOPIC["hrueco"]}/{MQTT_STATETOPIC["hrueco"]}"
+            sensors.append(IthoSensorFan(description, config_entry))
+
+    if config_entry.data[CONF_ADDON_TYPE] in ["cve", "hru350", "hrueco"]:
+        for description in _create_remotes(config_entry):
+            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}"
+            sensors.append(IthoSensorCO2Remote(description, config_entry))
+
+        for description in LASTCMDSENSORS:
+            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["last_cmd"]}"
+            sensors.append(IthoSensorLastCommand(description, config_entry))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "wpu":
+        for description in WPUSENSORS:
+            description.key = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
+            sensors.append(IthoSensorWPU(description, config_entry))
 
     async_add_entities(sensors)
 
@@ -345,7 +352,7 @@ class IthoSensorFan(IthoBaseSensor):
                 value = payload[json_field]
                 if json_field == "Actual Mode":
                     self._extra_state_attributes = {"Code": value}
-                    value = NONCVE_ACTUAL_MODE.get(value, "Unknown mode")
+                    value = HRU_ACTUAL_MODE.get(value, "Unknown mode")
 
                 if json_field == "Airfilter counter":
                     _last_maintenance = ""
@@ -378,7 +385,7 @@ class IthoSensorFan(IthoBaseSensor):
                 if json_field == "Global fault code":
                     _description = ""
                     if str(value).isnumeric():
-                        _description = NONCVE_GLOBAL_FAULT_CODE.get(
+                        _description = HRU_GLOBAL_FAULT_CODE.get(
                             int(value), "Unknown fault code"
                         )
 
@@ -389,7 +396,7 @@ class IthoSensorFan(IthoBaseSensor):
                 if json_field == "Highest received RH value (%RH)":
                     _error_description = ""
                     if isinstance(value, (int, float)) and float(value) > 100:
-                        _error_description = NONCVE_RH_ERROR_CODE.get(
+                        _error_description = HRU_RH_ERROR_CODE.get(
                             int(value), "Unknown error"
                         )
                         value = None

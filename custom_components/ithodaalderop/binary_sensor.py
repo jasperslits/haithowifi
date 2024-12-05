@@ -24,7 +24,8 @@ from .const import (
 )
 from .definitions import (
     AUTOTEMPBINARYSENSORS,
-    NONCVEBINARYSENSORS,
+    HRU350BINARYSENSORS,
+    HRUECOBINARYSENSORS,
     IthoBinarySensorEntityDescription,
 )
 
@@ -41,14 +42,21 @@ async def async_setup_entry(
         return
 
     sensors = []
-    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
-        for description in NONCVEBINARYSENSORS:
-            description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
-            sensors.append(IthoBinarySensor(description, config_entry))
-
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
         for description in AUTOTEMPBINARYSENSORS:
-            description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            description.key = (
+                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            )
+            sensors.append(IthoBinarySensor(description, config_entry))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "hru350":
+        for description in HRU350BINARYSENSORS:
+            description.key = f"{MQTT_BASETOPIC["hru350"]}/{MQTT_STATETOPIC["hru350"]}"
+            sensors.append(IthoBinarySensor(description, config_entry))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "hrueco":
+        for description in HRU350BINARYSENSORS:
+            description.key = f"{MQTT_BASETOPIC["hrueco"]}/{MQTT_STATETOPIC["hrueco"]}"
             sensors.append(IthoBinarySensor(description, config_entry))
 
     async_add_entities(sensors)

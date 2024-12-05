@@ -51,6 +51,9 @@
       "cv_return_temp": {
         "name": "CV Return Temperature"
       },
+      "drain_fan_speed": {
+        "name": "Drain Fan Speed"
+      },
       "empty_battery": {
         "name": "Empty Battery"
       },
@@ -116,6 +119,9 @@
       },
       "status": {
         "name": "Status"
+      },
+      "supply_fan_speed": {
+        "name": "Supply Fan Speed"
       },
       "temp": {
         "name": "Temperature"
@@ -212,9 +218,10 @@
   "selector": {
     "addonselect": {
       "options": {
-        "noncve": "Non-CVE (HRU)",
-        "cve": "CVE (ECO box)",
         "autotemp": "Autotemp floor heating",
+        "cve": "CVE (ECO box)",
+        "hru350": "HRU ECO 350",
+        "hrueco": "HRU ECO",
         "wpu": "WPU heatpump"
       }
     }

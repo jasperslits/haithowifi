@@ -51,6 +51,9 @@
       "cv_return_temp": {
         "name": "CV Afvoer Temperatuur"
       },
+      "drain_fan_speed": {
+        "name": "Afvoerentilator Snelheid"
+      },
       "empty_battery": {
         "name": "Battery Leeg"
       },
@@ -116,6 +119,9 @@
       },
       "status": {
         "name": "Status"
+      },
+      "supply_fan_speed": {
+        "name": "Toevoerentilator Snelheid"
       },
       "temp": {
         "name": "Temperatuur"
@@ -206,10 +212,11 @@
   "selector": {
     "addonselect": {
       "options": {
-        "wpu": "WPU Warmtepomp",
         "autotemp": "Autotemp vloerverwarming",
-        "noncve": "Non-CVE (HRU)",
-        "cve": "CVE (ECO box)"
+        "cve": "CVE (ECO box)",
+        "hru350": "HRU ECO 350",
+        "hrueco": "HRU ECO",
+        "wpu": "WPU Warmtepomp"
       }
     }
   }

@@ -9,15 +9,11 @@ DOMAIN = "ithodaalderop"
 MANUFACTURER = "Itho Daalderop"
 
 ADDON_TYPES = {
-    "noncve": "HRU",
-    "cve": "CVE",
     "autotemp": "Autotemp",
+    "cve": "CVE",
+    "hru350": "HRU ECO 350",
+    "hrueco": "HRU ECO",
     "wpu": "WPU",
-}
-
-CVE_TYPES = {
-    "noncve": ["noncve", "mdi:fan"],
-    "cve": ["cve", "mdi:fan"],
 }
 
 UNITTYPE_ICONS = {
@@ -29,7 +25,8 @@ UNITTYPE_ICONS = {
 MQTT_BASETOPIC = {
     "autotemp": "ithotemp",
     "cve": "ithocve",
-    "noncve": "ithohru",
+    "hru350": "ithohru",
+    "hrueco": "ithohru",
     "wpu": "ithowpu",
 }
 
@@ -37,7 +34,8 @@ MQTT_STATETOPIC = {
     "autotemp": "ithostatus",
     "cve": "ithostatus",
     "last_cmd": "lastcmd",
-    "noncve": "ithostatus",
+    "hru350": "ithostatus",
+    "hrueco": "ithostatus",
     "remote": "remotesinfo",
     "wpu": "ithostatus",
 }
@@ -86,7 +84,7 @@ AUTOTEMP_MODE = {
     5: "Manual operation",
 }
 
-NONCVE_ACTUAL_MODE = {
+HRU_ACTUAL_MODE = {
     1: "low",
     2: "medium",
     3: "high",
@@ -97,13 +95,13 @@ NONCVE_ACTUAL_MODE = {
 
 # Based on user-experience. No codelist availble in the Itho Servicetool
 # For any additions/feedback, please create an issue in the repo of the integration
-NONCVE_GLOBAL_FAULT_CODE = {
+HRU_GLOBAL_FAULT_CODE = {
     0: "No error",
     7: "Filters dirty",
     11: "(External) Sensor error",
 }
 
-NONCVE_RH_ERROR_CODE = {
+HRU_RH_ERROR_CODE = {
     239: "Not Available",
     240: "Shorted Sensor",
     241: "Open Sensor",
