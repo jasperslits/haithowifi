@@ -1,4 +1,17 @@
-## Home Assistant sensor component/integration for Itho Wifi
+# Table of Contents
+- [Home Assistant sensor component/integration for Itho Wifi](#home-assistant-sensor-componentintegration-for-itho-wifi))
+  - [What can be configured via this Integration](#what-can-be-configured-via-this-integration)
+  - [Not (yet) supported](#not-yet-supported)
+  - [Use-case](#use-case)
+  - [Available sensors](#available-sensors)
+- [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Install via HACS (recommended)](#install-via-hacs-recommended)
+  - [Manual install](#manual-install)
+  - [Upgrading from 1.4 or below (+ keeping history)](#upgrading-from-14-or-below--keeping-history)
+- [Screenshots](#screenshots)
+
+# Home Assistant sensor component/integration for Itho Wifi
 Requires WiFi add-on from https://github.com/arjenhiemstra/ithowifi and [MQTT](https://www.home-assistant.io/integrations/mqtt/) integration with Home Assistant. 
 
 This simplifies the integration by creating the sensors for the various Itho Daalderop devices: Heatpump WPU 5G, HRU-350 and related devices, CVE boxes, Autotemp units for floor heating. 
@@ -9,35 +22,18 @@ This integration is intended for standard domestic set ups: 1 WPU, 1 CVE or HRU 
 This custom component has no affiliation with the Itho Daalderop company or with Arjen Hiemstra's Itho WiFi add-on.
 Note: The 'add-on' here in the context is the ESP32 add-on to the Itho Daalderop units, not an Add-on in Home Assistant. 
 
-### Upgrading from 1.4 or below (+ keeping history):
-Version `2.0.0` includes major improvements that changes the entity id's for all entities within a device. Due to this change old entities will no longer be provided by the integration and no longer work. You will need to reconfigure the integration:
-1. Navigate to `Settings` -> `Devices & Services` and find `Itho WiFi Add-on`.
-2. For each entry press ` ⠇ ` (three dots) and press `Delete`.
-3. Reconfigure a new entry by pressing `ADD DEVICE` for each Itho Wifi Add-on you own.
-
-In order to keep the history from your old entities follow this process for each entity:
-
-
->_According to https://www.home-assistant.io/blog/2023/04/05/release-20234/#database-scalability_:
->
->It may take a while to complete background data migration, depending on the size of your stored data. To ensure Home Assistant keeps history when renaming an entity, wait 24 hours after upgrading before renaming.
-
-1. Rename the entity to the entity-id of the old entity. (For example, change `sensor.itho_hru_actual_exhaust_fan` back to `sensor.noncve_actual_exhaust_fan`)
-2. **Wait 24 hours**
-3. Rename the entity back to the new naming scheme. The history should now be kept with your new entity-id
-
-### What can be configured via this Integration
+## What can be configured via this Integration
 1. Heatpump WPU sensors
 2. NONCVE / HRU sensors
 3. CVE sensors
 4. Up to 5 remotes for monitoring CO2 levels
 5. Up to 10 autotemp rooms using custom room names instead of Room 1, Room 2
 
-### Not (yet) supported
+## Not (yet) supported
 The fan entity is not supported yet. To add this to Home Assistant enable the Auto-discovery in Arjen's module under MQTT settings or manually configured it. 
 See https://github.com/arjenhiemstra/ithowifi/wiki/Home-Assistant the wiki for details
 
-### Use-case
+## Use-case
 Full auto-discovery from the WiFi add-on to Home Assistant is the best experience but as this is not there yet, this integration should eliminate the manual creation via YAML of sensors for:
 * Non-CVE like Actual mode, Supply Temp, Supply / Exhaust RPM, Bypass 
 * CVE like Humidity, Temperature, Speed
@@ -47,7 +43,7 @@ Full auto-discovery from the WiFi add-on to Home Assistant is the best experienc
 
 It creates a device and commonly used sensors and uses a predefined MQTT state topic to distinct the devices.
 
-### Available sensors
+## Available sensors
 | Device | Sensor | Attributes |
 |---|---|---|
 | **Autotemp** |||
@@ -105,10 +101,12 @@ It creates a device and commonly used sensors and uses a predefined MQTT state t
 
 Missing a sensor? Feel free to create an [issue](https://github.com/jasperslits/haithowifi/issues)
 
-### Prerequisites
-1. Working WiFi add-on connected to the Itho device(s)
-2. [MQTT HA Integration](https://www.home-assistant.io/integrations/mqtt/)
-3. State topics for MQTT like table below
+# Installation
+
+## Prerequisites
+1. Working WiFi add-on connected to the Itho device(s) ([buy](https://www.nrgwatch.nl/))
+2. [Official HA MQTT Integration](https://www.home-assistant.io/integrations/mqtt/) - Other `MQTT` integrations are not supported
+3. In the Itho WiFi add-on the `MQTT base topic` should be configured like the table below:
 
 | Device  | MQTT base topic   | 
 |---|---|
@@ -117,17 +115,36 @@ Missing a sensor? Feel free to create an [issue](https://github.com/jasperslits/
 | HRU  | ithohru  | 
 | WPU  | ithowpu  |
 
-## How to install
-1. In the Add-On from Arjen: Update the add-on MQTT configuration and set MQTT Base Topic as per below above
-2. On the system running Home Assistant: Create /usr/share/hassio/homeassistant/custom_components/ithodaalderop
-3. Install the component via HACS custom repo. See https://hacs.xyz/docs/faq/custom_repositories/ and use Integration in the dropdown and https://github.com/jasperslits/haithowifi/ as name **OR** 
-4. Git clone or download the content to custom_components in the /usr/share/hassio/homeassistant/custom_components/ithodaalderop directory 
-5. Restart Home Assistant
-6. Go to Integrations
-7. Search for Itho Add-on integration
-8. Add an entry for each device
+## Install via HACS (recommended)
+1. Install HACS by following [these](https://www.hacs.xyz/docs/use/) steps
+2. Install the component via HACS custom repository. See https://hacs.xyz/docs/faq/custom_repositories/ and use Integration in the dropdown and https://github.com/jasperslits/haithowifi/ as name 
 
-### Screenshots
+## Manual install
+1. Using a HA file editor like [`Studio Code Server`](https://github.com/hassio-addons/addon-vscode/blob/main/vscode/DOCS.md) or [`File Editor`](https://www.home-assistant.io/common-tasks/os/#installing-and-using-the-file-editor-add-on), create a folder /usr/share/hassio/homeassistant/custom_components/ithodaalderop
+2. Git clone or download the content to custom_components in the /usr/share/hassio/homeassistant/custom_components/ithodaalderop directory 
+3. Restart Home Assistant
+4. Go to Integrations
+5. Search for Itho Add-on integration
+6. Add an entry for each device
+
+## Upgrading from 1.4 or below (+ keeping history)
+Version `2.0.0` includes major improvements that changes the entity id's for all entities within a device. Due to this change old entities will no longer be provided by the integration and no longer work. You will need to reconfigure the integration:
+1. Navigate to `Settings` -> `Devices & Services` and find `Itho WiFi Add-on`.
+2. For each entry press ` ⠇ ` (three dots) and press `Delete`.
+3. Reconfigure a new entry by pressing `ADD DEVICE` for each Itho Wifi Add-on you own.
+
+In order to keep the history from your old entities follow this process for each entity:
+
+
+>_According to https://www.home-assistant.io/blog/2023/04/05/release-20234/#database-scalability_:
+>
+>It may take a while to complete background data migration, depending on the size of your stored data. To ensure Home Assistant keeps history when renaming an entity, wait 24 hours after upgrading before renaming.
+
+1. Rename the entity to the entity-id of the old entity. (For example, change `sensor.itho_hru_actual_exhaust_fan` back to `sensor.noncve_actual_exhaust_fan`)
+2. **Wait 24 hours**
+3. Rename the entity back to the new naming scheme. The history should now be kept with your new entity-id
+
+# Screenshots
 1. Add integration
 <img width="606" alt="image" src="https://github.com/user-attachments/assets/5e32a3e3-a06b-4be0-9681-6a640f486abc">
 
