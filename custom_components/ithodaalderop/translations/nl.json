@@ -52,7 +52,7 @@
         "name": "CV Afvoer Temperatuur"
       },
       "drain_fan_speed": {
-        "name": "Afvoerentilator Snelheid"
+        "name": "Afvoerventilator Snelheid"
       },
       "empty_battery": {
         "name": "Battery Leeg"
@@ -121,7 +121,7 @@
         "name": "Status"
       },
       "supply_fan_speed": {
-        "name": "Toevoerentilator Snelheid"
+        "name": "Toevoerventilator Snelheid"
       },
       "temp": {
         "name": "Temperatuur"
