@@ -55,7 +55,7 @@ async def async_setup_entry(
             sensors.append(IthoBinarySensor(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "hrueco":
-        for description in HRU350BINARYSENSORS:
+        for description in HRUECOBINARYSENSORS:
             description.key = f"{MQTT_BASETOPIC["hrueco"]}/{MQTT_STATETOPIC["hrueco"]}"
             sensors.append(IthoBinarySensor(description, config_entry))
 

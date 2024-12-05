@@ -31,14 +31,13 @@ from .const import (
     UNITTYPE_ICONS,
     WPU_STATUS,
 )
-
 from .definitions import (
     AUTOTEMPROOMSENSORS,
     AUTOTEMPSENSORS,
     CVESENSORS,
-    LASTCMDSENSORS,
     HRU350SENSORS,
     HRUECOSENSORS,
+    LASTCMDSENSORS,
     WPUSENSORS,
     IthoSensorEntityDescription,
 )
