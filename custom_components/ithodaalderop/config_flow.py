@@ -118,41 +118,6 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="rooms", data_schema=itho_schema, last_step=True
         )
 
-    async def async_step_remotes(self, user_input: Mapping[str, Any] | None = None):
-        """Configure up to 5 remotes."""
-        if user_input is not None:
-            self.config.update(user_input)
-            await self.async_set_unique_id(
-                f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}"
-            )
-            self._abort_if_unique_id_configured()
-            if self.config[CONF_ADDON_TYPE] == "noncve":
-                return self.async_create_entry(
-                    title="Itho WiFi Add-on for "
-                    + ADDON_TYPES[self.config[CONF_ADDON_TYPE]]
-                    + " - "
-                    + HRU_DEVICES[self.config[CONF_HRU_DEVICE]],
-                    data=self.config,
-                )
-            return self.async_create_entry(
-                title="Itho WiFi Add-on for "
-                + ADDON_TYPES[self.config[CONF_ADDON_TYPE]],
-                data=self.config,
-            )
-
-        itho_schema = vol.Schema(
-            {
-                vol.Required(CONF_REMOTE_1, default="Remote 1"): str,
-                vol.Optional(CONF_REMOTE_2, default="Remote 2"): str,
-                vol.Optional(CONF_REMOTE_3, default="Remote 3"): str,
-                vol.Optional(CONF_REMOTE_4, default="Remote 4"): str,
-                vol.Optional(CONF_REMOTE_5, default="Remote 5"): str,
-            }
-        )
-        return self.async_show_form(
-            step_id="remotes", data_schema=itho_schema, last_step=True
-        )
-
     async def async_step_hru_device(self, user_input: Mapping[str, Any] | None = None):
         """Configure Non-CVE (HRU) Device."""
         if user_input is not None:
@@ -175,6 +140,37 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         )
 
         return self.async_show_form(step_id="hru_device", data_schema=itho_schema)
+
+    async def async_step_remotes(self, user_input: Mapping[str, Any] | None = None):
+        """Configure up to 5 remotes."""
+        if user_input is not None:
+            self.config.update(user_input)
+            await self.async_set_unique_id(
+                f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}"
+            )
+            self._abort_if_unique_id_configured()
+
+            title = "Itho WiFi Add-on for " + ADDON_TYPES[self.config[CONF_ADDON_TYPE]]
+            if self.config[CONF_ADDON_TYPE] == "noncve":
+                title = title + " - " + HRU_DEVICES[self.config[CONF_HRU_DEVICE]]
+
+            return self.async_create_entry(
+                title=title,
+                data=self.config,
+            )
+
+        itho_schema = vol.Schema(
+            {
+                vol.Required(CONF_REMOTE_1, default="Remote 1"): str,
+                vol.Optional(CONF_REMOTE_2, default="Remote 2"): str,
+                vol.Optional(CONF_REMOTE_3, default="Remote 3"): str,
+                vol.Optional(CONF_REMOTE_4, default="Remote 4"): str,
+                vol.Optional(CONF_REMOTE_5, default="Remote 5"): str,
+            }
+        )
+        return self.async_show_form(
+            step_id="remotes", data_schema=itho_schema, last_step=True
+        )
 
     async def async_step_reconfigure(self, user_input: Mapping[str, Any] | None = None):
         """Reconfigure config flow."""

@@ -12,6 +12,9 @@ PLATFORMS = [Platform.BINARY_SENSOR, Platform.SENSOR]
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up the Itho Wifi add-on integration."""
 
+    # Migrate noncve config < v2.2.0 to 2.2.0+
+    # < 2.2.0 Only 1 HRU was supported. This was the HRU ECO 350
+    # So, if no hru_device is setup, this has to be the hru_eco_350
     if (
         entry.data[CONF_ADDON_TYPE] == "noncve"
         and entry.data.get(CONF_HRU_DEVICE) is None

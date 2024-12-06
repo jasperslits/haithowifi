@@ -5,6 +5,9 @@ A control entity represents interactive elements that allow the user to send com
 A diagnostic entity provides device-specific metadata or operational insights that assist in understanding the device's internal state or functioning but is not directly related to the user's environment.
 """
 
+# TODO: Add support for HRU 200 and HRU 250/300
+# Labels (json_fields) can be found @ https://github.com/arjenhiemstra/ithowifi/tree/master/software/NRG_itho_wifi/main/devices
+
 from __future__ import annotations
 
 from collections.abc import Callable
