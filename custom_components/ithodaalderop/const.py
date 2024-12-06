@@ -84,7 +84,7 @@ AUTOTEMP_MODE = {
     5: "Manual operation",
 }
 
-NONCVE_ACTUAL_MODE = {
+NONCVE_HRUECO350_ACTUAL_MODE = {
     1: "low",
     2: "medium",
     3: "high",
@@ -95,13 +95,13 @@ NONCVE_ACTUAL_MODE = {
 
 # Based on user-experience. No codelist availble in the Itho Servicetool
 # For any additions/feedback, please create an issue in the repo of the integration
-NONCVE_GLOBAL_FAULT_CODE = {
+NONCVE_HRUECO350_GLOBAL_FAULT_CODE = {
     0: "No error",
     7: "Filters dirty",
     11: "(External) Sensor error",
 }
 
-NONCVE_RH_ERROR_CODE = {
+NONCVE_HRUECO350_RH_ERROR_CODE = {
     239: "Not Available",
     240: "Shorted Sensor",
     241: "Open Sensor",
@@ -119,6 +119,14 @@ NONCVE_RH_ERROR_CODE = {
     253: "Reserved Error",
     254: "Reserved Error",
     255: "Unknown Error",
+}
+
+NONCVE_HRUECO_STATUS = {
+    0: "Normal",
+    1: "Adjust frost valve",
+    2: "Decelerate Supply fan",
+    3: "Accelerate Exhaust fan",
+    4: "Stop supply fan",
 }
 
 WPU_STATUS = {

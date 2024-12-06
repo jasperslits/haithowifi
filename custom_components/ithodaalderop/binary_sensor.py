@@ -19,6 +19,7 @@ from .const import (
     CONF_ADDON_TYPE,
     CONF_HRU_DEVICE,
     DOMAIN,
+    HRU_DEVICES,
     MANUFACTURER,
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
@@ -77,10 +78,14 @@ class IthoBinarySensor(BinarySensorEntity):
         """Initialize the binary sensor."""
         self.entity_description = description
 
+        model = ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
+        if config_entry.data[CONF_ADDON_TYPE] == "noncve":
+            model = model + " - " + HRU_DEVICES[config_entry.data[CONF_HRU_DEVICE]]
+
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
             manufacturer=MANUFACTURER,
-            model=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
+            model=model,
             name="Itho Daalderop " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
         )
 
