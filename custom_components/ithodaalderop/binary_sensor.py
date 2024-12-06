@@ -26,7 +26,7 @@ from .const import (
 )
 from .definitions import (
     AUTOTEMPBINARYSENSORS,
-    HRU350BINARYSENSORS,
+    HRUECO350BINARYSENSORS,
     HRUECOBINARYSENSORS,
     IthoBinarySensorEntityDescription,
 )
@@ -55,7 +55,7 @@ async def async_setup_entry(
         if config_entry.data[CONF_HRU_DEVICE] == "hru_eco":
             hru_sensors = HRUECOBINARYSENSORS
         if config_entry.data[CONF_HRU_DEVICE] == "hru_eco_350":
-            hru_sensors = HRU350BINARYSENSORS
+            hru_sensors = HRUECO350BINARYSENSORS
 
         for description in hru_sensors:
             description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"

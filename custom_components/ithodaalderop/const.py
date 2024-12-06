@@ -15,7 +15,13 @@ ADDON_TYPES = {
     "wpu": "WPU",
 }
 
-HRU_DEVICES = {"hru_eco": "HRU ECO", "hru_eco_350": "HRU ECO 350"}
+HRU_DEVICES = {
+    "hru_eco": "HRU ECO",
+    "hru_eco_200": "HRU ECO 200",
+    "hru_eco_250": "HRU ECO 250",
+    "hru_eco_300": "HRU ECO 300",
+    "hru_eco_350": "HRU ECO 350",
+}
 
 UNITTYPE_ICONS = {
     "%": "mdi:percent-outline",

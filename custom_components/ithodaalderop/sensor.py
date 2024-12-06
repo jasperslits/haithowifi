@@ -38,7 +38,9 @@ from .definitions import (
     AUTOTEMPROOMSENSORS,
     AUTOTEMPSENSORS,
     CVESENSORS,
-    HRU350SENSORS,
+    HRUECO200SENSORS,
+    HRUECO350SENSORS,
+    HRUECO250300SENSORS,
     HRUECOSENSORS,
     LASTCMDSENSORS,
     WPUSENSORS,
@@ -122,8 +124,12 @@ async def async_setup_entry(
     if config_entry.data[CONF_ADDON_TYPE] == "noncve":
         if config_entry.data[CONF_HRU_DEVICE] == "hru_eco":
             hru_sensors = HRUECOSENSORS
+        if config_entry.data[CONF_HRU_DEVICE] == "hru_eco_200":
+            hru_sensors = HRUECO200SENSORS
+        if config_entry.data[CONF_HRU_DEVICE] in ["hru_eco_250", "hru_eco_300"]:
+            hru_sensors = HRUECO250300SENSORS
         if config_entry.data[CONF_HRU_DEVICE] == "hru_eco_350":
-            hru_sensors = HRU350SENSORS
+            hru_sensors = HRUECO350SENSORS
 
         for description in hru_sensors:
             description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
