@@ -311,7 +311,7 @@ HRUECOBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
 
 HRUECOSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
-        json_field="Airfilter counter",
+        json_field="Air filter counter",
         translation_key="airfilter_counter",
         native_unit_of_measurement=UnitOfTime.HOURS,
         state_class=SensorStateClass.TOTAL_INCREASING,
@@ -323,7 +323,6 @@ HRUECOSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="drain_fan_speed",
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Temp of exhaust air (°C)",
@@ -348,7 +347,6 @@ HRUECOSENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="supply_fan_speed",
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Temp of supply air (°C)",

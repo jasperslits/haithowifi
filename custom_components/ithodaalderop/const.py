@@ -11,7 +11,7 @@ MANUFACTURER = "Itho Daalderop"
 ADDON_TYPES = {
     "autotemp": "Autotemp",
     "cve": "CVE",
-    "noncve": "HRU",
+    "noncve": "Non-CVE",
     "wpu": "WPU",
 }
 

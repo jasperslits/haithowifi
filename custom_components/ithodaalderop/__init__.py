@@ -12,11 +12,13 @@ PLATFORMS = [Platform.BINARY_SENSOR, Platform.SENSOR]
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up the Itho Wifi add-on integration."""
 
-    if entry.data[CONF_ADDON_TYPE] == "noncve":
+    if (
+        entry.data[CONF_ADDON_TYPE] == "noncve"
+        and entry.data.get(CONF_HRU_DEVICE) is None
+    ):
         new_data = {**entry.data}
-        if new_data.get(CONF_HRU_DEVICE) is None:
-            new_data[CONF_HRU_DEVICE] = "hru_eco_350"
-            hass.config_entries.async_update_entry(entry, data=new_data)
+        new_data[CONF_HRU_DEVICE] = "hru_eco_350"
+        hass.config_entries.async_update_entry(entry, data=new_data)
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True

@@ -126,6 +126,14 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}"
             )
             self._abort_if_unique_id_configured()
+            if self.config[CONF_ADDON_TYPE] == "noncve":
+                return self.async_create_entry(
+                    title="Itho WiFi Add-on for "
+                    + ADDON_TYPES[self.config[CONF_ADDON_TYPE]]
+                    + " - "
+                    + HRU_DEVICES[self.config[CONF_HRU_DEVICE]],
+                    data=self.config,
+                )
             return self.async_create_entry(
                 title="Itho WiFi Add-on for "
                 + ADDON_TYPES[self.config[CONF_ADDON_TYPE]],
