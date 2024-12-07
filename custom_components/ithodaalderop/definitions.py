@@ -5,6 +5,9 @@ A control entity represents interactive elements that allow the user to send com
 A diagnostic entity provides device-specific metadata or operational insights that assist in understanding the device's internal state or functioning but is not directly related to the user's environment.
 """
 
+# TODO: Add support for HRU 200 and HRU 250/300
+# Labels (json_fields) can be found @ https://github.com/arjenhiemstra/ithowifi/tree/master/software/NRG_itho_wifi/main/devices
+
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -204,7 +207,99 @@ LASTCMDSENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
 )
 
-NONCVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
+HRUECO200SENSORS: tuple[IthoSensorEntityDescription, ...] = (
+    IthoSensorEntityDescription(
+        json_field="Actual speed (rpm)",
+        translation_key="actual_speed",
+        native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Air discharge temperature (°C)",
+        translation_key="air_discharge_temp",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Average air outlet temperature (°C)",
+        translation_key="average_air_outlet_temp",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Error",
+        translation_key="error",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Filter use counter (hour)",
+        translation_key="filter_use_counter",
+        native_unit_of_measurement=UnitOfTime.HOURS,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        icon="mdi:counter",
+    ),
+    IthoSensorEntityDescription(
+        json_field="Max. CO2 level (ppm)",
+        translation_key="max_co2_level",
+        native_unit_of_measurement=CONCENTRATION_PARTS_PER_MILLION,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False,
+        icon="mdi:molecule-co2",
+    ),
+    IthoSensorEntityDescription(
+        json_field="Max. RH level (%)",
+        translation_key="max_rh_level",
+        native_unit_of_measurement=PERCENTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Room temp setpoint (°C)",
+        translation_key="room_temp_setpoint",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Outside temperature (°C)",
+        translation_key="outside_temp",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Speed setpoint (rpm)",
+        translation_key="speed_setpoint",
+        native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_registry_enabled_default=False,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Total operation (hrs)",
+        translation_key="total_operation_time",
+        native_unit_of_measurement=UnitOfTime.HOURS,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Ventilation setpoint (%)",
+        translation_key="ventilation_setpoint_percentage",
+        native_unit_of_measurement=PERCENTAGE,
+    ),
+)
+
+HRUECO250300SENSORS: tuple[IthoSensorEntityDescription, ...] = (
+    # IthoSensorEntityDescription(
+    #     json_field="Actual Mode",
+    #     translation_key="actual_mode",
+    #     icon="mdi:knob",
+    # ),
+)
+
+HRUECO350BINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     IthoBinarySensorEntityDescription(
         json_field="Bypass position",
         translation_key="bypass_position",
@@ -215,7 +310,7 @@ NONCVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     ),
 )
 
-NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
+HRUECO350SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Actual Mode",
         translation_key="actual_mode",
@@ -291,6 +386,65 @@ NONCVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Supply temp (°C)",
+        translation_key="actual_supply_temp",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+)
+
+HRUECOBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
+    IthoBinarySensorEntityDescription(
+        json_field="Bypass position (pulse)",
+        translation_key="bypass_position",
+        device_class=BinarySensorDeviceClass.OPENING,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        icon_off="mdi:valve-closed",
+        icon_on="mdi:valve-open",
+    ),
+)
+
+HRUECOSENSORS: tuple[IthoSensorEntityDescription, ...] = (
+    IthoSensorEntityDescription(
+        json_field="Air filter counter",
+        translation_key="airfilter_counter",
+        native_unit_of_measurement=UnitOfTime.HOURS,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        icon="mdi:counter",
+    ),
+    IthoSensorEntityDescription(
+        json_field="Drain fan speed (rpm)",
+        translation_key="drain_fan_speed",
+        native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Temp of exhaust air (°C)",
+        translation_key="actual_exhaust_temp",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="room temp (°C)",
+        translation_key="room_temp",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Status",
+        translation_key="status",
+    ),
+    IthoSensorEntityDescription(
+        json_field="Supply fan speed (rpm)",
+        translation_key="supply_fan_speed",
+        native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Temp of supply air (°C)",
         translation_key="actual_supply_temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
