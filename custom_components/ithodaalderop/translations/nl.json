@@ -18,6 +18,9 @@
       "actual_mode": {
         "name": "Huidige Mode"
       },
+      "actual_speed": {
+        "name": "Actuele Snelheid"
+      },
       "actual_supply_fan": {
         "name": "Actuele Aanvoer Ventilator"
       },
@@ -27,11 +30,17 @@
       "actual_temp": {
         "name": "Actuele Temperatuur"
       },
+      "air_discharge_temp": {
+        "name": "Luchtafvoertemperatuur"
+      },
       "airfilter_counter": {
         "name": "Luchtfilter Teller"
       },
       "airquality": {
         "name": "Luchtkwaliteit"
+      },
+      "average_air_outlet_temp": {
+        "name": "Gemiddelde Luchtuitlaattemperatuur"
       },
       "balance": {
         "name": "Balans"
@@ -66,6 +75,9 @@
       "fan_speed": {
         "name": "Ventilator Snelheid"
       },
+      "filter_use_counter": {
+        "name": "Filter gebruiksteller"
+      },
       "flow_sensor": {
         "name": "Stroomsnelheid"
       },
@@ -81,17 +93,26 @@
       "highest_received_rh_value": {
         "name": "Hoogste RH waarde"
       },
+      "humidity": {
+        "name": "Luchtvochtigheid"
+      },
       "last_cmd_command": {
         "name": "Laatste Commando"
       },
       "last_cmd_source": {
         "name": "Laatste Commando Bron"
       },
-      "humidity": {
-        "name": "Luchtvochtigheid"
+      "max_co2_level": {
+        "name": "Max CO2 Niveau"
+      },
+      "max_rh_level": {
+        "name": "Max RH Niveau"
       },
       "mode": {
         "name": "Mode"
+      },
+      "outside_temp": {
+        "name": "Buitentemperatuur"
       },
       "power_kw": {
         "name": "Vermogen (kW)"
@@ -111,6 +132,9 @@
       "room_temp": {
         "name": "Kamertemperatuur"
       },
+      "room_temp_setpoint": {
+        "name": "Ingestelde Kamertemperatuur"
+      },
       "setpoint_temp": {
         "name": "Ingestelde temperatuur"
       },
@@ -119,6 +143,9 @@
       },
       "status": {
         "name": "Status"
+      },
+      "speed_setpoint": {
+        "name": "Ingestelde Snelheid"
       },
       "supply_fan_speed": {
         "name": "Toevoerventilator Snelheid"
@@ -138,6 +165,9 @@
       "total_operation_time": {
         "name": "Totale bedrijfstijd"
       },
+      "ventilation_setpoint_percentage": {
+        "name": "Insteld Ventilatie Percentage"
+      },
       "well_pump_percent": {
         "name": "Bronpomp"
       }
@@ -152,11 +182,11 @@
           "addontype": "Add-on type"
         }
       },
-      "hru_device": {
+      "noncve_model": {
         "title": "Selecteer Non-CVE (HRU) model",
         "description": "Selecteer het model van uw Itho unit",
         "data": {
-          "hru_device": "Itho HRU Model"
+          "noncve_model": "Model:"
         }
       },
       "remotes": {
@@ -225,7 +255,7 @@
         "wpu": "WPU Warmtepomp"
       }
     },
-    "hrudeviceselect": {
+    "noncve_model_select": {
       "options": {
         "hru_eco": "HRU ECO",
         "hru_eco_200": "HRU ECO 200",

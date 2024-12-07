@@ -23,14 +23,14 @@ from .const import (
     CONF_AUTOTEMP_ROOM6,
     CONF_AUTOTEMP_ROOM7,
     CONF_AUTOTEMP_ROOM8,
-    CONF_HRU_DEVICE,
+    CONF_NONCVE_MODEL,
     CONF_REMOTE_1,
     CONF_REMOTE_2,
     CONF_REMOTE_3,
     CONF_REMOTE_4,
     CONF_REMOTE_5,
     DOMAIN,
-    HRU_DEVICES,
+    NONCVE_DEVICES,
 )
 
 
@@ -59,7 +59,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             if user_input[CONF_ADDON_TYPE] == "cve":
                 return await self.async_step_remotes()
             if user_input[CONF_ADDON_TYPE] == "noncve":
-                return await self.async_step_hru_device()
+                return await self.async_step_noncve_model()
 
             await self.async_set_unique_id(
                 f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}"
@@ -118,28 +118,30 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="rooms", data_schema=itho_schema, last_step=True
         )
 
-    async def async_step_hru_device(self, user_input: Mapping[str, Any] | None = None):
+    async def async_step_noncve_model(
+        self, user_input: Mapping[str, Any] | None = None
+    ):
         """Configure Non-CVE (HRU) Device."""
         if user_input is not None:
             self.config.update(user_input)
             return await self.async_step_remotes()
 
-        options = list(HRU_DEVICES.keys())
+        options = list(NONCVE_DEVICES.keys())
         itho_schema = vol.Schema(
             {
-                vol.Required(CONF_HRU_DEVICE): selector(
+                vol.Required(CONF_NONCVE_MODEL): selector(
                     {
                         "select": {
                             "options": options,
                             "multiple": False,
-                            "translation_key": "hrudeviceselect",
+                            "translation_key": "noncve_model_select",
                         }
                     }
                 ),
             }
         )
 
-        return self.async_show_form(step_id="hru_device", data_schema=itho_schema)
+        return self.async_show_form(step_id="noncve_model", data_schema=itho_schema)
 
     async def async_step_remotes(self, user_input: Mapping[str, Any] | None = None):
         """Configure up to 5 remotes."""
@@ -152,7 +154,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             title = "Itho WiFi Add-on for " + ADDON_TYPES[self.config[CONF_ADDON_TYPE]]
             if self.config[CONF_ADDON_TYPE] == "noncve":
-                title = title + " - " + HRU_DEVICES[self.config[CONF_HRU_DEVICE]]
+                title = title + " - " + NONCVE_DEVICES[self.config[CONF_NONCVE_MODEL]]
 
             return self.async_create_entry(
                 title=title,

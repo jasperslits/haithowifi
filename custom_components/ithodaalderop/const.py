@@ -15,7 +15,7 @@ ADDON_TYPES = {
     "wpu": "WPU",
 }
 
-HRU_DEVICES = {
+NONCVE_DEVICES = {
     "hru_eco": "HRU ECO",
     "hru_eco_200": "HRU ECO 200",
     "hru_eco_250": "HRU ECO 250",
@@ -46,7 +46,7 @@ MQTT_STATETOPIC = {
 }
 
 CONF_ADDON_TYPE = "addontype"
-CONF_HRU_DEVICE = "hru_device"
+CONF_NONCVE_MODEL = "noncve_model"
 
 CONF_AUTOTEMP_ROOM1 = "room1"
 CONF_AUTOTEMP_ROOM2 = "room2"

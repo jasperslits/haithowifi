@@ -18,6 +18,9 @@
       "actual_mode": {
         "name": "Actual Mode"
       },
+      "actual_speed": {
+        "name": "Actual Speed"
+      },
       "actual_supply_fan": {
         "name": "Actual Supply Fan"
       },
@@ -27,11 +30,17 @@
       "actual_temp": {
         "name": "Actual Temperature"
       },
+      "air_discharge_temp": {
+        "name": "Air Discharge Temperature"
+      },
       "airfilter_counter": {
         "name": "Airfilter Counter"
       },
       "airquality": {
         "name": "Air Quality"
+      },
+      "average_air_outlet_temp": {
+        "name": "Average Air Outlet Temperature"
       },
       "balance": {
         "name": "Balance"
@@ -66,6 +75,9 @@
       "fan_speed": {
         "name": "Fan Speed"
       },
+      "filter_use_counter": {
+        "name": "Filter Use Counter"
+      },
       "flow_sensor": {
         "name": "Flow"
       },
@@ -90,8 +102,17 @@
       "last_cmd_source": {
         "name": "Last Command Source"
       },
+      "max_co2_level": {
+        "name": "Max CO2 Level"
+      },
+      "max_rh_level": {
+        "name": "Max RH Level"
+      },
       "mode": {
         "name": "Mode"
+      },
+      "outside_temp": {
+        "name": "Outside Temperature"
       },
       "power_kw": {
         "name": "Power (kW)"
@@ -111,8 +132,14 @@
       "room_temp": {
         "name": "Room Temperature"
       },
+      "room_temp_setpoint": {
+        "name": "Room Temperature Setpoint"
+      },
       "setpoint_temp": {
         "name": "Setpoint Temperature"
+      },
+      "speed_setpoint": {
+        "name": "Speed Setpoint"
       },
       "state": {
         "name": "State"
@@ -138,6 +165,9 @@
       "total_operation_time": {
         "name": "Total Operating Time"
       },
+      "ventilation_setpoint_percentage": {
+        "name": "Ventilation Setpoint"
+      },
       "well_pump_percent": {
         "name": "Well Pump"
       }
@@ -152,11 +182,11 @@
           "addontype": "Select the type of add-on to configure."
         }
       },
-      "hru_device": {
+      "noncve_model": {
         "title": "Select Non-CVE (HRU) device model",
         "description": "Select the model of your Itho Unit",
         "data": {
-          "hru_device": "Itho HRU Model"
+          "noncve_model": "Model:"
         }
       },
       "reconfigure": {
@@ -231,7 +261,7 @@
         "wpu": "WPU heatpump"
       }
     },
-    "hrudeviceselect": {
+    "noncve_model_select": {
       "options": {
         "hru_eco": "HRU ECO",
         "hru_eco_200": "HRU ECO 200",
