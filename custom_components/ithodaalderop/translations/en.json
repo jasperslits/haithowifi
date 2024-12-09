@@ -9,6 +9,9 @@
       }
     },
     "sensor": {
+      "absolute_fanspeed": {
+        "name": "Absolute Fan Speed"
+      },
       "actual_exhaust_fan": {
         "name": "Actual Exhaust Fan"
       },
@@ -17,6 +20,9 @@
       },
       "actual_mode": {
         "name": "Actual Mode"
+      },
+      "actual_speed": {
+        "name": "Actual Speed"
       },
       "actual_supply_fan": {
         "name": "Actual Supply Fan"
@@ -27,21 +33,36 @@
       "actual_temp": {
         "name": "Actual Temperature"
       },
+      "air_discharge_temp": {
+        "name": "Air Discharge Temperature"
+      },
       "airfilter_counter": {
         "name": "Airfilter Counter"
       },
       "airquality": {
         "name": "Air Quality"
       },
+      "average_air_outlet_temp": {
+        "name": "Average Air Outlet Temperature"
+      },
       "balance": {
         "name": "Balance"
       },
+      "blown_out_air_temp": {
+				"name": "Blown Out Air Temperature"
+			},
       "boiler_pump_percent": {
         "name": "Boiler Pump"
       },
       "boiler_temp_up": {
         "name": "Boiler Temp Up"
       },
+      "bypass_valve_open": {
+				"name": "Bypass Valve Open"
+			},
+      "current_consumption_fan": {
+				"name": "Current Fan Power Consumption"
+			},
       "cv_pressure": {
         "name": "CV Pressure"
       },
@@ -51,18 +72,45 @@
       "cv_return_temp": {
         "name": "CV Return Temperature"
       },
+      "desired_capacity": {
+				"name": "Desired Capacity"
+			},
+      "desired_consumption_fan": {
+				"name": "Desired Fan Power Consumption"
+			},
+      "desired_inlet_temp": {
+				"name": "Desired Inlet Temperature"
+			},
+      "drain_fan_speed": {
+        "name": "Drain Fan Speed"
+      },
       "empty_battery": {
         "name": "Empty Battery"
       },
       "error": {
         "name": "Error"
       },
+      "error_number": {
+				"name": "Error Number"
+			},
+      "extracted_air_temp": {
+				"name": "Extracted Air Temperature"
+			},
       "fan_setpoint_rpm": {
         "name": "Fan Setpoint"
       },
       "fan_speed": {
         "name": "Fan Speed"
       },
+      "filter_use_counter": {
+        "name": "Filter Use Counter"
+      },
+      "flow_blown_air": {
+				"name": "Airflow (Blown Out)"
+			},
+      "flow_inflated_air": {
+				"name": "Airflow (Inflated)"
+			},
       "flow_sensor": {
         "name": "Flow"
       },
@@ -72,23 +120,59 @@
       "heat_demand": {
         "name": "Heat Demand Thermostat"
       },
+      "highest_measured_co2_value": {
+				"name": "Highest Measured CO2 Level"
+			},
+      "highest_measured_rh_value": {
+				"name": "Highest Measured Relative Humidity"
+			},
       "highest_received_co2_value": {
-        "name": "Highest Received CO2 Value"
+        "name": "Highest Received CO2 Level"
       },
       "highest_received_rh_value": {
-        "name": "Highest Received RH Value"
+        "name": "Highest Received Relative Humidity"
       },
       "humidity": {
         "name": "Humidity"
       },
+      "inlet_temp": {
+				"name": "Inlet Temperature"
+			},
       "last_cmd_command": {
         "name": "Last Command"
       },
       "last_cmd_source": {
         "name": "Last Command Source"
       },
+      "mass_flow_air_enter_house_kgh": {
+				"name": "Mass Flow of Air Entering (kg/h)"
+			},
+      "mass_flow_air_leaving_house_kgh": {
+				"name": "Mass Flow of Air Leaving (kg/h)"
+			},
+      "max_co2_level": {
+        "name": "Max CO2 Level"
+      },
+      "max_rh_level": {
+        "name": "Max RH Level"
+      },
+      "measured_blend_temp_heated": {
+				"name": "Measured Blend Temperature (Heated)"
+			},
+      "measured_waste_temp_heated": {
+				"name": "Measured Waste Temperature (Heated)"
+			},
+      "mixed_outside_air_temp": {
+				"name": "Mixed Outside Air Temperature"
+			},
       "mode": {
         "name": "Mode"
+      },
+      "motor_speed": {
+				"name": "Motor Speed"
+			},
+      "outside_temp": {
+        "name": "Outside Temperature"
       },
       "power_kw": {
         "name": "Power (kW)"
@@ -96,6 +180,9 @@
       "power_perc": {
         "name": "Power (%)"
       },
+      "relative_fanspeed": {
+				"name": "Relative Fan Speed"
+			},
       "remaining_override_timer": {
         "name": "Remaining Override Timer"
       },
@@ -108,14 +195,23 @@
       "room_temp": {
         "name": "Room Temperature"
       },
+      "room_temp_setpoint": {
+        "name": "Room Temperature Setpoint"
+      },
       "setpoint_temp": {
         "name": "Setpoint Temperature"
+      },
+      "speed_setpoint": {
+        "name": "Speed Setpoint"
       },
       "state": {
         "name": "State"
       },
       "status": {
         "name": "Status"
+      },
+      "supply_fan_speed": {
+        "name": "Supply Fan Speed"
       },
       "temp": {
         "name": "Temperature"
@@ -132,6 +228,9 @@
       "total_operation_time": {
         "name": "Total Operating Time"
       },
+      "ventilation_setpoint_percentage": {
+        "name": "Ventilation Setpoint"
+      },
       "well_pump_percent": {
         "name": "Well Pump"
       }
@@ -141,9 +240,16 @@
     "step": {
       "user": {
         "title": "Add new Itho devices",
-        "description": "Select the device you want to configure. Repeat the configuration for every physical add-on present. This integration creates commonly used sensors for each device.",
+        "description": "Select the Itho WiFi Add-on you want to configure. Repeat the configuration for every physical add-on present. This integration creates commonly used sensors for each device.",
         "data": {
           "addontype": "Select the type of add-on to configure."
+        }
+      },
+      "noncve_model": {
+        "title": "Select Non-CVE (HRU) device model",
+        "description": "Select the model of your Itho Unit",
+        "data": {
+          "noncve_model": "Model:"
         }
       },
       "reconfigure": {
@@ -212,10 +318,19 @@
   "selector": {
     "addonselect": {
       "options": {
-        "noncve": "Non-CVE (HRU)",
-        "cve": "CVE (ECO box)",
         "autotemp": "Autotemp floor heating",
+        "cve": "CVE (ECO box)",
+        "noncve": "Non-CVE (HRU)",
         "wpu": "WPU heatpump"
+      }
+    },
+    "noncve_model_select": {
+      "options": {
+        "hru_eco": "HRU ECO",
+        "hru_eco_200": "HRU ECO 200",
+        "hru_eco_250": "HRU ECO 250",
+        "hru_eco_300": "HRU ECO 300",
+        "hru_eco_350": "HRU ECO 350"
       }
     }
   }
