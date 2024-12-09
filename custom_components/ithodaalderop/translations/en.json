@@ -9,6 +9,9 @@
       }
     },
     "sensor": {
+      "absolute_fanspeed": {
+        "name": "Absolute Fan Speed"
+      },
       "actual_exhaust_fan": {
         "name": "Actual Exhaust Fan"
       },
@@ -45,12 +48,21 @@
       "balance": {
         "name": "Balance"
       },
+      "blown_out_air_temp": {
+				"name": "Blown Out Air Temperature"
+			},
       "boiler_pump_percent": {
         "name": "Boiler Pump"
       },
       "boiler_temp_up": {
         "name": "Boiler Temp Up"
       },
+      "bypass_valve_open": {
+				"name": "Bypass Valve Open"
+			},
+      "current_consumption_fan": {
+				"name": "Current Fan Power Consumption"
+			},
       "cv_pressure": {
         "name": "CV Pressure"
       },
@@ -60,6 +72,15 @@
       "cv_return_temp": {
         "name": "CV Return Temperature"
       },
+      "desired_capacity": {
+				"name": "Desired Capacity"
+			},
+      "desired_consumption_fan": {
+				"name": "Desired Fan Power Consumption"
+			},
+      "desired_inlet_temp": {
+				"name": "Desired Inlet Temperature"
+			},
       "drain_fan_speed": {
         "name": "Drain Fan Speed"
       },
@@ -69,6 +90,12 @@
       "error": {
         "name": "Error"
       },
+      "error_number": {
+				"name": "Error Number"
+			},
+      "extracted_air_temp": {
+				"name": "Extracted Air Temperature"
+			},
       "fan_setpoint_rpm": {
         "name": "Fan Setpoint"
       },
@@ -78,6 +105,12 @@
       "filter_use_counter": {
         "name": "Filter Use Counter"
       },
+      "flow_blown_air": {
+				"name": "Airflow (Blown Out)"
+			},
+      "flow_inflated_air": {
+				"name": "Airflow (Inflated)"
+			},
       "flow_sensor": {
         "name": "Flow"
       },
@@ -87,30 +120,57 @@
       "heat_demand": {
         "name": "Heat Demand Thermostat"
       },
+      "highest_measured_co2_value": {
+				"name": "Highest Measured CO2 Level"
+			},
+      "highest_measured_rh_value": {
+				"name": "Highest Measured Relative Humidity"
+			},
       "highest_received_co2_value": {
-        "name": "Highest Received CO2 Value"
+        "name": "Highest Received CO2 Level"
       },
       "highest_received_rh_value": {
-        "name": "Highest Received RH Value"
+        "name": "Highest Received Relative Humidity"
       },
       "humidity": {
         "name": "Humidity"
       },
+      "inlet_temp": {
+				"name": "Inlet Temperature"
+			},
       "last_cmd_command": {
         "name": "Last Command"
       },
       "last_cmd_source": {
         "name": "Last Command Source"
       },
+      "mass_flow_air_enter_house_kgh": {
+				"name": "Mass Flow of Air Entering (kg/h)"
+			},
+      "mass_flow_air_leaving_house_kgh": {
+				"name": "Mass Flow of Air Leaving (kg/h)"
+			},
       "max_co2_level": {
         "name": "Max CO2 Level"
       },
       "max_rh_level": {
         "name": "Max RH Level"
       },
+      "measured_blend_temp_heated": {
+				"name": "Measured Blend Temperature (Heated)"
+			},
+      "measured_waste_temp_heated": {
+				"name": "Measured Waste Temperature (Heated)"
+			},
+      "mixed_outside_air_temp": {
+				"name": "Mixed Outside Air Temperature"
+			},
       "mode": {
         "name": "Mode"
       },
+      "motor_speed": {
+				"name": "Motor Speed"
+			},
       "outside_temp": {
         "name": "Outside Temperature"
       },
@@ -120,6 +180,9 @@
       "power_perc": {
         "name": "Power (%)"
       },
+      "relative_fanspeed": {
+				"name": "Relative Fan Speed"
+			},
       "remaining_override_timer": {
         "name": "Remaining Override Timer"
       },

@@ -9,6 +9,9 @@
       }
     },
     "sensor": {
+      "absolute_fanspeed": {
+				"name": "Absolute Ventilatorsnelheid"
+			},
       "actual_exhaust_fan": {
         "name": "Actuele Afvoer Ventilator"
       },
@@ -45,12 +48,21 @@
       "balance": {
         "name": "Balans"
       },
+      "blown_out_air_temp": {
+				"name": "Uitgeblazen Luchttemperatuur"
+			},
       "boiler_pump_percent": {
         "name": "Boiler Pomp"
       },
       "boiler_temp_up": {
         "name": "Boiler Temperatuur"
       },
+      "bypass_valve_open": {
+				"name": "Bypassklep Open"
+			},
+      "current_consumption_fan": {
+				"name": "Huidig Energieverbruik Ventilator"
+			},
       "cv_pressure": {
         "name": "CV Druk"
       },
@@ -60,6 +72,15 @@
       "cv_return_temp": {
         "name": "CV Afvoer Temperatuur"
       },
+      "desired_capacity": {
+				"name": "Gewenste Capaciteit"
+			},
+      "desired_consumption_fan": {
+				"name": "Gewenst Energieverbruik Ventilator"
+			},
+      "desired_inlet_temp": {
+				"name": "Gewenste Inlaattemperatuur"
+			},
       "drain_fan_speed": {
         "name": "Afvoerventilator Snelheid"
       },
@@ -69,6 +90,12 @@
       "error": {
         "name": "Fout"
       },
+      "error_number": {
+				"name": "Foutnummer"
+			},
+      "extracted_air_temp": {
+				"name": "Afgevoerd Luchttemperatuur"
+			},
       "fan_setpoint_rpm": {
         "name": "Ventilator Stand"
       },
@@ -78,6 +105,12 @@
       "filter_use_counter": {
         "name": "Filter gebruiksteller"
       },
+      "flow_blown_air": {
+				"name": "Luchtstroom (Uitgeblazen)"
+			},
+      "flow_inflated_air": {
+				"name": "Luchtstroom (Ingeblazen)"
+			},
       "flow_sensor": {
         "name": "Stroomsnelheid"
       },
@@ -87,30 +120,57 @@
       "heat_demand": {
         "name": "Warmtevraag Thermostaat"
       },
+      "highest_measured_co2_value": {
+				"name": "Hoogst Gemeten CO2-niveau"
+			},
+      "highest_measured_rh_value": {
+				"name": "Hoogst Gemeten Relatieve Vochtigheid"
+			},
       "highest_received_co2_value": {
-        "name": "Hoogste CO2 waarde"
+        "name": "Hoogste CO2-niveau"
       },
       "highest_received_rh_value": {
-        "name": "Hoogste RH waarde"
+        "name": "Hoogste Relatieve Vochtigheid"
       },
       "humidity": {
         "name": "Luchtvochtigheid"
       },
+      "inlet_temp": {
+				"name": "Inlaattemperatuur"
+			},
       "last_cmd_command": {
         "name": "Laatste Commando"
       },
       "last_cmd_source": {
         "name": "Laatste Commando Bron"
       },
+      "mass_flow_air_enter_house_kgh": {
+				"name": "Luchtmassastroom In (kg/u)"
+			},
+      "mass_flow_air_leaving_house_kgh": {
+				"name": "Luchtmassastroom Uit (kg/u)"
+			},
       "max_co2_level": {
         "name": "Max CO2 Niveau"
       },
       "max_rh_level": {
         "name": "Max RH Niveau"
       },
+      "measured_blend_temp_heated": {
+				"name": "Gemeten Mengtemperatuur (Verwarmd)"
+			},
+      "measured_waste_temp_heated": {
+				"name": "Gemeten Afvaltemperatuur (Verwarmd)"
+			},
+      "mixed_outside_air_temp": {
+				"name": "Gemengde Buitenluchttemperatuur"
+			},
       "mode": {
         "name": "Mode"
       },
+      "motor_speed": {
+				"name": "Motorsnelheid"
+			},
       "outside_temp": {
         "name": "Buitentemperatuur"
       },
@@ -120,6 +180,9 @@
       "power_perc": {
         "name": "Vermogen (%)"
       },
+      "relative_fanspeed": {
+				"name": "Relatieve Ventilatorsnelheid"
+			},
       "remaining_override_timer": {
         "name": "Resterende Override Timer"
       },

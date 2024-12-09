@@ -23,14 +23,15 @@ from .const import (
     CONF_ADDON_TYPE,
     CONF_NONCVE_MODEL,
     DOMAIN,
+    HRUECO350_ACTUAL_MODE,
+    HRUECO350_GLOBAL_FAULT_CODE,
+    HRUECO350_RH_ERROR_CODE,
+    HRUECO250300_ERROR_CODE,
+    HRUECO_STATUS,
     MANUFACTURER,
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
     NONCVE_DEVICES,
-    NONCVE_HRUECO350_ACTUAL_MODE,
-    NONCVE_HRUECO350_GLOBAL_FAULT_CODE,
-    NONCVE_HRUECO350_RH_ERROR_CODE,
-    NONCVE_HRUECO_STATUS,
     UNITTYPE_ICONS,
     WPU_STATUS,
 )
@@ -367,7 +368,18 @@ class IthoSensorFan(IthoBaseSensor):
                 # HRU ECO 350
                 if json_field == "Actual Mode":
                     self._extra_state_attributes = {"Code": value}
-                    value = NONCVE_HRUECO350_ACTUAL_MODE.get(value, "Unknown mode")
+                    value = HRUECO350_ACTUAL_MODE.get(value, "Unknown mode")
+
+                # HRU ECO 350
+                if json_field == "Air Quality (%)":
+                    _error_description = "Unknown error code"
+                    if isinstance(value, (int, float)) and float(value) > 100:
+                        _error_description = "Unknown error"
+                        value = None
+
+                    self._extra_state_attributes = {
+                        "Error Description": _error_description,
+                    }
 
                 # HRU ECO 350 / HRU ECO
                 if json_field in ["Airfilter counter", "Air filter counter"]:
@@ -388,22 +400,23 @@ class IthoSensorFan(IthoBaseSensor):
                         "Next Maintenance Estimate": _next_maintenance_estimate,
                     }
 
-                # HRU ECO 350
-                if json_field == "Air Quality (%)":
-                    _error_description = ""
-                    if isinstance(value, (int, float)) and float(value) > 100:
-                        _error_description = "Unknown error"
-                        value = None
+                # HRU ECO 250/300
+                if json_field == "Error number":
+                    _description = ""
+                    if str(value).isnumeric():
+                        _error_description = HRUECO250300_ERROR_CODE.get(
+                            int(value), _description
+                        )
 
                     self._extra_state_attributes = {
-                        "Error Description": _error_description,
+                        "Description": _description,
                     }
 
                 # HRU ECO 350
                 if json_field == "Global fault code":
                     _description = "Unknown fault code"
                     if str(value).isnumeric():
-                        _description = NONCVE_HRUECO350_GLOBAL_FAULT_CODE.get(
+                        _description = HRUECO350_GLOBAL_FAULT_CODE.get(
                             int(value), _description
                         )
 
@@ -415,7 +428,7 @@ class IthoSensorFan(IthoBaseSensor):
                 if json_field == "Highest received RH value (%RH)":
                     _error_description = ""
                     if isinstance(value, (int, float)) and float(value) > 100:
-                        _error_description = NONCVE_HRUECO350_RH_ERROR_CODE.get(
+                        _error_description = HRUECO350_RH_ERROR_CODE.get(
                             int(value), "Unknown error"
                         )
                         value = None
@@ -432,9 +445,7 @@ class IthoSensorFan(IthoBaseSensor):
 
                     _description = "Unknown status"
                     if str(value).isnumeric():
-                        _description = NONCVE_HRUECO_STATUS.get(
-                            int(value), _description
-                        )
+                        _description = HRUECO_STATUS.get(int(value), _description)
                     value = _description
 
             self._attr_native_value = value
