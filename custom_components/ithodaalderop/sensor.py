@@ -35,18 +35,14 @@ from .const import (
     UNITTYPE_ICONS,
     WPU_STATUS,
 )
-from .definitions import (
-    AUTOTEMPROOMSENSORS,
-    AUTOTEMPSENSORS,
-    CVESENSORS,
-    HRUECO200SENSORS,
-    HRUECO350SENSORS,
-    HRUECO250300SENSORS,
-    HRUECOSENSORS,
-    LASTCMDSENSORS,
-    WPUSENSORS,
-    IthoSensorEntityDescription,
-)
+from .def_autotemp import AUTOTEMPROOMSENSORS, AUTOTEMPSENSORS
+from .def_cve import CVESENSORS
+from .def_hru200 import HRUECO200SENSORS
+from .def_hru250_300 import HRUECO250300SENSORS
+from .def_hru350 import HRUECO350SENSORS
+from .def_hrueco import HRUECOSENSORS
+from .def_wpu import WPUSENSORS
+from .definitions import LASTCMDSENSORS, IthoSensorEntityDescription
 
 
 def _create_remotes(config_entry: ConfigEntry):
