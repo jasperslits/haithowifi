@@ -57,11 +57,17 @@
       "boiler_temp_up": {
         "name": "Boiler Temp Up"
       },
+      "boiler_timer": {
+				"name": "Boiler Timer"
+			},
       "bypass_valve_open": {
 				"name": "Bypass Valve Open"
 			},
       "current_consumption_fan": {
 				"name": "Current Fan Power Consumption"
+			},
+      "current_position": {
+				"name": "Current Position"
 			},
       "cv_pressure": {
         "name": "CV Pressure"
@@ -93,8 +99,14 @@
       "error_number": {
 				"name": "Error Number"
 			},
+      "exhaust_fan_actual": {
+				"name": "Actual Exhaust Fan"
+			},
       "extracted_air_temp": {
 				"name": "Extracted Air Temperature"
+			},
+      "fallback_speed_timer": {
+				"name": "Fallback Speed Timer"
 			},
       "fan_setpoint_rpm": {
         "name": "Fan Setpoint"
@@ -114,6 +126,15 @@
       "flow_sensor": {
         "name": "Flow"
       },
+      "frost_block": {
+				"name": "Frost Block"
+			},
+      "frost_timer": {
+				"name": "Frost Timer"
+			},
+      "gheswitch": {
+				"name": "GHE Switch"
+			},
       "global_fault_code": {
         "name": "Global Fault Code"
       },
@@ -174,6 +195,9 @@
       "outside_temp": {
         "name": "Outside Temperature"
       },
+      "pir_fan_speed_level": {
+				"name": "PIR Fan Speed Level"
+			},
       "power_kw": {
         "name": "Power (kW)"
       },
@@ -189,8 +213,11 @@
       "remote": {
         "name": "Remote - {remote_name}"
       },
+      "requested_fanspeed": {
+        "name": "Requested Fan Speed"
+      },
       "requested_room_temp": {
-        "name": "Requested Toom Temperature"
+        "name": "Requested Room Temperature"
       },
       "room_temp": {
         "name": "Room Temperature"
@@ -210,6 +237,15 @@
       "status": {
         "name": "Status"
       },
+      "supply_fan_actual": {
+				"name": "Actual Supply Fan"
+			},
+      "summercounter": {
+				"name": "Summer Counter"
+			},
+      "summerday_k_min": {
+				"name": "Summer Day"
+			},
       "supply_fan_speed": {
         "name": "Supply Fan Speed"
       },
@@ -228,6 +264,12 @@
       "total_operation_time": {
         "name": "Total Operating Time"
       },
+      "valve_position": {
+				"name": "Valve Position"
+			},
+      "vkkswitch": {
+				"name": "VKK Switch"
+			},
       "ventilation_setpoint_percentage": {
         "name": "Ventilation Setpoint"
       },

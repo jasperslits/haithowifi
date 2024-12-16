@@ -57,11 +57,17 @@
       "boiler_temp_up": {
         "name": "Boiler Temperatuur"
       },
+      "boiler_timer": {
+				"name": "Boiler Timer"
+			},
       "bypass_valve_open": {
 				"name": "Bypassklep Open"
 			},
       "current_consumption_fan": {
 				"name": "Huidig Energieverbruik Ventilator"
+			},
+      "current_position": {
+				"name": "Huidige Positie"
 			},
       "cv_pressure": {
         "name": "CV Druk"
@@ -93,8 +99,14 @@
       "error_number": {
 				"name": "Foutnummer"
 			},
+      "exhaust_fan_actual": {
+				"name": "Actuele Afvoer Ventilator"
+			},
       "extracted_air_temp": {
 				"name": "Afgevoerd Luchttemperatuur"
+			},
+      "fallback_speed_timer": {
+				"name": "Fallback Snelheid Timer"
 			},
       "fan_setpoint_rpm": {
         "name": "Ventilator Stand"
@@ -114,6 +126,15 @@
       "flow_sensor": {
         "name": "Stroomsnelheid"
       },
+      "frost_block": {
+				"name": "Vorstbeveiliging"
+			},
+      "frost_timer": {
+				"name": "Vorst Timer"
+			},
+      "gheswitch": {
+				"name": "GHE Schakelaar"
+			},
       "global_fault_code": {
         "name": "Globale Fout Code"
       },
@@ -174,6 +195,9 @@
       "outside_temp": {
         "name": "Buitentemperatuur"
       },
+      "pir_fan_speed_level": {
+				"name": "PIR Ventilatorsnelheid Niveau"
+			},
       "power_kw": {
         "name": "Vermogen (kW)"
       },
@@ -188,6 +212,9 @@
       },
       "remote": {
         "name": "Afstandsbediening - {remote_name}"
+      },
+      "requested_fanspeed": {
+        "name": "Gevraagde Ventilatorsnelheid"
       },
       "requested_room_temp": {
         "name": "Gevraagde Kamertemperatuur"
@@ -210,6 +237,15 @@
       "speed_setpoint": {
         "name": "Ingestelde Snelheid"
       },
+      "summercounter": {
+				"name": "Zomerteller"
+			},
+      "summerday_k_min": {
+				"name": "Zomerdag"
+			},
+      "supply_fan_actual": {
+				"name": "Actuele Aanvoer Ventilator"
+			},
       "supply_fan_speed": {
         "name": "Toevoerventilator Snelheid"
       },
@@ -228,9 +264,15 @@
       "total_operation_time": {
         "name": "Totale bedrijfstijd"
       },
+      "valve_position": {
+				"name": "Klep Positie"
+			},
       "ventilation_setpoint_percentage": {
         "name": "Insteld Ventilatie Percentage"
       },
+      "vkkswitch": {
+				"name": "VKK Schakelaar"
+			},
       "well_pump_percent": {
         "name": "Bronpomp"
       }

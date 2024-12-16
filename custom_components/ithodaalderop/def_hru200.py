@@ -1,6 +1,5 @@
 """Definitions for Itho sensors added to MQTT."""
 
-from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import (
     CONCENTRATION_PARTS_PER_MILLION,
@@ -11,7 +10,7 @@ from homeassistant.const import (
     UnitOfTime,
 )
 
-from .definitions import IthoBinarySensorEntityDescription, IthoSensorEntityDescription
+from .definitions import IthoSensorEntityDescription
 
 HRUECO200SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
