@@ -8,6 +8,7 @@ from homeassistant.const import (
     EntityCategory,
     UnitOfElectricCurrent,
     UnitOfTemperature,
+    UnitOfTime,
     UnitOfVolumeFlowRate,
 )
 
@@ -20,6 +21,12 @@ HRUECO250300SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Busy doing adjustments (-)",
+        translation_key="busy_doing_adjustments",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Current consumption of fan (mA)",
@@ -65,6 +72,22 @@ HRUECO250300SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
+        json_field="Hysteresis of the frost (K)",
+        translation_key="hysteresis_of_the_frost",
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Hysteresis use in control mode (K)",
+        translation_key="hysteresis_use_in_control_mode",
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+    ),
+    IthoSensorEntityDescription(
         json_field="Inlet temperature (°C)",
         translation_key="inlet_temp",
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -76,6 +99,7 @@ HRUECO250300SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="measured_blend_temp_heated",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        entity_category=EntityCategory.DIAGNOSTIC,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
@@ -100,6 +124,21 @@ HRUECO250300SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
+        json_field="Number of hours of too cold air (hour)",
+        translation_key="number_of_hours_of_too_cold_air",
+        native_unit_of_measurement=UnitOfTime.HOURS,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Number of steps the frost valve is open (steps)",
+        translation_key="number_of_steps_the_frost_valve_is_open",
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+    ),
+    IthoSensorEntityDescription(
         json_field="Percentage that the bypass valve is open (%)",
         translation_key="bypass_valve_open",
         native_unit_of_measurement=PERCENTAGE,
@@ -119,6 +158,14 @@ HRUECO250300SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
+        json_field="Sample timer in frost mode (min)",
+        translation_key="sample_timer_in_frost_mode",
+        native_unit_of_measurement=UnitOfTime.MINUTES,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+    ),
+    IthoSensorEntityDescription(
         json_field="Status",
         translation_key="status",
     ),
@@ -135,6 +182,14 @@ HRUECO250300SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Temporary speed reduction (rpm)",
+        translation_key="temporary_speed_reduction",
+        native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="The desired inlet temperature (°C)",
@@ -168,5 +223,21 @@ HRUECO250300SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="The mass flow of the air leaving the house (kg/h)",
         translation_key="mass_flow_air_leaving_house_kgh",
         state_class=SensorStateClass.MEASUREMENT,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Timer for how long the house is cooled (hour)",
+        translation_key="timer_for_how_long_the_house_is_cooled",
+        native_unit_of_measurement=UnitOfTime.HOURS,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+    ),
+    IthoSensorEntityDescription(
+        json_field="Timer for how long the house is heated (hour)",
+        translation_key="timer_for_how_long_the_house_is_heated",
+        native_unit_of_measurement=UnitOfTime.HOURS,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
     ),
 )

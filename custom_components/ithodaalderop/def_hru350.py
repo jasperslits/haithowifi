@@ -22,6 +22,15 @@ HRUECO350BINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
         icon_off="mdi:valve-closed",
         icon_on="mdi:valve-open",
     ),
+    IthoBinarySensorEntityDescription(
+        json_field="Valve position",
+        translation_key="valve_position",
+        device_class=BinarySensorDeviceClass.OPENING,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        icon_off="mdi:valve-closed",
+        icon_on="mdi:valve-open",
+        entity_registry_enabled_default=False,
+    ),
 )
 
 HRUECO350SENSORS: tuple[IthoSensorEntityDescription, ...] = (
@@ -54,14 +63,14 @@ HRUECO350SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Boiler timer",
         translation_key="boiler_timer",
         state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=False,
         entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Current position",
         translation_key="current_position",
-        entity_registry_enabled_default=False,
         entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Exhaust fan (RPM)",
@@ -88,11 +97,13 @@ HRUECO350SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="fallback_speed_timer",
         native_unit_of_measurement=UnitOfTime.SECONDS,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Frost block",
         translation_key="frost_block",
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
@@ -104,7 +115,8 @@ HRUECO350SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="GHEswitch",
-        translation_key="gheswitch",
+        translation_key="ghe_switch",
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
@@ -148,6 +160,7 @@ HRUECO350SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="requested_fanspeed",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
@@ -155,6 +168,7 @@ HRUECO350SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         translation_key="pir_fan_speed_level",
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
@@ -172,7 +186,7 @@ HRUECO350SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Summercounter",
-        translation_key="summercounter",
+        translation_key="summer_counter",
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
@@ -204,14 +218,8 @@ HRUECO350SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
-        json_field="Valve position",
-        translation_key="valve_position",
-        entity_category=EntityCategory.DIAGNOSTIC,
-        entity_registry_enabled_default=False,
-    ),
-    IthoSensorEntityDescription(
         json_field="VKKswitch",
-        translation_key="vkkswitch",
+        translation_key="vkk_switch",
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
