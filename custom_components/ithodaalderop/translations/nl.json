@@ -13,11 +13,11 @@
     },
     "sensor": {
       "absence": {
-				"name": "Afwezigheid"
-			},
+        "name": "Afwezigheid"
+      },
       "absolute_fanspeed": {
-				"name": "Absolute Ventilatorsnelheid"
-			},
+        "name": "Absolute Ventilatorsnelheid"
+      },
       "actual_exhaust_fan": {
         "name": "Actuele Afvoer Ventilator"
       },
@@ -55,11 +55,11 @@
         "name": "Balans"
       },
       "block_timer_bypass": {
-				"name": "Blokkeer Timer voor Bypass"
-			},
+        "name": "Blokkeer Timer voor Bypass"
+      },
       "blown_out_air_temp": {
-				"name": "Uitgeblazen Luchttemperatuur"
-			},
+        "name": "Uitgeblazen Luchttemperatuur"
+      },
       "boiler_pump_percent": {
         "name": "Boiler Pomp"
       },
@@ -67,53 +67,53 @@
         "name": "Boiler Temperatuur"
       },
       "boiler_timer": {
-				"name": "Boiler Timer"
-			},
+        "name": "Boiler Timer"
+      },
       "busy_doing_adjustments": {
-				"name": "Bezig met Aanpassingen"
-			},
+        "name": "Bezig met Aanpassingen"
+      },
       "bypass_mode": {
-				"name": "Bypass Modus"
-			},
+        "name": "Bypass Modus"
+      },
       "bypass_position": {
-				"name": "Bypass Positie"
-			},
+        "name": "Bypass Positie"
+      },
       "bypass_setpoint": {
-				"name": "Bypass Instelpunt"
-			},
+        "name": "Bypass Instelpunt"
+      },
       "bypass_valve_open": {
-				"name": "Bypassklep Open"
-			},
+        "name": "Bypassklep Open"
+      },
       "co2_value": {
-				"name": "CO² Waarde"
-			},
+        "name": "CO² Waarde"
+      },
       "co2_velocity": {
-				"name": "CO² Veranderingssnelheid"
-			},
-			"co2_ventilation": {
-				"name": "CO² Ventilatie"
-			},
-			"condition": {
-				"name": "Conditie"
-			},
+        "name": "CO² Veranderingssnelheid"
+      },
+      "co2_ventilation": {
+        "name": "CO² Ventilatie"
+      },
+      "condition": {
+        "name": "Conditie"
+      },
       "counter_time": {
-				"name": "Tijd Teller"
-			},
+        "name": "Tijd Teller"
+      },
       "counter_stop": {
-				"name": "Stop Teller"
-			},
+        "name": "Stop Teller"
+      },
       "current_bypass_share": {
-				"name": "Huidige Bypass Aandeel"
-			},
+        "name": "Huidige Bypass Aandeel"
+      },
       "current_consumption_fan": {
-				"name": "Huidig Energieverbruik Ventilator"
-			},
+        "name": "Huidig Energieverbruik Ventilator"
+      },
       "current_period": {
-				"name": "Huidige Periode"
-			},
+        "name": "Huidige Periode"
+      },
       "current_position": {
-				"name": "Huidige Positie"
-			},
+        "name": "Huidige Positie"
+      },
       "cv_pressure": {
         "name": "CV Druk"
       },
@@ -124,56 +124,56 @@
         "name": "CV Afvoer Temperatuur"
       },
       "cycle_timer": {
-				"name": "Cyclustimer"
-			},
+        "name": "Cyclustimer"
+      },
       "deferred_absence": {
-				"name": "Uitgestelde Afwezigheid"
-			},
+        "name": "Uitgestelde Afwezigheid"
+      },
       "desired_capacity": {
-				"name": "Gewenste Capaciteit"
-			},
+        "name": "Gewenste Capaciteit"
+      },
       "desired_consumption_fan": {
-				"name": "Gewenst Energieverbruik Ventilator"
-			},
+        "name": "Gewenst Energieverbruik Ventilator"
+      },
       "desired_inlet_temp": {
-				"name": "Gewenste Inlaattemperatuur"
-			},
-			"drain_actual": {
-				"name": "Werkelijke Afvoerniveau"
-			},
+        "name": "Gewenste Inlaattemperatuur"
+      },
+      "drain_actual": {
+        "name": "Werkelijke Afvoerniveau"
+      },
       "drain_fan_speed": {
         "name": "Afvoerventilator Snelheid"
       },
-			"drain_requested": {
-				"name": "Gewenst Afvoerniveau"
-			},
+      "drain_requested": {
+        "name": "Gewenst Afvoerniveau"
+      },
       "duration_of_current_frost_setpoint": {
-				"name": "Duur van Huidig Vorst Instelpunt"
-			},
+        "name": "Duur van Huidig Vorst Instelpunt"
+      },
       "empty_battery": {
         "name": "Battery Leeg"
       },
       "enhanced_bathroom": {
-				"name": "Verbeterde Badkamer Modus"
-			},
+        "name": "Verbeterde Badkamer Modus"
+      },
       "error": {
         "name": "Fout"
       },
       "error_number": {
-				"name": "Foutnummer"
-			},
+        "name": "Foutnummer"
+      },
       "exhaust_fan_actual": {
-				"name": "Actuele Afvoer Ventilator"
-			},
+        "name": "Actuele Afvoer Ventilator"
+      },
       "extracted_air_temp": {
-				"name": "Afgevoerd Luchttemperatuur"
-			},
+        "name": "Afgevoerd Luchttemperatuur"
+      },
       "fallback_speed_timer": {
-				"name": "Fallback Snelheid Timer"
-			},
+        "name": "Fallback Snelheid Timer"
+      },
       "fan_off_during_frost": {
-				"name": "Ventilator Uit Tijdens Vorst"
-			},
+        "name": "Ventilator Uit Tijdens Vorst"
+      },
       "fan_setpoint_rpm": {
         "name": "Ventilator Stand"
       },
@@ -184,32 +184,32 @@
         "name": "Filter gebruiksteller"
       },
       "flow_blown_air": {
-				"name": "Luchtstroom (Uitgeblazen)"
-			},
+        "name": "Luchtstroom (Uitgeblazen)"
+      },
       "flow_inflated_air": {
-				"name": "Luchtstroom (Ingeblazen)"
-			},
+        "name": "Luchtstroom (Ingeblazen)"
+      },
       "flow_sensor": {
         "name": "Stroomsnelheid"
       },
       "frost_adjustment_speed": {
-				"name": "Vorst Aanpassingssnelheid"
-			},
+        "name": "Vorst Aanpassingssnelheid"
+      },
       "frost_block": {
-				"name": "Vorstbeveiliging"
-			},
-			"frost_lock": {
-				"name": "Vorstvergrendeling"
-			},
+        "name": "Vorstbeveiliging"
+      },
+      "frost_lock": {
+        "name": "Vorstvergrendeling"
+      },
       "frost_status": {
-				"name": "Vorststatus"
-			},
+        "name": "Vorststatus"
+      },
       "frost_timer": {
-				"name": "Vorst Timer"
-			},
+        "name": "Vorst Timer"
+      },
       "ghe_switch": {
-				"name": "GHE Schakelaar"
-			},
+        "name": "GHE Schakelaar"
+      },
       "global_fault_code": {
         "name": "Globale Fout Code"
       },
@@ -217,11 +217,11 @@
         "name": "Warmtevraag Thermostaat"
       },
       "highest_measured_co2_value": {
-				"name": "Hoogst Gemeten CO²-niveau"
-			},
+        "name": "Hoogst Gemeten CO²-niveau"
+      },
       "highest_measured_rh_value": {
-				"name": "Hoogst Gemeten Relatieve Vochtigheid"
-			},
+        "name": "Hoogst Gemeten Relatieve Vochtigheid"
+      },
       "highest_received_co2_value": {
         "name": "Hoogste CO²-niveau"
       },
@@ -232,20 +232,20 @@
         "name": "Luchtvochtigheid"
       },
       "hysteresis_of_the_frost": {
-				"name": "Vorst Hysteresis"
-			},
+        "name": "Vorst Hysteresis"
+      },
       "hysteresis_use_in_control_mode": {
-				"name": "Hysteresis in Regelmodus"
-			},
+        "name": "Hysteresis in Regelmodus"
+      },
       "inlet_temp": {
-				"name": "Inlaattemperatuur"
-			},
+        "name": "Inlaattemperatuur"
+      },
       "internal_humidity": {
-				"name": "Interne Luchtvochtigheid"
-			},
+        "name": "Interne Luchtvochtigheid"
+      },
       "internal_temp": {
-				"name": "Interne Temperatuur"
-			},
+        "name": "Interne Temperatuur"
+      },
       "last_cmd_command": {
         "name": "Laatste Commando"
       },
@@ -253,80 +253,80 @@
         "name": "Laatste Commando Bron"
       },
       "mass_flow_air_enter_house_kgh": {
-				"name": "Luchtmassastroom In (kg/u)"
-			},
+        "name": "Luchtmassastroom In (kg/u)"
+      },
       "mass_flow_air_leaving_house_kgh": {
-				"name": "Luchtmassastroom Uit (kg/u)"
-			},
+        "name": "Luchtmassastroom Uit (kg/u)"
+      },
       "max_co2_level": {
         "name": "Max CO² Niveau"
       },
       "max_frost_vent_speed": {
-				"name": "Maximale Vorstventilatiesnelheid"
-			},
+        "name": "Maximale Vorstventilatiesnelheid"
+      },
       "max_rh_level": {
         "name": "Max RH Niveau"
       },
       "measured_blend_temp_heated": {
-				"name": "Gemeten Mengtemperatuur (Verwarmd)"
-			},
+        "name": "Gemeten Mengtemperatuur (Verwarmd)"
+      },
       "measured_waste_temp_heated": {
-				"name": "Gemeten Afvaltemperatuur (Verwarmd)"
-			},
+        "name": "Gemeten Afvaltemperatuur (Verwarmd)"
+      },
       "measurement_actual": {
-				"name": "Huidige Meting"
-			},
+        "name": "Huidige Meting"
+      },
       "measurement_previous_first": {
-				"name": "Vorige Meting 1"
-			},
-			"measurement_previous_second": {
-				"name": "Vorige Meting 2"
-			},
+        "name": "Vorige Meting 1"
+      },
+      "measurement_previous_second": {
+        "name": "Vorige Meting 2"
+      },
       "mixed_outside_air_temp": {
-				"name": "Gemengde Buitenluchttemperatuur"
-			},
+        "name": "Gemengde Buitenluchttemperatuur"
+      },
       "mode": {
         "name": "Mode"
       },
       "motor_speed": {
-				"name": "Motorsnelheid"
-			},
+        "name": "Motorsnelheid"
+      },
       "new_level_time": {
-				"name": "Tijd Nieuw Niveau"
-			},
+        "name": "Tijd Nieuw Niveau"
+      },
       "next_rfspeed_absolute": {
-				"name": "Volgende RF Snelheid"
-			},
-			"next_rfspeed_level": {
-				"name": "Volgende RF Snelheidsniveau"
-			},
+        "name": "Volgende RF Snelheid"
+      },
+      "next_rfspeed_level": {
+        "name": "Volgende RF Snelheidsniveau"
+      },
       "number_of_bypass_settings": {
-				"name": "Aantal Bypass Instellingen"
-			},
+        "name": "Aantal Bypass Instellingen"
+      },
       "number_of_hours_of_too_cold_air": {
-				"name": "Uren van Te Koude Lucht"
-			},
+        "name": "Uren van Te Koude Lucht"
+      },
       "number_of_steps_the_frost_valve_is_open": {
-				"name": "Stappen Dat Vorstklep Open Is"
-			},
+        "name": "Stappen Dat Vorstklep Open Is"
+      },
       "outside_temp": {
         "name": "Buitentemperatuur"
       },
-			"outdoor_temp": {
-				"name": "Buitentemperatuur"
-			},
+      "outdoor_temp": {
+        "name": "Buitentemperatuur"
+      },
       "period_timer": {
-				"name": "Periode Timer"
-			},
+        "name": "Periode Timer"
+      },
       "periodic_bypass_valve_travel": {
-				"name": "Periodieke Bypassklepbeweging"
-			},
+        "name": "Periodieke Bypassklepbeweging"
+      },
       "pir_fan_speed_level": {
-				"name": "PIR Ventilatorsnelheid Niveau"
-			},
+        "name": "PIR Ventilatorsnelheid Niveau"
+      },
       "position_of_frost_valve": {
-				"name": "Positie van Vorstklep"
-			},
+        "name": "Positie van Vorstklep"
+      },
       "power_kw": {
         "name": "Vermogen (kW)"
       },
@@ -334,14 +334,14 @@
         "name": "Vermogen (%)"
       },
       "presence_timer": {
-				"name": "Aanwezigheidstimer"
-			},
+        "name": "Aanwezigheidstimer"
+      },
       "relative_fanspeed": {
-				"name": "Relatieve Ventilatorsnelheid"
-			},
+        "name": "Relatieve Ventilatorsnelheid"
+      },
       "relative_humidity": {
-				"name": "Relatieve Luchtvochtigheid"
-			},
+        "name": "Relatieve Luchtvochtigheid"
+      },
       "remaining_override_timer": {
         "name": "Resterende Override Timer"
       },
@@ -354,12 +354,12 @@
       "requested_room_temp": {
         "name": "Gevraagde Kamertemperatuur"
       },
-			"requested_speed": {
-				"name": "Gevraagde Snelheid"
-			},
+      "requested_speed": {
+        "name": "Gevraagde Snelheid"
+      },
       "rfspeed_absolute": {
-				"name": "RF Snelheid"
-			},
+        "name": "RF Snelheid"
+      },
       "room_temp": {
         "name": "Kamertemperatuur"
       },
@@ -367,29 +367,29 @@
         "name": "Ingestelde Kamertemperatuur"
       },
       "sample_timer": {
-				"name": "Sample Timer"
-			},
+        "name": "Sample Timer"
+      },
       "sample_timer_in_frost_mode": {
-				"name": "Sample Timer in Vorstmodus"
-			},
+        "name": "Sample Timer in Vorstmodus"
+      },
       "selected_mode": {
-				"name": "Geselecteerde Modus"
-			},
+        "name": "Geselecteerde Modus"
+      },
       "selection": {
-				"name": "Selectie"
-			},
+        "name": "Selectie"
+      },
       "sensor_fault": {
-				"name": "Sensorfout"
-			},
+        "name": "Sensorfout"
+      },
       "setpoint_temp": {
         "name": "Ingestelde temperatuur"
       },
       "speed_timer": {
-				"name": "Snelheid Timer"
-			},
+        "name": "Snelheid Timer"
+      },
       "start_up_counter": {
-				"name": "Opstart Teller"
-			},
+        "name": "Opstart Teller"
+      },
       "state": {
         "name": "Status"
       },
@@ -399,33 +399,33 @@
       "speed_setpoint": {
         "name": "Ingestelde Snelheid"
       },
-			"summer_day": {
-				"name": "Zomerdag"
-			},
+      "summer_day": {
+        "name": "Zomerdag"
+      },
       "summer_counter": {
-				"name": "Zomerteller"
-			},
+        "name": "Zomerteller"
+      },
       "summerday_k_min": {
-				"name": "Zomerdag"
-			},
-			"supply_actual": {
-				"name": "Werkelijke Toevoerniveau"
-			},
+        "name": "Zomerdag"
+      },
+      "supply_actual": {
+        "name": "Werkelijke Toevoerniveau"
+      },
       "supply_fan_actual": {
-				"name": "Actuele Aanvoer Ventilator"
-			},
+        "name": "Actuele Aanvoer Ventilator"
+      },
       "supply_fan_speed": {
         "name": "Toevoerventilator Snelheid"
       },
-			"supply_requested": {
-				"name": "Gevraagd Toevoerniveau"
-			},
+      "supply_requested": {
+        "name": "Gevraagd Toevoerniveau"
+      },
       "temp": {
         "name": "Temperatuur"
       },
       "temperature": {
-				"name": "Temperatuur"
-			},
+        "name": "Temperatuur"
+      },
       "temp_from_source": {
         "name": "Temperatuur vanuit bron"
       },
@@ -433,35 +433,35 @@
         "name": "Temperatuur naar bron"
       },
       "temporary_speed_reduction": {
-				"name": "Tijdelijke Snelheidsverlaging"
-			},
+        "name": "Tijdelijke Snelheidsverlaging"
+      },
       "thermostat": {
         "name": "Thermostaat boiler"
       },
       "timer_for_how_long_the_house_is_cooled": {
-				"name": "Duur van Koeling"
-			},
+        "name": "Duur van Koeling"
+      },
       "timer_for_how_long_the_house_is_heated": {
-				"name": "Duur van Verwarming"
-			},
+        "name": "Duur van Verwarming"
+      },
       "total_operation_time": {
         "name": "Totale bedrijfstijd"
       },
       "valve": {
-				"name": "Klep"
-			},
+        "name": "Klep"
+      },
       "ventilation_level": {
-				"name": "Ventilatieniveau"
-			},
+        "name": "Ventilatieniveau"
+      },
       "ventilation_request": {
-				"name": "Gevraagd Ventilatieniveau"
-			},
+        "name": "Gevraagd Ventilatieniveau"
+      },
       "ventilation_setpoint_percentage": {
         "name": "Insteld Ventilatie Percentage"
       },
       "vkk_switch": {
-				"name": "VKK Schakelaar"
-			},
+        "name": "VKK Schakelaar"
+      },
       "well_pump_percent": {
         "name": "Bronpomp"
       }

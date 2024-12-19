@@ -8,13 +8,13 @@
         "name": "Filter Dirty"
       },
       "valve_position": {
-				"name": "Valve Position"
-			}
+        "name": "Valve Position"
+      }
     },
     "sensor": {
-			"absence": {
-				"name": "Absence"
-			},
+      "absence": {
+        "name": "Absence"
+      },
       "absolute_fanspeed": {
         "name": "Absolute Fan Speed"
       },
@@ -55,11 +55,11 @@
         "name": "Balance"
       },
       "block_timer_bypass": {
-				"name": "Block Timer for Bypass"
-			},
+        "name": "Block Timer for Bypass"
+      },
       "blown_out_air_temp": {
-				"name": "Blown Out Air Temperature"
-			},
+        "name": "Blown Out Air Temperature"
+      },
       "boiler_pump_percent": {
         "name": "Boiler Pump"
       },
@@ -67,35 +67,35 @@
         "name": "Boiler Temp Up"
       },
       "boiler_timer": {
-				"name": "Boiler Timer"
-			},
+        "name": "Boiler Timer"
+      },
       "busy_doing_adjustments": {
         "name": "Busy Doing Adjustments"
       },
-			"bypass_mode": {
-				"name": "Bypass Mode"
-			},
-			"bypass_position": {
-				"name": "Bypass Position"
-			},
-			"bypass_setpoint": {
-				"name": "Bypass Setpoint"
-			},
+      "bypass_mode": {
+        "name": "Bypass Mode"
+      },
+      "bypass_position": {
+        "name": "Bypass Position"
+      },
+      "bypass_setpoint": {
+        "name": "Bypass Setpoint"
+      },
       "bypass_valve_open": {
-				"name": "Bypass Valve Open"
-			},
+        "name": "Bypass Valve Open"
+      },
       "co2_value": {
-				"name": "CO² Value"
-			},
+        "name": "CO² Value"
+      },
       "co2_velocity": {
         "name": "CO² Velocity"
       },
       "co2_ventilation": {
-				"name": "CO² Ventilation"
-			},
+        "name": "CO² Ventilation"
+      },
       "condition": {
-				"name": "Condition"
-			},
+        "name": "Condition"
+      },
       "counter_time": {
         "name": "Counter Time"
       },
@@ -103,17 +103,17 @@
         "name": "Counter Stop"
       },
       "current_bypass_share": {
-				"name": "Current Bypass Share"
-			},
+        "name": "Current Bypass Share"
+      },
       "current_consumption_fan": {
-				"name": "Current Fan Power Consumption"
-			},
+        "name": "Current Fan Power Consumption"
+      },
       "current_period": {
         "name": "Current Period"
       },
       "current_position": {
-				"name": "Current Position"
-			},
+        "name": "Current Position"
+      },
       "cv_pressure": {
         "name": "CV Pressure"
       },
@@ -124,32 +124,32 @@
         "name": "CV Return Temperature"
       },
       "cycle_timer": {
-				"name": "Cycle Timer"
-			},
+        "name": "Cycle Timer"
+      },
       "deferred_absence": {
-				"name": "Deferred Absence"
-			},
+        "name": "Deferred Absence"
+      },
       "desired_capacity": {
-				"name": "Desired Capacity"
-			},
+        "name": "Desired Capacity"
+      },
       "desired_consumption_fan": {
-				"name": "Desired Fan Power Consumption"
-			},
+        "name": "Desired Fan Power Consumption"
+      },
       "desired_inlet_temp": {
-				"name": "Desired Inlet Temperature"
-			},
-			"drain_actual": {
-				"name": "Actual Drain Level"
-			},
+        "name": "Desired Inlet Temperature"
+      },
+      "drain_actual": {
+        "name": "Actual Drain Level"
+      },
       "drain_fan_speed": {
         "name": "Drain Fan Speed"
       },
-			"drain_requested": {
-				"name": "Requested Drain Level"
-			},
+      "drain_requested": {
+        "name": "Requested Drain Level"
+      },
       "duration_of_current_frost_setpoint": {
-				"name": "Duration of Current Frost Setpoint"
-			},
+        "name": "Duration of Current Frost Setpoint"
+      },
       "empty_battery": {
         "name": "Empty Battery"
       },
@@ -160,20 +160,20 @@
         "name": "Error"
       },
       "error_number": {
-				"name": "Error Number"
-			},
+        "name": "Error Number"
+      },
       "exhaust_fan_actual": {
-				"name": "Actual Exhaust Fan"
-			},
+        "name": "Actual Exhaust Fan"
+      },
       "extracted_air_temp": {
-				"name": "Extracted Air Temperature"
-			},
+        "name": "Extracted Air Temperature"
+      },
       "fallback_speed_timer": {
-				"name": "Fallback Speed Timer"
-			},
+        "name": "Fallback Speed Timer"
+      },
       "fan_off_during_frost": {
-				"name": "Fan Off During Frost"
-			},
+        "name": "Fan Off During Frost"
+      },
       "fan_setpoint_rpm": {
         "name": "Fan Setpoint"
       },
@@ -184,32 +184,32 @@
         "name": "Filter Use Counter"
       },
       "flow_blown_air": {
-				"name": "Airflow (Blown Out)"
-			},
+        "name": "Airflow (Blown Out)"
+      },
       "flow_inflated_air": {
-				"name": "Airflow (Inflated)"
-			},
+        "name": "Airflow (Inflated)"
+      },
       "flow_sensor": {
         "name": "Flow"
       },
       "frost_adjustment_speed": {
-				"name": "Frost Adjustment Speed"
-			},
+        "name": "Frost Adjustment Speed"
+      },
       "frost_block": {
-				"name": "Frost Block"
-			},
-			"frost_lock": {
-				"name": "Frost Lock"
-			},
+        "name": "Frost Block"
+      },
+      "frost_lock": {
+        "name": "Frost Lock"
+      },
       "frost_status": {
-				"name": "Frost Status"
-			},
+        "name": "Frost Status"
+      },
       "frost_timer": {
-				"name": "Frost Timer"
-			},
+        "name": "Frost Timer"
+      },
       "ghe_switch": {
-				"name": "GHE Switch"
-			},
+        "name": "GHE Switch"
+      },
       "global_fault_code": {
         "name": "Global Fault Code"
       },
@@ -217,11 +217,11 @@
         "name": "Heat Demand Thermostat"
       },
       "highest_measured_co2_value": {
-				"name": "Highest Measured CO² Level"
-			},
+        "name": "Highest Measured CO² Level"
+      },
       "highest_measured_rh_value": {
-				"name": "Highest Measured Relative Humidity"
-			},
+        "name": "Highest Measured Relative Humidity"
+      },
       "highest_received_co2_value": {
         "name": "Highest Received CO² Level"
       },
@@ -238,8 +238,8 @@
         "name": "Hysteresis in Control Mode"
       },
       "inlet_temp": {
-				"name": "Inlet Temperature"
-			},
+        "name": "Inlet Temperature"
+      },
       "internal_humidity": {
         "name": "Internal Humidity"
       },
@@ -253,26 +253,26 @@
         "name": "Last Command Source"
       },
       "mass_flow_air_enter_house_kgh": {
-				"name": "Mass Flow of Air Entering (kg/h)"
-			},
+        "name": "Mass Flow of Air Entering (kg/h)"
+      },
       "mass_flow_air_leaving_house_kgh": {
-				"name": "Mass Flow of Air Leaving (kg/h)"
-			},
+        "name": "Mass Flow of Air Leaving (kg/h)"
+      },
       "max_co2_level": {
         "name": "Max CO² Level"
       },
       "max_frost_vent_speed": {
-				"name": "Maximum Frost Ventilation Speed"
-			},
+        "name": "Maximum Frost Ventilation Speed"
+      },
       "max_rh_level": {
         "name": "Max RH Level"
       },
       "measured_blend_temp_heated": {
-				"name": "Measured Blend Temperature (Heated)"
-			},
+        "name": "Measured Blend Temperature (Heated)"
+      },
       "measured_waste_temp_heated": {
-				"name": "Measured Waste Temperature (Heated)"
-			},
+        "name": "Measured Waste Temperature (Heated)"
+      },
       "measurement_actual": {
         "name": "Actual Measurement"
       },
@@ -283,14 +283,14 @@
         "name": "Previous Measurement 2"
       },
       "mixed_outside_air_temp": {
-				"name": "Mixed Outside Air Temperature"
-			},
+        "name": "Mixed Outside Air Temperature"
+      },
       "mode": {
         "name": "Mode"
       },
       "motor_speed": {
-				"name": "Motor Speed"
-			},
+        "name": "Motor Speed"
+      },
       "new_level_time": {
         "name": "New Level Time"
       },
@@ -301,32 +301,32 @@
         "name": "Next RF Speed Level"
       },
       "number_of_bypass_settings": {
-				"name": "Number of Bypass Settings"
-			},
+        "name": "Number of Bypass Settings"
+      },
       "number_of_hours_of_too_cold_air": {
         "name": "Hours of Too Cold Air"
       },
       "number_of_steps_the_frost_valve_is_open": {
         "name": "Steps Frost Valve is Open"
       },
-			"outdoor_temp": {
-				"name": "Outdoor Temperature"
-			},
+      "outdoor_temp": {
+        "name": "Outdoor Temperature"
+      },
       "outside_temp": {
         "name": "Outside Temperature"
       },
       "periodic_bypass_valve_travel": {
-				"name": "Periodic Bypass Valve Travel"
-			},
+        "name": "Periodic Bypass Valve Travel"
+      },
       "period_timer": {
         "name": "Period Timer"
       },
       "pir_fan_speed_level": {
-				"name": "PIR Fan Speed Level"
-			},
+        "name": "PIR Fan Speed Level"
+      },
       "position_of_frost_valve": {
-				"name": "Position of Frost Valve"
-			},
+        "name": "Position of Frost Valve"
+      },
       "power_kw": {
         "name": "Power (kW)"
       },
@@ -334,11 +334,11 @@
         "name": "Power (%)"
       },
       "presence_timer": {
-				"name": "Presence Timer"
-			},
+        "name": "Presence Timer"
+      },
       "relative_fanspeed": {
-				"name": "Relative Fan Speed"
-			},
+        "name": "Relative Fan Speed"
+      },
       "relative_humidity": {
         "name": "Relative Humidity"
       },
@@ -354,9 +354,9 @@
       "requested_room_temp": {
         "name": "Requested Room Temperature"
       },
-			"requested_speed": {
-				"name": "Requested Speed"
-			},
+      "requested_speed": {
+        "name": "Requested Speed"
+      },
       "rfspeed_absolute": {
         "name": "RF Speed"
       },
@@ -367,8 +367,8 @@
         "name": "Room Temperature Setpoint"
       },
       "sample_timer": {
-				"name": "Sample Timer"
-			},
+        "name": "Sample Timer"
+      },
       "sample_timer_in_frost_mode": {
         "name": "Sample Timer in Frost Mode"
       },
@@ -376,8 +376,8 @@
         "name": "Selected Mode"
       },
       "selection": {
-				"name": "Selection"
-			},
+        "name": "Selection"
+      },
       "sensor_fault": {
         "name": "Sensor Fault"
       },
@@ -391,35 +391,35 @@
         "name": "Speed Timer"
       },
       "start_up_counter": {
-				"name": "Start-Up Counter"
-			},
+        "name": "Start-Up Counter"
+      },
       "state": {
         "name": "State"
       },
       "status": {
         "name": "Status"
       },
-			"summer_day": {
-				"name": "Summer Day"
-			},
+      "summer_day": {
+        "name": "Summer Day"
+      },
       "summer_counter": {
-				"name": "Summer Counter"
-			},
+        "name": "Summer Counter"
+      },
       "summerday_k_min": {
-				"name": "Summer Day"
-			},
-			"supply_actual": {
-				"name": "Actual Supply"
-			},
+        "name": "Summer Day"
+      },
+      "supply_actual": {
+        "name": "Actual Supply"
+      },
       "supply_fan_actual": {
-				"name": "Actual Supply Fan"
-			},
+        "name": "Actual Supply Fan"
+      },
       "supply_fan_speed": {
         "name": "Supply Fan Speed"
       },
-			"supply_requested": {
-				"name": "Requested Supply"
-			},
+      "supply_requested": {
+        "name": "Requested Supply"
+      },
       "temp": {
         "name": "Temperature"
       },
@@ -448,11 +448,11 @@
         "name": "Total Operating Time"
       },
       "valve": {
-				"name": "Valve"
-			},
+        "name": "Valve"
+      },
       "ventilation_level": {
-				"name": "Ventilation Level"
-			},
+        "name": "Ventilation Level"
+      },
       "ventilation_request": {
         "name": "Ventilation Request"
       },
@@ -460,8 +460,8 @@
         "name": "Ventilation Setpoint"
       },
       "vkk_switch": {
-				"name": "VKK Switch"
-			},
+        "name": "VKK Switch"
+      },
       "well_pump_percent": {
         "name": "Well Pump"
       }
