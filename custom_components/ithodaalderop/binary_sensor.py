@@ -24,12 +24,11 @@ from .const import (
     MQTT_STATETOPIC,
     NONCVE_DEVICES,
 )
-from .definitions import (
-    AUTOTEMPBINARYSENSORS,
-    HRUECO350BINARYSENSORS,
-    HRUECOBINARYSENSORS,
-    IthoBinarySensorEntityDescription,
-)
+from .def_autotemp import AUTOTEMPBINARYSENSORS
+from .def_cve import CVEBINARYSENSORS
+from .def_hru350 import HRUECO350BINARYSENSORS
+from .def_hrueco import HRUECOBINARYSENSORS
+from .definitions import IthoBinarySensorEntityDescription
 
 
 async def async_setup_entry(
@@ -49,6 +48,11 @@ async def async_setup_entry(
             description.key = (
                 f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
             )
+            sensors.append(IthoBinarySensor(description, config_entry))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "cve":
+        for description in CVEBINARYSENSORS:
+            description.key = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
             sensors.append(IthoBinarySensor(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "noncve":
