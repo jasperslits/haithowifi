@@ -7,7 +7,6 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
 from ._sensor_base import IthoBaseSensor
-from .const import ADDON_TYPES, CONF_ADDON_TYPE
 from .definitions.base import IthoSensorEntityDescription
 
 
