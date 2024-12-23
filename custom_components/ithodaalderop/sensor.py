@@ -5,84 +5,72 @@ Author: Jasper
 """
 
 import copy
-from datetime import datetime, timedelta
-import json
 
 from homeassistant.components import mqtt
-from homeassistant.components.sensor import SensorEntity
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.device_registry import DeviceInfo
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
+from ._sensor_autotemp import IthoSensorAutotemp, IthoSensorAutotempRoom
+from ._sensor_co2_remote import IthoSensorCO2Remote
+from ._sensor_fan import IthoSensorFan
+from ._sensor_last_command import IthoSensorLastCommand
+from ._sensor_wpu import IthoSensorWPU
 from .const import (
     _LOGGER,
-    ADDON_TYPES,
-    AUTOTEMP_ERROR,
-    AUTOTEMP_MODE,
     CONF_ADDON_TYPE,
     CONF_NONCVE_MODEL,
-    DOMAIN,
-    HRUECO350_ACTUAL_MODE,
-    HRUECO350_GLOBAL_FAULT_CODE,
-    HRUECO350_RH_ERROR_CODE,
-    HRUECO250300_ERROR_CODE,
-    HRUECO_STATUS,
-    MANUFACTURER,
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
-    NONCVE_DEVICES,
-    UNITTYPE_ICONS,
-    WPU_STATUS,
 )
-from .def_autotemp import AUTOTEMPROOMSENSORS, AUTOTEMPSENSORS
-from .def_cve import CVESENSORS
-from .def_hru200 import HRUECO200SENSORS
-from .def_hru250_300 import HRUECO250300SENSORS
-from .def_hru350 import HRUECO350SENSORS
-from .def_hrueco import HRUECOSENSORS
-from .def_wpu import WPUSENSORS
-from .definitions import LASTCMDSENSORS, IthoSensorEntityDescription
+from .definitions.autotemp import (
+    AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE,
+    AUTOTEMP_DISTRIBUTOR_VALVE_SENSOR_TEMPLATE,
+    AUTOTEMP_MALFUNCTION_VALVE_DECTECTION_DIST_SENSOR_TEMPLATE,
+    AUTOTEMP_ROOM_SENSORS,
+    AUTOTEMP_VALVE_SENSOR_TEMPLATE,
+)
+from .definitions.co2_remote import REMOTE_SENSOR_TEMPLATE
+from .definitions.cve import CVE_SENSORS
+from .definitions.hru200 import HRU_ECO_200_SENSORS
+from .definitions.hru250_300 import HRU_ECO_250_300_SENSORS
+from .definitions.hru350 import HRU_ECO_350_SENSORS
+from .definitions.hrueco import HRU_ECO_SENSORS
+from .definitions.last_command import LAST_CMD_SENSORS
+from .definitions.wpu import WPU_ERROR_CODE_BYTE_TEMPLATE, WPU_SENSORS
 
 
 def _create_remotes(config_entry: ConfigEntry):
     """Create remotes for CO2 monitoring."""
 
-    cfg = config_entry.data
     remotes = []
     for x in range(1, 5):
-        remote = cfg["remote" + str(x)]
+        remote = config_entry.data["remote" + str(x)]
         if remote not in ("", "Remote " + str(x)):
-            remotes.append(
-                IthoSensorEntityDescription(
-                    json_field=remote,
-                    key=f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}",
-                    affix=remote,
-                    translation_key="remote",
-                    translation_placeholders={"remote_name": remote},
-                    device_class="carbon_dioxide",
-                    native_unit_of_measurement="ppm",
-                    state_class="measurement",
-                )
-            )
+            sensor = copy.deepcopy(REMOTE_SENSOR_TEMPLATE)
+            sensor.json_field = remote
+            sensor.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}"
+            sensor.translation_placeholders = {"remote_name": remote}
+            sensor.unique_id = remote
+            remotes.append(sensor)
     return remotes
 
 
 def _create_autotemprooms(config_entry: ConfigEntry):
     """Create autotemp rooms for configured entries."""
 
-    cfg = config_entry.data
     room_sensors = []
     for x in range(1, 8):
-        template_sensors = copy.deepcopy(list(AUTOTEMPROOMSENSORS))
-        room = cfg["room" + str(x)]
+        template_sensors = copy.deepcopy(list(AUTOTEMP_ROOM_SENSORS))
+        room = config_entry.data["room" + str(x)]
         if room not in ("", "Room " + str(x)):
             for sensor in template_sensors:
                 sensor.json_field = sensor.json_field.replace("X", str(x))
                 sensor.key = (
                     f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
                 )
-                sensor.affix = room
+                sensor.room = room
+                sensor.unique_id = f"{sensor.translation_key}_{room}"
                 room_sensors.append(sensor)
 
     return room_sensors
@@ -101,424 +89,112 @@ async def async_setup_entry(
 
     sensors = []
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
-        for description in list(AUTOTEMPSENSORS):
-            description.key = (
-                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
-            )
-            sensors.append(IthoSensorAutotemp(description, config_entry))
+        topic = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+        for letter in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]:
+            sensor = copy.deepcopy(AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE)
+            sensor.key = topic
+            sensor.json_field = sensor.json_field.replace("X", letter)
+            sensor.translation_placeholders = {"letter": letter}
+            sensor.unique_id = sensor.unique_id_template.replace("x", letter)
+            sensors.append(IthoSensorAutotemp(sensor, config_entry))
 
-        for description in _create_autotemprooms(config_entry):
-            description.key = (
-                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+        for d in range(1, 4):
+            for v in range(1, 13):
+                d = str(d)
+                v = str(v)
+                sensor = copy.deepcopy(AUTOTEMP_DISTRIBUTOR_VALVE_SENSOR_TEMPLATE)
+                sensor.key = topic
+                sensor.json_field = sensor.json_field.replace("X", d).replace("Y", v)
+                sensor.translation_placeholders = {"distributor": d, "valve": v}
+                sensor.unique_id = sensor.unique_id_template.replace("x", d).replace(
+                    "y", v
+                )
+                sensors.append(IthoSensorAutotemp(sensor, config_entry))
+
+        for d in range(1, 4):
+            d = str(d)
+            sensor = copy.deepcopy(
+                AUTOTEMP_MALFUNCTION_VALVE_DECTECTION_DIST_SENSOR_TEMPLATE
             )
-            sensors.append(IthoSensorAutotempRoom(description, config_entry))
+            sensor.key = topic
+            sensor.json_field = sensor.json_field.replace("X", d)
+            sensor.translation_placeholders = {"distributor": d}
+            sensor.unique_id = sensor.unique_id_template.replace("x", d)
+            sensors.append(IthoSensorAutotemp(sensor, config_entry))
+
+        for v in range(1, 4):
+            v = str(v)
+            template_sensors = copy.deepcopy(list(AUTOTEMP_VALVE_SENSOR_TEMPLATE))
+            for sensor in template_sensors:
+                sensor.key = topic
+                sensor.json_field = sensor.json_field.replace("X", v)
+                sensor.translation_placeholders = {"valve": v}
+                sensor.unique_id = sensor.unique_id_template.replace("x", v)
+                sensors.append(IthoSensorAutotemp(sensor, config_entry))
+
+        # for description in AUTOTEMP_SENSORS:
+        #     description.key = (
+        #         f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+        #     )
+        #     sensors.append(IthoSensorAutotemp(description, config_entry))
+
+        sensors.extend(
+            [
+                IthoSensorAutotempRoom(description, config_entry)
+                for description in _create_autotemprooms(config_entry)
+            ]
+        )
 
     if config_entry.data[CONF_ADDON_TYPE] == "cve":
-        for description in CVESENSORS:
-            description.key = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
+        topic = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
+
+        for description in CVE_SENSORS:
+            description.key = topic
             sensors.append(IthoSensorFan(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "noncve":
+        topic = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
+
         if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco":
-            hru_sensors = HRUECOSENSORS
+            hru_sensors = HRU_ECO_SENSORS
         if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_200":
-            hru_sensors = HRUECO200SENSORS
+            hru_sensors = HRU_ECO_200_SENSORS
         if config_entry.data[CONF_NONCVE_MODEL] in ["hru_eco_250", "hru_eco_300"]:
-            hru_sensors = HRUECO250300SENSORS
+            hru_sensors = HRU_ECO_250_300_SENSORS
         if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_350":
-            hru_sensors = HRUECO350SENSORS
+            hru_sensors = HRU_ECO_350_SENSORS
 
         for description in hru_sensors:
-            description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
+            description.key = topic
             sensors.append(IthoSensorFan(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] in ["cve", "noncve"]:
-        for description in _create_remotes(config_entry):
-            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}"
-            sensors.append(IthoSensorCO2Remote(description, config_entry))
+        topic = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["last_cmd"]}"
 
-        for description in LASTCMDSENSORS:
-            description.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["last_cmd"]}"
+        sensors.extend(
+            [
+                IthoSensorCO2Remote(description, config_entry)
+                for description in _create_remotes(config_entry)
+            ]
+        )
+
+        for description in LAST_CMD_SENSORS:
+            description.key = topic
             sensors.append(IthoSensorLastCommand(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "wpu":
-        for description in WPUSENSORS:
-            description.key = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
+        topic = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
+        for x in range(6):
+            x = str(x)
+            sensor = copy.deepcopy(WPU_ERROR_CODE_BYTE_TEMPLATE)
+            sensor.key = topic
+            sensor.json_field = sensor.json_field + x
+            sensor.translation_placeholders = {"num": x}
+            sensor.unique_id = sensor.unique_id_template.replace("x", x)
+            sensors.append(IthoSensorWPU(sensor, config_entry))
+
+        for description in WPU_SENSORS:
+            description.key = topic
             sensors.append(IthoSensorWPU(description, config_entry))
 
     async_add_entities(sensors)
-
-
-class IthoBaseSensor(SensorEntity):
-    """Base class sharing foundation for WPU, remotes and Fans."""
-
-    _attr_has_entity_name = True
-    entity_description: IthoSensorEntityDescription
-
-    _extra_state_attributes = None
-
-    def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry,
-        unique_id: str | None = None,
-        use_base_sensor_device: bool = True,
-    ) -> None:
-        """Initialize the sensor."""
-        self.entity_description = description
-
-        if use_base_sensor_device:
-            model = ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
-            if config_entry.data[CONF_ADDON_TYPE] == "noncve":
-                model = (
-                    model + " - " + NONCVE_DEVICES[config_entry.data[CONF_NONCVE_MODEL]]
-                )
-
-            self._attr_device_info = DeviceInfo(
-                identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
-                manufacturer=MANUFACTURER,
-                model=model,
-                name=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
-            )
-
-        if unique_id is not None:
-            self._attr_unique_id = unique_id
-        else:
-            self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}"
-        self.entity_id = f"sensor.{self._attr_unique_id}"
-
-    @property
-    def icon(self) -> str | None:
-        """Pick the right icon."""
-
-        if self.entity_description.icon is not None:
-            return self.entity_description.icon
-        if self.entity_description.native_unit_of_measurement in UNITTYPE_ICONS:
-            return UNITTYPE_ICONS[self.entity_description.native_unit_of_measurement]
-        return None
-
-
-class IthoSensorAutotemp(IthoBaseSensor):
-    """Representation of Itho add-on sensor for Autotemp data that is updated via MQTT."""
-
-    def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry,
-        unique_id: str | None = None,
-    ) -> None:
-        """Construct sensor for Autotemp."""
-        if description.affix is not None:
-            unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.affix.lower()}"
-        super().__init__(description, config_entry, unique_id)
-
-    async def async_added_to_hass(self) -> None:
-        """Subscribe to MQTT events."""
-
-        @callback
-        def message_received(message):
-            """Handle new MQTT messages."""
-            payload = json.loads(message.payload)
-            json_field = self.entity_description.json_field
-            if json_field not in payload:
-                value = None
-            else:
-                value = payload[json_field]
-                if json_field == "Error":
-                    self._extra_state_attributes = {
-                        "Code": value,
-                    }
-                    value = AUTOTEMP_ERROR.get(value, "Unknown error")
-
-                if json_field == "Mode":
-                    self._extra_state_attributes = {
-                        "Code": value,
-                    }
-                    value = AUTOTEMP_MODE.get(value, "Unknown mode")
-
-                if json_field == "State off":
-                    if value == 1:
-                        value = "Off"
-                    if payload["State cool"] == 1:
-                        value = "Cooling"
-                    if payload["State heating"] == 1:
-                        value = "Heating"
-                    if payload["state hand"] == 1:
-                        value = "Hand"
-
-            self._attr_native_value = value
-            self.async_write_ha_state()
-
-        await mqtt.async_subscribe(
-            self.hass, self.entity_description.key, message_received, 1
-        )
-
-
-class IthoSensorAutotempRoom(IthoBaseSensor):
-    """Representation of Itho add-on room sensor for Autotemp data that is updated via MQTT."""
-
-    def __init__(
-        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
-    ) -> None:
-        """Construct sensor for Autotemp."""
-        unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.affix.lower()}"
-
-        self._attr_device_info = DeviceInfo(
-            identifiers={
-                (
-                    DOMAIN,
-                    f"{config_entry.data[CONF_ADDON_TYPE]}_room_{description.affix.lower()}",
-                )
-            },
-            manufacturer=MANUFACTURER,
-            model=f"{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]} Spider",
-            name=f"Spider {description.affix.capitalize()}",
-            via_device=(DOMAIN, config_entry.data[CONF_ADDON_TYPE]),
-        )
-
-        super().__init__(
-            description, config_entry, unique_id, use_base_sensor_device=False
-        )
-
-    async def async_added_to_hass(self) -> None:
-        """Subscribe to MQTT events."""
-
-        @callback
-        def message_received(message):
-            """Handle new MQTT messages."""
-            payload = json.loads(message.payload)
-            value = payload.get(self.entity_description.json_field, None)
-
-            self._attr_native_value = value
-            self.async_write_ha_state()
-
-        await mqtt.async_subscribe(
-            self.hass, self.entity_description.key, message_received, 1
-        )
-
-
-class IthoSensorCO2Remote(IthoBaseSensor):
-    """Representation of Itho add-on sensor for a Remote that is updated via MQTT."""
-
-    def __init__(
-        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
-    ) -> None:
-        """Construct sensor for Remote."""
-        unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}_{description.affix.lower()}"
-        super().__init__(description, config_entry, unique_id)
-
-    async def async_added_to_hass(self) -> None:
-        """Subscribe to MQTT events."""
-
-        @callback
-        def message_received(message):
-            """Handle new MQTT messages."""
-            payload = json.loads(message.payload)
-            json_field = self.entity_description.json_field
-            if json_field not in payload:
-                value = None
-            else:
-                value = payload[json_field]["co2"]
-
-            self._attr_native_value = value
-            self.async_write_ha_state()
-
-        await mqtt.async_subscribe(
-            self.hass, self.entity_description.key, message_received, 1
-        )
-
-
-class IthoSensorFan(IthoBaseSensor):
-    """Representation of a Itho add-on sensor that is updated via MQTT."""
-
-    _attr_has_entity_name = True
-    entity_description: IthoSensorEntityDescription
-
-    _extra_state_attributes = None
-
-    def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry,
-    ) -> None:
-        """Initialize the sensor."""
-        super().__init__(description, config_entry)
-
-    @property
-    def extra_state_attributes(self) -> list[str] | None:
-        """Return the state attributes."""
-        return self._extra_state_attributes
-
-    async def async_added_to_hass(self) -> None:
-        """Subscribe to MQTT events."""
-
-        @callback
-        def message_received(message):
-            """Handle new MQTT messages."""
-            payload = json.loads(message.payload)
-            json_field = self.entity_description.json_field
-            if json_field not in payload:
-                value = None
-            else:
-                value = payload[json_field]
-                # HRU ECO 350
-                if json_field == "Actual Mode":
-                    self._extra_state_attributes = {"Code": value}
-                    value = HRUECO350_ACTUAL_MODE.get(value, "Unknown mode")
-
-                # HRU ECO 350
-                if json_field == "Air Quality (%)":
-                    _error_description = "Unknown error code"
-                    if isinstance(value, (int, float)) and float(value) > 100:
-                        _error_description = "Unknown error"
-                        value = None
-
-                    self._extra_state_attributes = {
-                        "Error Description": _error_description,
-                    }
-
-                # HRU ECO 350 / HRU ECO
-                if json_field in ["Airfilter counter", "Air filter counter"]:
-                    _last_maintenance = ""
-                    _next_maintenance_estimate = ""
-                    if str(value).isnumeric():
-                        _last_maintenance = (
-                            datetime.now() - timedelta(hours=int(value))
-                        ).date()
-                        _next_maintenance_estimate = (
-                            datetime.now() + timedelta(days=180, hours=-int(value))
-                        ).date()
-                    else:
-                        _last_maintenance = "Invalid value"
-
-                    self._extra_state_attributes = {
-                        "Last Maintenance": _last_maintenance,
-                        "Next Maintenance Estimate": _next_maintenance_estimate,
-                    }
-
-                # HRU ECO 250/300
-                if json_field == "Error number":
-                    _description = ""
-                    if str(value).isnumeric():
-                        _error_description = HRUECO250300_ERROR_CODE.get(
-                            int(value), _description
-                        )
-
-                    self._extra_state_attributes = {
-                        "Description": _description,
-                    }
-
-                # HRU ECO 350
-                if json_field == "Global fault code":
-                    _description = "Unknown fault code"
-                    if str(value).isnumeric():
-                        _description = HRUECO350_GLOBAL_FAULT_CODE.get(
-                            int(value), _description
-                        )
-
-                    self._extra_state_attributes = {
-                        "Description": _description,
-                    }
-
-                # HRU ECO 350
-                if json_field == "Highest received RH value (%RH)":
-                    _error_description = ""
-                    if isinstance(value, (int, float)) and float(value) > 100:
-                        _error_description = HRUECO350_RH_ERROR_CODE.get(
-                            int(value), "Unknown error"
-                        )
-                        value = None
-
-                    self._extra_state_attributes = {
-                        "Error Description": _error_description,
-                    }
-
-                # HRU ECO
-                if json_field == "Status":
-                    self._extra_state_attributes = {
-                        "Code": value,
-                    }
-
-                    _description = "Unknown status"
-                    if str(value).isnumeric():
-                        _description = HRUECO_STATUS.get(int(value), _description)
-                    value = _description
-
-            self._attr_native_value = value
-            self.async_write_ha_state()
-
-        await mqtt.async_subscribe(
-            self.hass, self.entity_description.key, message_received, 1
-        )
-
-
-class IthoSensorLastCommand(IthoBaseSensor):
-    """Representation of Itho add-on sensor for Last Command that is updated via MQTT."""
-
-    def __init__(
-        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
-    ) -> None:
-        """Construct sensor for WPU."""
-        super().__init__(description, config_entry)
-
-    async def async_added_to_hass(self) -> None:
-        """Subscribe to MQTT events."""
-
-        @callback
-        def message_received(message):
-            """Handle new MQTT messages."""
-            payload = json.loads(message.payload)
-            value = payload.get(self.entity_description.json_field, None)
-
-            self._attr_native_value = value
-            self.async_write_ha_state()
-
-        await mqtt.async_subscribe(
-            self.hass, self.entity_description.key, message_received, 1
-        )
-
-
-class IthoSensorWPU(IthoBaseSensor):
-    """Representation of Itho add-on sensor for WPU that is updated via MQTT."""
-
-    def __init__(
-        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
-    ) -> None:
-        """Construct sensor for WPU."""
-        super().__init__(description, config_entry)
-
-    async def async_added_to_hass(self) -> None:
-        """Subscribe to MQTT events."""
-
-        @callback
-        def message_received(message):
-            """Handle new MQTT messages."""
-            payload = json.loads(message.payload)
-            json_field = self.entity_description.json_field
-            if json_field not in payload:
-                value = None
-            else:
-                value = payload[json_field]
-                if json_field == "Status":
-                    self._extra_state_attributes = {
-                        "Code": value,
-                    }
-                    value = WPU_STATUS.get(int(value), "Unknown status")
-                if json_field == "ECO selected on thermostat":
-                    if value == 1:
-                        value = "Eco"
-                    if payload["Comfort selected on thermostat"] == 1:
-                        value = "Comfort"
-                    if payload["Boiler boost from thermostat"] == 1:
-                        value = "Boost"
-                    if payload["Boiler blocked from thermostat"] == 1:
-                        value = "Off"
-                    if payload["Venting from thermostat"] == 1:
-                        value = "Venting"
-
-            self._attr_native_value = value
-            self.async_write_ha_state()
-
-        await mqtt.async_subscribe(
-            self.hass, self.entity_description.key, message_received, 1
-        )

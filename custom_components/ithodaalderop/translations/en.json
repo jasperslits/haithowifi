@@ -1,14 +1,113 @@
 {
   "entity": {
     "binary_sensor": {
+      "bleeding_mode_blocked": {
+        "name": "Bleeding Mode Blocked"
+      },
+      "blockage": {
+        "name": "Blockage"
+      },
+      "boiler_blocked_from_thermostat": {
+        "name": "Boiler Blocked from Thermostat"
+      },
+      "boiler_boost_from_thermostat": {
+        "name": "Boiler Boost from Thermostat"
+      },
+      "boiler_mode_active": {
+        "name": "Boiler Mode Active"
+      },
+      "boiler_mode_blocked": {
+        "name": "Boiler Mode Blocked"
+      },
       "bypass_position": {
         "name": "Bypass Position"
+      },
+      "comfort_selected_on_thermostat": {
+        "name": "Comfort Mode Selected on Thermostat"
+      },
+      "compressor_blocked": {
+        "name": "Compressor Blocked"
+      },
+      "compressor_in_boiler_mode": {
+        "name": "Compressor in Boiler Mode"
+      },
+      "compressor_in_cv_mode": {
+        "name": "Compressor in CV Mode"
+      },
+      "condensation_protection": {
+        "name": "Condensation Protection"
+      },
+      "cv_enabled": {
+        "name": "CV Mode Enabled"
+      },
+      "cv_mode_active": {
+        "name": "CV Mode Active"
+      },
+      "cv_mode_blocked": {
+        "name": "CV Mode Blocked"
+      },
+      "eco_selected_on_thermostat": {
+        "name": "ECO Mode Selected on Thermostat"
+      },
+      "electr_element_blocked": {
+        "name": "Electrical Element Blocked"
+      },
+      "electr_element_dhw_blocked": {
+        "name": "Electrical Element for DHW Blocked"
+      },
+      "element_blocked_during_retry": {
+        "name": "Element Blocked During Retry"
+      },
+      "element_in_boiler_mode": {
+        "name": "Element in Boiler Mode"
+      },
+      "element_in_cv_mode": {
+        "name": "Element in CV Mode"
+      },
+      "element_released": {
+        "name": "Element Released"
+      },
+      "empty_battery": {
+        "name": "Empty Battery"
+      },
+      "error_found": {
+        "name": "Error Found"
       },
       "filter_dirty": {
         "name": "Filter Dirty"
       },
+      "free_cooling_enabled": {
+        "name": "Free Cooling Enabled"
+      },
+      "free_cooling_mode_active": {
+        "name": "Free Cooling Mode Active"
+      },
+      "free_cooling_mode_blocked": {
+        "name": "Free Cooling Mode Blocked"
+      },
+      "manual_operation": {
+        "name": "Manual Operation"
+      },
+      "ot_time_valid": {
+        "name": "OT Time Valid"
+      },
+      "off_mode_active": {
+        "name": "Off Mode Active"
+      },
+      "regeneration_active": {
+        "name": "Regeneration Active"
+      },
+      "task_active": {
+        "name": "Task Active"
+      },
+      "utc_time_valid": {
+        "name": "UTC Time Valid"
+      },
       "valve_position": {
         "name": "Valve Position"
+      },
+      "venting_from_thermostat": {
+        "name": "Venting from Thermostat"
       }
     },
     "sensor": {
@@ -39,6 +138,18 @@
       "actual_temp": {
         "name": "Actual Temperature"
       },
+      "adaptive_fifo_index": {
+        "name": "Adaptive FIFO Index"
+      },
+      "adaptive_overheat": {
+        "name": "Adaptive Overheat"
+      },
+      "adaptive_timer": {
+        "name": "Adaptive Timer"
+      },
+      "additional_cooling_release": {
+        "name": "Additional Cooling Release"
+      },
       "air_discharge_temp": {
         "name": "Air Discharge Temperature"
       },
@@ -54,14 +165,35 @@
       "balance": {
         "name": "Balance"
       },
+      "block_time_pre_heating_tap_water": {
+        "name": "Block Time for Preheating Tap Water"
+      },
+      "block_time_release_external_cooling": {
+        "name": "Block Time for External Cooling Release"
+      },
       "block_timer_bypass": {
         "name": "Block Timer for Bypass"
+      },
+      "blocking_time_trickle_low_after_cv_operation": {
+        "name": "Blocking Time Trickle Low After CV Operation"
+      },
+      "blocking_time_trickle_low_after_power_up": {
+        "name": "Blocking Time Trickle Low After Power-Up"
       },
       "blown_out_air_temp": {
         "name": "Blown Out Air Temperature"
       },
+      "boiler_for_nadraai": {
+        "name": "Boiler for Afterrun"
+      },
+      "boiler_pump": {
+        "name": "Boiler Pump"
+      },
       "boiler_pump_percent": {
         "name": "Boiler Pump"
+      },
+      "boiler_temp_down": {
+        "name": "Boiler Temperature Decrease"
       },
       "boiler_temp_up": {
         "name": "Boiler Temp Up"
@@ -84,6 +216,30 @@
       "bypass_valve_open": {
         "name": "Bypass Valve Open"
       },
+      "calculated_condensation_temp_dhw": {
+        "name": "Calculated DHW Condensation Temperature"
+      },
+      "calculated_cv_condensation_temp": {
+        "name": "Calculated CV Condensation Temperature"
+      },
+      "calculated_evaporation_temp_cv": {
+        "name": "Calculated Evaporation Temp (CV)"
+      },
+      "calculated_evaporation_temp_dhw": {
+        "name": "Calculated Evaporation Temp (DHW)"
+      },
+      "ch_mode": {
+        "name": "Central Heating Mode"
+      },
+      "ch_mode_starts": {
+        "name": "Central Heating Mode Starts"
+      },
+      "ch_pump_on": {
+        "name": "Central Heating Pump On"
+      },
+      "ch_pump_starts": {
+        "name": "Central Heating Pump Starts"
+      },
       "co2_value": {
         "name": "CO² Value"
       },
@@ -93,14 +249,59 @@
       "co2_ventilation": {
         "name": "CO² Ventilation"
       },
+      "co_valve_position": {
+        "name": "CO Valve Position"
+      },
+      "comm_space": {
+        "name": "Comm Space {letter}"
+      },
+      "compr_block": {
+        "name": "Compressor Block"
+      },
+      "compr_power_on_delay": {
+        "name": "Compressor Power-On Delay"
+      },
+      "compressed_gas_temp": {
+        "name": "Compressed Gas Temperature"
+      },
+      "compressor": {
+        "name": "Compressor"
+      },
+      "compressor_current": {
+        "name": "Compressor Current (A)"
+      },
+      "compressor_on": {
+        "name": "Compressor On"
+      },
+      "compressor_start": {
+        "name": "Compressor Start"
+      },
+      "compressor_starts": {
+        "name": "Compressor Starts"
+      },
       "condition": {
         "name": "Condition"
       },
-      "counter_time": {
-        "name": "Counter Time"
+      "condition_cool": {
+        "name": "Condition Cool"
+      },
+      "condition_off": {
+        "name": "Condition Off"
+      },
+      "cooling_temp_control_valve_setpoint": {
+        "name": "Cooling Temp Control Valve Setpoint"
+      },
+      "correction_measurement_delta_source_temperature": {
+        "name": "Correction of Delta Source Temperature (K)"
+      },
+      "counter_min_time": {
+        "name": "Counter Minimum Time"
       },
       "counter_stop": {
         "name": "Counter Stop"
+      },
+      "counter_time": {
+        "name": "Counter Time"
       },
       "current_bypass_share": {
         "name": "Current Bypass Share"
@@ -108,26 +309,68 @@
       "current_consumption_fan": {
         "name": "Current Fan Power Consumption"
       },
+      "current_e_element": {
+        "name": "Current Electrical Element (A)"
+      },
       "current_period": {
         "name": "Current Period"
+      },
+      "current_pos": {
+        "name": "Current Position"
       },
       "current_position": {
         "name": "Current Position"
       },
+      "current_source_valve_position": {
+        "name": "Current Source Valve Position"
+      },
+      "cv_dhw_or_cooling_temp_valve": {
+        "name": "CV DHW or Cooling Temp Valve"
+      },
+      "cv_for_naddraai": {
+        "name": "CV for Afterrun"
+      },
       "cv_pressure": {
         "name": "CV Pressure"
+      },
+      "cv_pump": {
+        "name": "CV Pump"
       },
       "cv_pump_percent": {
         "name": "CV Pump"
       },
+      "cv_pump_prime": {
+        "name": "CV Pump Prime"
+      },
       "cv_return_temp": {
         "name": "CV Return Temperature"
+      },
+      "cv_start_delay": {
+        "name": "CV Start Delay"
+      },
+      "cv_stop_delay": {
+        "name": "CV Stop Delay"
+      },
+      "cv_supply_temp": {
+        "name": "CV Supply Temperature"
+      },
+      "cycle_counter": {
+        "name": "Cycle Counter"
       },
       "cycle_timer": {
         "name": "Cycle Timer"
       },
       "deferred_absence": {
         "name": "Deferred Absence"
+      },
+      "delay_cv_start": {
+        "name": "Delay CV Start"
+      },
+      "delay_cv_stop": {
+        "name": "Delay CV Stop"
+      },
+      "delay_electr": {
+        "name": "Delay Electrical Element"
       },
       "desired_capacity": {
         "name": "Desired Capacity"
@@ -138,6 +381,30 @@
       "desired_inlet_temp": {
         "name": "Desired Inlet Temperature"
       },
+      "desired_power": {
+        "name": "Desired Power"
+      },
+      "dhw_element_on": {
+        "name": "DHW Element On"
+      },
+      "dhw_element_starts": {
+        "name": "DHW Element Starts"
+      },
+      "dhw_mode": {
+        "name": "DHW Mode"
+      },
+      "dhw_mode_starts": {
+        "name": "DHW Mode Starts"
+      },
+      "dhw_pump_on": {
+        "name": "DHW Pump On"
+      },
+      "dhw_pump_starts": {
+        "name": "DHW Pump Starts"
+      },
+      "distributor_valve": {
+        "name": "Distributor Valve"
+      },
       "drain_actual": {
         "name": "Actual Drain Level"
       },
@@ -147,11 +414,56 @@
       "drain_requested": {
         "name": "Requested Drain Level"
       },
+      "drain_time": {
+        "name": "Drain Time"
+      },
       "duration_of_current_frost_setpoint": {
         "name": "Duration of Current Frost Setpoint"
       },
-      "empty_battery": {
-        "name": "Empty Battery"
+      "e_consumption_cooling": {
+        "name": "Energy Consumption (Cooling, kWh)"
+      },
+      "e_consumption_dhw": {
+        "name": "Energy Consumption (DHW, kWh)"
+      },
+      "e_consumption_during_cooling": {
+        "name": "Energy During Cooling (kWh)"
+      },
+      "e_consumption_during_dhw": {
+        "name": "Energy During DHW (kWh)"
+      },
+      "e_consumption_during_heating": {
+        "name": "Energy During Heating (kWh)"
+      },
+      "e_consumption_during_stand_by": {
+        "name": "Energy During Standby (kWh)"
+      },
+      "e_consumption_heating": {
+        "name": "Energy Consumption (Heating, kWh)"
+      },
+      "e_consumption_stand_by": {
+        "name": "Energy Consumption (Standby, kWh)"
+      },
+      "electrical_element_on": {
+        "name": "Electrical Element On"
+      },
+      "electrical_element_release": {
+        "name": "Electrical Element Release"
+      },
+      "electrical_element_starts": {
+        "name": "Electrical Element Starts"
+      },
+      "elek_block": {
+        "name": "Electrical Block"
+      },
+      "element": {
+        "name": "Element"
+      },
+      "energy_out_of_source": {
+        "name": "Energy Out of Source (MWh)"
+      },
+      "energy_returned_to_source": {
+        "name": "Energy Returned to Source (MWh)"
       },
       "enhanced_bathroom": {
         "name": "Enhanced Bathroom Mode"
@@ -159,11 +471,32 @@
       "error": {
         "name": "Error"
       },
+      "error_code_byte": {
+        "name": "Error Code Byte {num}"
+      },
       "error_number": {
         "name": "Error Number"
       },
+      "error_retry": {
+        "name": "Error Retry"
+      },
+      "ev_adjust": {
+        "name": "Expansion Valve Adjustment"
+      },
+      "ev_pressure_offset": {
+        "name": "Expansion Valve Pressure Offset"
+      },
+      "evaporator_temp": {
+        "name": "Evaporator Temperature"
+      },
       "exhaust_fan_actual": {
         "name": "Actual Exhaust Fan"
+      },
+      "expansion_valve": {
+        "name": "Expansion Valve"
+      },
+      "external_heating_release_time": {
+        "name": "External Heating Release Time"
       },
       "extracted_air_temp": {
         "name": "Extracted Air Temperature"
@@ -180,17 +513,44 @@
       "fan_speed": {
         "name": "Fan Speed"
       },
+      "fault_highest_priority": {
+        "name": "Highest Priority Fault"
+      },
       "filter_use_counter": {
         "name": "Filter Use Counter"
       },
       "flow_blown_air": {
         "name": "Airflow (Blown Out)"
       },
+      "flow_hardware": {
+        "name": "Flow Hardware"
+      },
       "flow_inflated_air": {
         "name": "Airflow (Inflated)"
       },
       "flow_sensor": {
         "name": "Flow"
+      },
+      "free_cooling": {
+        "name": "Free Cooling"
+      },
+      "free_cooling_block_time": {
+        "name": "Free Cooling Block Time"
+      },
+      "free_cooling_interval": {
+        "name": "Free Cooling Interval"
+      },
+      "free_cooling_mode": {
+        "name": "Free Cooling Mode"
+      },
+      "free_cooling_on_time": {
+        "name": "Free Cooling On Time"
+      },
+      "free_cooling_starts": {
+        "name": "Free Cooling Starts"
+      },
+      "free_cooling_valve": {
+        "name": "Free Cooling Valve"
       },
       "frost_adjustment_speed": {
         "name": "Frost Adjustment Speed"
@@ -207,6 +567,9 @@
       "frost_timer": {
         "name": "Frost Timer"
       },
+      "gateway_time_receive": {
+        "name": "Gateway Time Receive"
+      },
       "ghe_switch": {
         "name": "GHE Switch"
       },
@@ -215,6 +578,15 @@
       },
       "heat_demand": {
         "name": "Heat Demand Thermostat"
+      },
+      "heat_demand_thermost": {
+        "name": "Heat Demand Thermostat"
+      },
+      "heat_demand_total": {
+        "name": "Total Heat Demand"
+      },
+      "heat_source": {
+        "name": "Heat Source"
       },
       "highest_measured_co2_value": {
         "name": "Highest Measured CO² Level"
@@ -228,6 +600,12 @@
       "highest_received_rh_value": {
         "name": "Highest Received Relative Humidity"
       },
+      "hru_blowout_flow": {
+        "name": "HRU Blowout Flow"
+      },
+      "hru_blowout_temp": {
+        "name": "HRU Blowout Temperature"
+      },
       "humidity": {
         "name": "Humidity"
       },
@@ -236,6 +614,9 @@
       },
       "hysteresis_use_in_control_mode": {
         "name": "Hysteresis in Control Mode"
+      },
+      "i_error_sourceflow": {
+        "name": "I-Error Source Flow"
       },
       "inlet_temp": {
         "name": "Inlet Temperature"
@@ -252,6 +633,33 @@
       "last_cmd_source": {
         "name": "Last Command Source"
       },
+      "latest_valid_source_supply_temp": {
+        "name": "Latest Valid Source Supply Temperature"
+      },
+      "led_fast": {
+        "name": "LED Fast"
+      },
+      "led_on": {
+        "name": "LED On"
+      },
+      "led_slow": {
+        "name": "LED Slow"
+      },
+      "liquid_temp": {
+        "name": "Liquid Temperature"
+      },
+      "logging": {
+        "name": "Logging"
+      },
+      "low_pressure_timer": {
+        "name": "Low Pressure Timer"
+      },
+      "malfunction_valve_detection_dist": {
+        "name": "Malfunction Valve Detection Distributor {distributor}"
+      },
+      "manual_control": {
+        "name": "Manual Control"
+      },
       "mass_flow_air_enter_house_kgh": {
         "name": "Mass Flow of Air Entering (kg/h)"
       },
@@ -261,11 +669,17 @@
       "max_co2_level": {
         "name": "Max CO² Level"
       },
+      "max_cv_return_temp": {
+        "name": "Max CV Return Temperature"
+      },
       "max_frost_vent_speed": {
         "name": "Maximum Frost Ventilation Speed"
       },
       "max_rh_level": {
         "name": "Max RH Level"
+      },
+      "maximum_time_for_preheating_potable_water": {
+        "name": "Maximum Time for Preheating Potable Water"
       },
       "measured_blend_temp_heated": {
         "name": "Measured Blend Temperature (Heated)"
@@ -281,6 +695,15 @@
       },
       "measurement_previous_second": {
         "name": "Previous Measurement 2"
+      },
+      "min_running_time_compr": {
+        "name": "Minimum Running Time for Compressor"
+      },
+      "minimum_release_time_external_cooling": {
+        "name": "Minimum Release Time for External Cooling"
+      },
+      "minimum_time_for_preheating_potable_water": {
+        "name": "Minimum Time for Preheating Potable Water"
       },
       "mixed_outside_air_temp": {
         "name": "Mixed Outside Air Temperature"
@@ -315,11 +738,23 @@
       "outside_temp": {
         "name": "Outside Temperature"
       },
-      "periodic_bypass_valve_travel": {
-        "name": "Periodic Bypass Valve Travel"
+      "p_source_flow_error": {
+        "name": "P-Source Flow Error"
+      },
+      "particulars": {
+        "name": "Particulars"
       },
       "period_timer": {
         "name": "Period Timer"
+      },
+      "periodic_bypass_valve_travel": {
+        "name": "Periodic Bypass Valve Travel"
+      },
+      "phase_detection": {
+        "name": "Phase Detection"
+      },
+      "pi_error_sourceflow": {
+        "name": "PI-Error Source Flow"
       },
       "pir_fan_speed_level": {
         "name": "PIR Fan Speed Level"
@@ -333,8 +768,17 @@
       "power_perc": {
         "name": "Power (%)"
       },
+      "preheat_tap_water": {
+        "name": "Preheat Tap Water"
+      },
       "presence_timer": {
         "name": "Presence Timer"
+      },
+      "pressure_switch": {
+        "name": "Pressure Switch"
+      },
+      "pulse_counter": {
+        "name": "Pulse Counter"
       },
       "relative_fanspeed": {
         "name": "Relative Fan Speed"
@@ -356,6 +800,15 @@
       },
       "requested_speed": {
         "name": "Requested Speed"
+      },
+      "reserve": {
+        "name": "Reserve"
+      },
+      "rest_cycle_time": {
+        "name": "Rest Cycle Time"
+      },
+      "rest_vent_time": {
+        "name": "Rest Vent Time"
       },
       "rfspeed_absolute": {
         "name": "RF Speed"
@@ -384,11 +837,47 @@
       "setpoint_temp": {
         "name": "Setpoint Temperature"
       },
+      "slow_start_well_pump": {
+        "name": "Slow Start Well Pump"
+      },
+      "source_flow_control_period": {
+        "name": "Source Flow Control Period"
+      },
+      "source_flow_glycol_compensation": {
+        "name": "Source Flow Glycol Compensation"
+      },
+      "source_for_nadraai": {
+        "name": "Source for Afterrun"
+      },
+      "source_pump_flow_setpoint": {
+        "name": "Source Pump Flow Setpoint"
+      },
+      "source_pump_on": {
+        "name": "Source Pump On"
+      },
+      "source_pump_speed_at_free_cooling": {
+        "name": "Source Pump Speed at Free Cooling"
+      },
+      "source_pump_speed_free_cooling_mode": {
+        "name": "Source Pump Speed in Free Cooling Mode"
+      },
+      "source_pump_starts": {
+        "name": "Source Pump Starts"
+      },
+      "source_return_temperature_too_low": {
+        "name": "Source Return Temperature Too Low"
+      },
+      "spare_input": {
+        "name": "Spare Input"
+      },
       "speed_setpoint": {
         "name": "Speed Setpoint"
       },
       "speed_timer": {
         "name": "Speed Timer"
+      },
+      "stabilisation_waiting_time_free_cooling": {
+        "name": "Stabilisation Waiting Time for Free Cooling"
       },
       "start_up_counter": {
         "name": "Start-Up Counter"
@@ -396,14 +885,32 @@
       "state": {
         "name": "State"
       },
+      "state_cool": {
+        "name": "State Cool"
+      },
+      "state_hand": {
+        "name": "State Hand"
+      },
+      "state_hand2": {
+        "name": "State Hand"
+      },
+      "state_heating": {
+        "name": "State Heating"
+      },
       "status": {
         "name": "Status"
       },
-      "summer_day": {
-        "name": "Summer Day"
+      "sub_status": {
+        "name": "Sub Status"
+      },
+      "suction_gas_temp": {
+        "name": "Suction Gas Temperature"
       },
       "summer_counter": {
         "name": "Summer Counter"
+      },
+      "summer_day": {
+        "name": "Summer Day"
       },
       "summerday_k_min": {
         "name": "Summer Day"
@@ -420,10 +927,16 @@
       "supply_requested": {
         "name": "Requested Supply"
       },
-      "temp": {
-        "name": "Temperature"
+      "system_starts": {
+        "name": "System Starts"
       },
-      "temperature": {
+      "tariff": {
+        "name": "Tariff"
+      },
+      "tariff_low_from_thermostat": {
+        "name": "Low Tariff from Thermostat"
+      },
+      "temp": {
         "name": "Temperature"
       },
       "temp_from_source": {
@@ -432,11 +945,35 @@
       "temp_to_source": {
         "name": "Temperature to Source"
       },
+      "temperature": {
+        "name": "Temperature"
+      },
       "temporary_speed_reduction": {
         "name": "Temporary Speed Reduction"
       },
       "thermostat": {
         "name": "Thermostat"
+      },
+      "time_active_zone_too_cold": {
+        "name": "Time Active Zone Too Cold"
+      },
+      "time_co_valve_start_position": {
+        "name": "Time CO Valve Start Position"
+      },
+      "time_for_error_history": {
+        "name": "Time for Error History"
+      },
+      "time_hours": {
+        "name": "Time (Hours)"
+      },
+      "time_minutes": {
+        "name": "Time (Minutes)"
+      },
+      "time_seconds": {
+        "name": "Time (Seconds)"
+      },
+      "time_valid": {
+        "name": "Time Valid"
       },
       "timer_for_how_long_the_house_is_cooled": {
         "name": "Cooling Duration"
@@ -447,23 +984,116 @@
       "total_operation_time": {
         "name": "Total Operating Time"
       },
+      "total_runtime": {
+        "name": "Total Runtime"
+      },
+      "trickle_heating": {
+        "name": "Trickle Heating"
+      },
+      "utc_time": {
+        "name": "UTC Time"
+      },
+      "utc_time_offset": {
+        "name": "UTC Time Offset"
+      },
+      "v_valve": {
+        "name": "Valve {valve}"
+      },
       "valve": {
         "name": "Valve"
+      },
+      "valve_failure_detection_distributor_1": {
+        "name": "Valve Failure Detection Distributor 1"
+      },
+      "valve_failure_distributor": {
+        "name": "Valve Failure Distributor {valve}"
       },
       "ventilation_level": {
         "name": "Ventilation Level"
       },
+      "ventilation_mode": {
+        "name": "Ventilation Mode"
+      },
+      "ventilation_override": {
+        "name": "Ventilation Override"
+      },
       "ventilation_request": {
         "name": "Ventilation Request"
+      },
+      "ventilation_setpoint": {
+        "name": "Ventilation Setpoint"
       },
       "ventilation_setpoint_percentage": {
         "name": "Ventilation Setpoint"
       },
+      "ventilation_status": {
+        "name": "Ventilation Status"
+      },
+      "venting_active": {
+        "name": "Venting Active"
+      },
+      "venting_duration": {
+        "name": "Venting Duration"
+      },
+      "venting_end_time": {
+        "name": "Venting End Time"
+      },
+      "venting_start_time": {
+        "name": "Venting Start Time"
+      },
+      "venting_status": {
+        "name": "Venting Status"
+      },
       "vkk_switch": {
         "name": "VKK Switch"
       },
+      "waiting_time_permanently_released_element": {
+        "name": "Waiting Time for Permanently Released Element"
+      },
+      "water_heater_mode": {
+        "name": "Water Heater Mode"
+      },
+      "water_heater_setpoint": {
+        "name": "Water Heater Setpoint"
+      },
+      "water_heater_status": {
+        "name": "Water Heater Status"
+      },
+      "water_pressure": {
+        "name": "Water Pressure"
+      },
+      "water_temp": {
+        "name": "Water Temperature"
+      },
+      "water_temp_setpoint": {
+        "name": "Water Temperature Setpoint"
+      },
+      "water_temp_status": {
+        "name": "Water Temperature Status"
+      },
+      "well_pump": {
+        "name": "Well Pump"
+      },
       "well_pump_percent": {
         "name": "Well Pump"
+      },
+      "well_pump_prime": {
+        "name": "Well Pump Prime"
+      },
+      "well_pump_speed_at_airreg": {
+        "name": "Well Pump Speed at Air Regulation"
+      },
+      "well_pump_speed_at_compr": {
+        "name": "Well Pump Speed at Compressor"
+      },
+      "zone_demand": {
+        "name": "Zone Demand"
+      },
+      "zone_mode": {
+        "name": "Zone Mode"
+      },
+      "zone_temp": {
+        "name": "Zone Temperature"
       }
     }
   },

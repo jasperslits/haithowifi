@@ -10,9 +10,9 @@ from homeassistant.const import (
     UnitOfTime,
 )
 
-from .definitions import IthoSensorEntityDescription
+from .base import IthoSensorEntityDescription
 
-HRUECO200SENSORS: tuple[IthoSensorEntityDescription, ...] = (
+HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Absence (min)",
         translation_key="absence",

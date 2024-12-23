@@ -11,9 +11,9 @@ from homeassistant.const import (
     UnitOfTime,
 )
 
-from .definitions import IthoBinarySensorEntityDescription, IthoSensorEntityDescription
+from .base import IthoBinarySensorEntityDescription, IthoSensorEntityDescription
 
-CVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
+CVE_BINARY_SENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     IthoBinarySensorEntityDescription(
         json_field="Filter dirty",
         translation_key="filter_dirty",
@@ -24,7 +24,7 @@ CVEBINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     ),
 )
 
-CVESENSORS: tuple[IthoSensorEntityDescription, ...] = (
+CVE_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Absence (min)",
         translation_key="absence",

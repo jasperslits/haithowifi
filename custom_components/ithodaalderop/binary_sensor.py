@@ -24,11 +24,11 @@ from .const import (
     MQTT_STATETOPIC,
     NONCVE_DEVICES,
 )
-from .def_autotemp import AUTOTEMPBINARYSENSORS
-from .def_cve import CVEBINARYSENSORS
-from .def_hru350 import HRUECO350BINARYSENSORS
-from .def_hrueco import HRUECOBINARYSENSORS
-from .definitions import IthoBinarySensorEntityDescription
+from .definitions.base import IthoBinarySensorEntityDescription
+from .definitions.cve import CVE_BINARY_SENSORS
+from .definitions.hru350 import HRU_ECO_350_BINARY_SENSORS
+from .definitions.hrueco import HRU_ECO_BINARY_SENSORS
+from .definitions.wpu import WPU_BINARY_SENSORS
 
 
 async def async_setup_entry(
@@ -43,26 +43,26 @@ async def async_setup_entry(
         return
 
     sensors = []
-    if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
-        for description in AUTOTEMPBINARYSENSORS:
-            description.key = (
-                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
-            )
-            sensors.append(IthoBinarySensor(description, config_entry))
-
     if config_entry.data[CONF_ADDON_TYPE] == "cve":
-        for description in CVEBINARYSENSORS:
+        for description in CVE_BINARY_SENSORS:
             description.key = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
             sensors.append(IthoBinarySensor(description, config_entry))
 
-    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
+    if config_entry.data[CONF_ADDON_TYPE] == "noncve" and config_entry.data[
+        CONF_NONCVE_MODEL
+    ] in ["hru_eco", "hru_eco_350"]:
         if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco":
-            hru_sensors = HRUECOBINARYSENSORS
+            hru_sensors = HRU_ECO_BINARY_SENSORS
         if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_350":
-            hru_sensors = HRUECO350BINARYSENSORS
+            hru_sensors = HRU_ECO_350_BINARY_SENSORS
 
         for description in hru_sensors:
             description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
+            sensors.append(IthoBinarySensor(description, config_entry))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "wpu":
+        for description in WPU_BINARY_SENSORS:
+            description.key = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
             sensors.append(IthoBinarySensor(description, config_entry))
 
     async_add_entities(sensors)

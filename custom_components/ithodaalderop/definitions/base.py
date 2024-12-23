@@ -16,18 +16,6 @@ from homeassistant.const import EntityCategory
 
 
 @dataclass(frozen=False)
-class IthoSensorEntityDescription(SensorEntityDescription):
-    """Sensor entity description for Itho."""
-
-    state: Callable | None = None
-    json_field: str | None = None
-    key: str | None = None
-    icon: str | None = None
-    affix: str | None = None
-    entity_category: EntityCategory | None = None
-
-
-@dataclass(frozen=False)
 class IthoBinarySensorEntityDescription(BinarySensorEntityDescription):
     """Binary Sensor entity description for Itho."""
 
@@ -37,23 +25,19 @@ class IthoBinarySensorEntityDescription(BinarySensorEntityDescription):
     icon: str | None = None
     icon_off: str | None = None
     icon_on: str | None = None
-    affix: str | None = None
+    unique_id_template: str | None = None
+    unique_id: str | None = None
     entity_category: EntityCategory | None = None
 
 
-LASTCMDSENSORS: tuple[IthoSensorEntityDescription, ...] = (
-    IthoSensorEntityDescription(
-        json_field="command",
-        translation_key="last_cmd_command",
-        entity_category=EntityCategory.DIAGNOSTIC,
-        icon="mdi:cog",
-        entity_registry_enabled_default=False,
-    ),
-    IthoSensorEntityDescription(
-        json_field="source",
-        translation_key="last_cmd_source",
-        entity_category=EntityCategory.DIAGNOSTIC,
-        icon="mdi:target",
-        entity_registry_enabled_default=False,
-    ),
-)
+@dataclass(frozen=False)
+class IthoSensorEntityDescription(SensorEntityDescription):
+    """Sensor entity description for Itho."""
+
+    state: Callable | None = None
+    json_field: str | None = None
+    key: str | None = None
+    icon: str | None = None
+    unique_id_template: str | None = None
+    unique_id: str | None = None
+    entity_category: EntityCategory | None = None

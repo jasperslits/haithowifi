@@ -12,9 +12,9 @@ from homeassistant.const import (
     UnitOfVolumeFlowRate,
 )
 
-from .definitions import IthoSensorEntityDescription
+from .base import IthoSensorEntityDescription
 
-HRUECO250300SENSORS: tuple[IthoSensorEntityDescription, ...] = (
+HRU_ECO_250_300_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Absolute speed of the fan (%)",
         translation_key="absolute_fanspeed",
@@ -212,16 +212,16 @@ HRUECO250300SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfVolumeFlowRate.CUBIC_METERS_PER_HOUR,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-    # No native_unit_of_measurement available for mass flow
     IthoSensorEntityDescription(
         json_field="The mass flow of the air entering the house (kg/h)",
         translation_key="mass_flow_air_enter_house_kgh",
+        native_unit_of_measurement="kg/h",
         state_class=SensorStateClass.MEASUREMENT,
     ),
-    # No native_unit_of_measurement available for mass flow
     IthoSensorEntityDescription(
         json_field="The mass flow of the air leaving the house (kg/h)",
         translation_key="mass_flow_air_leaving_house_kgh",
+        native_unit_of_measurement="kg/h",
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
