@@ -7,8 +7,8 @@ from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from ..const import CONF_ADDON_TYPE, MQTT_BASETOPIC, MQTT_STATETOPIC
-from ..definitions.co2_remote import REMOTE_SENSOR_TEMPLATE
+from ..const import CONF_ADDON_TYPE, MQTT_BASETOPIC, MQTT_STATETOPIC  # noqa: TID252
+from ..definitions.co2_remote import REMOTE_SENSOR_TEMPLATE  # noqa: TID252
 from .base import IthoBaseSensor
 
 

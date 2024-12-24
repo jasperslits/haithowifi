@@ -6,8 +6,8 @@ from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from ..const import CONF_ADDON_TYPE, MQTT_BASETOPIC, MQTT_STATETOPIC
-from ..definitions.last_command import LAST_CMD_SENSORS
+from ..const import CONF_ADDON_TYPE, MQTT_BASETOPIC, MQTT_STATETOPIC  # noqa: TID252
+from ..definitions.last_command import LAST_CMD_SENSORS  # noqa: TID252
 from .base import IthoBaseSensor
 
 

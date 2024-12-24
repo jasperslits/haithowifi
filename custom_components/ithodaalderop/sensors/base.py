@@ -4,7 +4,7 @@ from homeassistant.components.sensor import SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.device_registry import DeviceInfo
 
-from ..const import (
+from ..const import (  # noqa: TID252
     ADDON_TYPES,
     CONF_ADDON_TYPE,
     CONF_NONCVE_MODEL,
@@ -13,7 +13,7 @@ from ..const import (
     NONCVE_DEVICES,
     UNITTYPE_ICONS,
 )
-from ..definitions.base import IthoSensorEntityDescription
+from ..definitions.base import IthoSensorEntityDescription  # noqa: TID252
 
 
 class IthoBaseSensor(SensorEntity):
