@@ -45,7 +45,7 @@ async def async_setup_entry(
     sensors = []
     if config_entry.data[CONF_ADDON_TYPE] == "cve":
         for description in CVE_BINARY_SENSORS:
-            description.key = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
+            description.topic = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
             sensors.append(IthoBinarySensor(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "noncve" and config_entry.data[
@@ -57,12 +57,14 @@ async def async_setup_entry(
             hru_sensors = HRU_ECO_350_BINARY_SENSORS
 
         for description in hru_sensors:
-            description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
+            description.topic = (
+                f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
+            )
             sensors.append(IthoBinarySensor(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "wpu":
         for description in WPU_BINARY_SENSORS:
-            description.key = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
+            description.topic = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
             sensors.append(IthoBinarySensor(description, config_entry))
 
     async_add_entities(sensors)
@@ -81,6 +83,7 @@ class IthoBinarySensor(BinarySensorEntity):
     ) -> None:
         """Initialize the binary sensor."""
         self.entity_description = description
+        self.entity_description.translation_key = self.entity_description.key
 
         model = ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
         if config_entry.data[CONF_ADDON_TYPE] == "noncve":
@@ -93,7 +96,9 @@ class IthoBinarySensor(BinarySensorEntity):
             name="Itho Daalderop " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
         )
 
-        self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}"
+        self._attr_unique_id = (
+            f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.key}"
+        )
         self.entity_id = f"binary_sensor.{self._attr_unique_id}"
 
     @property
@@ -127,5 +132,5 @@ class IthoBinarySensor(BinarySensorEntity):
             self.async_write_ha_state()
 
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.key, message_received, 1
+            self.hass, self.entity_description.topic, message_received, 1
         )

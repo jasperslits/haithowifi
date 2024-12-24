@@ -7,7 +7,6 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 from homeassistant.helpers.device_registry import DeviceInfo
 
-from ._sensor_base import IthoBaseSensor
 from .const import (
     ADDON_TYPES,
     AUTOTEMP_ERROR,
@@ -17,6 +16,7 @@ from .const import (
     MANUFACTURER,
 )
 from .definitions.base import IthoSensorEntityDescription
+from .sensor_base import IthoBaseSensor
 
 
 class IthoSensorAutotemp(IthoBaseSensor):
@@ -68,7 +68,7 @@ class IthoSensorAutotemp(IthoBaseSensor):
             self.async_write_ha_state()
 
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.key, message_received, 1
+            self.hass, self.entity_description.topic, message_received, 1
         )
 
 
@@ -108,5 +108,5 @@ class IthoSensorAutotempRoom(IthoBaseSensor):
             self.async_write_ha_state()
 
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.key, message_received, 1
+            self.hass, self.entity_description.topic, message_received, 1
         )

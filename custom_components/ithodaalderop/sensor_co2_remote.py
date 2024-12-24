@@ -6,8 +6,8 @@ from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from ._sensor_base import IthoBaseSensor
 from .definitions.base import IthoSensorEntityDescription
+from .sensor_base import IthoBaseSensor
 
 
 class IthoSensorCO2Remote(IthoBaseSensor):
@@ -38,5 +38,5 @@ class IthoSensorCO2Remote(IthoBaseSensor):
             self.async_write_ha_state()
 
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.key, message_received, 1
+            self.hass, self.entity_description.topic, message_received, 1
         )

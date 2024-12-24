@@ -11,11 +11,6 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from ._sensor_autotemp import IthoSensorAutotemp, IthoSensorAutotempRoom
-from ._sensor_co2_remote import IthoSensorCO2Remote
-from ._sensor_fan import IthoSensorFan
-from ._sensor_last_command import IthoSensorLastCommand
-from ._sensor_wpu import IthoSensorWPU
 from .const import (
     _LOGGER,
     CONF_ADDON_TYPE,
@@ -28,6 +23,7 @@ from .definitions.autotemp import (
     AUTOTEMP_DISTRIBUTOR_VALVE_SENSOR_TEMPLATE,
     AUTOTEMP_MALFUNCTION_VALVE_DECTECTION_DIST_SENSOR_TEMPLATE,
     AUTOTEMP_ROOM_SENSORS,
+    AUTOTEMP_SENSORS,
     AUTOTEMP_VALVE_SENSOR_TEMPLATE,
 )
 from .definitions.co2_remote import REMOTE_SENSOR_TEMPLATE
@@ -38,6 +34,11 @@ from .definitions.hru350 import HRU_ECO_350_SENSORS
 from .definitions.hrueco import HRU_ECO_SENSORS
 from .definitions.last_command import LAST_CMD_SENSORS
 from .definitions.wpu import WPU_ERROR_CODE_BYTE_TEMPLATE, WPU_SENSORS
+from .sensor_autotemp import IthoSensorAutotemp, IthoSensorAutotempRoom
+from .sensor_co2_remote import IthoSensorCO2Remote
+from .sensor_fan import IthoSensorFan
+from .sensor_last_command import IthoSensorLastCommand
+from .sensor_wpu import IthoSensorWPU
 
 
 def _create_remotes(config_entry: ConfigEntry):
@@ -49,7 +50,7 @@ def _create_remotes(config_entry: ConfigEntry):
         if remote not in ("", "Remote " + str(x)):
             sensor = copy.deepcopy(REMOTE_SENSOR_TEMPLATE)
             sensor.json_field = remote
-            sensor.key = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}"
+            sensor.topic = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}"
             sensor.translation_placeholders = {"remote_name": remote}
             sensor.unique_id = remote
             remotes.append(sensor)
@@ -66,7 +67,7 @@ def _create_autotemprooms(config_entry: ConfigEntry):
         if room not in ("", "Room " + str(x)):
             for sensor in template_sensors:
                 sensor.json_field = sensor.json_field.replace("X", str(x))
-                sensor.key = (
+                sensor.topic = (
                     f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
                 )
                 sensor.room = room
@@ -92,7 +93,7 @@ async def async_setup_entry(
         topic = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
         for letter in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]:
             sensor = copy.deepcopy(AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE)
-            sensor.key = topic
+            sensor.topic = topic
             sensor.json_field = sensor.json_field.replace("X", letter)
             sensor.translation_placeholders = {"letter": letter}
             sensor.unique_id = sensor.unique_id_template.replace("x", letter)
@@ -103,7 +104,7 @@ async def async_setup_entry(
                 d = str(d)
                 v = str(v)
                 sensor = copy.deepcopy(AUTOTEMP_DISTRIBUTOR_VALVE_SENSOR_TEMPLATE)
-                sensor.key = topic
+                sensor.topic = topic
                 sensor.json_field = sensor.json_field.replace("X", d).replace("Y", v)
                 sensor.translation_placeholders = {"distributor": d, "valve": v}
                 sensor.unique_id = sensor.unique_id_template.replace("x", d).replace(
@@ -116,7 +117,7 @@ async def async_setup_entry(
             sensor = copy.deepcopy(
                 AUTOTEMP_MALFUNCTION_VALVE_DECTECTION_DIST_SENSOR_TEMPLATE
             )
-            sensor.key = topic
+            sensor.topic = topic
             sensor.json_field = sensor.json_field.replace("X", d)
             sensor.translation_placeholders = {"distributor": d}
             sensor.unique_id = sensor.unique_id_template.replace("x", d)
@@ -126,17 +127,17 @@ async def async_setup_entry(
             v = str(v)
             template_sensors = copy.deepcopy(list(AUTOTEMP_VALVE_SENSOR_TEMPLATE))
             for sensor in template_sensors:
-                sensor.key = topic
+                sensor.topic = topic
                 sensor.json_field = sensor.json_field.replace("X", v)
                 sensor.translation_placeholders = {"valve": v}
                 sensor.unique_id = sensor.unique_id_template.replace("x", v)
                 sensors.append(IthoSensorAutotemp(sensor, config_entry))
 
-        # for description in AUTOTEMP_SENSORS:
-        #     description.key = (
-        #         f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
-        #     )
-        #     sensors.append(IthoSensorAutotemp(description, config_entry))
+        for description in AUTOTEMP_SENSORS:
+            description.topic = (
+                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            )
+            sensors.append(IthoSensorAutotemp(description, config_entry))
 
         sensors.extend(
             [
@@ -149,7 +150,7 @@ async def async_setup_entry(
         topic = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
 
         for description in CVE_SENSORS:
-            description.key = topic
+            description.topic = topic
             sensors.append(IthoSensorFan(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "noncve":
@@ -165,7 +166,7 @@ async def async_setup_entry(
             hru_sensors = HRU_ECO_350_SENSORS
 
         for description in hru_sensors:
-            description.key = topic
+            description.topic = topic
             sensors.append(IthoSensorFan(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] in ["cve", "noncve"]:
@@ -179,7 +180,7 @@ async def async_setup_entry(
         )
 
         for description in LAST_CMD_SENSORS:
-            description.key = topic
+            description.topic = topic
             sensors.append(IthoSensorLastCommand(description, config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "wpu":
@@ -187,14 +188,14 @@ async def async_setup_entry(
         for x in range(6):
             x = str(x)
             sensor = copy.deepcopy(WPU_ERROR_CODE_BYTE_TEMPLATE)
-            sensor.key = topic
+            sensor.topic = topic
             sensor.json_field = sensor.json_field + x
             sensor.translation_placeholders = {"num": x}
             sensor.unique_id = sensor.unique_id_template.replace("x", x)
             sensors.append(IthoSensorWPU(sensor, config_entry))
 
         for description in WPU_SENSORS:
-            description.key = topic
+            description.topic = topic
             sensors.append(IthoSensorWPU(description, config_entry))
 
     async_add_entities(sensors)

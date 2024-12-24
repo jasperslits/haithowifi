@@ -7,7 +7,6 @@ from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from ._sensor_base import IthoBaseSensor
 from .const import (
     HRU_ECO_250_300_ERROR_CODE,
     HRU_ECO_350_ACTUAL_MODE,
@@ -16,6 +15,7 @@ from .const import (
     HRU_ECO_STATUS,
 )
 from .definitions.base import IthoSensorEntityDescription
+from .sensor_base import IthoBaseSensor
 
 
 class IthoSensorFan(IthoBaseSensor):
@@ -138,5 +138,5 @@ class IthoSensorFan(IthoBaseSensor):
             self.async_write_ha_state()
 
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.key, message_received, 1
+            self.hass, self.entity_description.topic, message_received, 1
         )

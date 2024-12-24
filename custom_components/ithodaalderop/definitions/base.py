@@ -19,9 +19,10 @@ from homeassistant.const import EntityCategory
 class IthoBinarySensorEntityDescription(BinarySensorEntityDescription):
     """Binary Sensor entity description for Itho."""
 
+    key: str | None = None
     state: Callable | None = None
     json_field: str | None = None
-    key: str | None = None
+    topic: str | None = None
     icon: str | None = None
     icon_off: str | None = None
     icon_on: str | None = None
@@ -34,9 +35,10 @@ class IthoBinarySensorEntityDescription(BinarySensorEntityDescription):
 class IthoSensorEntityDescription(SensorEntityDescription):
     """Sensor entity description for Itho."""
 
+    key: str | None = None
     state: Callable | None = None
     json_field: str | None = None
-    key: str | None = None
+    topic: str | None = None
     icon: str | None = None
     unique_id_template: str | None = None
     unique_id: str | None = None

@@ -1,4 +1,4 @@
-"""Definitions for Itho sensors added to MQTT."""
+"""Definitions for Itho HRU 200 sensors added to MQTT."""
 
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import (
@@ -15,7 +15,7 @@ from .base import IthoSensorEntityDescription
 HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Absence (min)",
-        translation_key="absence",
+        key="absence",
         native_unit_of_measurement=UnitOfTime.MINUTES,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -23,27 +23,27 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Actual speed (rpm)",
-        translation_key="actual_speed",
+        key="actual_speed",
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
         json_field="Air discharge temperature (°C)",
-        translation_key="air_discharge_temp",
+        key="air_discharge_temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
         json_field="Average air outlet temperature (°C)",
-        translation_key="average_air_outlet_temp",
+        key="average_air_outlet_temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
         json_field="Block timer bypass (min)",
-        translation_key="block_timer_bypass",
+        key="block_timer_bypass",
         native_unit_of_measurement=UnitOfTime.MINUTES,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -51,13 +51,13 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Bypass mode",
-        translation_key="bypass_mode",
+        key="bypass_mode",
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Bypass setpoint (%)",
-        translation_key="bypass_setpoint",
+        key="bypass_setpoint",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -65,7 +65,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Current bypass share (%)",
-        translation_key="current_bypass_share",
+        key="current_bypass_share",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -73,7 +73,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Deferred absence (min)",
-        translation_key="deferred_absence",
+        key="deferred_absence",
         native_unit_of_measurement=UnitOfTime.MINUTES,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -81,7 +81,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Duration of current frost setpoint (sec)",
-        translation_key="duration_of_current_frost_setpoint",
+        key="duration_of_current_frost_setpoint",
         native_unit_of_measurement=UnitOfTime.SECONDS,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -89,12 +89,12 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Error",
-        translation_key="error",
+        key="error",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     IthoSensorEntityDescription(
         json_field="Fan off during frost (min)",
-        translation_key="fan_off_during_frost",
+        key="fan_off_during_frost",
         native_unit_of_measurement=UnitOfTime.MINUTES,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -102,7 +102,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Filter use counter (hour)",
-        translation_key="filter_use_counter",
+        key="filter_use_counter",
         native_unit_of_measurement=UnitOfTime.HOURS,
         state_class=SensorStateClass.TOTAL_INCREASING,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -110,7 +110,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Frost adjustment speed (rpm)",
-        translation_key="frost_adjustment_speed",
+        key="frost_adjustment_speed",
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -118,13 +118,13 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Frost status",
-        translation_key="frost_status",
+        key="frost_status",
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Max. CO2 level (ppm)",
-        translation_key="max_co2_level",
+        key="max_co2_level",
         native_unit_of_measurement=CONCENTRATION_PARTS_PER_MILLION,
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False,
@@ -132,7 +132,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Max frost vent. speed (rpm)",
-        translation_key="max_frost_vent_speed",
+        key="max_frost_vent_speed",
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -140,21 +140,21 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Max. RH level (%)",
-        translation_key="max_rh_level",
+        key="max_rh_level",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Number of bypass settings",
-        translation_key="number_of_bypass_settings",
+        key="number_of_bypass_settings",
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Periodic bypass valve travel (min)",
-        translation_key="periodic_bypass_valve_travel",
+        key="periodic_bypass_valve_travel",
         native_unit_of_measurement=UnitOfTime.MINUTES,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -162,7 +162,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Position of frost valve (%)",
-        translation_key="position_of_frost_valve",
+        key="position_of_frost_valve",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -170,27 +170,27 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Room temp setpoint (°C)",
-        translation_key="room_temp_setpoint",
+        key="room_temp_setpoint",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
         json_field="Outside temperature (°C)",
-        translation_key="outside_temp",
+        key="outside_temp",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     IthoSensorEntityDescription(
         json_field="Selection",
-        translation_key="selection",
+        key="selection",
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Speed setpoint (rpm)",
-        translation_key="speed_setpoint",
+        key="speed_setpoint",
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -198,21 +198,21 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     ),
     IthoSensorEntityDescription(
         json_field="Start-up counter",
-        translation_key="start_up_counter",
+        key="start_up_counter",
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Total operation (hrs)",
-        translation_key="total_operation_time",
+        key="total_operation_time",
         native_unit_of_measurement=UnitOfTime.HOURS,
         state_class=SensorStateClass.TOTAL_INCREASING,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     IthoSensorEntityDescription(
         json_field="Ventilation setpoint (%)",
-        translation_key="ventilation_setpoint_percentage",
+        key="ventilation_setpoint_percentage",
         native_unit_of_measurement=PERCENTAGE,
     ),
 )
