@@ -9,15 +9,18 @@ DOMAIN = "ithodaalderop"
 MANUFACTURER = "Itho Daalderop"
 
 ADDON_TYPES = {
-    "noncve": "HRU",
-    "cve": "CVE",
     "autotemp": "Autotemp",
+    "cve": "CVE",
+    "noncve": "Non-CVE",
     "wpu": "WPU",
 }
 
-CVE_TYPES = {
-    "noncve": ["noncve", "mdi:fan"],
-    "cve": ["cve", "mdi:fan"],
+NONCVE_DEVICES = {
+    "hru_eco": "HRU ECO",
+    "hru_eco_200": "HRU ECO 200",
+    "hru_eco_250": "HRU ECO 250",
+    "hru_eco_300": "HRU ECO 300",
+    "hru_eco_350": "HRU ECO 350",
 }
 
 UNITTYPE_ICONS = {
@@ -43,6 +46,7 @@ MQTT_STATETOPIC = {
 }
 
 CONF_ADDON_TYPE = "addontype"
+CONF_NONCVE_MODEL = "noncve_model"
 
 CONF_AUTOTEMP_ROOM1 = "room1"
 CONF_AUTOTEMP_ROOM2 = "room2"
@@ -86,24 +90,37 @@ AUTOTEMP_MODE = {
     5: "Manual operation",
 }
 
-NONCVE_ACTUAL_MODE = {
-    1: "low",
-    2: "medium",
-    3: "high",
-    13: "timer",
-    24: "auto",
-    25: "autonight",
+HRUECO250300_ERROR_CODE = {
+    0: "No error",
+    1: "W01 - Clean Filter",
+    2: "W02 - Replace Filter",
+    3: "W03 - Fan speed decreased",
+    51: "B01 - Temperature outside NOT-OK",
+    52: "B02 - Temperature blend NOT-OK",
+    53: "B03 - Temperature waste NOT-OK",
+    54: "B04 - Temperature return NOT-OK",
+    55: "B05 - Temperature supply NOT-OK",
+    101: "E01 - Fan is't working",
+}
+
+HRUECO350_ACTUAL_MODE = {
+    1: "Low",
+    2: "Medium",
+    3: "High",
+    13: "Timer",
+    24: "Auto",
+    25: "Autonight",
 }
 
 # Based on user-experience. No codelist availble in the Itho Servicetool
 # For any additions/feedback, please create an issue in the repo of the integration
-NONCVE_GLOBAL_FAULT_CODE = {
+HRUECO350_GLOBAL_FAULT_CODE = {
     0: "No error",
     7: "Filters dirty",
     11: "(External) Sensor error",
 }
 
-NONCVE_RH_ERROR_CODE = {
+HRUECO350_RH_ERROR_CODE = {
     239: "Not Available",
     240: "Shorted Sensor",
     241: "Open Sensor",
@@ -121,6 +138,14 @@ NONCVE_RH_ERROR_CODE = {
     253: "Reserved Error",
     254: "Reserved Error",
     255: "Unknown Error",
+}
+
+HRUECO_STATUS = {
+    0: "Normal",
+    1: "Adjust frost valve",
+    2: "Decelerate Supply fan",
+    3: "Accelerate Exhaust fan",
+    4: "Stop supply fan",
 }
 
 WPU_STATUS = {

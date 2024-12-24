@@ -17,14 +17,17 @@ from .const import (
     _LOGGER,
     ADDON_TYPES,
     CONF_ADDON_TYPE,
+    CONF_NONCVE_MODEL,
     DOMAIN,
     MANUFACTURER,
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
+    NONCVE_DEVICES,
 )
 from .definitions import (
     AUTOTEMPBINARYSENSORS,
-    NONCVEBINARYSENSORS,
+    HRUECO350BINARYSENSORS,
+    HRUECOBINARYSENSORS,
     IthoBinarySensorEntityDescription,
 )
 
@@ -41,14 +44,21 @@ async def async_setup_entry(
         return
 
     sensors = []
-    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
-        for description in NONCVEBINARYSENSORS:
-            description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
-            sensors.append(IthoBinarySensor(description, config_entry))
-
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
         for description in AUTOTEMPBINARYSENSORS:
-            description.key = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            description.key = (
+                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+            )
+            sensors.append(IthoBinarySensor(description, config_entry))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
+        if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco":
+            hru_sensors = HRUECOBINARYSENSORS
+        if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_350":
+            hru_sensors = HRUECO350BINARYSENSORS
+
+        for description in hru_sensors:
+            description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
             sensors.append(IthoBinarySensor(description, config_entry))
 
     async_add_entities(sensors)
@@ -68,10 +78,14 @@ class IthoBinarySensor(BinarySensorEntity):
         """Initialize the binary sensor."""
         self.entity_description = description
 
+        model = ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
+        if config_entry.data[CONF_ADDON_TYPE] == "noncve":
+            model = model + " - " + NONCVE_DEVICES[config_entry.data[CONF_NONCVE_MODEL]]
+
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
             manufacturer=MANUFACTURER,
-            model=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
+            model=model,
             name="Itho Daalderop " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
         )
 
