@@ -14,7 +14,7 @@ from .sensor_base import IthoBaseSensor
 
 
 def get_wpu_sensors(config_entry: ConfigEntry):
-    """Create sensors for WPU"""
+    """Create sensors for WPU."""
     sensors = []
     topic = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
     for x in range(6):

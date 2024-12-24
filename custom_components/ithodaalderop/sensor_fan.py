@@ -6,11 +6,7 @@ import json
 from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
-from .definitions.cve import CVE_SENSORS
-from .definitions.hru200 import HRU_ECO_200_SENSORS
-from .definitions.hru250_300 import HRU_ECO_250_300_SENSORS
-from .definitions.hru350 import HRU_ECO_350_SENSORS
-from .definitions.hrueco import HRU_ECO_SENSORS
+
 from .const import (
     CONF_NONCVE_MODEL,
     HRU_ECO_250_300_ERROR_CODE,
@@ -22,11 +18,16 @@ from .const import (
     MQTT_STATETOPIC,
 )
 from .definitions.base import IthoSensorEntityDescription
+from .definitions.cve import CVE_SENSORS
+from .definitions.hru200 import HRU_ECO_200_SENSORS
+from .definitions.hru250_300 import HRU_ECO_250_300_SENSORS
+from .definitions.hru350 import HRU_ECO_350_SENSORS
+from .definitions.hrueco import HRU_ECO_SENSORS
 from .sensor_base import IthoBaseSensor
 
 
 def get_cve_sensors(config_entry: ConfigEntry):
-    """Create sensors for CVE"""
+    """Create sensors for CVE."""
     sensors = []
     topic = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
 
@@ -38,7 +39,7 @@ def get_cve_sensors(config_entry: ConfigEntry):
 
 
 def get_noncve_sensors(config_entry: ConfigEntry):
-    """Create sensors for NON-CVE"""
+    """Create sensors for NON-CVE."""
     sensors = []
     topic = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
 

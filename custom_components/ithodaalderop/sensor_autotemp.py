@@ -18,7 +18,6 @@ from .const import (
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
 )
-
 from .definitions.autotemp import (
     AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE,
     AUTOTEMP_DISTRIBUTOR_VALVE_SENSOR_TEMPLATE,
@@ -32,7 +31,7 @@ from .sensor_base import IthoBaseSensor
 
 
 def get_autotemp_sensors(config_entry: ConfigEntry):
-    """Create sensors for Autotemp"""
+    """Create sensors for Autotemp."""
     sensors = []
     topic = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
     for letter in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]:

@@ -5,14 +5,15 @@ import json
 from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
-from .definitions.last_command import LAST_CMD_SENSORS
+
 from .const import CONF_ADDON_TYPE, MQTT_BASETOPIC, MQTT_STATETOPIC
 from .definitions.base import IthoSensorEntityDescription
+from .definitions.last_command import LAST_CMD_SENSORS
 from .sensor_base import IthoBaseSensor
 
 
 def get_last_command_sensors(config_entry: ConfigEntry):
-    """Create sensors for Last Command"""
+    """Create sensors for Last Command."""
     sensors = []
     topic = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["last_cmd"]}"
     for description in LAST_CMD_SENSORS:
@@ -28,7 +29,7 @@ class IthoSensorLastCommand(IthoBaseSensor):
     def __init__(
         self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
     ) -> None:
-        """Construct sensor for Last Command"""
+        """Construct sensor for Last Command."""
         super().__init__(description, config_entry)
 
     async def async_added_to_hass(self) -> None:
