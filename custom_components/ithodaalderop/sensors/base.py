@@ -1,10 +1,6 @@
 """Sensor base class."""
 
-from homeassistant.components.sensor import SensorEntity
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.helpers.device_registry import DeviceInfo
-
-from .const import (
+from config.custom_components.ithodaalderop.const import (
     ADDON_TYPES,
     CONF_ADDON_TYPE,
     CONF_NONCVE_MODEL,
@@ -13,7 +9,12 @@ from .const import (
     NONCVE_DEVICES,
     UNITTYPE_ICONS,
 )
-from .definitions.base import IthoSensorEntityDescription
+from config.custom_components.ithodaalderop.definitions.base import (
+    IthoSensorEntityDescription,
+)
+from homeassistant.components.sensor import SensorEntity
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.helpers.device_registry import DeviceInfo
 
 
 class IthoBaseSensor(SensorEntity):
@@ -38,7 +39,7 @@ class IthoBaseSensor(SensorEntity):
             model = ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
             if config_entry.data[CONF_ADDON_TYPE] == "noncve":
                 model = (
-                    model + " - " + NONCVE_DEVICES[config_entry.data[CONF_NONCVE_MODEL]]
+                    f"{model} - {NONCVE_DEVICES[config_entry.data[CONF_NONCVE_MODEL]]}"
                 )
 
             self._attr_device_info = DeviceInfo(

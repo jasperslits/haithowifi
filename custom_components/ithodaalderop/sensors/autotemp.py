@@ -3,12 +3,7 @@
 import copy
 import json
 
-from homeassistant.components import mqtt
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import callback
-from homeassistant.helpers.device_registry import DeviceInfo
-
-from .const import (
+from config.custom_components.ithodaalderop.const import (
     ADDON_TYPES,
     AUTOTEMP_ERROR,
     AUTOTEMP_MODE,
@@ -18,7 +13,7 @@ from .const import (
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
 )
-from .definitions.autotemp import (
+from config.custom_components.ithodaalderop.definitions.autotemp import (
     AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE,
     AUTOTEMP_DISTRIBUTOR_VALVE_SENSOR_TEMPLATE,
     AUTOTEMP_MALFUNCTION_VALVE_DECTECTION_DIST_SENSOR_TEMPLATE,
@@ -26,8 +21,14 @@ from .definitions.autotemp import (
     AUTOTEMP_SENSORS,
     AUTOTEMP_VALVE_SENSOR_TEMPLATE,
 )
-from .definitions.base import IthoSensorEntityDescription
-from .sensor_base import IthoBaseSensor
+from config.custom_components.ithodaalderop.definitions.base import (
+    IthoSensorEntityDescription,
+)
+from config.custom_components.ithodaalderop.sensors.base import IthoBaseSensor
+from homeassistant.components import mqtt
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import callback
+from homeassistant.helpers.device_registry import DeviceInfo
 
 
 def get_autotemp_sensors(config_entry: ConfigEntry):
@@ -99,14 +100,6 @@ def get_autotemp_sensors(config_entry: ConfigEntry):
 
 class IthoSensorAutotemp(IthoBaseSensor):
     """Representation of Itho add-on sensor for Autotemp data that is updated via MQTT."""
-
-    def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry,
-    ) -> None:
-        """Construct sensor for Autotemp."""
-        super().__init__(description, config_entry)
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""

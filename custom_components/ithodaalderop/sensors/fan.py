@@ -3,11 +3,7 @@
 from datetime import datetime, timedelta
 import json
 
-from homeassistant.components import mqtt
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import callback
-
-from .const import (
+from config.custom_components.ithodaalderop.const import (
     CONF_NONCVE_MODEL,
     HRU_ECO_250_300_ERROR_CODE,
     HRU_ECO_350_ACTUAL_MODE,
@@ -17,13 +13,25 @@ from .const import (
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
 )
-from .definitions.base import IthoSensorEntityDescription
-from .definitions.cve import CVE_SENSORS
-from .definitions.hru200 import HRU_ECO_200_SENSORS
-from .definitions.hru250_300 import HRU_ECO_250_300_SENSORS
-from .definitions.hru350 import HRU_ECO_350_SENSORS
-from .definitions.hrueco import HRU_ECO_SENSORS
-from .sensor_base import IthoBaseSensor
+from config.custom_components.ithodaalderop.definitions.base import (
+    IthoSensorEntityDescription,
+)
+from config.custom_components.ithodaalderop.definitions.cve import CVE_SENSORS
+from config.custom_components.ithodaalderop.definitions.hru200 import (
+    HRU_ECO_200_SENSORS,
+)
+from config.custom_components.ithodaalderop.definitions.hru250_300 import (
+    HRU_ECO_250_300_SENSORS,
+)
+from config.custom_components.ithodaalderop.definitions.hru350 import (
+    HRU_ECO_350_SENSORS,
+)
+from config.custom_components.ithodaalderop.definitions.hrueco import HRU_ECO_SENSORS
+from homeassistant.components import mqtt
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import callback
+
+from .base import IthoBaseSensor
 
 
 def get_cve_sensors(config_entry: ConfigEntry):
@@ -66,14 +74,6 @@ class IthoSensorFan(IthoBaseSensor):
     entity_description: IthoSensorEntityDescription
 
     _extra_state_attributes = None
-
-    def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry,
-    ) -> None:
-        """Initialize the sensor."""
-        super().__init__(description, config_entry)
 
     @property
     def extra_state_attributes(self) -> list[str] | None:

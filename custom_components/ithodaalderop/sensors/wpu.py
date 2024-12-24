@@ -3,14 +3,20 @@
 import copy
 import json
 
+from config.custom_components.ithodaalderop.const import (
+    MQTT_BASETOPIC,
+    MQTT_STATETOPIC,
+    WPU_STATUS,
+)
+from config.custom_components.ithodaalderop.definitions.wpu import (
+    WPU_ERROR_CODE_BYTE_TEMPLATE,
+    WPU_SENSORS,
+)
 from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from .const import MQTT_BASETOPIC, MQTT_STATETOPIC, WPU_STATUS
-from .definitions.base import IthoSensorEntityDescription
-from .definitions.wpu import WPU_ERROR_CODE_BYTE_TEMPLATE, WPU_SENSORS
-from .sensor_base import IthoBaseSensor
+from .base import IthoBaseSensor
 
 
 def get_wpu_sensors(config_entry: ConfigEntry):
@@ -35,14 +41,6 @@ def get_wpu_sensors(config_entry: ConfigEntry):
 
 class IthoSensorWPU(IthoBaseSensor):
     """Representation of Itho add-on sensor for WPU that is updated via MQTT."""
-
-    def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry,
-    ) -> None:
-        """Construct sensor for WPU."""
-        super().__init__(description, config_entry)
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""

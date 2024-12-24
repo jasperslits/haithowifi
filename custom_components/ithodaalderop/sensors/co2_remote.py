@@ -3,14 +3,19 @@
 import copy
 import json
 
+from config.custom_components.ithodaalderop.const import (
+    CONF_ADDON_TYPE,
+    MQTT_BASETOPIC,
+    MQTT_STATETOPIC,
+)
+from config.custom_components.ithodaalderop.definitions.co2_remote import (
+    REMOTE_SENSOR_TEMPLATE,
+)
 from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from .const import CONF_ADDON_TYPE, MQTT_BASETOPIC, MQTT_STATETOPIC
-from .definitions.base import IthoSensorEntityDescription
-from .definitions.co2_remote import REMOTE_SENSOR_TEMPLATE
-from .sensor_base import IthoBaseSensor
+from .base import IthoBaseSensor
 
 
 def get_co2_remote_sensors(config_entry: ConfigEntry):
@@ -32,14 +37,6 @@ def get_co2_remote_sensors(config_entry: ConfigEntry):
 
 class IthoSensorCO2Remote(IthoBaseSensor):
     """Representation of Itho add-on sensor for a Remote that is updated via MQTT."""
-
-    def __init__(
-        self,
-        description: IthoSensorEntityDescription,
-        config_entry: ConfigEntry,
-    ) -> None:
-        """Construct sensor for Remote."""
-        super().__init__(description, config_entry)
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""

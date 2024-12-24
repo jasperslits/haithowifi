@@ -87,13 +87,13 @@ class IthoBinarySensor(BinarySensorEntity):
 
         model = ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
         if config_entry.data[CONF_ADDON_TYPE] == "noncve":
-            model = model + " - " + NONCVE_DEVICES[config_entry.data[CONF_NONCVE_MODEL]]
+            model = f"{model} - {NONCVE_DEVICES[config_entry.data[CONF_NONCVE_MODEL]]}"
 
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
             manufacturer=MANUFACTURER,
             model=model,
-            name="Itho Daalderop " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
+            name=f"Itho Daalderop {ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}",
         )
 
         self._attr_unique_id = (

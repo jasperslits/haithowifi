@@ -10,11 +10,11 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import _LOGGER, CONF_ADDON_TYPE
-from .sensor_autotemp import get_autotemp_sensors
-from .sensor_co2_remote import get_co2_remote_sensors
-from .sensor_fan import get_cve_sensors, get_noncve_sensors
-from .sensor_last_command import get_last_command_sensors
-from .sensor_wpu import get_wpu_sensors
+from .sensors.autotemp import get_autotemp_sensors
+from .sensors.co2_remote import get_co2_remote_sensors
+from .sensors.fan import get_cve_sensors, get_noncve_sensors
+from .sensors.last_command import get_last_command_sensors
+from .sensors.wpu import get_wpu_sensors
 
 
 async def async_setup_entry(

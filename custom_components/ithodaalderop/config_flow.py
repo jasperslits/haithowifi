@@ -66,8 +66,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             )
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
-                title="Itho WiFi Add-on for "
-                + ADDON_TYPES[self.config[CONF_ADDON_TYPE]],
+                title=f"Itho WiFi Add-on for {ADDON_TYPES[self.config[CONF_ADDON_TYPE]]}",
                 data=user_input,
             )
 
@@ -97,8 +96,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             )
             self._abort_if_unique_id_configured()
             return self.async_create_entry(
-                title="Itho WiFi Add-on for "
-                + ADDON_TYPES[self.config[CONF_ADDON_TYPE]],
+                title=f"Itho WiFi Add-on for {ADDON_TYPES[self.config[CONF_ADDON_TYPE]]}",
                 data=self.config,
             )
 

@@ -2,14 +2,19 @@
 
 import json
 
+from config.custom_components.ithodaalderop.const import (
+    CONF_ADDON_TYPE,
+    MQTT_BASETOPIC,
+    MQTT_STATETOPIC,
+)
+from config.custom_components.ithodaalderop.definitions.last_command import (
+    LAST_CMD_SENSORS,
+)
 from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from .const import CONF_ADDON_TYPE, MQTT_BASETOPIC, MQTT_STATETOPIC
-from .definitions.base import IthoSensorEntityDescription
-from .definitions.last_command import LAST_CMD_SENSORS
-from .sensor_base import IthoBaseSensor
+from .base import IthoBaseSensor
 
 
 def get_last_command_sensors(config_entry: ConfigEntry):
@@ -25,12 +30,6 @@ def get_last_command_sensors(config_entry: ConfigEntry):
 
 class IthoSensorLastCommand(IthoBaseSensor):
     """Representation of Itho add-on sensor for Last Command that is updated via MQTT."""
-
-    def __init__(
-        self, description: IthoSensorEntityDescription, config_entry: ConfigEntry
-    ) -> None:
-        """Construct sensor for Last Command."""
-        super().__init__(description, config_entry)
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
