@@ -403,7 +403,7 @@
         "name": "Tapwater Pomp Start"
       },
       "distributor_valve": {
-        "name": "Distributieklep"
+        "name": "Distributeur {distributor} Klep {valve}"
       },
       "drain_actual": {
         "name": "Werkelijke Afvoerniveau"

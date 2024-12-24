@@ -1,5 +1,6 @@
 """Sensor class for handling Autotemp sensors."""
 
+import copy
 import json
 
 from homeassistant.components import mqtt
@@ -14,9 +15,87 @@ from .const import (
     CONF_ADDON_TYPE,
     DOMAIN,
     MANUFACTURER,
+    MQTT_BASETOPIC,
+    MQTT_STATETOPIC,
+)
+
+from .definitions.autotemp import (
+    AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE,
+    AUTOTEMP_DISTRIBUTOR_VALVE_SENSOR_TEMPLATE,
+    AUTOTEMP_MALFUNCTION_VALVE_DECTECTION_DIST_SENSOR_TEMPLATE,
+    AUTOTEMP_ROOM_SENSORS,
+    AUTOTEMP_SENSORS,
+    AUTOTEMP_VALVE_SENSOR_TEMPLATE,
 )
 from .definitions.base import IthoSensorEntityDescription
 from .sensor_base import IthoBaseSensor
+
+
+def get_autotemp_sensors(config_entry: ConfigEntry):
+    """Create sensors for Autotemp"""
+    sensors = []
+    topic = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+    for letter in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]:
+        description = copy.deepcopy(AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE)
+        description.topic = topic
+        description.json_field = description.json_field.replace("X", letter)
+        description.translation_placeholders = {"letter": letter}
+        description.unique_id = description.unique_id_template.replace("x", letter)
+        sensors.append(IthoSensorAutotemp(description, config_entry))
+
+    for d in range(1, 4):
+        for v in range(1, 13):
+            d = str(d)
+            v = str(v)
+            description = copy.deepcopy(AUTOTEMP_DISTRIBUTOR_VALVE_SENSOR_TEMPLATE)
+            description.topic = topic
+            description.json_field = description.json_field.replace("X", d).replace(
+                "Y", v
+            )
+            description.translation_placeholders = {"distributor": d, "valve": v}
+            description.unique_id = description.unique_id_template.replace(
+                "x", d
+            ).replace("y", v)
+            sensors.append(IthoSensorAutotemp(description, config_entry))
+
+    for d in range(1, 4):
+        d = str(d)
+        description = copy.deepcopy(
+            AUTOTEMP_MALFUNCTION_VALVE_DECTECTION_DIST_SENSOR_TEMPLATE
+        )
+        description.topic = topic
+        description.json_field = description.json_field.replace("X", d)
+        description.translation_placeholders = {"distributor": d}
+        description.unique_id = description.unique_id_template.replace("x", d)
+        sensors.append(IthoSensorAutotemp(description, config_entry))
+
+    for v in range(1, 4):
+        v = str(v)
+        template_sensors = copy.deepcopy(list(AUTOTEMP_VALVE_SENSOR_TEMPLATE))
+        for description in template_sensors:
+            description.topic = topic
+            description.json_field = description.json_field.replace("X", v)
+            description.translation_placeholders = {"valve": v}
+            description.unique_id = description.unique_id_template.replace("x", v)
+            sensors.append(IthoSensorAutotemp(description, config_entry))
+
+    for description in AUTOTEMP_SENSORS:
+        description.topic = topic
+        sensors.append(IthoSensorAutotemp(description, config_entry))
+
+    # Create Room sensors
+    for x in range(1, 8):
+        template_sensors = copy.deepcopy(list(AUTOTEMP_ROOM_SENSORS))
+        room = config_entry.data["room" + str(x)]
+        if room not in ("", "Room " + str(x)):
+            for description in template_sensors:
+                description.json_field = description.json_field.replace("X", str(x))
+                description.topic = topic
+                description.room = room
+                description.unique_id = f"{description.key}_{room}"
+                sensors.append(IthoSensorAutotempRoom(description, config_entry))
+
+    return sensors
 
 
 class IthoSensorAutotemp(IthoBaseSensor):

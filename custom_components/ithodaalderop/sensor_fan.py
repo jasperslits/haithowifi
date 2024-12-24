@@ -6,16 +6,56 @@ import json
 from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
-
+from .definitions.cve import CVE_SENSORS
+from .definitions.hru200 import HRU_ECO_200_SENSORS
+from .definitions.hru250_300 import HRU_ECO_250_300_SENSORS
+from .definitions.hru350 import HRU_ECO_350_SENSORS
+from .definitions.hrueco import HRU_ECO_SENSORS
 from .const import (
+    CONF_NONCVE_MODEL,
     HRU_ECO_250_300_ERROR_CODE,
     HRU_ECO_350_ACTUAL_MODE,
     HRU_ECO_350_GLOBAL_FAULT_CODE,
     HRU_ECO_350_RH_ERROR_CODE,
     HRU_ECO_STATUS,
+    MQTT_BASETOPIC,
+    MQTT_STATETOPIC,
 )
 from .definitions.base import IthoSensorEntityDescription
 from .sensor_base import IthoBaseSensor
+
+
+def get_cve_sensors(config_entry: ConfigEntry):
+    """Create sensors for CVE"""
+    sensors = []
+    topic = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
+
+    for description in CVE_SENSORS:
+        description.topic = topic
+        sensors.append(IthoSensorFan(description, config_entry))
+
+    return sensors
+
+
+def get_noncve_sensors(config_entry: ConfigEntry):
+    """Create sensors for NON-CVE"""
+    sensors = []
+    topic = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
+
+    if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco":
+        hru_sensors = HRU_ECO_SENSORS
+    if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_200":
+        hru_sensors = HRU_ECO_200_SENSORS
+    if config_entry.data[CONF_NONCVE_MODEL] in ["hru_eco_250", "hru_eco_300"]:
+        hru_sensors = HRU_ECO_250_300_SENSORS
+    if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_350":
+        hru_sensors = HRU_ECO_350_SENSORS
+
+    for description in hru_sensors:
+        description.topic = topic
+        sensors.append(IthoSensorFan(description, config_entry))
+
+    return sensors
 
 
 class IthoSensorFan(IthoBaseSensor):

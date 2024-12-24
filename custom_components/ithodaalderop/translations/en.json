@@ -403,7 +403,7 @@
         "name": "DHW Pump Starts"
       },
       "distributor_valve": {
-        "name": "Distributor Valve"
+        "name": "Distributor {distributor} Valve {valve}"
       },
       "drain_actual": {
         "name": "Actual Drain Level"
