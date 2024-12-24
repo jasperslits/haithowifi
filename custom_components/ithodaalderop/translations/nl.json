@@ -1124,50 +1124,50 @@
         "title": "Voeg nieuwe Itho afstandsbedieningen toe",
         "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices. Klik op 'Verzenden' zonder iets te wijzigen om dit over te slaan.",
         "data": {
-        "remote1": "Afstandsbediening 1",
-        "remote2": "Afstandsbediening 2",
-        "remote3": "Afstandsbediening 3",
-        "remote4": "Afstandsbediening 4",
-        "remote5": "Afstandsbediening 5"
+          "remote1": "Afstandsbediening 1",
+          "remote2": "Afstandsbediening 2",
+          "remote3": "Afstandsbediening 3",
+          "remote4": "Afstandsbediening 4",
+          "remote5": "Afstandsbediening 5"
         }
       },
       "remotes_reconfigure": {
         "title": "Wijzig Itho afstandsbedieningen",
         "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices. ",
         "data": {
-        "remote1": "Afstandsbediening 1",
-        "remote2": "Afstandsbediening 2",
-        "remote3": "Afstandsbediening 3",
-        "remote4": "Afstandsbediening 4",
-        "remote5": "Afstandsbediening 5"
+          "remote1": "Afstandsbediening 1",
+          "remote2": "Afstandsbediening 2",
+          "remote3": "Afstandsbediening 3",
+          "remote4": "Afstandsbediening 4",
+          "remote5": "Afstandsbediening 5"
         }
       },
       "rooms": {
         "title": "Voeg nieuwe Itho ruimtes toe",
         "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer",
         "data": {
-        "room1": "Ruimte 1",
-        "room2": "Ruimte 2",
-        "room3": "Ruimte 3",
-        "room4": "Ruimte 4",
-        "room5": "Ruimte 5",
-        "room6": "Ruimte 6",
-        "room7": "Ruimte 7",
-        "room8": "Ruimte 8"
+          "room1": "Ruimte 1",
+          "room2": "Ruimte 2",
+          "room3": "Ruimte 3",
+          "room4": "Ruimte 4",
+          "room5": "Ruimte 5",
+          "room6": "Ruimte 6",
+          "room7": "Ruimte 7",
+          "room8": "Ruimte 8"
         }
       },
       "rooms_reconfigure": {
         "title": "Wijzig Itho ruimtes",
         "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer or slaapkamer ouders.",
         "data": {
-        "room1": "Ruimte 1",
-        "room2": "Ruimte 2",
-        "room3": "Ruimte 3",
-        "room4": "Ruimte 4",
-        "room5": "Ruimte 5",
-        "room6": "Ruimte 6",
-        "room7": "Ruimte 7",
-        "room8": "Ruimte 8"
+          "room1": "Ruimte 1",
+          "room2": "Ruimte 2",
+          "room3": "Ruimte 3",
+          "room4": "Ruimte 4",
+          "room5": "Ruimte 5",
+          "room6": "Ruimte 6",
+          "room7": "Ruimte 7",
+          "room8": "Ruimte 8"
         }
       }
     },
