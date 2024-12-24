@@ -3,7 +3,7 @@
   - [What can be configured via this Integration](#what-can-be-configured-via-this-integration)
   - [Not (yet) supported](#not-yet-supported)
   - [Use-case](#use-case)
-  - [Available sensors](#available-sensors)
+  - [Why don't I see all entities?](#why-dont-i-see-all-entities)
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
   - [Install via HACS (recommended)](#install-via-hacs-recommended)
@@ -41,65 +41,22 @@ Full auto-discovery from the WiFi add-on to Home Assistant is the best experienc
 * CO2 concencration for supported remotes
 * WPU like Pump Percentage, Boiler Temp, From / To Source Temps, Operating Mode etc
 
-It creates a device and commonly used sensors and uses a predefined MQTT state topic to distinct the devices.
+It creates a device and all available sensors and uses a predefined MQTT state topic to distinct the devices. 
 
-## Available sensors
-| Device | Sensor | Attributes |
-|---|---|---|
-| **Autotemp** |||
-|| Empty battery ||
-|| Error | Code |
-|| Mode | Code |
-|| Room X power % (%) ||
-|| Room X power kW (kW) ||
-|| Room X setpoint ||
-|| Room X temp ||
-|| Status | Code |
-| **CVE** |||
-|| Error ||
-|| Fan Setpoint (rpm) ||
-|| Fan Speed (rpm) ||
-|| Filter dirty ||
-|| Humidity ||
-|| Temperature ||
-|| Total Operating Time ||
-|| Ventilation setpoint (%) ||
-|| Last Command (disabled by default) ||
-|| Last Command Source (disabled by default) ||
-| **NONCVE (HRU)** |||
-|| Actual Mode | Code |
-|| Air Quality (%) ||
-|| Airfilter counter | Last Maintenance |
-||| Next Maintenance Estimate |
-|| Balance (%) ||
-|| Bypass position ||
-|| Exhaust fan (RPM) ||
-|| Exhaust temp (°C) ||
-|| Global fault code | Description |
-|| Highest received CO2 value (Ppm) (disabled by default) ||
-|| Highest received RH value (%RH) (disabled by default) | Error Description |
-|| Remaining override timer (Sec) ||
-|| Supply fan (RPM) ||
-|| Supply temp (°C) ||
-|| Last Command (disabled by default) ||
-|| Last Command Source (disabled by default) ||
-| **WPU** |||
-|| Boiler pump (%) ||
-|| Boiler temp up (°C) ||
-|| CV pressure (Bar) ||
-|| Cv pump (%) ||
-|| CV return temp (°C) ||
-|| Error ||
-|| Flow sensor (lt_hr) ||
-|| Heat demand thermost. (%) ||
-|| Status ||
-|| Temp from source (°C) ||
-|| Temp to source (°C) ||
-|| Requested room temp (°C) ||
-|| Room temp (°C) ||
-|| Well pump (%) ||
+## Why don't I see all entities?
+Some sensor are disabled by default. Follow these instructions to enable an entity.
 
-Missing a sensor? Feel free to create an [issue](https://github.com/jasperslits/haithowifi/issues)
+Click `xx entities not shown` within the device or just navigate to the entity directly
+
+![image](https://github.com/user-attachments/assets/2a72a81d-7007-410e-af52-9ba43e88352c)
+
+Click the `cogwheel` icon
+
+![image](https://github.com/user-attachments/assets/3c7c89a8-b847-48b1-a7ae-d272da72c552)
+
+Click `enable`
+
+![image](https://github.com/user-attachments/assets/64f7b234-648d-4e25-adeb-996c0d6a7ef8)
 
 # Installation
 
