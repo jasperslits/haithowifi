@@ -35,7 +35,7 @@ def get_autotemp_sensors(config_entry: ConfigEntry):
     """Create sensors for Autotemp."""
     sensors = []
     topic = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
-    for letter in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]:
+    for letter in ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"):
         description = copy.deepcopy(AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE)
         description.topic = topic
         description.json_field = description.json_field.replace("X", letter)
@@ -83,7 +83,7 @@ def get_autotemp_sensors(config_entry: ConfigEntry):
         description.topic = topic
         sensors.append(IthoSensorAutotemp(description, config_entry))
 
-    # Create Room sensors
+    # Create Room devices
     for x in range(1, 8):
         template_sensors = copy.deepcopy(list(AUTOTEMP_ROOM_SENSORS))
         room = config_entry.data["room" + str(x)]

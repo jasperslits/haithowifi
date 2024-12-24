@@ -13,9 +13,6 @@ from config.custom_components.ithodaalderop.const import (
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
 )
-from config.custom_components.ithodaalderop.definitions.base import (
-    IthoSensorEntityDescription,
-)
 from config.custom_components.ithodaalderop.definitions.cve import CVE_SENSORS
 from config.custom_components.ithodaalderop.definitions.hru200 import (
     HRU_ECO_200_SENSORS,
@@ -69,16 +66,6 @@ def get_noncve_sensors(config_entry: ConfigEntry):
 
 class IthoSensorFan(IthoBaseSensor):
     """Representation of a Itho add-on sensor that is updated via MQTT."""
-
-    _attr_has_entity_name = True
-    entity_description: IthoSensorEntityDescription
-
-    _extra_state_attributes = None
-
-    @property
-    def extra_state_attributes(self) -> list[str] | None:
-        """Return the state attributes."""
-        return self._extra_state_attributes
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
