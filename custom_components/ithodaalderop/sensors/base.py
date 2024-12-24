@@ -1,6 +1,10 @@
 """Sensor base class."""
 
-from config.custom_components.ithodaalderop.const import (
+from homeassistant.components.sensor import SensorEntity
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.helpers.device_registry import DeviceInfo
+
+from ..const import (
     ADDON_TYPES,
     CONF_ADDON_TYPE,
     CONF_NONCVE_MODEL,
@@ -9,12 +13,7 @@ from config.custom_components.ithodaalderop.const import (
     NONCVE_DEVICES,
     UNITTYPE_ICONS,
 )
-from config.custom_components.ithodaalderop.definitions.base import (
-    IthoSensorEntityDescription,
-)
-from homeassistant.components.sensor import SensorEntity
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.helpers.device_registry import DeviceInfo
+from ..definitions.base import IthoSensorEntityDescription
 
 
 class IthoBaseSensor(SensorEntity):

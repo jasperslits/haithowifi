@@ -3,7 +3,11 @@
 from datetime import datetime, timedelta
 import json
 
-from config.custom_components.ithodaalderop.const import (
+from homeassistant.components import mqtt
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import callback
+
+from ..const import (
     CONF_NONCVE_MODEL,
     HRU_ECO_250_300_ERROR_CODE,
     HRU_ECO_350_ACTUAL_MODE,
@@ -13,21 +17,11 @@ from config.custom_components.ithodaalderop.const import (
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
 )
-from config.custom_components.ithodaalderop.definitions.cve import CVE_SENSORS
-from config.custom_components.ithodaalderop.definitions.hru200 import (
-    HRU_ECO_200_SENSORS,
-)
-from config.custom_components.ithodaalderop.definitions.hru250_300 import (
-    HRU_ECO_250_300_SENSORS,
-)
-from config.custom_components.ithodaalderop.definitions.hru350 import (
-    HRU_ECO_350_SENSORS,
-)
-from config.custom_components.ithodaalderop.definitions.hrueco import HRU_ECO_SENSORS
-from homeassistant.components import mqtt
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import callback
-
+from ..definitions.cve import CVE_SENSORS
+from ..definitions.hru200 import HRU_ECO_200_SENSORS
+from ..definitions.hru250_300 import HRU_ECO_250_300_SENSORS
+from ..definitions.hru350 import HRU_ECO_350_SENSORS
+from ..definitions.hrueco import HRU_ECO_SENSORS
 from .base import IthoBaseSensor
 
 

@@ -2,18 +2,12 @@
 
 import json
 
-from config.custom_components.ithodaalderop.const import (
-    CONF_ADDON_TYPE,
-    MQTT_BASETOPIC,
-    MQTT_STATETOPIC,
-)
-from config.custom_components.ithodaalderop.definitions.last_command import (
-    LAST_CMD_SENSORS,
-)
 from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
+from ..const import CONF_ADDON_TYPE, MQTT_BASETOPIC, MQTT_STATETOPIC
+from ..definitions.last_command import LAST_CMD_SENSORS
 from .base import IthoBaseSensor
 
 

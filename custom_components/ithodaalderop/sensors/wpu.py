@@ -3,19 +3,12 @@
 import copy
 import json
 
-from config.custom_components.ithodaalderop.const import (
-    MQTT_BASETOPIC,
-    MQTT_STATETOPIC,
-    WPU_STATUS,
-)
-from config.custom_components.ithodaalderop.definitions.wpu import (
-    WPU_ERROR_CODE_BYTE_TEMPLATE,
-    WPU_SENSORS,
-)
 from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
+from ..const import MQTT_BASETOPIC, MQTT_STATETOPIC, WPU_STATUS
+from ..definitions.wpu import WPU_ERROR_CODE_BYTE_TEMPLATE, WPU_SENSORS
 from .base import IthoBaseSensor
 
 

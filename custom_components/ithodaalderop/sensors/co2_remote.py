@@ -3,18 +3,12 @@
 import copy
 import json
 
-from config.custom_components.ithodaalderop.const import (
-    CONF_ADDON_TYPE,
-    MQTT_BASETOPIC,
-    MQTT_STATETOPIC,
-)
-from config.custom_components.ithodaalderop.definitions.co2_remote import (
-    REMOTE_SENSOR_TEMPLATE,
-)
 from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
+from ..const import CONF_ADDON_TYPE, MQTT_BASETOPIC, MQTT_STATETOPIC
+from ..definitions.co2_remote import REMOTE_SENSOR_TEMPLATE
 from .base import IthoBaseSensor
 
 
