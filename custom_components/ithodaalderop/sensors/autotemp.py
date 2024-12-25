@@ -8,7 +8,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 from homeassistant.helpers.device_registry import DeviceInfo
 
-from ..const import (  # noqa: TID252
+from ..const import (
     ADDON_TYPES,
     AUTOTEMP_ERROR,
     AUTOTEMP_MODE,
@@ -18,7 +18,7 @@ from ..const import (  # noqa: TID252
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
 )
-from ..definitions.autotemp import (  # noqa: TID252
+from ..definitions.autotemp import (
     AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE,
     AUTOTEMP_DISTRIBUTOR_VALVE_SENSOR_TEMPLATE,
     AUTOTEMP_MALFUNCTION_VALVE_DECTECTION_DIST_SENSOR_TEMPLATE,
@@ -26,8 +26,8 @@ from ..definitions.autotemp import (  # noqa: TID252
     AUTOTEMP_SENSORS,
     AUTOTEMP_VALVE_SENSOR_TEMPLATE,
 )
-from ..definitions.base import IthoSensorEntityDescription  # noqa: TID252
-from ..sensors.base import IthoBaseSensor  # noqa: TID252
+from ..definitions.base import IthoSensorEntityDescription
+from ..sensors.base import IthoBaseSensor
 
 
 def get_autotemp_sensors(config_entry: ConfigEntry):

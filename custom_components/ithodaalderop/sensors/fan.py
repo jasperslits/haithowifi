@@ -7,7 +7,7 @@ from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from ..const import (  # noqa: TID252
+from ..const import (
     CONF_NONCVE_MODEL,
     HRU_ECO_250_300_ERROR_CODE,
     HRU_ECO_350_ACTUAL_MODE,
@@ -17,12 +17,12 @@ from ..const import (  # noqa: TID252
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
 )
-from ..definitions.cve import CVE_SENSORS  # noqa: TID252
-from ..definitions.hru200 import HRU_ECO_200_SENSORS  # noqa: TID252
-from ..definitions.hru250_300 import HRU_ECO_250_300_SENSORS  # noqa: TID252
-from ..definitions.hru350 import HRU_ECO_350_SENSORS  # noqa: TID252
-from ..definitions.hrueco import HRU_ECO_SENSORS  # noqa: TID252
-from .base import IthoBaseSensor  # noqa: TID252
+from ..definitions.cve import CVE_SENSORS
+from ..definitions.hru200 import HRU_ECO_200_SENSORS
+from ..definitions.hru250_300 import HRU_ECO_250_300_SENSORS
+from ..definitions.hru350 import HRU_ECO_350_SENSORS
+from ..definitions.hrueco import HRU_ECO_SENSORS
+from .base import IthoBaseSensor
 
 
 def get_cve_sensors(config_entry: ConfigEntry):
