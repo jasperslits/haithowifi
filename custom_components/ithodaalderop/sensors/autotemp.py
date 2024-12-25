@@ -34,7 +34,8 @@ def get_autotemp_sensors(config_entry: ConfigEntry):
     """Create sensors for Autotemp."""
     sensors = []
     topic = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
-    for letter in ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"):
+    for i in range(1, 12):
+        letter = chr(i + 64)
         description = copy.deepcopy(AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE)
         description.topic = topic
         description.json_field = description.json_field.replace("X", letter)
