@@ -8,7 +8,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 from homeassistant.helpers.device_registry import DeviceInfo
 
-from ..const import (  # noqa: TID252
+from ..const import (
     ADDON_TYPES,
     AUTOTEMP_ERROR,
     AUTOTEMP_MODE,
@@ -18,7 +18,7 @@ from ..const import (  # noqa: TID252
     MQTT_BASETOPIC,
     MQTT_STATETOPIC,
 )
-from ..definitions.autotemp import (  # noqa: TID252
+from ..definitions.autotemp import (
     AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE,
     AUTOTEMP_DISTRIBUTOR_VALVE_SENSOR_TEMPLATE,
     AUTOTEMP_MALFUNCTION_VALVE_DECTECTION_DIST_SENSOR_TEMPLATE,
@@ -26,15 +26,16 @@ from ..definitions.autotemp import (  # noqa: TID252
     AUTOTEMP_SENSORS,
     AUTOTEMP_VALVE_SENSOR_TEMPLATE,
 )
-from ..definitions.base import IthoSensorEntityDescription  # noqa: TID252
-from ..sensors.base import IthoBaseSensor  # noqa: TID252
+from ..definitions.base import IthoSensorEntityDescription
+from ..sensors.base import IthoBaseSensor
 
 
 def get_autotemp_sensors(config_entry: ConfigEntry):
     """Create sensors for Autotemp."""
     sensors = []
     topic = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
-    for letter in ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"):
+    for i in range(1, 13):
+        letter = chr(i + 64)
         description = copy.deepcopy(AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE)
         description.topic = topic
         description.json_field = description.json_field.replace("X", letter)
