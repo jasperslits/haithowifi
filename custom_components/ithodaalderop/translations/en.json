@@ -1188,7 +1188,7 @@
     },
     "entities_creation_modes": {
       "options": {
-        "only_selected": "Only create selected sensors",
+        "only_selected": "Only create selected sensors (recommended for must users)",
         "all": "Create all available sensors"
       }
     },

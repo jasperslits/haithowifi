@@ -1188,7 +1188,7 @@
     },
     "entities_creation_modes": {
       "options": {
-        "only_selected": "Maak alleen een selectie van sensoren aan",
+        "only_selected": "Maak alleen een selectie van sensoren aan (aanbevolen voor de meeste gebruikers)",
         "all": "Maak alle beschikbare sensoren aan"
       }
     },
