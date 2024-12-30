@@ -1,5 +1,6 @@
 """Definitions for Itho Autotemp sensors added to MQTT."""
 
+from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import (
     PERCENTAGE,
@@ -9,7 +10,18 @@ from homeassistant.const import (
     UnitOfTime,
 )
 
-from .base import IthoSensorEntityDescription
+from .base import IthoBinarySensorEntityDescription, IthoSensorEntityDescription
+
+AUTOTEMP_BINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
+    IthoBinarySensorEntityDescription(
+        json_field="Empty battery ( 0=OK )",
+        translation_key="empty_battery",
+        device_class=BinarySensorDeviceClass.BATTERY,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        # icon_off="mdi:battery",
+        # icon_on="mdi:battery-low",
+    ),
+)
 
 AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE = IthoSensorEntityDescription(
     json_field="Comm space X (sec)",

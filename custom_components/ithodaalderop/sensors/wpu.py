@@ -8,8 +8,23 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
 from ..const import MQTT_BASETOPIC, MQTT_STATETOPIC, WPU_STATUS
-from ..definitions.wpu import WPU_ERROR_CODE_BYTE_TEMPLATE, WPU_SENSORS
-from .base import IthoBaseSensor
+from ..definitions.wpu import (
+    WPU_BINARY_SENSORS,
+    WPU_ERROR_CODE_BYTE_TEMPLATE,
+    WPU_SENSORS,
+)
+from .base import IthoBaseSensor, IthoBinarySensor
+
+
+def get_wpu_binary_sensors(config_entry: ConfigEntry):
+    """Create binary sensors for WPU."""
+    sensors = []
+    topic = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
+    for description in WPU_BINARY_SENSORS:
+        description.topic = topic
+        sensors.append(IthoBinarySensor(description, config_entry))
+
+    return sensors
 
 
 def get_wpu_sensors(config_entry: ConfigEntry):

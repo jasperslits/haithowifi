@@ -4,32 +4,15 @@
 Author: Benjamin
 """
 
-import json
-
 from homeassistant.components import mqtt
-from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.device_registry import DeviceInfo
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import (
-    _LOGGER,
-    ADDON_TYPES,
-    CONF_ADDON_TYPE,
-    CONF_ENTITIES_CREATION_MODE,
-    CONF_NONCVE_MODEL,
-    DOMAIN,
-    MANUFACTURER,
-    MQTT_BASETOPIC,
-    MQTT_STATETOPIC,
-    NONCVE_DEVICES,
-)
-from .definitions.base import IthoBinarySensorEntityDescription
-from .definitions.cve import CVE_BINARY_SENSORS
-from .definitions.hru350 import HRU_ECO_350_BINARY_SENSORS
-from .definitions.hrueco import HRU_ECO_BINARY_SENSORS
-from .definitions.wpu import WPU_BINARY_SENSORS
+from .const import _LOGGER, CONF_ADDON_TYPE
+from .sensors.autotemp import get_autotemp_binary_sensors
+from .sensors.fan import get_cve_binary_sensors, get_noncve_binary_sensors
+from .sensors.wpu import get_wpu_binary_sensors
 
 
 async def async_setup_entry(
@@ -45,29 +28,17 @@ async def async_setup_entry(
 
     sensors = []
     selected_sensors = []
+    if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
+        sensors.extend(get_autotemp_binary_sensors(config_entry))
+
     if config_entry.data[CONF_ADDON_TYPE] == "cve":
-        for description in CVE_BINARY_SENSORS:
-            description.topic = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
-            sensors.append(IthoBinarySensor(description, config_entry))
+        sensors.extend(get_cve_binary_sensors(config_entry))
 
-    if config_entry.data[CONF_ADDON_TYPE] == "noncve" and config_entry.data[
-        CONF_NONCVE_MODEL
-    ] in ["hru_eco", "hru_eco_350"]:
-        if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco":
-            hru_sensors = HRU_ECO_BINARY_SENSORS
-        if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_350":
-            hru_sensors = HRU_ECO_350_BINARY_SENSORS
-
-        for description in hru_sensors:
-            description.topic = (
-                f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
-            )
-            sensors.append(IthoBinarySensor(description, config_entry))
+    if config_entry.data[CONF_ADDON_TYPE] == "noncve":
+        sensors.extend(get_noncve_binary_sensors(config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "wpu":
-        for description in WPU_BINARY_SENSORS:
-            description.topic = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
-            sensors.append(IthoBinarySensor(description, config_entry))
+        sensors.extend(get_wpu_binary_sensors(config_entry))
 
     for sensor in sensors:
         if (
