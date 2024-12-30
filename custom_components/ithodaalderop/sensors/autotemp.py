@@ -19,6 +19,7 @@ from ..const import (
     MQTT_STATETOPIC,
 )
 from ..definitions.autotemp import (
+    AUTOTEMP_BINARYSENSORS,
     AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE,
     AUTOTEMP_DISTRIBUTOR_VALVE_SENSOR_TEMPLATE,
     AUTOTEMP_MALFUNCTION_VALVE_DECTECTION_DIST_SENSOR_TEMPLATE,
@@ -27,7 +28,17 @@ from ..definitions.autotemp import (
     AUTOTEMP_VALVE_SENSOR_TEMPLATE,
 )
 from ..definitions.base import IthoSensorEntityDescription
-from ..sensors.base import IthoBaseSensor
+from ..sensors.base import IthoBaseSensor, IthoBinarySensor
+
+
+def get_autotemp_binary_sensors(config_entry: ConfigEntry):
+    """Create binary sensors for Autotemp."""
+    sensors = []
+    topic = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+    for description in AUTOTEMP_BINARYSENSORS:
+        description.topic = topic
+        sensors.append(IthoBinarySensor(description, config_entry))
+    return sensors
 
 
 def get_autotemp_sensors(config_entry: ConfigEntry):
