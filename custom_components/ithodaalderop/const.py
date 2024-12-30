@@ -14,6 +14,7 @@ ADDON_TYPES = {
     "noncve": "Non-CVE",
     "wpu": "WPU",
 }
+ENTITIES_CREATION_MODES = ["only_selected", "all"]
 
 NONCVE_DEVICES = {
     "hru_eco": "HRU ECO",
@@ -46,6 +47,7 @@ MQTT_STATETOPIC = {
 }
 
 CONF_ADDON_TYPE = "addontype"
+CONF_ENTITIES_CREATION_MODE = "entities_creation_mode"
 CONF_NONCVE_MODEL = "noncve_model"
 
 CONF_AUTOTEMP_ROOM1 = "room1"

@@ -1103,7 +1103,8 @@
         "title": "Add new Itho devices",
         "description": "Select the Itho WiFi Add-on you want to configure. Repeat the configuration for every physical add-on present. This integration creates commonly used sensors for each device.",
         "data": {
-          "addontype": "Select the type of add-on to configure."
+          "addontype": "Select the type of add-on to configure.",
+          "entities_creation_mode": "Select mode for entity creation"
         }
       },
       "noncve_model": {
@@ -1183,6 +1184,12 @@
         "cve": "CVE (ECO box)",
         "noncve": "Non-CVE (HRU)",
         "wpu": "WPU heatpump"
+      }
+    },
+    "entities_creation_modes": {
+      "options": {
+        "only_selected": "Only create selected sensors",
+        "all": "Create all available sensors"
       }
     },
     "noncve_model_select": {

@@ -17,6 +17,7 @@ from .const import (
     _LOGGER,
     ADDON_TYPES,
     CONF_ADDON_TYPE,
+    CONF_ENTITIES_CREATION_MODE,
     CONF_NONCVE_MODEL,
     DOMAIN,
     MANUFACTURER,
@@ -43,6 +44,7 @@ async def async_setup_entry(
         return
 
     sensors = []
+    selected_sensors = []
     if config_entry.data[CONF_ADDON_TYPE] == "cve":
         for description in CVE_BINARY_SENSORS:
             description.topic = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
@@ -67,7 +69,15 @@ async def async_setup_entry(
             description.topic = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
             sensors.append(IthoBinarySensor(description, config_entry))
 
-    async_add_entities(sensors)
+    for sensor in sensors:
+        if (
+            config_entry.data[CONF_ENTITIES_CREATION_MODE] == "only_selected"
+            and not sensor.entity_description.is_selected_entity
+        ):
+            continue
+        selected_sensors.append(sensor)
+
+    async_add_entities(selected_sensors)
 
 
 class IthoBinarySensor(BinarySensorEntity):
