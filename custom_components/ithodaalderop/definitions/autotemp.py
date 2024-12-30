@@ -20,6 +20,7 @@ AUTOTEMP_BINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
         entity_category=EntityCategory.DIAGNOSTIC,
         # icon_off="mdi:battery",
         # icon_on="mdi:battery-low",
+        is_selected_entity=True,
     ),
 )
 
@@ -58,6 +59,7 @@ AUTOTEMP_ROOM_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.POWER_FACTOR,
         native_unit_of_measurement="%",
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Room X power kW (kW)",
@@ -65,6 +67,7 @@ AUTOTEMP_ROOM_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.POWER,
         native_unit_of_measurement=UnitOfPower.KILO_WATT,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Room X setp",
@@ -72,6 +75,7 @@ AUTOTEMP_ROOM_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Room X temp",
@@ -79,6 +83,7 @@ AUTOTEMP_ROOM_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
 )
 
@@ -121,6 +126,7 @@ AUTOTEMP_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Error",
         key="error",
         entity_category=EntityCategory.DIAGNOSTIC,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Heat source",
@@ -149,6 +155,7 @@ AUTOTEMP_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Mode",
         key="mode",
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Outdoor temp (°C)",
@@ -192,30 +199,35 @@ AUTOTEMP_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="state_cool",
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="State hand",
         key="state_hand",
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="state hand",
         key="state_hand2",
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="State heating",
         key="state_heating",
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="State off",
         key="state",
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Time active zone too cold (sec)",

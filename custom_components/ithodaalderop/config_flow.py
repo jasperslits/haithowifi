@@ -186,14 +186,34 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         entry = self.hass.config_entries.async_get_entry(self.context["entry_id"])
         assert entry
         self.entry = entry
-        self.config.update(entry.data)
-        if self.config[CONF_ADDON_TYPE] == "autotemp":
-            return await self.async_step_rooms_reconfigure()
-        if self.config[CONF_ADDON_TYPE] in ["cve", "noncve"]:
-            return await self.async_step_remotes_reconfigure()
-        return self.async_update_reload_and_abort(
-            self.entry, data=self.config, reason="reconfigure_successful"
+        self.config.update(self.entry.data)
+
+        if user_input is not None:
+            self.config.update(user_input)
+            if self.entry.data[CONF_ADDON_TYPE] == "autotemp":
+                return await self.async_step_rooms_reconfigure()
+            if self.entry.data[CONF_ADDON_TYPE] in ["cve", "noncve"]:
+                return await self.async_step_remotes_reconfigure()
+
+            return self.async_update_reload_and_abort(
+                self.entry, data=self.config, reason="reconfigure_successful"
+            )
+
+        itho_schema = vol.Schema(
+            {
+                vol.Required(CONF_ENTITIES_CREATION_MODE): selector(
+                    {
+                        "select": {
+                            "options": ENTITIES_CREATION_MODES,
+                            "multiple": False,
+                            "translation_key": "entities_creation_modes",
+                        }
+                    }
+                ),
+            }
         )
+
+        return self.async_show_form(step_id="reconfigure", data_schema=itho_schema)
 
     async def async_step_rooms_reconfigure(
         self, user_input: Mapping[str, Any] | None = None

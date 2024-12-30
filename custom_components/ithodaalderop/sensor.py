@@ -9,7 +9,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import _LOGGER, CONF_ENTITIES_CREATION_MODE, CONF_ADDON_TYPE
+from .const import _LOGGER, CONF_ADDON_TYPE, CONF_ENTITIES_CREATION_MODE
 from .sensors.autotemp import get_autotemp_sensors
 from .sensors.co2_remote import get_co2_remote_sensors
 from .sensors.fan import get_cve_sensors, get_noncve_sensors

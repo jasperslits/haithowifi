@@ -1103,8 +1103,8 @@
         "title": "Add new Itho devices",
         "description": "Select the Itho WiFi Add-on you want to configure. Repeat the configuration for every physical add-on present. This integration creates commonly used sensors for each device.",
         "data": {
-          "addontype": "Select the type of add-on to configure.",
-          "entities_creation_mode": "Select mode for entity creation"
+          "addontype": "Select the type of add-on to configure:",
+          "entities_creation_mode": "Select mode for entity creation:"
         }
       },
       "noncve_model": {
@@ -1115,10 +1115,10 @@
         }
       },
       "reconfigure": {
-        "title": "Reconfigure Itho devices",
-        "description": "Select the device you want to reconfigure. Repeat the configuration for every physical add-on present.",
+        "title": "Reconfigure created entities",
+        "description": "Switching from 'all' to 'selected' will not delete sensors, but only makes them unavailable. If you so wish, you need to delete them yourself",
         "data": {
-          "addontype": "Select the type of add-on to reconfigure."
+          "entities_creation_mode": "Select mode for entity re-creation:"
         }
       },
       "remotes": {
