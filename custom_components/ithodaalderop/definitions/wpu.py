@@ -107,8 +107,7 @@ WPU_BINARY_SENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
         json_field="ECO selected on thermostat",
         key="eco_selected_on_thermostat",
         entity_category=EntityCategory.DIAGNOSTIC,
-        entity_registry_enabled_default=False,
-        is_selected_entity=True,
+        is_selected_entity=False,
     ),
     IthoBinarySensorEntityDescription(
         json_field="Electr element DHW blocked",
@@ -306,7 +305,7 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
-        entity_registry_enabled_default=False,
+        entity_registry_enabled_default=True,
         is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
@@ -316,7 +315,7 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
-        entity_registry_enabled_default=False,
+        entity_registry_enabled_default=True,
         is_selected_entity=True,
     ),
     IthoSensorEntityDescription(

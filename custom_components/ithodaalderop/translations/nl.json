@@ -193,7 +193,7 @@
         "name": "Boiler Pomp"
       },
       "boiler_temp_down": {
-        "name": "Boilertemperatuur Verlaging"
+        "name": "Boiler temperatuur Verlaging"
       },
       "boiler_temp_up": {
         "name": "Boiler Temperatuur"
@@ -1101,7 +1101,7 @@
     "step": {
       "user": {
         "title": "Voeg nieuwe Itho apparaten toe",
-        "description": "Configuratie stappen voor Itho. Herhaal deze configuratie voor iedere fysieke add-on die gebruikt wordt. Deze integratie maakt automatisch de meest gebruikelijke sensors aan.",
+        "description": "Configuratie stappen voor Itho. Herhaal deze configuratie voor iedere fysieke add-on die gebruikt wordt. Deze integratie maakt automatisch alle of de meest gebruikelijke sensors aan.",
         "data": {
           "addontype": "Add-on type:",
           "entities_creation_mode": "Kies de sensoren die aangemaakt worden (dit kan later aangepast worden):"
