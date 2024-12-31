@@ -107,7 +107,7 @@ WPU_BINARY_SENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
         json_field="ECO selected on thermostat",
         key="eco_selected_on_thermostat",
         entity_category=EntityCategory.DIAGNOSTIC,
-        entity_registry_enabled_default=False,
+        is_selected_entity=False,
     ),
     IthoBinarySensorEntityDescription(
         json_field="Electr element DHW blocked",
@@ -296,6 +296,7 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="boiler_pump_percent",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Boiler temp down (°C)",
@@ -304,7 +305,8 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
-        entity_registry_enabled_default=False,
+        entity_registry_enabled_default=True,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Boiler temp up (°C)",
@@ -313,7 +315,8 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
-        entity_registry_enabled_default=False,
+        entity_registry_enabled_default=True,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Calculated CV condensation temp (°C)",
@@ -498,12 +501,14 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.PRESSURE,
         native_unit_of_measurement=UnitOfPressure.BAR,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Cv pump (%)",
         key="cv_pump_percent",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="CV pump prime",
@@ -516,6 +521,7 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Cv start delay (sec)",
@@ -745,6 +751,7 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Error",
         key="error",
         entity_category=EntityCategory.DIAGNOSTIC,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Error_retry",
@@ -884,6 +891,7 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
         entity_category=EntityCategory.DIAGNOSTIC,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="HRU blowout flow (m3_h)",
@@ -1049,6 +1057,7 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Reserve",
@@ -1158,6 +1167,7 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Status",
         key="status",
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Sub_status",
@@ -1199,6 +1209,7 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Temp from source (°C)",
@@ -1206,6 +1217,7 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Time CO valve start position (sec)",
@@ -1288,6 +1300,7 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="well_pump_percent",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Well pump prime",

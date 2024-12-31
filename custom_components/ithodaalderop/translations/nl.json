@@ -193,7 +193,7 @@
         "name": "Boiler Pomp"
       },
       "boiler_temp_down": {
-        "name": "Boilertemperatuur Verlaging"
+        "name": "Boiler temperatuur Verlaging"
       },
       "boiler_temp_up": {
         "name": "Boiler Temperatuur"
@@ -1101,9 +1101,10 @@
     "step": {
       "user": {
         "title": "Voeg nieuwe Itho apparaten toe",
-        "description": "Configuratie stappen voor Itho. Herhaal deze configuratie voor iedere fysieke add-on die gebruikt wordt. Deze integratie maakt automatisch de meest gebruikelijke sensors aan.",
+        "description": "Configuratie stappen voor Itho. Herhaal deze configuratie voor iedere fysieke add-on die gebruikt wordt. Deze integratie maakt automatisch alle of de meest gebruikelijke sensors aan.",
         "data": {
-          "addontype": "Add-on type"
+          "addontype": "Add-on type:",
+          "entities_creation_mode": "Kies de sensoren die aangemaakt worden (dit kan later aangepast worden):"
         }
       },
       "noncve_model": {
@@ -1114,10 +1115,10 @@
         }
       },
       "reconfigure": {
-        "title": "Wijzig Itho apparaten",
-        "description": "Selecteer het apparaat dat u opnieuw wilt configureren. Herhaal de configuratie voor elke fysieke add-on die aanwezig is.",
+        "title": "Wijzig de aan te maken sensoren",
+        "description": "Schakelen tussen 'alle' en 'selectief' zal geen sensoren verwijderen, maar maakt deze alleen niet-beschikbaar. Als u ze wilt verwijderen dient u dat zelf te doen.",
         "data": {
-          "addontype": "Selecteer het type add-on dat u opnieuw wilt configureren."
+          "entities_creation_mode": "Kies de sensoren die aangemaakt worden:"
         }
       },
       "remotes": {
@@ -1183,6 +1184,12 @@
         "cve": "CVE (ECO box)",
         "noncve": "Non-CVE (HRU)",
         "wpu": "WPU Warmtepomp"
+      }
+    },
+    "entities_creation_modes": {
+      "options": {
+        "only_selected": "Maak alleen een selectie van sensoren aan (aanbevolen voor de meeste gebruikers)",
+        "all": "Maak alle beschikbare sensoren aan"
       }
     },
     "noncve_model_select": {

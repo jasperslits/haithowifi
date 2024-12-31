@@ -11,6 +11,7 @@ LAST_CMD_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         entity_category=EntityCategory.DIAGNOSTIC,
         icon="mdi:cog",
         entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="source",
@@ -18,5 +19,6 @@ LAST_CMD_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         entity_category=EntityCategory.DIAGNOSTIC,
         icon="mdi:target",
         entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
 )

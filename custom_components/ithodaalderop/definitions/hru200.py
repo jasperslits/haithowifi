@@ -26,6 +26,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="actual_speed",
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Air discharge temperature (°C)",
@@ -33,6 +34,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Average air outlet temperature (°C)",
@@ -40,6 +42,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Block timer bypass (min)",
@@ -91,6 +94,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Error",
         key="error",
         entity_category=EntityCategory.DIAGNOSTIC,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Fan off during frost (min)",
@@ -107,6 +111,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.TOTAL_INCREASING,
         entity_category=EntityCategory.DIAGNOSTIC,
         icon="mdi:counter",
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Frost adjustment speed (rpm)",
@@ -129,6 +134,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False,
         icon="mdi:molecule-co2",
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Max frost vent. speed (rpm)",
@@ -144,6 +150,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Number of bypass settings",
@@ -174,6 +181,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Outside temperature (°C)",
@@ -181,6 +189,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Selection",
@@ -195,6 +204,7 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Start-up counter",
@@ -209,10 +219,12 @@ HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfTime.HOURS,
         state_class=SensorStateClass.TOTAL_INCREASING,
         entity_category=EntityCategory.DIAGNOSTIC,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Ventilation setpoint (%)",
         key="ventilation_setpoint_percentage",
         native_unit_of_measurement=PERCENTAGE,
+        is_selected_entity=True,
     ),
 )

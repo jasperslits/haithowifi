@@ -21,6 +21,7 @@ CVE_BINARY_SENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
         entity_category=EntityCategory.DIAGNOSTIC,
         icon_off="mdi:air-filter",
         icon_on="mdi:vacuum-outline",
+        is_selected_entity=True,
     ),
 )
 
@@ -107,12 +108,14 @@ CVE_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Error",
         key="error",
         entity_category=EntityCategory.DIAGNOSTIC,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Fan setpoint (rpm)",
         key="fan_setpoint_rpm",
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Fan speed (rpm)",
@@ -120,6 +123,7 @@ CVE_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Highest CO2 concentration (ppm)",
@@ -128,6 +132,7 @@ CVE_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False,
         icon="mdi:molecule-co2",
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Highest RH concentration (%)",
@@ -135,12 +140,14 @@ CVE_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="hum",
         key="humidity",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Internal humidity (%)",
@@ -271,6 +278,7 @@ CVE_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Temperature",
@@ -285,6 +293,7 @@ CVE_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfTime.HOURS,
         state_class=SensorStateClass.TOTAL_INCREASING,
         entity_category=EntityCategory.DIAGNOSTIC,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Valve",
@@ -298,6 +307,7 @@ CVE_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Ventilation request (%)",

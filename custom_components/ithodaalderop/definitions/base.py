@@ -29,6 +29,7 @@ class IthoBinarySensorEntityDescription(BinarySensorEntityDescription):
     unique_id_template: str | None = None
     unique_id: str | None = None
     entity_category: EntityCategory | None = None
+    is_selected_entity: bool = False
 
 
 @dataclass(frozen=False)
@@ -43,3 +44,4 @@ class IthoSensorEntityDescription(SensorEntityDescription):
     unique_id_template: str | None = None
     unique_id: str | None = None
     entity_category: EntityCategory | None = None
+    is_selected_entity: bool = False

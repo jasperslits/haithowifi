@@ -10,4 +10,5 @@ REMOTE_SENSOR_TEMPLATE = IthoSensorEntityDescription(
     device_class=SensorDeviceClass.CO2,
     native_unit_of_measurement=CONCENTRATION_PARTS_PER_MILLION,
     state_class=SensorStateClass.MEASUREMENT,
+    is_selected_entity=True,
 )
