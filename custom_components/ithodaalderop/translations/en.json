@@ -1104,7 +1104,7 @@
         "description": "Select the Itho WiFi Add-on you want to configure. Repeat the configuration for every physical add-on present. This integration creates commonly used sensors for each device.",
         "data": {
           "addontype": "Select the type of add-on to configure:",
-          "entities_creation_mode": "Select mode for entity creation:"
+          "entities_creation_mode": "Select mode for entity creation (this can later be re-configured):"
         }
       },
       "noncve_model": {
