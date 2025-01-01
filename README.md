@@ -1,7 +1,7 @@
 # Table of Contents
 - [Home Assistant sensor component/integration for Itho Wifi](#home-assistant-sensor-componentintegration-for-itho-wifi))
   - [What can be configured via this Integration](#what-can-be-configured-via-this-integration)
-  - [Not (yet) supported](#not-yet-supported)
+  - [Differences with the add-on's Home Assistant MQTT Discovery](#differences-with-the-itho-wifi-add-on-home-assistant-mqtt-discovery)
   - [Use-case](#use-case)
   - [Available entities](#available-entities)
   - [Why don't I see all entities?](#why-dont-i-see-all-entities)
@@ -14,15 +14,12 @@
 - [Help us improve!](#help-us-improve)
 
 # Home Assistant sensor component/integration for Itho Wifi
-Requires WiFi add-on from https://github.com/arjenhiemstra/ithowifi and [MQTT](https://www.home-assistant.io/integrations/mqtt/) integration with Home Assistant. 
-
-This simplifies the integration by creating the sensors for the various Itho Daalderop devices: Heatpump WPU 5G, HRU-350 and related devices, CVE boxes, Autotemp units for floor heating. 
-Combine this integration with the Home Assistant auto-discovery in the MQTT configuration for the CVE / non-CVE devices in the add-on. 
+This integration for Home Assistant provides a simple configuration screen for the MQTT based "Itho Wifi add-on" from https://github.com/arjenhiemstra/ithowifi
+This simplifies the integration by creating the sensors for the various Itho Daalderop devices: Heatpump WPU 5G, HRU units, CVE boxes, Autotemp units for floor heating. 
 
 This integration is intended for standard domestic set ups: 1 WPU, 1 CVE or HRU unit, up to 10 rooms connected to autotemp and up to 5 CO2 remotes. More complex setups should be managed via YAML and are out of scope.  
 
 This custom component has no affiliation with the Itho Daalderop company or with Arjen Hiemstra's Itho WiFi add-on.
-Note: The 'add-on' here in the context is the ESP32 add-on to the Itho Daalderop units, not an Add-on in Home Assistant. 
 
 ## What can be configured via this Integration
 1. Autotemp sensors with up to 10 autotemp rooms using custom room names instead of Room 1, Room 2
@@ -31,17 +28,23 @@ Note: The 'add-on' here in the context is the ESP32 add-on to the Itho Daalderop
 4. NON-CVE / HRU sensors
 5. Up to 5 remotes for monitoring CO2 levels for CVE/NON-CVE (HRU)
 
-## Not (yet) supported
-The fan entity is not supported yet. To add this to Home Assistant enable the Auto-discovery in Arjen's module under MQTT settings or manually configured it. 
-See https://github.com/arjenhiemstra/ithowifi/wiki/Home-Assistant the wiki for details
+## Differences with the Itho WiFi add-on Home Assistant MQTT Discovery
+This integration does not support the MQTT fan entity while this is provided via the MQTT Discovery. 
+To add this to Home Assistant enable Home Assistant MQTT Discovery in Arjen's module under MQTT settings or manually configure it in YAML.
+See the [wiki](https://github.com/arjenhiemstra/ithowifi/wiki/Home-Assistant) for details. 
+
+Custom autotemp roomnames and CO2 remote names are also unique to this integration.  
+
+Additional differences include the translations in Dutch, support for other Itho devices besides a fan, value translations for e.g. status. 
 
 ## Use-case
-Full auto-discovery from the WiFi add-on to Home Assistant is the best experience but as this is not there yet, this integration should eliminate the manual creation via YAML of sensors for:
-* Non-CVE like Actual mode, Supply Temp, Supply / Exhaust RPM, Bypass 
+This integration should eliminate the manual creation via YAML of sensors for:
+* Non-CVE (HRU) like Actual mode, Supply Temp, Supply / Exhaust RPM, Bypass 
 * CVE like Humidity, Temperature, Speed
 * Autotemp like Power kW, Power %, Set Point Temp, Actual Temp per Room
 * CO2 concencration for supported remotes
 * WPU like Pump Percentage, Boiler Temp, From / To Source Temps, Operating Mode etc
+
 
 ## Available entities
 The integration creates a device and sensors and uses a predefined MQTT state topic to distinct the devices. At first only a (by the authors) selected group of entities will be created. If you want to create all available entities for your device, you need to re-configure the integation entry:
@@ -73,8 +76,8 @@ Click `enable`
 
 ## Prerequisites
 1. Working WiFi add-on connected to the Itho device(s) ([buy](https://www.nrgwatch.nl/))
-2. [Official HA MQTT Integration](https://www.home-assistant.io/integrations/mqtt/) - Other `MQTT` integrations are not supported
-3. In the Itho WiFi add-on the `MQTT base topic` should be configured like the table below:
+2. [Official HA MQTT Integration](https://www.home-assistant.io/integrations/mqtt/) configured and connected to the MQTT broker. 
+3. In the Itho WiFi add-on under 'MQTT' the `MQTT base topic` should be configured like the table below:
 
 | Device  | MQTT base topic   | 
 |---|---|
@@ -85,11 +88,11 @@ Click `enable`
 
 ## Install via HACS (recommended)
 1. Install HACS by following [these](https://www.hacs.xyz/docs/use/) steps
-2. Install the component via HACS custom repository. See https://hacs.xyz/docs/faq/custom_repositories/ and use Integration in the dropdown and https://github.com/jasperslits/haithowifi/ as name 
+2. Install the component via HACS custom repository. See [here](https://hacs.xyz/docs/faq/custom_repositories/) and use Integration in the dropdown and https://github.com/jasperslits/haithowifi/ as name 
 
 ## Manual install
 1. Using a HA file editor like [`Studio Code Server`](https://github.com/hassio-addons/addon-vscode/blob/main/vscode/DOCS.md) or [`File Editor`](https://www.home-assistant.io/common-tasks/os/#installing-and-using-the-file-editor-add-on), create a folder /usr/share/hassio/homeassistant/custom_components/ithodaalderop
-2. Git clone or download the content to custom_components in the /usr/share/hassio/homeassistant/custom_components/ithodaalderop directory 
+2. Git clone this repository or download the content to custom_components in the /usr/share/hassio/homeassistant/custom_components/ithodaalderop directory 
 3. Restart Home Assistant
 4. Go to Integrations
 5. Search for Itho Add-on integration
