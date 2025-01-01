@@ -11,6 +11,7 @@
   - [Manual install](#manual-install)
   - [Upgrading from 1.4 or below (+ keeping history)](#upgrading-from-14-or-below--keeping-history)
 - [Screenshots](#screenshots)
+- [Help us improve!](#help-us-improve)
 
 # Home Assistant sensor component/integration for Itho Wifi
 Requires WiFi add-on from https://github.com/arjenhiemstra/ithowifi and [MQTT](https://www.home-assistant.io/integrations/mqtt/) integration with Home Assistant. 
@@ -24,11 +25,11 @@ This custom component has no affiliation with the Itho Daalderop company or with
 Note: The 'add-on' here in the context is the ESP32 add-on to the Itho Daalderop units, not an Add-on in Home Assistant. 
 
 ## What can be configured via this Integration
-1. Heatpump WPU sensors
-2. NONCVE / HRU sensors
+1. Autotemp sensors with up to 10 autotemp rooms using custom room names instead of Room 1, Room 2
+2. Heatpump WPU sensors
 3. CVE sensors
-4. Up to 5 remotes for monitoring CO2 levels
-5. Up to 10 autotemp rooms using custom room names instead of Room 1, Room 2
+4. NON-CVE / HRU sensors
+5. Up to 5 remotes for monitoring CO2 levels for CVE/NON-CVE (HRU)
 
 ## Not (yet) supported
 The fan entity is not supported yet. To add this to Home Assistant enable the Auto-discovery in Arjen's module under MQTT settings or manually configured it. 
@@ -43,7 +44,7 @@ Full auto-discovery from the WiFi add-on to Home Assistant is the best experienc
 * WPU like Pump Percentage, Boiler Temp, From / To Source Temps, Operating Mode etc
 
 ## Available entities
-The integration creates a device and sensors and uses a predefined MQTT state topic to distinct the devices. At first only a (by the authors') selected group of entities will be created. If you want to create all available entities for your device, you need to re-configure the integation entry:
+The integration creates a device and sensors and uses a predefined MQTT state topic to distinct the devices. At first only a (by the authors) selected group of entities will be created. If you want to create all available entities for your device, you need to re-configure the integation entry:
 
 Navigate to [integrations](https://my.home-assistant.io/create-link/?redirect=integrations) and find the `Itho WiFi Add-on`. Click the three dots of the entry you want edit:
 
@@ -137,4 +138,12 @@ In order to keep the history from your old entities follow this process for each
 * Add Integration to HACS default (waiting for https://github.com/hacs/default/pull/2494)
 * Explore adding Fan without autodiscovery
 
+# Help us improve!
+As we don't own all Itho devices ourselves, we don't always know the exact meaning and usage of an available sensor. You can help us improve the integration by providing feedback about:
+- Translations
+- Binary sensors. When a sensor provides only binary data (on/off, open/close, ...)
+- Should a sensor be within the 'selected' group of sensors
+- Should a sensor be enabled by default
+- ...
 
+Feel free to create an [issue](https://github.com/jasperslits/haithowifi/issues)!
