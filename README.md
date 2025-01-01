@@ -112,25 +112,25 @@ In order to keep the history from your old entities follow this process for each
 3. Rename the entity back to the new naming scheme. The history should now be kept with your new entity-id
 
 # Screenshots
-1. Add integration
-<img src="https://github.com/user-attachments/assets/8171307a-8f36-4064-a3bb-0e0634728b86">
+## Add integration
+![image](https://github.com/user-attachments/assets/8171307a-8f36-4064-a3bb-0e0634728b86)
 
-3. Define remotes for CO2 monitoring
+## Define remotes for CO2 monitoring
 <img width="612" alt="image" src="https://github.com/user-attachments/assets/d9d2dca1-254c-450b-84a8-a71f5afee608">
 
-4. Define rooms for autotemp
+## Define rooms for autotemp
 <img width="612" alt="image" src="https://github.com/user-attachments/assets/cd554cac-3cc7-4c5f-b6fd-7efc7c63b256">
 
-5. Created devices
+## Created devices
 <img width="1031" alt="image" src="https://github.com/user-attachments/assets/2235a880-79e0-4a0e-80f3-134f10af7208">
 
-6. Created HRU sensors and two remotes
+## Created HRU sensors and two remotes
 <img width="463" alt="image" src="https://github.com/user-attachments/assets/f8ebf3cd-c2a9-43a0-96bd-00d235b6d6ca">
 
-7. CVE sensors
+## CVE sensors
 <img src="https://github.com/user-attachments/assets/feef6706-28ac-48db-897f-ea780e5d38f9">
 
-8. Autotemp Control Unit + Connected Sensors
+## Autotemp Control Unit + Connected Sensors
 <img width="322" alt="image" src="https://github.com/user-attachments/assets/bcad60cc-5635-4ef1-b792-2d08452d8b33">
 
 ### TODO:
