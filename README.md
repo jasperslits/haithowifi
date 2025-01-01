@@ -3,6 +3,7 @@
   - [What can be configured via this Integration](#what-can-be-configured-via-this-integration)
   - [Not (yet) supported](#not-yet-supported)
   - [Use-case](#use-case)
+  - [Available entities](#available-entities)
   - [Why don't I see all entities?](#why-dont-i-see-all-entities)
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
@@ -41,7 +42,16 @@ Full auto-discovery from the WiFi add-on to Home Assistant is the best experienc
 * CO2 concencration for supported remotes
 * WPU like Pump Percentage, Boiler Temp, From / To Source Temps, Operating Mode etc
 
-It creates a device and all available sensors and uses a predefined MQTT state topic to distinct the devices. 
+## Available entities
+The integration creates a device and sensors and uses a predefined MQTT state topic to distinct the devices. At first only a (by the authors') selected group of entities will be created. If you want to create all available entities for your device, you need to re-configure the integation entry:
+
+Navigate to [integrations](https://my.home-assistant.io/create-link/?redirect=integrations) and find the `Itho WiFi Add-on`. Click the three dots of the entry you want edit:
+
+![image](https://github.com/user-attachments/assets/4d46443b-777e-4899-a49f-5cc9ada1d92c)
+
+Click `Reconfigure` and reconfigure the created entities
+
+![image](https://github.com/user-attachments/assets/3c608faf-60c3-489a-97bf-ddc35af7e329)
 
 ## Why don't I see all entities?
 Some sensor are disabled by default. Follow these instructions to enable an entity.
@@ -103,24 +113,24 @@ In order to keep the history from your old entities follow this process for each
 
 # Screenshots
 1. Add integration
-<img width="606" alt="image" src="https://github.com/user-attachments/assets/5e32a3e3-a06b-4be0-9681-6a640f486abc">
+<img src="https://github.com/user-attachments/assets/8171307a-8f36-4064-a3bb-0e0634728b86">
 
-2. Define remotes for CO2 monitoring
+3. Define remotes for CO2 monitoring
 <img width="612" alt="image" src="https://github.com/user-attachments/assets/d9d2dca1-254c-450b-84a8-a71f5afee608">
 
-3. Define rooms for autotemp
+4. Define rooms for autotemp
 <img width="612" alt="image" src="https://github.com/user-attachments/assets/cd554cac-3cc7-4c5f-b6fd-7efc7c63b256">
 
-4. Created devices
+5. Created devices
 <img width="1031" alt="image" src="https://github.com/user-attachments/assets/2235a880-79e0-4a0e-80f3-134f10af7208">
 
-5. Created HRU sensors and two remotes
+6. Created HRU sensors and two remotes
 <img width="463" alt="image" src="https://github.com/user-attachments/assets/f8ebf3cd-c2a9-43a0-96bd-00d235b6d6ca">
 
-6. CVE sensors
+7. CVE sensors
 <img src="https://github.com/user-attachments/assets/feef6706-28ac-48db-897f-ea780e5d38f9">
 
-7. Autotemp Control Unit + Connected Sensors
+8. Autotemp Control Unit + Connected Sensors
 <img width="322" alt="image" src="https://github.com/user-attachments/assets/bcad60cc-5635-4ef1-b792-2d08452d8b33">
 
 ### TODO:
