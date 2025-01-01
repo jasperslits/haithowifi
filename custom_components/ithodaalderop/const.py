@@ -14,6 +14,7 @@ ADDON_TYPES = {
     "noncve": "Non-CVE",
     "wpu": "WPU",
 }
+ENTITIES_CREATION_MODES = ["only_selected", "all"]
 
 NONCVE_DEVICES = {
     "hru_eco": "HRU ECO",
@@ -46,6 +47,7 @@ MQTT_STATETOPIC = {
 }
 
 CONF_ADDON_TYPE = "addontype"
+CONF_ENTITIES_CREATION_MODE = "entities_creation_mode"
 CONF_NONCVE_MODEL = "noncve_model"
 
 CONF_AUTOTEMP_ROOM1 = "room1"
@@ -90,7 +92,7 @@ AUTOTEMP_MODE = {
     5: "Manual operation",
 }
 
-HRUECO250300_ERROR_CODE = {
+HRU_ECO_250_300_ERROR_CODE = {
     0: "No error",
     1: "W01 - Clean Filter",
     2: "W02 - Replace Filter",
@@ -103,7 +105,7 @@ HRUECO250300_ERROR_CODE = {
     101: "E01 - Fan is't working",
 }
 
-HRUECO350_ACTUAL_MODE = {
+HRU_ECO_350_ACTUAL_MODE = {
     1: "Low",
     2: "Medium",
     3: "High",
@@ -114,13 +116,13 @@ HRUECO350_ACTUAL_MODE = {
 
 # Based on user-experience. No codelist availble in the Itho Servicetool
 # For any additions/feedback, please create an issue in the repo of the integration
-HRUECO350_GLOBAL_FAULT_CODE = {
+HRU_ECO_350_GLOBAL_FAULT_CODE = {
     0: "No error",
     7: "Filters dirty",
     11: "(External) Sensor error",
 }
 
-HRUECO350_RH_ERROR_CODE = {
+HRU_ECO_350_RH_ERROR_CODE = {
     239: "Not Available",
     240: "Shorted Sensor",
     241: "Open Sensor",
@@ -140,7 +142,7 @@ HRUECO350_RH_ERROR_CODE = {
     255: "Unknown Error",
 }
 
-HRUECO_STATUS = {
+HRU_ECO_STATUS = {
     0: "Normal",
     1: "Adjust frost valve",
     2: "Decelerate Supply fan",

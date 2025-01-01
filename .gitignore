@@ -1,3 +1,4 @@
 README.md
 .DS_Store
 custom_components/ithodaalderop/__pycache__
+*.pyc

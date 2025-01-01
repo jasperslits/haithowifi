@@ -3,13 +3,15 @@
   - [What can be configured via this Integration](#what-can-be-configured-via-this-integration)
   - [Not (yet) supported](#not-yet-supported)
   - [Use-case](#use-case)
-  - [Available sensors](#available-sensors)
+  - [Available entities](#available-entities)
+  - [Why don't I see all entities?](#why-dont-i-see-all-entities)
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
   - [Install via HACS (recommended)](#install-via-hacs-recommended)
   - [Manual install](#manual-install)
   - [Upgrading from 1.4 or below (+ keeping history)](#upgrading-from-14-or-below--keeping-history)
 - [Screenshots](#screenshots)
+- [Help us improve!](#help-us-improve)
 
 # Home Assistant sensor component/integration for Itho Wifi
 Requires WiFi add-on from https://github.com/arjenhiemstra/ithowifi and [MQTT](https://www.home-assistant.io/integrations/mqtt/) integration with Home Assistant. 
@@ -23,11 +25,11 @@ This custom component has no affiliation with the Itho Daalderop company or with
 Note: The 'add-on' here in the context is the ESP32 add-on to the Itho Daalderop units, not an Add-on in Home Assistant. 
 
 ## What can be configured via this Integration
-1. Heatpump WPU sensors
-2. NONCVE / HRU sensors
+1. Autotemp sensors with up to 10 autotemp rooms using custom room names instead of Room 1, Room 2
+2. Heatpump WPU sensors
 3. CVE sensors
-4. Up to 5 remotes for monitoring CO2 levels
-5. Up to 10 autotemp rooms using custom room names instead of Room 1, Room 2
+4. NON-CVE / HRU sensors
+5. Up to 5 remotes for monitoring CO2 levels for CVE/NON-CVE (HRU)
 
 ## Not (yet) supported
 The fan entity is not supported yet. To add this to Home Assistant enable the Auto-discovery in Arjen's module under MQTT settings or manually configured it. 
@@ -41,65 +43,31 @@ Full auto-discovery from the WiFi add-on to Home Assistant is the best experienc
 * CO2 concencration for supported remotes
 * WPU like Pump Percentage, Boiler Temp, From / To Source Temps, Operating Mode etc
 
-It creates a device and commonly used sensors and uses a predefined MQTT state topic to distinct the devices.
+## Available entities
+The integration creates a device and sensors and uses a predefined MQTT state topic to distinct the devices. At first only a (by the authors) selected group of entities will be created. If you want to create all available entities for your device, you need to re-configure the integation entry:
 
-## Available sensors
-| Device | Sensor | Attributes |
-|---|---|---|
-| **Autotemp** |||
-|| Empty battery ||
-|| Error | Code |
-|| Mode | Code |
-|| Room X power % (%) ||
-|| Room X power kW (kW) ||
-|| Room X setpoint ||
-|| Room X temp ||
-|| Status | Code |
-| **CVE** |||
-|| Error ||
-|| Fan Setpoint (rpm) ||
-|| Fan Speed (rpm) ||
-|| Filter dirty ||
-|| Humidity ||
-|| Temperature ||
-|| Total Operating Time ||
-|| Ventilation setpoint (%) ||
-|| Last Command (disabled by default) ||
-|| Last Command Source (disabled by default) ||
-| **NONCVE (HRU)** |||
-|| Actual Mode | Code |
-|| Air Quality (%) ||
-|| Airfilter counter | Last Maintenance |
-||| Next Maintenance Estimate |
-|| Balance (%) ||
-|| Bypass position ||
-|| Exhaust fan (RPM) ||
-|| Exhaust temp (°C) ||
-|| Global fault code | Description |
-|| Highest received CO2 value (Ppm) (disabled by default) ||
-|| Highest received RH value (%RH) (disabled by default) | Error Description |
-|| Remaining override timer (Sec) ||
-|| Supply fan (RPM) ||
-|| Supply temp (°C) ||
-|| Last Command (disabled by default) ||
-|| Last Command Source (disabled by default) ||
-| **WPU** |||
-|| Boiler pump (%) ||
-|| Boiler temp up (°C) ||
-|| CV pressure (Bar) ||
-|| Cv pump (%) ||
-|| CV return temp (°C) ||
-|| Error ||
-|| Flow sensor (lt_hr) ||
-|| Heat demand thermost. (%) ||
-|| Status ||
-|| Temp from source (°C) ||
-|| Temp to source (°C) ||
-|| Requested room temp (°C) ||
-|| Room temp (°C) ||
-|| Well pump (%) ||
+Navigate to [integrations](https://my.home-assistant.io/create-link/?redirect=integrations) and find the `Itho WiFi Add-on`. Click the three dots of the entry you want edit:
 
-Missing a sensor? Feel free to create an [issue](https://github.com/jasperslits/haithowifi/issues)
+![image](https://github.com/user-attachments/assets/4d46443b-777e-4899-a49f-5cc9ada1d92c)
+
+Click `Reconfigure` and reconfigure the created entities
+
+![image](https://github.com/user-attachments/assets/3c608faf-60c3-489a-97bf-ddc35af7e329)
+
+## Why don't I see all entities?
+Some sensor are disabled by default. Follow these instructions to enable an entity.
+
+Click `xx entities not shown` within the device or just navigate to the entity directly
+
+![image](https://github.com/user-attachments/assets/2a72a81d-7007-410e-af52-9ba43e88352c)
+
+Click the `cogwheel` icon
+
+![image](https://github.com/user-attachments/assets/3c7c89a8-b847-48b1-a7ae-d272da72c552)
+
+Click `enable`
+
+![image](https://github.com/user-attachments/assets/64f7b234-648d-4e25-adeb-996c0d6a7ef8)
 
 # Installation
 
@@ -145,29 +113,37 @@ In order to keep the history from your old entities follow this process for each
 3. Rename the entity back to the new naming scheme. The history should now be kept with your new entity-id
 
 # Screenshots
-1. Add integration
-<img width="606" alt="image" src="https://github.com/user-attachments/assets/5e32a3e3-a06b-4be0-9681-6a640f486abc">
+## Add integration
+![image](https://github.com/user-attachments/assets/8171307a-8f36-4064-a3bb-0e0634728b86)
 
-2. Define remotes for CO2 monitoring
+## Define remotes for CO2 monitoring
 <img width="612" alt="image" src="https://github.com/user-attachments/assets/d9d2dca1-254c-450b-84a8-a71f5afee608">
 
-3. Define rooms for autotemp
+## Define rooms for autotemp
 <img width="612" alt="image" src="https://github.com/user-attachments/assets/cd554cac-3cc7-4c5f-b6fd-7efc7c63b256">
 
-4. Created devices
+## Created devices
 <img width="1031" alt="image" src="https://github.com/user-attachments/assets/2235a880-79e0-4a0e-80f3-134f10af7208">
 
-5. Created HRU sensors and two remotes
+## Created HRU sensors and two remotes
 <img width="463" alt="image" src="https://github.com/user-attachments/assets/f8ebf3cd-c2a9-43a0-96bd-00d235b6d6ca">
 
-6. CVE sensors
+## CVE sensors
 <img src="https://github.com/user-attachments/assets/feef6706-28ac-48db-897f-ea780e5d38f9">
 
-7. Autotemp Control Unit + Connected Sensors
+## Autotemp Control Unit + Connected Sensors
 <img width="322" alt="image" src="https://github.com/user-attachments/assets/bcad60cc-5635-4ef1-b792-2d08452d8b33">
 
 ### TODO:
 * Add Integration to HACS default (waiting for https://github.com/hacs/default/pull/2494)
 * Explore adding Fan without autodiscovery
 
+# Help us improve!
+As we don't own all Itho devices ourselves, we don't always know the exact meaning and usage of an available sensor. You can help us improve the integration by providing feedback about:
+- Translations
+- Binary sensors. When a sensor provides only binary data (on/off, open/close, ...)
+- Should a sensor be within the 'selected' group of sensors
+- Should a sensor be enabled by default
+- ...
 
+Feel free to create an [issue](https://github.com/jasperslits/haithowifi/issues)!

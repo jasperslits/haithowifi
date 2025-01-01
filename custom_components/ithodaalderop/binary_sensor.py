@@ -4,32 +4,15 @@
 Author: Benjamin
 """
 
-import json
-
 from homeassistant.components import mqtt
-from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.device_registry import DeviceInfo
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import (
-    _LOGGER,
-    ADDON_TYPES,
-    CONF_ADDON_TYPE,
-    CONF_NONCVE_MODEL,
-    DOMAIN,
-    MANUFACTURER,
-    MQTT_BASETOPIC,
-    MQTT_STATETOPIC,
-    NONCVE_DEVICES,
-)
-from .definitions import (
-    AUTOTEMPBINARYSENSORS,
-    HRUECO350BINARYSENSORS,
-    HRUECOBINARYSENSORS,
-    IthoBinarySensorEntityDescription,
-)
+from .const import _LOGGER, CONF_ADDON_TYPE, CONF_ENTITIES_CREATION_MODE
+from .sensors.autotemp import get_autotemp_binary_sensors
+from .sensors.fan import get_cve_binary_sensors, get_noncve_binary_sensors
+from .sensors.wpu import get_wpu_binary_sensors
 
 
 async def async_setup_entry(
@@ -44,84 +27,25 @@ async def async_setup_entry(
         return
 
     sensors = []
+    selected_sensors = []
     if config_entry.data[CONF_ADDON_TYPE] == "autotemp":
-        for description in AUTOTEMPBINARYSENSORS:
-            description.key = (
-                f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
-            )
-            sensors.append(IthoBinarySensor(description, config_entry))
+        sensors.extend(get_autotemp_binary_sensors(config_entry))
+
+    if config_entry.data[CONF_ADDON_TYPE] == "cve":
+        sensors.extend(get_cve_binary_sensors(config_entry))
 
     if config_entry.data[CONF_ADDON_TYPE] == "noncve":
-        if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco":
-            hru_sensors = HRUECOBINARYSENSORS
-        if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_350":
-            hru_sensors = HRUECO350BINARYSENSORS
+        sensors.extend(get_noncve_binary_sensors(config_entry))
 
-        for description in hru_sensors:
-            description.key = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
-            sensors.append(IthoBinarySensor(description, config_entry))
+    if config_entry.data[CONF_ADDON_TYPE] == "wpu":
+        sensors.extend(get_wpu_binary_sensors(config_entry))
 
-    async_add_entities(sensors)
-
-
-class IthoBinarySensor(BinarySensorEntity):
-    """Representation of a Itho add-on binary sensor that is updated via MQTT."""
-
-    _attr_has_entity_name = True
-    entity_description: IthoBinarySensorEntityDescription
-
-    def __init__(
-        self,
-        description: IthoBinarySensorEntityDescription,
-        config_entry: ConfigEntry,
-    ) -> None:
-        """Initialize the binary sensor."""
-        self.entity_description = description
-
-        model = ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
-        if config_entry.data[CONF_ADDON_TYPE] == "noncve":
-            model = model + " - " + NONCVE_DEVICES[config_entry.data[CONF_NONCVE_MODEL]]
-
-        self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
-            manufacturer=MANUFACTURER,
-            model=model,
-            name="Itho Daalderop " + ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
-        )
-
-        self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.translation_key}"
-        self.entity_id = f"binary_sensor.{self._attr_unique_id}"
-
-    @property
-    def icon(self):
-        """Icon for binary sensor."""
+    for sensor in sensors:
         if (
-            self.entity_description.icon_off is not None
-            and self.entity_description.icon_on is not None
+            config_entry.data[CONF_ENTITIES_CREATION_MODE] == "only_selected"
+            and not sensor.entity_description.is_selected_entity
         ):
-            if self._attr_is_on:
-                return self.entity_description.icon_on
-            return self.entity_description.icon_off
-        if self.entity_description.icon is not None:
-            return self.entity_description.icon
-        return None
+            continue
+        selected_sensors.append(sensor)
 
-    async def async_added_to_hass(self) -> None:
-        """Subscribe to MQTT events."""
-
-        @callback
-        def message_received(message):
-            """Handle new MQTT messages."""
-            payload = json.loads(message.payload)
-            json_field = self.entity_description.json_field
-            if json_field not in payload:
-                value = None
-            else:
-                value = bool(payload[json_field])
-
-            self._attr_is_on = value
-            self.async_write_ha_state()
-
-        await mqtt.async_subscribe(
-            self.hass, self.entity_description.key, message_received, 1
-        )
+    async_add_entities(selected_sensors)
