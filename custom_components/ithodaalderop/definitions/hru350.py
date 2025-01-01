@@ -194,7 +194,6 @@ HRU_ECO_350_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Status",
         key="status",
         entity_category=EntityCategory.DIAGNOSTIC,
-        entity_registry_enabled_default=False,
         is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
