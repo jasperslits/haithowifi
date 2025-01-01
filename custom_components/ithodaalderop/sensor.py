@@ -46,12 +46,11 @@ async def async_setup_entry(
     if config_entry.data[CONF_ADDON_TYPE] == "wpu":
         sensors.extend(get_wpu_sensors(config_entry))
 
-    """New parameter CONF_ENTITIES_CREATION_MODE is not present in prior releases."""
     for sensor in sensors:
         if (
-            CONF_ENTITIES_CREATION_MODE not in config_entry.data
-            or config_entry.data[CONF_ENTITIES_CREATION_MODE] == "only_selected"
-        ) and not sensor.entity_description.is_selected_entity:
+            config_entry.data[CONF_ENTITIES_CREATION_MODE] == "only_selected"
+            and not sensor.entity_description.is_selected_entity
+        ):
             continue
         selected_sensors.append(sensor)
 

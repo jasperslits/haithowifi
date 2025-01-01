@@ -4,7 +4,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
-from .const import CONF_ADDON_TYPE, CONF_NONCVE_MODEL
+from .const import CONF_ADDON_TYPE, CONF_ENTITIES_CREATION_MODE, CONF_NONCVE_MODEL
 
 PLATFORMS = [Platform.BINARY_SENSOR, Platform.SENSOR]
 
@@ -21,6 +21,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     ):
         new_data = {**entry.data}
         new_data[CONF_NONCVE_MODEL] = "hru_eco_350"
+        hass.config_entries.async_update_entry(entry, data=new_data)
+
+    # Migrate entities_creation_mode config < v2.2.0 to 2.2.0+
+    if entry.data.get(CONF_ENTITIES_CREATION_MODE) is None:
+        new_data = {**entry.data}
+        new_data[CONF_ENTITIES_CREATION_MODE] = "only_selected"
         hass.config_entries.async_update_entry(entry, data=new_data)
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
