@@ -6,7 +6,7 @@ from homeassistant.core import HomeAssistant
 
 from .const import CONF_ADDON_TYPE, CONF_ENTITIES_CREATION_MODE, CONF_NONCVE_MODEL
 
-PLATFORMS = [Platform.BINARY_SENSOR, Platform.SENSOR]
+PLATFORMS = [Platform.BINARY_SENSOR, Platform.SENSOR, Platform.UPDATE]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
