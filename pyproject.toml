@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "haithowifi"
-version = "1.4"
+version = "2.2.0"
 description = "This integration creates sensors for the Itho WiFi Add-on by Arjen Hiemstra"
 authors = ["Jasper Slits","Benjamin"]
 license = "Apache-2.0"
