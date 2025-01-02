@@ -108,6 +108,7 @@ HRU_ECO_350_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Frost block",
         key="frost_block",
+        state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
