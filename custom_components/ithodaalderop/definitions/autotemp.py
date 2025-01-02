@@ -187,14 +187,6 @@ AUTOTEMP_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
-        json_field="Rest vent time (sec)",
-        key="rest_vent_time",
-        native_unit_of_measurement=UnitOfTime.SECONDS,
-        state_class=SensorStateClass.MEASUREMENT,
-        entity_category=EntityCategory.DIAGNOSTIC,
-        entity_registry_enabled_default=False,
-    ),
-    IthoSensorEntityDescription(
         json_field="State cool",
         key="state_cool",
         entity_category=EntityCategory.DIAGNOSTIC,
