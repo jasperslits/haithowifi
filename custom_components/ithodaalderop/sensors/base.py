@@ -57,8 +57,7 @@ class IthoBaseSensor(SensorEntity):
                 identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
                 manufacturer=MANUFACTURER,
                 model=model,
-                # name=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
-                name=f"{MANUFACTURER} - {model}",
+                name=model,
             )
 
         if description.unique_id is not None:
