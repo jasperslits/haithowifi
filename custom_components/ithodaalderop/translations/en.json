@@ -108,6 +108,33 @@
       },
       "venting_from_thermostat": {
         "name": "Venting from Thermostat"
+      },
+      "status_normal": {
+        "name":"Status normal"
+      },
+      "status_high_extractor": {
+        "name":"Status high extractor hood"
+      },
+      "status_high_bathroom": {
+        "name":"Status high bathroom"
+      },
+      "status_high_extractor_bathroom": {
+        "name":"Status high extractor hood and bath"
+      },
+      "status_timer": {
+        "name":"Status timer"
+      },
+      "status_manual_control": {
+        "name":"Status manual control"
+      },
+      "status_eco comfort": {
+        "name":"Status eco comfort"
+      },
+      "status_limited_ventilation": {
+        "name":"Status limited ventilation"
+      },
+      "status_notathome": {
+        "name":"Status not at home"
       }
     },
     "sensor": {
@@ -1094,6 +1121,189 @@
       },
       "zone_temp": {
         "name": "Zone Temperature"
+      },
+      "operating_mode": {
+        "name":"Operating mode"
+      },
+      "operating_status": {
+        "name":"Operating status"
+      },
+      "rh_extractor": {
+        "name":"RH extractor (%)"
+      },
+      "rh_kitchen": {
+        "name":"RH kitchen (%)"
+      },
+      "rh_toilet1": {
+        "name":"RH toilet 1 (%)"
+      },
+      "rh_livingroom1": {
+        "name":"RH living room 1 (%)"
+      },
+      "rh_livingroom2": {
+        "name":"RH living room 2 (%)"
+      },
+      "rh_laundryroom": {
+        "name":"RH laundry room (%)"
+      },
+      "rh_bathroom1": {
+        "name":"RH bathroom 1 (%)"
+      },
+      "rh_bathroom2": {
+        "name":"RH bathroom 2 (%)"
+      },
+      "rh_bedroom1": {
+        "name":"RH bedroom 1 (%)"
+      },
+      "rh_bedroom2": {
+        "name":"RH bedroom 2 (%)"
+      },
+      "rh_bedroom3": {
+        "name":"RH bedroom 3 (%)"
+      },
+      "rh_bedroom4": {
+        "name":"RH bedroom 4 (%)"
+      },
+      "exhaust_fan": {
+        "name":"exhaust fan (%)"
+      },
+      "supply_fan": {
+        "name":"supply fan (%)"
+      },
+      "co2_plenum": {
+        "name":"CO2 plenum (ppm)"
+      },
+      "co2_calculated": {
+        "name":"CO2 calculated (ppm)"
+      },
+      "calc_co2_extractor": {
+        "name":"Calculated CO2 extractor (ppm)"
+      },
+      "calc_co2_kitchen": {
+        "name":"Calculated CO2 kitchen (ppm)"
+      },
+      "calc_co2_toilet1": {
+        "name":"Calculated CO2 toilet 1 (ppm)"
+      },
+      "calc_co2_livingroom1": {
+        "name":"Calculated CO2 living room 1 (ppm)"
+      },
+      "calc_co2_livingroom2": {
+        "name":"Calculated CO2 living room 2 (ppm)"
+      },
+      "calc_co2_laundryroom": {
+        "name":"Calculated CO2 laundry room (ppm)"
+      },
+      "calc_co2_bathroom1": {
+        "name":"Calculated CO2 bathroom 1 (ppm)"
+      },
+      "calc_co2_bathroom2": {
+        "name":"Calculated CO2 bathroom 2 + toilet 2 (ppm)"
+      },
+      "calc_co2_bedroom1": {
+        "name":"Calculated CO2 bedroom 1 (ppm)"
+      },
+      "calc_co2_bedroom2": {
+        "name":"Calculated CO2 bedroom 2 (ppm)"
+      },
+      "calc_co2_bedroom3": {
+        "name":"Calculated CO2 bedroom 3 (ppm)"
+      },
+      "calc_co2_bedroom4": {
+        "name":"Calculated CO2 bedroom 4 (ppm)"
+      },
+      "calc_pos_extractor": {
+        "name":"Calculated pos valve extractor"
+      },
+      "calc_pos_kitchen": {
+        "name":"Calculated pos valve kitchen"
+      },
+      "calc_pos_toilet1": {
+        "name":"Calculated pos valve toilet 1"
+      },
+      "calc_pos_livingroom1": {
+        "name":"Calculated pos valve living room 1"
+      },
+      "calc_pos_livingroom2": {
+        "name":"Calculated pos valve living room 2"
+      },
+      "calc_pos_laundryroom": {
+        "name":"Calculated pos valve laundry room"
+      },
+      "calc_pos_bathroom1": {
+        "name":"Calculated pos valve bathroom1"
+      },
+      "calc_pos_bathroom2": {
+        "name":"Calculated pos valve bathroom 2 + toilet 2"
+      },
+      "calc_pos_bedroom1": {
+        "name":"Calculated pos valve bedroom 1"
+      },
+      "calc_pos_bedroom2": {
+        "name":"Calculated pos valve bedroom 2"
+      },
+      "calc_pos_bedroom3": {
+        "name":"Calculated pos valve bedroom 3"
+      },
+      "calc_pos_bedroom4": {
+        "name":"Calculated pos valve bedroom 4"
+      },
+      "calc_flow_extractor": {
+        "name":"Calculated Flow extractor (m3_h)"
+      },
+      "calc_flow_kitchen": {
+        "name":"Calculated Flow kitchen (m3_h)"
+      },
+      "calc_flow_toilet1": {
+        "name":"Calculated Flow toilet 1 (m3_h)"
+      },
+      "calc_flow_livingroom1": {
+        "name":"Calculated Flow living room 1 (m3_h)"
+      },
+      "calc_flow_livingroom2": {
+        "name":"Calculated Flow living room 2 (m3_h)"
+      },
+      "calc_flow_laundryroom": {
+        "name":"Calculated Flow laundry room (m3_h)"
+      },
+      "calc_flow_bathroom1": {
+        "name":"Calculated Flow bathroom1 (m3_h)"
+      },
+      "calc_flow_bathroom2": {
+        "name":"Calculated Flow bathroom 2 + toilet 2 (m3_h)"
+      },
+      "calc_flow_bedroom1": {
+        "name":"Calculated Flow bedroom 1 (m3_h)"
+      },
+      "calc_flow_bedroom2": {
+        "name":"Calculated Flow bedroom 2 (m3_h)"
+      },
+      "calc_flow_bedroom3": {
+        "name":"Calculated Flow bedroom 4 (m3_h)"
+      },
+      "calc_flow_bedroom4": {
+        "name":"Calculated Flow bedroom 3 (m3_h)"
+      },
+      "error": {
+        "name":"Error"
+      },
+      "measuring_interval": {
+        "name":"Measuring interval (sec)"
+      },
+      "timer_extractor": {
+        "name":"Timer extractor (sec)"
+      },
+      "time_increase_bathroom1": {
+        "name":"Time increase bathroom 1 (sec)"
+      },
+      "time_increase_bathroom2": {
+        "name":"Time increase bathroom 2 (sec)"
+      },
+      "co2_measurement_room": {
+        "name":"CO2 measurement room"
+      },
+      "measurement_method": {
+        "name":"Measurement method"
       }
     }
   },
@@ -1198,8 +1408,10 @@
         "hru_eco_200": "HRU ECO 200",
         "hru_eco_250": "HRU ECO 250",
         "hru_eco_300": "HRU ECO 300",
-        "hru_eco_350": "HRU ECO 350"
+        "hru_eco_350": "HRU ECO 350",
+        "demand_flow": "Demand/Quality Flow"
       }
     }
   }
 }
+

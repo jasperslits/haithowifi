@@ -108,6 +108,33 @@
       },
       "venting_from_thermostat": {
         "name": "Ventilatie van Thermostaat"
+      },
+      "status_normal": {
+        "name":"Status normaal"
+      },
+      "status_high_extractor": {
+        "name":"Status hoog afzuigkap"
+      },
+      "status_high_bathroom": {
+        "name":"Status hoog badkamer"
+      },
+      "status_high_extractor_bathroom": {
+        "name":"Status hoog afzuigkap and badkamer"
+      },
+      "status_timer": {
+        "name":"Status timer"
+      },
+      "status_manual_control": {
+        "name":"Status handmatig instellen"
+      },
+      "status_eco comfort": {
+        "name":"Status eco comfort"
+      },
+      "status_limited_ventilation": {
+        "name":"Status beperkte ventilatie"
+      },
+      "status_notathome": {
+        "name":"Status niet thuis"
       }
     },
     "sensor": {
@@ -1094,6 +1121,189 @@
       },
       "zone_temp": {
         "name": "Zonetemperatuur"
+      },
+      "operating_mode": {
+        "name":"Apparaat Modus"
+      },
+      "operating_status": {
+        "name":"Apparaat status"
+      },
+      "rh_extractor": {
+        "name":"RH Afzuigkap (%)"
+      },
+      "rh_kitchen": {
+        "name":"RH keuken (%)"
+      },
+      "rh_toilet1": {
+        "name":"RH toilet 1 (%)"
+      },
+      "rh_livingroom1": {
+        "name":"RH woonkamer 1 (%)"
+      },
+      "rh_livingroom2": {
+        "name":"RH woonkamer 2 (%)"
+      },
+      "rh_laundryroom": {
+        "name":"RH waskamer (%)"
+      },
+      "rh_bathroom1": {
+        "name":"RH badkamer 1 (%)"
+      },
+      "rh_bathroom2": {
+        "name":"RH badkamer 2 (%)"
+      },
+      "rh_bedroom1": {
+        "name":"RH slaapkamer 1 (%)"
+      },
+      "rh_bedroom2": {
+        "name":"RH slaapkamer 2 (%)"
+      },
+      "rh_bedroom3": {
+        "name":"RH slaapkamer 3 (%)"
+      },
+      "rh_bedroom4": {
+        "name":"RH slaapkamer 4 (%)"
+      },
+      "exhaust_fan": {
+        "name":"exhaust fan (%)"
+      },
+      "supply_fan": {
+        "name":"supply fan (%)"
+      },
+      "co2_plenum": {
+        "name":"CO2 plenum (ppm)"
+      },
+      "co2_calculated": {
+        "name":"CO2 calculated (ppm)"
+      },
+      "calc_co2_extractor": {
+        "name":"Calculated CO2 afzuigkap (ppm)"
+      },
+      "calc_co2_kitchen": {
+        "name":"Calculated CO2 keuken (ppm)"
+      },
+      "calc_co2_toilet1": {
+        "name":"Calculated CO2 toilet 1 (ppm)"
+      },
+      "calc_co2_livingroom1": {
+        "name":"Calculated CO2 woonkamer 1 (ppm)"
+      },
+      "calc_co2_livingroom2": {
+        "name":"Calculated CO2 woonkamer 2 (ppm)"
+      },
+      "calc_co2_laundryroom": {
+        "name":"Calculated CO2 washroom (ppm)"
+      },
+      "calc_co2_bathroom1": {
+        "name":"Calculated CO2 badkamer1 (ppm)"
+      },
+      "calc_co2_bathroom2": {
+        "name":"Calculated CO2 badkamer 2 + toilet 2 (ppm)"
+      },
+      "calc_co2_bedroom1": {
+        "name":"Calculated CO2 slaapkamer 1 (ppm)"
+      },
+      "calc_co2_bedroom2": {
+        "name":"Calculated CO2 slaapkamer 2 (ppm)"
+      },
+      "calc_co2_bedroom3": {
+        "name":"Calculated CO2 slaapkamer 3 (ppm)"
+      },
+      "calc_co2_bedroom4": {
+        "name":"Calculated CO2 slaapkamer 4 (ppm)"
+      },
+      "calc_pos_extractor": {
+        "name":"Calculated pos klep afzuigkap"
+      },
+      "calc_pos_kitchen": {
+        "name":"Calculated pos klep keuken"
+      },
+      "calc_pos_toilet1": {
+        "name":"Calculated pos klep toilet 1"
+      },
+      "calc_pos_livingroom1": {
+        "name":"Calculated pos klep woonkamer 1"
+      },
+      "calc_pos_livingroom2": {
+        "name":"Calculated pos klep woonkamer 2"
+      },
+      "calc_pos_laundryroom": {
+        "name":"Calculated pos klep waskamer"
+      },
+      "calc_pos_bathroom1": {
+        "name":"Calculated pos klep badkamer 1"
+      },
+      "calc_pos_bathroom2": {
+        "name":"Calculated pos klep badkamer 2 + toilet 2"
+      },
+      "calc_pos_bedroom1": {
+        "name":"Calculated pos klep slaapkamer 1"
+      },
+      "calc_pos_bedroom2": {
+        "name":"Calculated pos klep slaapkamer 2"
+      },
+      "calc_pos_bedroom3": {
+        "name":"Calculated pos klep slaapkamer 3"
+      },
+      "calc_pos_bedroom4": {
+        "name":"Calculated pos klep slaapkamer 4"
+      },
+      "calc_flow_extractor": {
+        "name":"Calculated luchtstroom afzuigkap (m3_h)"
+      },
+      "calc_flow_kitchen": {
+        "name":"Calculated luchtstroom keuken (m3_h)"
+      },
+      "calc_flow_toilet1": {
+        "name":"Calculated luchtstroom toilet 1 (m3_h)"
+      },
+      "calc_flow_livingroom1": {
+        "name":"Calculated luchtstroom woonkamer 1 (m3_h)"
+      },
+      "calc_flow_livingroom2": {
+        "name":"Calculated luchtstroom woonkamer 2 (m3_h)"
+      },
+      "calc_flow_laundryroom": {
+        "name":"Calculated luchtstroom waskamer (m3_h)"
+      },
+      "calc_flow_bathroom1": {
+        "name":"Calculated luchtstroom badkamer 1 (m3_h)"
+      },
+      "calc_flow_bathroom2": {
+        "name":"Calculated luchtstroom badkamer 2 + toilet 2 (m3_h)"
+      },
+      "calc_flow_bedroom1": {
+        "name":"Calculated luchtstroom slaapkamer 1 (m3_h)"
+      },
+      "calc_flow_bedroom2": {
+        "name":"Calculated luchtstroom slaapkamer 2 (m3_h)"
+      },
+      "calc_flow_bedroom3": {
+        "name":"Calculated luchtstroom slaapkamer 4 (m3_h)"
+      },
+      "calc_flow_bedroom4": {
+        "name":"Calculated luchtstroom slaapkamer 3 (m3_h)"
+      },
+      "error": {
+        "name":"Error"
+      },
+      "measuring_interval": {
+        "name":"Measuring interval (sec)"
+      },
+      "timer_extractor": {
+        "name":"Timer afzuigkap (sec)"
+      },
+      "time_increase_bathroom1": {
+        "name":"Time increase badkamer 1 (sec)"
+      },
+      "time_increase_bathroom2": {
+        "name":"Time increase badkamer 2 (sec)"
+      },
+      "co2_measurement_room": {
+        "name":"CO2 measurement room"
+      },
+      "measurement_method": {
+        "name":"Measurement method"
       }
     }
   },
@@ -1198,7 +1408,8 @@
         "hru_eco_200": "HRU ECO 200",
         "hru_eco_250": "HRU ECO 250",
         "hru_eco_300": "HRU ECO 300",
-        "hru_eco_350": "HRU ECO 350"
+        "hru_eco_350": "HRU ECO 350",
+        "demand_flow": "Demand/Quality Flow"
       }
     }
   }
