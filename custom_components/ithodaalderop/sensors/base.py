@@ -65,7 +65,9 @@ class IthoBaseSensor(SensorEntity):
             self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.unique_id.lower()}"
         else:
             self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.key}"
+
         self.entity_id = f"sensor.{self._attr_unique_id}"
+        self.entity_description.key = self.entity_id
 
     @property
     def icon(self) -> str | None:
@@ -108,6 +110,7 @@ class IthoBinarySensor(BinarySensorEntity):
             f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.key}"
         )
         self.entity_id = f"binary_sensor.{self._attr_unique_id}"
+        self.entity_description.key = self.entity_id
 
     @property
     def icon(self):
