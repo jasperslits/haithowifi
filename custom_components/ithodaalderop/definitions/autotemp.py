@@ -15,7 +15,7 @@ from .base import IthoBinarySensorEntityDescription, IthoSensorEntityDescription
 AUTOTEMP_BINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     IthoBinarySensorEntityDescription(
         json_field="Empty battery ( 0=OK )",
-        translation_key="empty_battery",
+        key="empty_battery",
         device_class=BinarySensorDeviceClass.BATTERY,
         entity_category=EntityCategory.DIAGNOSTIC,
         # icon_off="mdi:battery",
