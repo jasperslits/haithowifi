@@ -1,6 +1,5 @@
 """Definitions for Itho Demand Flow sensors added to MQTT."""
 
-from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.components.sensor import SensorStateClass
 from homeassistant.const import (
     CONCENTRATION_PARTS_PER_MILLION,
