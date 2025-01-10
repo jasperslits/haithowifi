@@ -1,4 +1,84 @@
 {
+  "config": {
+    "abort": {
+      "already_configured": "Itho integratie is al geconfigureerd",
+      "reconfigure_successful": "Herconfiguratie was succesvol"
+    },
+    "step": {
+      "noncve_model": {
+        "data": {
+          "noncve_model": "Model:"
+        },
+        "description": "Selecteer het model van uw Itho unit",
+        "title": "Selecteer Non-CVE (HRU) model"
+      },
+      "reconfigure": {
+        "data": {
+          "entities_creation_mode": "Kies de sensoren die aangemaakt worden:"
+        },
+        "description": "Schakelen tussen 'alle' en 'selectief' zal geen sensoren verwijderen, maar maakt deze alleen niet-beschikbaar. Als u ze wilt verwijderen dient u dat zelf te doen.",
+        "title": "Wijzig de aan te maken sensoren"
+      },
+      "remotes": {
+        "data": {
+          "remote1": "Afstandsbediening 1",
+          "remote2": "Afstandsbediening 2",
+          "remote3": "Afstandsbediening 3",
+          "remote4": "Afstandsbediening 4",
+          "remote5": "Afstandsbediening 5"
+        },
+        "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices. Klik op 'Verzenden' zonder iets te wijzigen om dit over te slaan.",
+        "title": "Voeg nieuwe Itho afstandsbedieningen toe"
+      },
+      "remotes_reconfigure": {
+        "data": {
+          "remote1": "Afstandsbediening 1",
+          "remote2": "Afstandsbediening 2",
+          "remote3": "Afstandsbediening 3",
+          "remote4": "Afstandsbediening 4",
+          "remote5": "Afstandsbediening 5"
+        },
+        "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices. ",
+        "title": "Wijzig Itho afstandsbedieningen"
+      },
+      "rooms": {
+        "data": {
+          "room1": "Ruimte 1",
+          "room2": "Ruimte 2",
+          "room3": "Ruimte 3",
+          "room4": "Ruimte 4",
+          "room5": "Ruimte 5",
+          "room6": "Ruimte 6",
+          "room7": "Ruimte 7",
+          "room8": "Ruimte 8"
+        },
+        "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer",
+        "title": "Voeg nieuwe Itho ruimtes toe"
+      },
+      "rooms_reconfigure": {
+        "data": {
+          "room1": "Ruimte 1",
+          "room2": "Ruimte 2",
+          "room3": "Ruimte 3",
+          "room4": "Ruimte 4",
+          "room5": "Ruimte 5",
+          "room6": "Ruimte 6",
+          "room7": "Ruimte 7",
+          "room8": "Ruimte 8"
+        },
+        "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer or slaapkamer ouders.",
+        "title": "Wijzig Itho ruimtes"
+      },
+      "user": {
+        "data": {
+          "addontype": "Add-on type:",
+          "entities_creation_mode": "Kies de sensoren die aangemaakt worden (dit kan later aangepast worden):"
+        },
+        "description": "Configuratie stappen voor Itho. Herhaal deze configuratie voor iedere fysieke add-on die gebruikt wordt. Deze integratie maakt automatisch alle of de meest gebruikelijke sensors aan.",
+        "title": "Voeg nieuwe Itho apparaten toe"
+      }
+    }
+  },
   "entity": {
     "binary_sensor": {
       "bleeding_mode_blocked": {
@@ -88,14 +168,41 @@
       "manual_operation": {
         "name": "Handmatige Bediening"
       },
-      "ot_time_valid": {
-        "name": "OT Tijd Geldig"
-      },
       "off_mode_active": {
         "name": "Uit-Modus Actief"
       },
+      "ot_time_valid": {
+        "name": "OT Tijd Geldig"
+      },
       "regeneration_active": {
         "name": "Regeneratie Actief"
+      },
+      "status_eco comfort": {
+        "name": "Status eco comfort"
+      },
+      "status_high_bathroom": {
+        "name": "Status hoog badkamer"
+      },
+      "status_high_extractor": {
+        "name": "Status hoog afzuigkap"
+      },
+      "status_high_extractor_bathroom": {
+        "name": "Status hoog afzuigkap and badkamer"
+      },
+      "status_limited_ventilation": {
+        "name": "Status beperkte ventilatie"
+      },
+      "status_manual_control": {
+        "name": "Status handmatig instellen"
+      },
+      "status_normal": {
+        "name": "Status normaal"
+      },
+      "status_notathome": {
+        "name": "Status niet thuis"
+      },
+      "status_timer": {
+        "name": "Status timer"
       },
       "task_active": {
         "name": "Taak Actief"
@@ -108,33 +215,6 @@
       },
       "venting_from_thermostat": {
         "name": "Ventilatie van Thermostaat"
-      },
-      "status_normal": {
-        "name":"Status normaal"
-      },
-      "status_high_extractor": {
-        "name":"Status hoog afzuigkap"
-      },
-      "status_high_bathroom": {
-        "name":"Status hoog badkamer"
-      },
-      "status_high_extractor_bathroom": {
-        "name":"Status hoog afzuigkap and badkamer"
-      },
-      "status_timer": {
-        "name":"Status timer"
-      },
-      "status_manual_control": {
-        "name":"Status handmatig instellen"
-      },
-      "status_eco comfort": {
-        "name":"Status eco comfort"
-      },
-      "status_limited_ventilation": {
-        "name":"Status beperkte ventilatie"
-      },
-      "status_notathome": {
-        "name":"Status niet thuis"
       }
     },
     "sensor": {
@@ -243,6 +323,114 @@
       "bypass_valve_open": {
         "name": "Bypassklep Open"
       },
+      "calc_co2_bathroom1": {
+        "name": "Calculated CO2 badkamer1"
+      },
+      "calc_co2_bathroom2": {
+        "name": "Calculated CO2 badkamer 2 + toilet 2"
+      },
+      "calc_co2_bedroom1": {
+        "name": "Calculated CO2 slaapkamer 1"
+      },
+      "calc_co2_bedroom2": {
+        "name": "Calculated CO2 slaapkamer 2"
+      },
+      "calc_co2_bedroom3": {
+        "name": "Calculated CO2 slaapkamer 3"
+      },
+      "calc_co2_bedroom4": {
+        "name": "Calculated CO2 slaapkamer 4"
+      },
+      "calc_co2_extractor": {
+        "name": "Calculated CO2 afzuigkap"
+      },
+      "calc_co2_kitchen": {
+        "name": "Calculated CO2 keuken"
+      },
+      "calc_co2_laundryroom": {
+        "name": "Calculated CO2 washroom"
+      },
+      "calc_co2_livingroom1": {
+        "name": "Calculated CO2 woonkamer 1"
+      },
+      "calc_co2_livingroom2": {
+        "name": "Calculated CO2 woonkamer 2"
+      },
+      "calc_co2_toilet1": {
+        "name": "Calculated CO2 toilet 1"
+      },
+      "calc_flow_bathroom1": {
+        "name": "Calculated luchtstroom badkamer 1"
+      },
+      "calc_flow_bathroom2": {
+        "name": "Calculated luchtstroom badkamer 2 + toilet 2"
+      },
+      "calc_flow_bedroom1": {
+        "name": "Calculated luchtstroom slaapkamer 1"
+      },
+      "calc_flow_bedroom2": {
+        "name": "Calculated luchtstroom slaapkamer 2"
+      },
+      "calc_flow_bedroom3": {
+        "name": "Calculated luchtstroom slaapkamer 4"
+      },
+      "calc_flow_bedroom4": {
+        "name": "Calculated luchtstroom slaapkamer 3"
+      },
+      "calc_flow_extractor": {
+        "name": "Calculated luchtstroom afzuigkap"
+      },
+      "calc_flow_kitchen": {
+        "name": "Calculated luchtstroom keuken"
+      },
+      "calc_flow_laundryroom": {
+        "name": "Calculated luchtstroom waskamer"
+      },
+      "calc_flow_livingroom1": {
+        "name": "Calculated luchtstroom woonkamer 1"
+      },
+      "calc_flow_livingroom2": {
+        "name": "Calculated luchtstroom woonkamer 2"
+      },
+      "calc_flow_toilet1": {
+        "name": "Calculated luchtstroom toilet 1"
+      },
+      "calc_pos_bathroom1": {
+        "name": "Calculated pos klep badkamer 1"
+      },
+      "calc_pos_bathroom2": {
+        "name": "Calculated pos klep badkamer 2 + toilet 2"
+      },
+      "calc_pos_bedroom1": {
+        "name": "Calculated pos klep slaapkamer 1"
+      },
+      "calc_pos_bedroom2": {
+        "name": "Calculated pos klep slaapkamer 2"
+      },
+      "calc_pos_bedroom3": {
+        "name": "Calculated pos klep slaapkamer 3"
+      },
+      "calc_pos_bedroom4": {
+        "name": "Calculated pos klep slaapkamer 4"
+      },
+      "calc_pos_extractor": {
+        "name": "Calculated pos klep afzuigkap"
+      },
+      "calc_pos_kitchen": {
+        "name": "Calculated pos klep keuken"
+      },
+      "calc_pos_laundryroom": {
+        "name": "Calculated pos klep waskamer"
+      },
+      "calc_pos_livingroom1": {
+        "name": "Calculated pos klep woonkamer 1"
+      },
+      "calc_pos_livingroom2": {
+        "name": "Calculated pos klep woonkamer 2"
+      },
+      "calc_pos_toilet1": {
+        "name": "Calculated pos klep toilet 1"
+      },
       "calculated_condensation_temp_dhw": {
         "name": "Berekende Condensatietemperatuur (Tapwater)"
       },
@@ -267,6 +455,18 @@
       "ch_pump_starts": {
         "name": "CV Pomp Start"
       },
+      "co_valve_position": {
+        "name": "CO Kleppositie"
+      },
+      "co2_calculated": {
+        "name": "CO2 calculated"
+      },
+      "co2_measurement_room": {
+        "name": "CO2 measurement room"
+      },
+      "co2_plenum": {
+        "name": "CO2 plenum"
+      },
       "co2_value": {
         "name": "CO² Waarde"
       },
@@ -275,9 +475,6 @@
       },
       "co2_ventilation": {
         "name": "CO² Ventilatie"
-      },
-      "co_valve_position": {
-        "name": "CO Kleppositie"
       },
       "comm_space": {
         "name": "Comm Space {letter}"
@@ -319,7 +516,7 @@
         "name": "Instelpunt Koelkleptemperatuur"
       },
       "correction_measurement_delta_source_temperature": {
-        "name": "Correctie Delta Bron Temperatuur (K)"
+        "name": "Correctie Delta Bron Temperatuur"
       },
       "counter_min_time": {
         "name": "Teller Minimale Tijd"
@@ -337,7 +534,7 @@
         "name": "Huidig Energieverbruik Ventilator"
       },
       "current_e_element": {
-        "name": "Huidige Elektrische Element (A)"
+        "name": "Huidige Elektrische Element"
       },
       "current_period": {
         "name": "Huidige Periode"
@@ -448,28 +645,28 @@
         "name": "Duur van Huidig Vorst Instelpunt"
       },
       "e_consumption_cooling": {
-        "name": "Energieverbruik (Koeling, kWh)"
+        "name": "Energieverbruik (Koeling)"
       },
       "e_consumption_dhw": {
-        "name": "Energieverbruik (Tapwater, kWh)"
+        "name": "Energieverbruik (Tapwater)"
       },
       "e_consumption_during_cooling": {
-        "name": "Energieverbruik Tijdens Koeling (kWh)"
+        "name": "Energieverbruik Tijdens Koeling"
       },
       "e_consumption_during_dhw": {
-        "name": "Energieverbruik Tijdens Tapwater (kWh)"
+        "name": "Energieverbruik Tijdens Tapwater"
       },
       "e_consumption_during_heating": {
-        "name": "Energieverbruik Tijdens Verwarming (kWh)"
+        "name": "Energieverbruik Tijdens Verwarming"
       },
       "e_consumption_during_stand_by": {
-        "name": "Energieverbruik Tijdens Stand-by (kWh)"
+        "name": "Energieverbruik Tijdens Stand-by"
       },
       "e_consumption_heating": {
-        "name": "Energieverbruik (Verwarming, kWh)"
+        "name": "Energieverbruik (Verwarming)"
       },
       "e_consumption_stand_by": {
-        "name": "Energieverbruik (Stand-by, kWh)"
+        "name": "Energieverbruik (Stand-by)"
       },
       "electrical_element_on": {
         "name": "Elektrisch Element Aan"
@@ -487,16 +684,16 @@
         "name": "Element"
       },
       "energy_out_of_source": {
-        "name": "Energie Uit Bron (MWh)"
+        "name": "Energie Uit Bron"
       },
       "energy_returned_to_source": {
-        "name": "Energie Terug naar Bron (MWh)"
+        "name": "Energie Terug naar Bron"
       },
       "enhanced_bathroom": {
         "name": "Verbeterde Badkamer Modus"
       },
       "error": {
-        "name": "Fout"
+        "name": "Error"
       },
       "error_code_byte": {
         "name": "Foutcode Byte {num}"
@@ -515,6 +712,9 @@
       },
       "evaporator_temp": {
         "name": "Verdampertemperatuur"
+      },
+      "exhaust_fan": {
+        "name": "exhaust fan"
       },
       "exhaust_fan_actual": {
         "name": "Actuele Afvoer Ventilator"
@@ -688,10 +888,10 @@
         "name": "Handmatige Bediening"
       },
       "mass_flow_air_enter_house_kgh": {
-        "name": "Luchtmassastroom In (kg/u)"
+        "name": "Luchtmassastroom In"
       },
       "mass_flow_air_leaving_house_kgh": {
-        "name": "Luchtmassastroom Uit (kg/u)"
+        "name": "Luchtmassastroom Uit"
       },
       "max_co2_level": {
         "name": "Max CO² Niveau"
@@ -717,11 +917,17 @@
       "measurement_actual": {
         "name": "Huidige Meting"
       },
+      "measurement_method": {
+        "name": "Measurement method"
+      },
       "measurement_previous_first": {
         "name": "Vorige Meting 1"
       },
       "measurement_previous_second": {
         "name": "Vorige Meting 2"
+      },
+      "measuring_interval": {
+        "name": "Measuring interval"
       },
       "min_running_time_compr": {
         "name": "Minimale Looptijd Compressor"
@@ -759,6 +965,12 @@
       "number_of_steps_the_frost_valve_is_open": {
         "name": "Stappen Dat Vorstklep Open Is"
       },
+      "operating_mode": {
+        "name": "Apparaat Modus"
+      },
+      "operating_status": {
+        "name": "Apparaat status"
+      },
       "outdoor_temp": {
         "name": "Buitentemperatuur"
       },
@@ -790,10 +1002,10 @@
         "name": "Positie van Vorstklep"
       },
       "power_kw": {
-        "name": "Vermogen (kW)"
+        "name": "Vermogen"
       },
       "power_perc": {
-        "name": "Vermogen (%)"
+        "name": "Vermogen"
       },
       "preheat_tap_water": {
         "name": "Voorverwarmen Kraanwater"
@@ -839,6 +1051,42 @@
       },
       "rfspeed_absolute": {
         "name": "RF Snelheid"
+      },
+      "rh_bathroom1": {
+        "name": "RH badkamer 1"
+      },
+      "rh_bathroom2": {
+        "name": "RH badkamer 2"
+      },
+      "rh_bedroom1": {
+        "name": "RH slaapkamer 1"
+      },
+      "rh_bedroom2": {
+        "name": "RH slaapkamer 2"
+      },
+      "rh_bedroom3": {
+        "name": "RH slaapkamer 3"
+      },
+      "rh_bedroom4": {
+        "name": "RH slaapkamer 4"
+      },
+      "rh_extractor": {
+        "name": "RH Afzuigkap"
+      },
+      "rh_kitchen": {
+        "name": "RH keuken"
+      },
+      "rh_laundryroom": {
+        "name": "RH waskamer"
+      },
+      "rh_livingroom1": {
+        "name": "RH woonkamer 1"
+      },
+      "rh_livingroom2": {
+        "name": "RH woonkamer 2"
+      },
+      "rh_toilet1": {
+        "name": "RH toilet 1"
       },
       "room_temp": {
         "name": "Kamertemperatuur"
@@ -945,6 +1193,9 @@
       "supply_actual": {
         "name": "Werkelijke Toevoerniveau"
       },
+      "supply_fan": {
+        "name": "supply fan"
+      },
       "supply_fan_actual": {
         "name": "Actuele Aanvoer Ventilator"
       },
@@ -993,6 +1244,12 @@
       "time_hours": {
         "name": "Tijd (Uren)"
       },
+      "time_increase_bathroom1": {
+        "name": "Time increase badkamer 1"
+      },
+      "time_increase_bathroom2": {
+        "name": "Time increase badkamer 2"
+      },
       "time_minutes": {
         "name": "Tijd (Minuten)"
       },
@@ -1001,6 +1258,9 @@
       },
       "time_valid": {
         "name": "Tijd Geldig"
+      },
+      "timer_extractor": {
+        "name": "Timer afzuigkap"
       },
       "timer_for_how_long_the_house_is_cooled": {
         "name": "Duur van Koeling"
@@ -1121,270 +1381,7 @@
       },
       "zone_temp": {
         "name": "Zonetemperatuur"
-      },
-      "operating_mode": {
-        "name":"Apparaat Modus"
-      },
-      "operating_status": {
-        "name":"Apparaat status"
-      },
-      "rh_extractor": {
-        "name":"RH Afzuigkap (%)"
-      },
-      "rh_kitchen": {
-        "name":"RH keuken (%)"
-      },
-      "rh_toilet1": {
-        "name":"RH toilet 1 (%)"
-      },
-      "rh_livingroom1": {
-        "name":"RH woonkamer 1 (%)"
-      },
-      "rh_livingroom2": {
-        "name":"RH woonkamer 2 (%)"
-      },
-      "rh_laundryroom": {
-        "name":"RH waskamer (%)"
-      },
-      "rh_bathroom1": {
-        "name":"RH badkamer 1 (%)"
-      },
-      "rh_bathroom2": {
-        "name":"RH badkamer 2 (%)"
-      },
-      "rh_bedroom1": {
-        "name":"RH slaapkamer 1 (%)"
-      },
-      "rh_bedroom2": {
-        "name":"RH slaapkamer 2 (%)"
-      },
-      "rh_bedroom3": {
-        "name":"RH slaapkamer 3 (%)"
-      },
-      "rh_bedroom4": {
-        "name":"RH slaapkamer 4 (%)"
-      },
-      "exhaust_fan": {
-        "name":"exhaust fan (%)"
-      },
-      "supply_fan": {
-        "name":"supply fan (%)"
-      },
-      "co2_plenum": {
-        "name":"CO2 plenum (ppm)"
-      },
-      "co2_calculated": {
-        "name":"CO2 calculated (ppm)"
-      },
-      "calc_co2_extractor": {
-        "name":"Calculated CO2 afzuigkap (ppm)"
-      },
-      "calc_co2_kitchen": {
-        "name":"Calculated CO2 keuken (ppm)"
-      },
-      "calc_co2_toilet1": {
-        "name":"Calculated CO2 toilet 1 (ppm)"
-      },
-      "calc_co2_livingroom1": {
-        "name":"Calculated CO2 woonkamer 1 (ppm)"
-      },
-      "calc_co2_livingroom2": {
-        "name":"Calculated CO2 woonkamer 2 (ppm)"
-      },
-      "calc_co2_laundryroom": {
-        "name":"Calculated CO2 washroom (ppm)"
-      },
-      "calc_co2_bathroom1": {
-        "name":"Calculated CO2 badkamer1 (ppm)"
-      },
-      "calc_co2_bathroom2": {
-        "name":"Calculated CO2 badkamer 2 + toilet 2 (ppm)"
-      },
-      "calc_co2_bedroom1": {
-        "name":"Calculated CO2 slaapkamer 1 (ppm)"
-      },
-      "calc_co2_bedroom2": {
-        "name":"Calculated CO2 slaapkamer 2 (ppm)"
-      },
-      "calc_co2_bedroom3": {
-        "name":"Calculated CO2 slaapkamer 3 (ppm)"
-      },
-      "calc_co2_bedroom4": {
-        "name":"Calculated CO2 slaapkamer 4 (ppm)"
-      },
-      "calc_pos_extractor": {
-        "name":"Calculated pos klep afzuigkap"
-      },
-      "calc_pos_kitchen": {
-        "name":"Calculated pos klep keuken"
-      },
-      "calc_pos_toilet1": {
-        "name":"Calculated pos klep toilet 1"
-      },
-      "calc_pos_livingroom1": {
-        "name":"Calculated pos klep woonkamer 1"
-      },
-      "calc_pos_livingroom2": {
-        "name":"Calculated pos klep woonkamer 2"
-      },
-      "calc_pos_laundryroom": {
-        "name":"Calculated pos klep waskamer"
-      },
-      "calc_pos_bathroom1": {
-        "name":"Calculated pos klep badkamer 1"
-      },
-      "calc_pos_bathroom2": {
-        "name":"Calculated pos klep badkamer 2 + toilet 2"
-      },
-      "calc_pos_bedroom1": {
-        "name":"Calculated pos klep slaapkamer 1"
-      },
-      "calc_pos_bedroom2": {
-        "name":"Calculated pos klep slaapkamer 2"
-      },
-      "calc_pos_bedroom3": {
-        "name":"Calculated pos klep slaapkamer 3"
-      },
-      "calc_pos_bedroom4": {
-        "name":"Calculated pos klep slaapkamer 4"
-      },
-      "calc_flow_extractor": {
-        "name":"Calculated luchtstroom afzuigkap (m3_h)"
-      },
-      "calc_flow_kitchen": {
-        "name":"Calculated luchtstroom keuken (m3_h)"
-      },
-      "calc_flow_toilet1": {
-        "name":"Calculated luchtstroom toilet 1 (m3_h)"
-      },
-      "calc_flow_livingroom1": {
-        "name":"Calculated luchtstroom woonkamer 1 (m3_h)"
-      },
-      "calc_flow_livingroom2": {
-        "name":"Calculated luchtstroom woonkamer 2 (m3_h)"
-      },
-      "calc_flow_laundryroom": {
-        "name":"Calculated luchtstroom waskamer (m3_h)"
-      },
-      "calc_flow_bathroom1": {
-        "name":"Calculated luchtstroom badkamer 1 (m3_h)"
-      },
-      "calc_flow_bathroom2": {
-        "name":"Calculated luchtstroom badkamer 2 + toilet 2 (m3_h)"
-      },
-      "calc_flow_bedroom1": {
-        "name":"Calculated luchtstroom slaapkamer 1 (m3_h)"
-      },
-      "calc_flow_bedroom2": {
-        "name":"Calculated luchtstroom slaapkamer 2 (m3_h)"
-      },
-      "calc_flow_bedroom3": {
-        "name":"Calculated luchtstroom slaapkamer 4 (m3_h)"
-      },
-      "calc_flow_bedroom4": {
-        "name":"Calculated luchtstroom slaapkamer 3 (m3_h)"
-      },
-      "error": {
-        "name":"Error"
-      },
-      "measuring_interval": {
-        "name":"Measuring interval (sec)"
-      },
-      "timer_extractor": {
-        "name":"Timer afzuigkap (sec)"
-      },
-      "time_increase_bathroom1": {
-        "name":"Time increase badkamer 1 (sec)"
-      },
-      "time_increase_bathroom2": {
-        "name":"Time increase badkamer 2 (sec)"
-      },
-      "co2_measurement_room": {
-        "name":"CO2 measurement room"
-      },
-      "measurement_method": {
-        "name":"Measurement method"
       }
-    }
-  },
-  "config": {
-    "step": {
-      "user": {
-        "title": "Voeg nieuwe Itho apparaten toe",
-        "description": "Configuratie stappen voor Itho. Herhaal deze configuratie voor iedere fysieke add-on die gebruikt wordt. Deze integratie maakt automatisch alle of de meest gebruikelijke sensors aan.",
-        "data": {
-          "addontype": "Add-on type:",
-          "entities_creation_mode": "Kies de sensoren die aangemaakt worden (dit kan later aangepast worden):"
-        }
-      },
-      "noncve_model": {
-        "title": "Selecteer Non-CVE (HRU) model",
-        "description": "Selecteer het model van uw Itho unit",
-        "data": {
-          "noncve_model": "Model:"
-        }
-      },
-      "reconfigure": {
-        "title": "Wijzig de aan te maken sensoren",
-        "description": "Schakelen tussen 'alle' en 'selectief' zal geen sensoren verwijderen, maar maakt deze alleen niet-beschikbaar. Als u ze wilt verwijderen dient u dat zelf te doen.",
-        "data": {
-          "entities_creation_mode": "Kies de sensoren die aangemaakt worden:"
-        }
-      },
-      "remotes": {
-        "title": "Voeg nieuwe Itho afstandsbedieningen toe",
-        "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices. Klik op 'Verzenden' zonder iets te wijzigen om dit over te slaan.",
-        "data": {
-          "remote1": "Afstandsbediening 1",
-          "remote2": "Afstandsbediening 2",
-          "remote3": "Afstandsbediening 3",
-          "remote4": "Afstandsbediening 4",
-          "remote5": "Afstandsbediening 5"
-        }
-      },
-      "remotes_reconfigure": {
-        "title": "Wijzig Itho afstandsbedieningen",
-        "description": "Gebruik de namen zoals deze ook zijn geconfigureerd in de Add-on bij RF Devices. ",
-        "data": {
-          "remote1": "Afstandsbediening 1",
-          "remote2": "Afstandsbediening 2",
-          "remote3": "Afstandsbediening 3",
-          "remote4": "Afstandsbediening 4",
-          "remote5": "Afstandsbediening 5"
-        }
-      },
-      "rooms": {
-        "title": "Voeg nieuwe Itho ruimtes toe",
-        "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer",
-        "data": {
-          "room1": "Ruimte 1",
-          "room2": "Ruimte 2",
-          "room3": "Ruimte 3",
-          "room4": "Ruimte 4",
-          "room5": "Ruimte 5",
-          "room6": "Ruimte 6",
-          "room7": "Ruimte 7",
-          "room8": "Ruimte 8"
-        }
-      },
-      "rooms_reconfigure": {
-        "title": "Wijzig Itho ruimtes",
-        "description": "Benoem de ruimtes gekoppeld aan de Auto temp unit. Bijv. Woonkamer or slaapkamer ouders.",
-        "data": {
-          "room1": "Ruimte 1",
-          "room2": "Ruimte 2",
-          "room3": "Ruimte 3",
-          "room4": "Ruimte 4",
-          "room5": "Ruimte 5",
-          "room6": "Ruimte 6",
-          "room7": "Ruimte 7",
-          "room8": "Ruimte 8"
-        }
-      }
-    },
-    "abort": {
-      "already_configured": "Itho integratie is al geconfigureerd",
-      "reconfigure_successful": "Herconfiguratie was succesvol"
     }
   },
   "selector": {
@@ -1398,18 +1395,18 @@
     },
     "entities_creation_modes": {
       "options": {
-        "only_selected": "Maak alleen een selectie van sensoren aan (aanbevolen voor de meeste gebruikers)",
-        "all": "Maak alle beschikbare sensoren aan"
+        "all": "Maak alle beschikbare sensoren aan",
+        "only_selected": "Maak alleen een selectie van sensoren aan (aanbevolen voor de meeste gebruikers)"
       }
     },
     "noncve_model_select": {
       "options": {
+        "demand_flow": "Demand/Quality Flow",
         "hru_eco": "HRU ECO",
         "hru_eco_200": "HRU ECO 200",
         "hru_eco_250": "HRU ECO 250",
         "hru_eco_300": "HRU ECO 300",
-        "hru_eco_350": "HRU ECO 350",
-        "demand_flow": "Demand/Quality Flow"
+        "hru_eco_350": "HRU ECO 350"
       }
     }
   }

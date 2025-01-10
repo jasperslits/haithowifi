@@ -1,7 +1,7 @@
 """Definitions for Itho Demand Flow sensors added to MQTT."""
 
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass
-from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
+from homeassistant.components.sensor import SensorStateClass
 from homeassistant.const import (
     CONCENTRATION_PARTS_PER_MILLION,
     PERCENTAGE,
@@ -16,74 +16,47 @@ DEMAND_FLOW_BINARY_SENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     IthoBinarySensorEntityDescription(
         json_field="Status normal",
         key="status_normal",
-        device_class=BinarySensorDeviceClass.OPENING,
         entity_category=EntityCategory.DIAGNOSTIC,
-        icon_off="mdi:valve-closed",
-        icon_on="mdi:valve-open",
     ),
     IthoBinarySensorEntityDescription(
         json_field="Status high extractor hood",
         key="status_high_extractor",
-        device_class=BinarySensorDeviceClass.OPENING,
         entity_category=EntityCategory.DIAGNOSTIC,
-        icon_off="mdi:valve-closed",
-        icon_on="mdi:valve-open",
     ),
     IthoBinarySensorEntityDescription(
         json_field="Status high bathroom",
         key="status_high_bathroom",
-        device_class=BinarySensorDeviceClass.OPENING,
         entity_category=EntityCategory.DIAGNOSTIC,
-        icon_off="mdi:valve-closed",
-        icon_on="mdi:valve-open",
     ),
     IthoBinarySensorEntityDescription(
         json_field="Status high extractor hood and bath",
         key="status_high_extractor_bathroom",
-        device_class=BinarySensorDeviceClass.OPENING,
         entity_category=EntityCategory.DIAGNOSTIC,
-        icon_off="mdi:valve-closed",
-        icon_on="mdi:valve-open",
     ),
     IthoBinarySensorEntityDescription(
         json_field="Status timer",
         key="status_timer",
-        device_class=BinarySensorDeviceClass.OPENING,
         entity_category=EntityCategory.DIAGNOSTIC,
-        icon_off="mdi:valve-closed",
-        icon_on="mdi:valve-open",
     ),
     IthoBinarySensorEntityDescription(
         json_field="Status manual control",
         key="status_manual_control",
-        device_class=BinarySensorDeviceClass.OPENING,
         entity_category=EntityCategory.DIAGNOSTIC,
-        icon_off="mdi:valve-closed",
-        icon_on="mdi:valve-open",
     ),
     IthoBinarySensorEntityDescription(
         json_field="Status eco comfort",
         key="status_eco comfort",
-        device_class=BinarySensorDeviceClass.OPENING,
         entity_category=EntityCategory.DIAGNOSTIC,
-        icon_off="mdi:valve-closed",
-        icon_on="mdi:valve-open",
     ),
     IthoBinarySensorEntityDescription(
         json_field="Status limited ventilation",
         key="status_limited_ventilation",
-        device_class=BinarySensorDeviceClass.OPENING,
         entity_category=EntityCategory.DIAGNOSTIC,
-        icon_off="mdi:valve-closed",
-        icon_on="mdi:valve-open",
     ),
     IthoBinarySensorEntityDescription(
         json_field="Status not at home",
         key="status_notathome",
-        device_class=BinarySensorDeviceClass.OPENING,
         entity_category=EntityCategory.DIAGNOSTIC,
-        icon_off="mdi:valve-closed",
-        icon_on="mdi:valve-open",
     ),
 )
 
@@ -148,14 +121,12 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="rh_bathroom1",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=True,
     ),
     IthoSensorEntityDescription(
         json_field="RH bathroom 2 (%)",
         key="rh_bathroom2",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=True,
     ),
     IthoSensorEntityDescription(
         json_field="RH bedroom 1 (%)",
@@ -258,14 +229,12 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="calc_co2_bathroom1",
         native_unit_of_measurement=CONCENTRATION_PARTS_PER_MILLION,
         state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=True,
     ),
     IthoSensorEntityDescription(
         json_field="Calculated CO2 bath2 + toilet2 (ppm)",
         key="calc_co2_bathroom2",
         native_unit_of_measurement=CONCENTRATION_PARTS_PER_MILLION,
         state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=True,
     ),
     IthoSensorEntityDescription(
         json_field="Calculated CO2 bedroom 1 (ppm)",
@@ -342,14 +311,12 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="calc_pos_bathroom1",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=True,
     ),
     IthoSensorEntityDescription(
         json_field="Calculated pos valve bath2+toilet2",
         key="calc_pos_bathroom2",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=True,
     ),
     IthoSensorEntityDescription(
         json_field="Calculated pos valve bedroom1",
@@ -426,14 +393,12 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="calc_flow_bathroom1",
         native_unit_of_measurement=UnitOfVolumeFlowRate.CUBIC_METERS_PER_HOUR,
         state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=True,
     ),
     IthoSensorEntityDescription(
         json_field="Calculated Flow bath2+toilet2 (m3_h)",
         key="calc_flow_bathroom2",
         native_unit_of_measurement=UnitOfVolumeFlowRate.CUBIC_METERS_PER_HOUR,
         state_class=SensorStateClass.MEASUREMENT,
-        entity_registry_enabled_default=True,
     ),
     IthoSensorEntityDescription(
         json_field="Calculated Flow bedroom1 (m3_h)",
@@ -517,5 +482,4 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
-
 )
