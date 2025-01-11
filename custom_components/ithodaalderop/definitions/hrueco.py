@@ -107,6 +107,7 @@ HRU_ECO_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Outdoor temp (°C)",
         key="outdoor_temp",
+        device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False,

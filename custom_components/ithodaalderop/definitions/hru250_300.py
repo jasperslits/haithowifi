@@ -73,6 +73,7 @@ HRU_ECO_250_300_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Highest measured RH (%)",
         key="highest_measured_rh_value",
+        device_class=SensorDeviceClass.HUMIDITY,
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False,
@@ -81,6 +82,7 @@ HRU_ECO_250_300_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Hysteresis of the frost (K)",
         key="hysteresis_of_the_frost",
+        device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -89,6 +91,7 @@ HRU_ECO_250_300_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Hysteresis use in control mode (K)",
         key="hysteresis_use_in_control_mode",
+        device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
