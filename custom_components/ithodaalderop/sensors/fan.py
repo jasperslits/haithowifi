@@ -18,11 +18,11 @@ from ..const import (
     MQTT_STATETOPIC,
 )
 from ..definitions.cve import CVE_BINARY_SENSORS, CVE_SENSORS
+from ..definitions.demandflow import DEMAND_FLOW_BINARY_SENSORS, DEMAND_FLOW_SENSORS
 from ..definitions.hru200 import HRU_ECO_200_SENSORS
 from ..definitions.hru250_300 import HRU_ECO_250_300_SENSORS
 from ..definitions.hru350 import HRU_ECO_350_BINARY_SENSORS, HRU_ECO_350_SENSORS
 from ..definitions.hrueco import HRU_ECO_BINARY_SENSORS, HRU_ECO_SENSORS
-from ..definitions.demandflow import DEMAND_FLOW_BINARY_SENSORS, DEMAND_FLOW_SENSORS
 from .base import IthoBaseSensor, IthoBinarySensor
 
 
