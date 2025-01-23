@@ -15,7 +15,7 @@ from .base import IthoBinarySensorEntityDescription, IthoSensorEntityDescription
 AUTOTEMP_BINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     IthoBinarySensorEntityDescription(
         json_field="Empty battery ( 0=OK )",
-        translation_key="empty_battery",
+        key="empty_battery",
         device_class=BinarySensorDeviceClass.BATTERY,
         entity_category=EntityCategory.DIAGNOSTIC,
         # icon_off="mdi:battery",
@@ -121,6 +121,7 @@ AUTOTEMP_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Error",
@@ -163,6 +164,7 @@ AUTOTEMP_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="Particulars",
@@ -173,14 +175,6 @@ AUTOTEMP_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Rest cycle time (sec)",
         key="rest_cycle_time",
-        native_unit_of_measurement=UnitOfTime.SECONDS,
-        state_class=SensorStateClass.MEASUREMENT,
-        entity_category=EntityCategory.DIAGNOSTIC,
-        entity_registry_enabled_default=False,
-    ),
-    IthoSensorEntityDescription(
-        json_field="Rest vent time (sec)",
-        key="rest_vent_time",
         native_unit_of_measurement=UnitOfTime.SECONDS,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,

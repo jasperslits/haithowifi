@@ -48,23 +48,23 @@ class IthoBaseSensor(SensorEntity):
         self.entity_description.translation_key = self.entity_description.key
 
         if use_base_sensor_device:
-            model = ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
             if config_entry.data[CONF_ADDON_TYPE] == "noncve":
-                model = (
-                    f"{model} - {NONCVE_DEVICES[config_entry.data[CONF_NONCVE_MODEL]]}"
-                )
+                model = NONCVE_DEVICES[config_entry.data[CONF_NONCVE_MODEL]]
+            else:
+                model = ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
 
             self._attr_device_info = DeviceInfo(
                 identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
                 manufacturer=MANUFACTURER,
                 model=model,
-                name=ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]],
+                name=model,
             )
 
         if description.unique_id is not None:
             self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.unique_id.lower()}"
         else:
             self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.key}"
+
         self.entity_id = f"sensor.{self._attr_unique_id}"
 
     @property
