@@ -275,6 +275,7 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="calc_pos_kitchen",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
@@ -282,6 +283,7 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="calc_pos_toilet1",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
@@ -289,6 +291,7 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="calc_pos_livingroom1",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
@@ -296,6 +299,7 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="calc_pos_livingroom2",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
@@ -303,6 +307,7 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="calc_pos_laundryroom",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
@@ -310,18 +315,23 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="calc_pos_bathroom1",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Calculated pos valve bath2+toilet2",
         key="calc_pos_bathroom2",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Calculated pos valve bedroom1",
         key="calc_pos_bedroom1",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
@@ -329,6 +339,7 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="calc_pos_bedroom2",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
@@ -336,6 +347,7 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="calc_pos_bedroom3",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
@@ -343,6 +355,7 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="calc_pos_bedroom4",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
@@ -431,7 +444,6 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         json_field="Error",
         key="error",
         entity_category=EntityCategory.DIAGNOSTIC,
-        entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Measuring interval (sec)",
@@ -470,7 +482,6 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="co2_measurement_room",
         icon="mdi:knob",
         is_selected_entity=False,
-        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
