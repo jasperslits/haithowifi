@@ -22,6 +22,7 @@ NONCVE_DEVICES = {
     "hru_eco_250": "HRU ECO 250",
     "hru_eco_300": "HRU ECO 300",
     "hru_eco_350": "HRU ECO 350",
+    "demand_flow": "Demand Flow",
 }
 
 UNITTYPE_ICONS = {

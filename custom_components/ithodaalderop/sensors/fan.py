@@ -22,6 +22,7 @@ from ..definitions.hru200 import HRU_ECO_200_SENSORS
 from ..definitions.hru250_300 import HRU_ECO_250_300_SENSORS
 from ..definitions.hru350 import HRU_ECO_350_BINARY_SENSORS, HRU_ECO_350_SENSORS
 from ..definitions.hrueco import HRU_ECO_BINARY_SENSORS, HRU_ECO_SENSORS
+from ..definitions.demandflow import DEMAND_FLOW_BINARY_SENSORS, DEMAND_FLOW_SENSORS
 from .base import IthoBaseSensor, IthoBinarySensor
 
 
@@ -57,6 +58,8 @@ def get_noncve_binary_sensors(config_entry: ConfigEntry):
             hru_sensors = HRU_ECO_BINARY_SENSORS
         if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_350":
             hru_sensors = HRU_ECO_350_BINARY_SENSORS
+        if config_entry.data[CONF_NONCVE_MODEL] == "demand_flow":
+            hru_sensors = DEMAND_FLOW_BINARY_SENSORS
 
         for description in hru_sensors:
             description.topic = topic
@@ -78,6 +81,8 @@ def get_noncve_sensors(config_entry: ConfigEntry):
         hru_sensors = HRU_ECO_250_300_SENSORS
     if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_350":
         hru_sensors = HRU_ECO_350_SENSORS
+    if config_entry.data[CONF_NONCVE_MODEL] == "demand_flow":
+        hru_sensors = DEMAND_FLOW_SENSORS
 
     for description in hru_sensors:
         description.topic = topic
