@@ -267,6 +267,7 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="calc_pos_extractor",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
