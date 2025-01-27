@@ -65,13 +65,12 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         key="operating_mode",
         icon="mdi:knob",
         is_selected_entity=True,
-        entity_registry_enabled_default=False,
     ),
     IthoSensorEntityDescription(
         json_field="Operating status",
         key="operating_status",
         icon="mdi:knob",
-        entity_registry_enabled_default=False,
+        is_selected_entity=True,
     ),
     IthoSensorEntityDescription(
         json_field="RH extractor (%)",
