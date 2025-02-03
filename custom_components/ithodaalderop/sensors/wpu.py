@@ -12,6 +12,7 @@ from ..definitions.wpu import (
     WPU_BINARY_SENSORS,
     WPU_ERROR_CODE_BYTE_TEMPLATE,
     WPU_SENSORS,
+    WPU_THERMOSTAT,
 )
 from .base import IthoBaseSensor, IthoBinarySensor
 
@@ -47,6 +48,16 @@ def get_wpu_sensors(config_entry: ConfigEntry):
     return sensors
 
 
+def get_wpu_thermostat(config_entry: ConfigEntry):
+    """Create virtual thermostat for WPU."""
+    topic = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
+
+    description = WPU_THERMOSTAT
+    description.topic = topic
+
+    return [IthoThermostatWPU(description, config_entry)]
+
+
 class IthoSensorWPU(IthoBaseSensor):
     """Representation of Itho add-on sensor for WPU that is updated via MQTT."""
 
@@ -67,17 +78,36 @@ class IthoSensorWPU(IthoBaseSensor):
                         "Code": value,
                     }
                     value = WPU_STATUS.get(int(value), "Unknown status")
-                if json_field == "ECO selected on thermostat":
-                    if value == 1:
-                        value = "Eco"
-                    if payload["Comfort selected on thermostat"] == 1:
-                        value = "Comfort"
-                    if payload["Boiler boost from thermostat"] == 1:
-                        value = "Boost"
-                    if payload["Boiler blocked from thermostat"] == 1:
-                        value = "Off"
-                    if payload["Venting from thermostat"] == 1:
-                        value = "Venting"
+
+            self._attr_native_value = value
+            self.async_write_ha_state()
+
+        await mqtt.async_subscribe(
+            self.hass, self.entity_description.topic, message_received, 1
+        )
+
+
+class IthoThermostatWPU(IthoBaseSensor):
+    """Representation of Itho add-on sensor for WPU that is updated via MQTT."""
+
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to MQTT events."""
+
+        @callback
+        def message_received(message):
+            """Handle new MQTT messages."""
+            payload = json.loads(message.payload)
+
+            if payload.get("ECO selected on thermostat", 0) == 1:
+                value = "Eco"
+            if payload.get("Comfort selected on thermostat", 0) == 1:
+                value = "Comfort"
+            if payload.get("Boiler boost from thermostat", 0) == 1:
+                value = "Boost"
+            if payload.get("Boiler blocked from thermostat", 0) == 1:
+                value = "Off"
+            if payload.get("Venting from thermostat", 0) == 1:
+                value = "Venting"
 
             self._attr_native_value = value
             self.async_write_ha_state()

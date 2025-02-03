@@ -1325,3 +1325,8 @@ WPU_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         entity_registry_enabled_default=False,
     ),
 )
+
+WPU_THERMOSTAT = IthoSensorEntityDescription(
+    key="thermostat",
+    is_selected_entity=True,
+)

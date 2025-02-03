@@ -14,7 +14,7 @@ from .sensors.autotemp import get_autotemp_sensors
 from .sensors.co2_remote import get_co2_remote_sensors
 from .sensors.fan import get_cve_sensors, get_noncve_sensors
 from .sensors.last_command import get_last_command_sensors
-from .sensors.wpu import get_wpu_sensors
+from .sensors.wpu import get_wpu_sensors, get_wpu_thermostat
 
 
 async def async_setup_entry(
@@ -45,6 +45,7 @@ async def async_setup_entry(
 
     if config_entry.data[CONF_ADDON_TYPE] == "wpu":
         sensors.extend(get_wpu_sensors(config_entry))
+        sensors.extend(get_wpu_thermostat(config_entry))
 
     for sensor in sensors:
         if (
