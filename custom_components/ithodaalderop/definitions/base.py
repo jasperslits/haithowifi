@@ -49,6 +49,7 @@ class IthoSensorEntityDescription(SensorEntityDescription):
     json_field: str | None = None
     topic: str | None = None
     icon: str | None = None
+    room: str | None = None
     unique_id_template: str | None = None
     unique_id: str | None = None
     entity_category: EntityCategory | None = None

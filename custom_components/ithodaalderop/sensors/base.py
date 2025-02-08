@@ -1,6 +1,7 @@
 """Sensor base class."""
 
 import json
+from typing import Any
 
 from homeassistant.components import mqtt
 from homeassistant.components.binary_sensor import BinarySensorEntity
@@ -12,9 +13,14 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from ..const import (
     ADDON_TYPES,
     CONF_ADDON_TYPE,
+    CONF_ADVANCED_CONFIG,
+    CONF_CUSTOM_BASETOPIC,
+    CONF_CUSTOM_DEVICE_NAME,
+    CONF_CUSTOM_ENTITY_PREFIX,
     CONF_NONCVE_MODEL,
     DOMAIN,
     MANUFACTURER,
+    MQTT_DEFAULT_BASETOPIC,
     NONCVE_DEVICES,
     UNITTYPE_ICONS,
 )
@@ -22,6 +28,48 @@ from ..definitions.base import (
     IthoBinarySensorEntityDescription,
     IthoSensorEntityDescription,
 )
+
+
+def get_default_mqtt_base_topic(config: dict[str, Any]) -> str:
+    """Get the default MQTT base topic."""
+    return MQTT_DEFAULT_BASETOPIC[config[CONF_ADDON_TYPE]]
+
+
+def get_mqtt_base_topic(config: dict[str, Any]) -> str:
+    """Get the MQTT base topic."""
+    if config[CONF_ADVANCED_CONFIG]:
+        return config[CONF_CUSTOM_BASETOPIC]
+
+    return get_default_mqtt_base_topic(config)
+
+
+def get_device_model(config: dict[str, Any]) -> str:
+    """Get the device model."""
+    if config[CONF_ADDON_TYPE] == "noncve":
+        return NONCVE_DEVICES[config[CONF_NONCVE_MODEL]]
+
+    return ADDON_TYPES[config[CONF_ADDON_TYPE]]
+
+
+def get_device_name(config: dict[str, Any]) -> str:
+    """Get the device name."""
+    if config[CONF_ADVANCED_CONFIG]:
+        return config[CONF_CUSTOM_DEVICE_NAME]
+
+    return get_device_model(config)
+
+
+def get_default_entity_prefix(config: dict[str, Any]) -> str:
+    """Get the default entity prefix."""
+    return f"itho_{ADDON_TYPES[config[CONF_ADDON_TYPE]].lower()}"
+
+
+def get_entity_prefix(config: dict[str, Any]) -> str:
+    """Get the entity prefix."""
+    if config[CONF_ADVANCED_CONFIG]:
+        return config[CONF_CUSTOM_ENTITY_PREFIX]
+
+    return get_default_entity_prefix(config)
 
 
 class IthoBaseSensor(SensorEntity):
@@ -48,22 +96,21 @@ class IthoBaseSensor(SensorEntity):
         self.entity_description.translation_key = self.entity_description.key
 
         if use_base_sensor_device:
-            if config_entry.data[CONF_ADDON_TYPE] == "noncve":
-                model = NONCVE_DEVICES[config_entry.data[CONF_NONCVE_MODEL]]
-            else:
-                model = ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
-
             self._attr_device_info = DeviceInfo(
-                identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
+                identifiers={
+                    (DOMAIN, f"itho_wifi_addon_{get_entity_prefix(config_entry.data)}"),
+                },
                 manufacturer=MANUFACTURER,
-                model=model,
-                name=model,
+                model=get_device_model(config_entry.data),
+                name=get_device_name(config_entry.data),
             )
 
         if description.unique_id is not None:
-            self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.unique_id.lower()}"
+            self._attr_unique_id = f"{get_entity_prefix(config_entry.data)}_{description.unique_id.lower()}"
         else:
-            self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.key}"
+            self._attr_unique_id = (
+                f"{get_entity_prefix(config_entry.data)}_{description.key}"
+            )
 
         self.entity_id = f"sensor.{self._attr_unique_id}"
 
@@ -98,15 +145,21 @@ class IthoBinarySensor(BinarySensorEntity):
             model = f"{model} - {NONCVE_DEVICES[config_entry.data[CONF_NONCVE_MODEL]]}"
 
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])},
+            identifiers={
+                (DOMAIN, f"itho_wifi_addon_{get_entity_prefix(config_entry.data)}"),
+            },
             manufacturer=MANUFACTURER,
-            model=model,
-            name=f"Itho Daalderop {ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}",
+            model=get_device_model(config_entry.data),
+            name=get_device_name(config_entry.data),
         )
 
-        self._attr_unique_id = (
-            f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.key}"
-        )
+        if description.unique_id is not None:
+            self._attr_unique_id = f"{get_entity_prefix(config_entry.data)}_{description.unique_id.lower()}"
+        else:
+            self._attr_unique_id = (
+                f"{get_entity_prefix(config_entry.data)}_{description.key}"
+            )
+
         self.entity_id = f"binary_sensor.{self._attr_unique_id}"
 
     @property

@@ -7,20 +7,20 @@ from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from ..const import MQTT_BASETOPIC, MQTT_STATETOPIC, WPU_STATUS
+from ..const import MQTT_STATETOPIC, WPU_STATUS
 from ..definitions.wpu import (
     WPU_BINARY_SENSORS,
     WPU_ERROR_CODE_BYTE_TEMPLATE,
     WPU_SENSORS,
     WPU_THERMOSTAT,
 )
-from .base import IthoBaseSensor, IthoBinarySensor
+from .base import IthoBaseSensor, IthoBinarySensor, get_mqtt_base_topic
 
 
 def get_wpu_binary_sensors(config_entry: ConfigEntry):
     """Create binary sensors for WPU."""
     sensors = []
-    topic = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
+    topic = f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["wpu"]}"
     for description in WPU_BINARY_SENSORS:
         description.topic = topic
         sensors.append(IthoBinarySensor(description, config_entry))
@@ -31,7 +31,7 @@ def get_wpu_binary_sensors(config_entry: ConfigEntry):
 def get_wpu_sensors(config_entry: ConfigEntry):
     """Create sensors for WPU."""
     sensors = []
-    topic = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
+    topic = f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["wpu"]}"
     for x in range(6):
         x = str(x)
         description = copy.deepcopy(WPU_ERROR_CODE_BYTE_TEMPLATE)
@@ -50,7 +50,7 @@ def get_wpu_sensors(config_entry: ConfigEntry):
 
 def get_wpu_thermostat(config_entry: ConfigEntry):
     """Create virtual thermostat for WPU."""
-    topic = f"{MQTT_BASETOPIC["wpu"]}/{MQTT_STATETOPIC["wpu"]}"
+    topic = f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["wpu"]}"
 
     description = WPU_THERMOSTAT
     description.topic = topic

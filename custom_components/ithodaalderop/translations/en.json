@@ -5,6 +5,15 @@
       "reconfigure_successful": "Re-configuration was successful"
     },
     "step": {
+      "advanced_config": {
+        "data": {
+          "custom_basetopic": "Custom MQTT base topic",
+          "custom_entity_prefix": "Custom entity prefix",
+          "custom_device_name": "Custom device name"
+        },
+        "description": "Customize the MQTT base topic, entity prefix and device name.",
+        "title": "Advanced integration entry configuration"
+      },
       "noncve_model": {
         "data": {
           "noncve_model": "Model:"
@@ -72,7 +81,8 @@
       "user": {
         "data": {
           "addontype": "Select the type of add-on to configure:",
-          "entities_creation_mode": "Select mode for entity creation (this can later be re-configured):"
+          "entities_creation_mode": "Select mode for entity creation (this can later be re-configured):",
+          "advanced_config": "Advanced configuration\n:"
         },
         "description": "Select the Itho WiFi Add-on you want to configure. Repeat the configuration for every physical add-on present. This integration creates either all or only commonly used sensors for each device.",
         "title": "Add new Itho devices"

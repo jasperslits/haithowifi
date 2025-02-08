@@ -31,7 +31,7 @@ UNITTYPE_ICONS = {
     "rpm": "mdi:speedometer",
 }
 
-MQTT_BASETOPIC = {
+MQTT_DEFAULT_BASETOPIC = {
     "autotemp": "ithotemp",
     "cve": "ithocve",
     "noncve": "ithohru",
@@ -49,6 +49,10 @@ MQTT_STATETOPIC = {
 
 CONF_ADDON_TYPE = "addontype"
 CONF_ENTITIES_CREATION_MODE = "entities_creation_mode"
+CONF_ADVANCED_CONFIG = "advanced_config"
+CONF_CUSTOM_BASETOPIC = "custom_basetopic"
+CONF_CUSTOM_DEVICE_NAME = "custom_device_name"
+CONF_CUSTOM_ENTITY_PREFIX = "custom_entity_prefix"
 CONF_NONCVE_MODEL = "noncve_model"
 
 CONF_AUTOTEMP_ROOM1 = "room1"

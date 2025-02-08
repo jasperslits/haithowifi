@@ -14,7 +14,6 @@ from ..const import (
     HRU_ECO_350_GLOBAL_FAULT_CODE,
     HRU_ECO_350_RH_ERROR_CODE,
     HRU_ECO_STATUS,
-    MQTT_BASETOPIC,
     MQTT_STATETOPIC,
 )
 from ..definitions.cve import CVE_BINARY_SENSORS, CVE_SENSORS
@@ -23,14 +22,16 @@ from ..definitions.hru200 import HRU_ECO_200_SENSORS
 from ..definitions.hru250_300 import HRU_ECO_250_300_SENSORS
 from ..definitions.hru350 import HRU_ECO_350_BINARY_SENSORS, HRU_ECO_350_SENSORS
 from ..definitions.hrueco import HRU_ECO_BINARY_SENSORS, HRU_ECO_SENSORS
-from .base import IthoBaseSensor, IthoBinarySensor
+from .base import IthoBaseSensor, IthoBinarySensor, get_mqtt_base_topic
 
 
 def get_cve_binary_sensors(config_entry: ConfigEntry):
     """Create binary sensors for CVE."""
     sensors = []
     for description in CVE_BINARY_SENSORS:
-        description.topic = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
+        description.topic = (
+            f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["cve"]}"
+        )
         sensors.append(IthoBinarySensor(description, config_entry))
 
     return sensors
@@ -39,10 +40,11 @@ def get_cve_binary_sensors(config_entry: ConfigEntry):
 def get_cve_sensors(config_entry: ConfigEntry):
     """Create sensors for CVE."""
     sensors = []
-    topic = f"{MQTT_BASETOPIC["cve"]}/{MQTT_STATETOPIC["cve"]}"
 
     for description in CVE_SENSORS:
-        description.topic = topic
+        description.topic = (
+            f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["cve"]}"
+        )
         sensors.append(IthoSensorFan(description, config_entry))
 
     return sensors
@@ -52,7 +54,6 @@ def get_noncve_binary_sensors(config_entry: ConfigEntry):
     """Create binary sensors for NON-CVE."""
     sensors = []
 
-    topic = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
     if config_entry.data[CONF_NONCVE_MODEL] in ["hru_eco", "hru_eco_350"]:
         if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco":
             hru_sensors = HRU_ECO_BINARY_SENSORS
@@ -62,7 +63,9 @@ def get_noncve_binary_sensors(config_entry: ConfigEntry):
             hru_sensors = DEMAND_FLOW_BINARY_SENSORS
 
         for description in hru_sensors:
-            description.topic = topic
+            description.topic = (
+                f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["noncve"]}"
+            )
             sensors.append(IthoBinarySensor(description, config_entry))
 
     return sensors
@@ -71,7 +74,6 @@ def get_noncve_binary_sensors(config_entry: ConfigEntry):
 def get_noncve_sensors(config_entry: ConfigEntry):
     """Create sensors for NON-CVE."""
     sensors = []
-    topic = f"{MQTT_BASETOPIC["noncve"]}/{MQTT_STATETOPIC["noncve"]}"
 
     if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco":
         hru_sensors = HRU_ECO_SENSORS
@@ -85,7 +87,9 @@ def get_noncve_sensors(config_entry: ConfigEntry):
         hru_sensors = DEMAND_FLOW_SENSORS
 
     for description in hru_sensors:
-        description.topic = topic
+        description.topic = (
+            f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["noncve"]}"
+        )
         sensors.append(IthoSensorFan(description, config_entry))
 
     return sensors
