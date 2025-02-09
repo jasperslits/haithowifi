@@ -82,7 +82,7 @@
         "data": {
           "addontype": "Select the type of add-on to configure:",
           "entities_creation_mode": "Select mode for entity creation (this can later be re-configured):",
-          "advanced_config": "Advanced configuration\n:"
+          "advanced_config": "Advanced integration entry configuration:"
         },
         "description": "Select the Itho WiFi Add-on you want to configure. Repeat the configuration for every physical add-on present. This integration creates either all or only commonly used sensors for each device.",
         "title": "Add new Itho devices"
