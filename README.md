@@ -84,7 +84,7 @@ Click `enable`
 ## Prerequisites
 1. Working WiFi add-on connected to the Itho device(s) ([buy](https://www.nrgwatch.nl/))
 2. [Official HA MQTT Integration](https://www.home-assistant.io/integrations/mqtt/) configured and connected to the MQTT broker. 
-3. In the Itho WiFi add-on under 'MQTT' the `MQTT base topic` should be configured like the table below:
+3. In the Itho WiFi add-on under 'MQTT' the `MQTT base topic` should be configured like the table below (or use the [advanced configuration](#advanced-configuration) to customize):
 
 | Device  | MQTT base topic   | 
 |---|---|
