@@ -67,7 +67,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         await self.async_set_unique_id(unique_id)
         self._abort_if_unique_id_configured()
 
-    def get_entry_title(self):
+    def _get_entry_title(self):
         """Generete title for the entry."""
 
         addon_type = self.config[CONF_ADDON_TYPE]
@@ -105,7 +105,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             await self._try_set_unique_id()
             return self.async_create_entry(
-                title=self.get_entry_title(),
+                title=self._get_entry_title(),
                 data=self.config,
             )
 
@@ -144,7 +144,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             await self._try_set_unique_id()
             return self.async_create_entry(
-                title=self.get_entry_title(),
+                title=self._get_entry_title(),
                 data=self.config,
             )
 
@@ -163,9 +163,9 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="rooms",
             data_schema=itho_schema,
-            last_step=not self.config[
-                CONF_ADVANCED_CONFIG
-            ],  # Display next (False) or submit (True or empty) button in frontend
+            last_step=(
+                not self.config[CONF_ADVANCED_CONFIG]
+            ),  # Display next (False) or submit (True or empty) button in frontend
         )
 
     async def async_step_noncve_model(
@@ -205,7 +205,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             await self._try_set_unique_id()
             return self.async_create_entry(
-                title=self.get_entry_title(),
+                title=self._get_entry_title(),
                 data=self.config,
             )
 
@@ -221,9 +221,9 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="remotes",
             data_schema=itho_schema,
-            last_step=not self.config[
-                CONF_ADVANCED_CONFIG
-            ],  # Display next (False) or submit (True or empty) button in frontend
+            last_step=(
+                not self.config[CONF_ADVANCED_CONFIG]
+            ),  # Display next (False) or submit (True or empty) button in frontend
         )
 
     async def async_step_advanced_config(
@@ -235,7 +235,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             await self._try_set_unique_id()
             return self.async_create_entry(
-                title=self.get_entry_title(),
+                title=self._get_entry_title(),
                 data=self.config,
             )
 
