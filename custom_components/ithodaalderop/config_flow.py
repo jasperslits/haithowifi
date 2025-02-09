@@ -105,8 +105,8 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             await self._try_set_unique_id()
             return self.async_create_entry(
-                title=f"Itho WiFi Add-on for {ADDON_TYPES[self.config[CONF_ADDON_TYPE]]}",
-                data=user_input,
+                title=self.get_entry_title(),
+                data=self.config,
             )
 
         itho_schema = vol.Schema(
@@ -143,8 +143,6 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 return await self.async_step_advanced_config()
 
             await self._try_set_unique_id()
-            # self._abort_if_unique_id_configured()
-
             return self.async_create_entry(
                 title=self.get_entry_title(),
                 data=self.config,
@@ -165,7 +163,9 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="rooms",
             data_schema=itho_schema,
-            last_step=True,  # Display next or submit button in frontend
+            last_step=not self.config[
+                CONF_ADVANCED_CONFIG
+            ],  # Display next (False) or submit (True or empty) button in frontend
         )
 
     async def async_step_noncve_model(
@@ -190,7 +190,11 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             }
         )
 
-        return self.async_show_form(step_id="noncve_model", data_schema=itho_schema)
+        return self.async_show_form(
+            step_id="noncve_model",
+            data_schema=itho_schema,
+            last_step=False,  # Display next (False) or submit (True or empty) button in frontend
+        )
 
     async def async_step_remotes(self, user_input: Mapping[str, Any] | None = None):
         """Configure up to 5 remotes."""
@@ -200,8 +204,6 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 return await self.async_step_advanced_config()
 
             await self._try_set_unique_id()
-            # self._abort_if_unique_id_configured()
-
             return self.async_create_entry(
                 title=self.get_entry_title(),
                 data=self.config,
@@ -219,7 +221,9 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="remotes",
             data_schema=itho_schema,
-            last_step=True,  # Display next or submit button in frontend
+            last_step=not self.config[
+                CONF_ADVANCED_CONFIG
+            ],  # Display next (False) or submit (True or empty) button in frontend
         )
 
     async def async_step_advanced_config(
@@ -228,9 +232,8 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Advanced configuration for multiple devices that would use the same MQTT basetopic."""
         if user_input is not None:
             self.config.update(user_input)
-            await self._try_set_unique_id()
-            # self._abort_if_unique_id_configured()
 
+            await self._try_set_unique_id()
             return self.async_create_entry(
                 title=self.get_entry_title(),
                 data=self.config,
@@ -255,7 +258,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="advanced_config",
             data_schema=itho_schema,
-            last_step=True,  # Display next or submit button in frontend
+            last_step=True,  # Display next (False) or submit (True or empty) button in frontend
         )
 
     async def async_step_reconfigure(self, user_input: Mapping[str, Any] | None = None):
@@ -341,7 +344,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="rooms_reconfigure",
             data_schema=itho_schema,
-            last_step=True,  # Display next or submit button in frontend
+            last_step=True,  # Display next (False) or submit (True or empty) button in frontend
         )
 
     async def async_step_remotes_reconfigure(
@@ -381,5 +384,5 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="remotes_reconfigure",
             data_schema=itho_schema,
-            last_step=True,  # Display next or submit button in frontend
+            last_step=True,  # Display next (False) or submit (True or empty) button in frontend
         )
