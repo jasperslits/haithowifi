@@ -9,7 +9,8 @@ from homeassistant.core import callback
 
 from ..const import MQTT_STATETOPIC
 from ..definitions.co2_remote import REMOTE_SENSOR_TEMPLATE
-from .base import IthoBaseSensor, get_mqtt_base_topic
+from ..vars import get_mqtt_base_topic
+from .base import IthoBaseSensor
 
 
 def get_co2_remote_sensors(config_entry: ConfigEntry):

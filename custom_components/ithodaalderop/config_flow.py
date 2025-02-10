@@ -38,7 +38,7 @@ from .const import (
     ENTITIES_CREATION_MODES,
     NONCVE_DEVICES,
 )
-from .sensors.base import (
+from .vars import (
     get_default_entity_prefix,
     get_default_mqtt_base_topic,
     get_device_model,
@@ -63,8 +63,9 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return default
 
     async def _try_set_unique_id(self):
-        unique_id = f"itho_wifi_addon_{get_entity_prefix(self.config)}"
-        await self.async_set_unique_id(unique_id)
+        await self.async_set_unique_id(
+            f"itho_wifi_addon_{get_entity_prefix(self.config)}"
+        )
         self._abort_if_unique_id_configured()
 
     def _get_entry_title(self):
