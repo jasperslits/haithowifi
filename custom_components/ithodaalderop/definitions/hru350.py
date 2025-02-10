@@ -11,10 +11,7 @@ from homeassistant.const import (
     UnitOfTime,
 )
 
-from .base import (
-    IthoBinarySensorEntityDescription,
-    IthoSensorEntityDescription,
-)
+from .base import IthoBinarySensorEntityDescription, IthoSensorEntityDescription
 
 HRU_ECO_350_BINARY_SENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     IthoBinarySensorEntityDescription(
