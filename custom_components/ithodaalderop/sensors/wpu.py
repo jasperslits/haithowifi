@@ -14,7 +14,7 @@ from ..definitions.wpu import (
     WPU_SENSORS,
     WPU_THERMOSTAT,
 )
-from ..vars import get_mqtt_base_topic
+from ..utils import get_mqtt_base_topic
 from .base import IthoBaseSensor, IthoBinarySensor
 
 

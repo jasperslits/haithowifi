@@ -22,7 +22,7 @@ from ..definitions.base import (
     IthoBinarySensorEntityDescription,
     IthoSensorEntityDescription,
 )
-from ..vars import get_device_model, get_device_name, get_entity_prefix
+from ..utils import get_device_model, get_device_name, get_entity_prefix
 
 
 class IthoBaseSensor(SensorEntity):

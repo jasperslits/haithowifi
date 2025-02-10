@@ -22,7 +22,7 @@ from ..definitions.hru200 import HRU_ECO_200_SENSORS
 from ..definitions.hru250_300 import HRU_ECO_250_300_SENSORS
 from ..definitions.hru350 import HRU_ECO_350_BINARY_SENSORS, HRU_ECO_350_SENSORS
 from ..definitions.hrueco import HRU_ECO_BINARY_SENSORS, HRU_ECO_SENSORS
-from ..vars import get_mqtt_base_topic
+from ..utils import get_mqtt_base_topic
 from .base import IthoBaseSensor, IthoBinarySensor
 
 

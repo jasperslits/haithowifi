@@ -9,7 +9,7 @@ from homeassistant.core import callback
 
 from ..const import MQTT_STATETOPIC
 from ..definitions.co2_remote import REMOTE_SENSOR_TEMPLATE
-from ..vars import get_mqtt_base_topic
+from ..utils import get_mqtt_base_topic
 from .base import IthoBaseSensor
 
 

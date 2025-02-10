@@ -38,7 +38,7 @@ from .const import (
     ENTITIES_CREATION_MODES,
     NONCVE_DEVICES,
 )
-from .vars import (
+from .utils import (
     get_default_entity_prefix,
     get_default_mqtt_base_topic,
     get_device_model,

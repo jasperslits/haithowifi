@@ -29,7 +29,7 @@ from ..definitions.autotemp import (
     AUTOTEMP_VALVE_SENSOR_TEMPLATE,
 )
 from ..definitions.base import IthoSensorEntityDescription
-from ..vars import get_entity_prefix, get_mqtt_base_topic
+from ..utils import get_entity_prefix, get_mqtt_base_topic
 from .base import IthoBaseSensor, IthoBinarySensor
 
 

@@ -8,7 +8,7 @@ from homeassistant.core import callback
 
 from ..const import MQTT_STATETOPIC
 from ..definitions.last_command import LAST_CMD_SENSORS
-from ..vars import get_mqtt_base_topic
+from ..utils import get_mqtt_base_topic
 from .base import IthoBaseSensor
 
 
