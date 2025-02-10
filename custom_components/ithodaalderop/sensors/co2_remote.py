@@ -7,15 +7,16 @@ from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from ..const import CONF_ADDON_TYPE, MQTT_BASETOPIC, MQTT_STATETOPIC
+from ..const import MQTT_STATETOPIC
 from ..definitions.co2_remote import REMOTE_SENSOR_TEMPLATE
+from ..utils import get_mqtt_base_topic
 from .base import IthoBaseSensor
 
 
 def get_co2_remote_sensors(config_entry: ConfigEntry):
     """Create remotes for CO2 monitoring."""
     sensors = []
-    topic = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["remote"]}"
+    topic = f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["remote"]}"
     for x in range(1, 5):
         remote = config_entry.data["remote" + str(x)]
         if remote not in ("", "Remote " + str(x)):

@@ -6,15 +6,16 @@ from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from ..const import CONF_ADDON_TYPE, MQTT_BASETOPIC, MQTT_STATETOPIC
+from ..const import MQTT_STATETOPIC
 from ..definitions.last_command import LAST_CMD_SENSORS
+from ..utils import get_mqtt_base_topic
 from .base import IthoBaseSensor
 
 
 def get_last_command_sensors(config_entry: ConfigEntry):
     """Create sensors for Last Command."""
     sensors = []
-    topic = f"{MQTT_BASETOPIC[config_entry.data[CONF_ADDON_TYPE]]}/{MQTT_STATETOPIC["last_cmd"]}"
+    topic = f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["last_cmd"]}"
     for description in LAST_CMD_SENSORS:
         description.topic = topic
         sensors.append(IthoSensorLastCommand(description, config_entry))

@@ -13,9 +13,10 @@ from ..const import (
     AUTOTEMP_ERROR,
     AUTOTEMP_MODE,
     CONF_ADDON_TYPE,
+    CONF_ADVANCED_CONFIG,
+    CONF_CUSTOM_DEVICE_NAME,
     DOMAIN,
     MANUFACTURER,
-    MQTT_BASETOPIC,
     MQTT_STATETOPIC,
 )
 from ..definitions.autotemp import (
@@ -28,13 +29,14 @@ from ..definitions.autotemp import (
     AUTOTEMP_VALVE_SENSOR_TEMPLATE,
 )
 from ..definitions.base import IthoSensorEntityDescription
-from ..sensors.base import IthoBaseSensor, IthoBinarySensor
+from ..utils import get_entity_prefix, get_mqtt_base_topic
+from .base import IthoBaseSensor, IthoBinarySensor
 
 
 def get_autotemp_binary_sensors(config_entry: ConfigEntry):
     """Create binary sensors for Autotemp."""
     sensors = []
-    topic = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+    topic = f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["autotemp"]}"
     for description in AUTOTEMP_BINARYSENSORS:
         description.topic = topic
         sensors.append(IthoBinarySensor(description, config_entry))
@@ -44,7 +46,7 @@ def get_autotemp_binary_sensors(config_entry: ConfigEntry):
 def get_autotemp_sensors(config_entry: ConfigEntry):
     """Create sensors for Autotemp."""
     sensors = []
-    topic = f"{MQTT_BASETOPIC["autotemp"]}/{MQTT_STATETOPIC["autotemp"]}"
+    topic = f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["autotemp"]}"
     for i in range(1, 13):
         letter = chr(i + 64)
         description = copy.deepcopy(AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE)
@@ -161,16 +163,20 @@ class IthoSensorAutotempRoom(IthoBaseSensor):
     ) -> None:
         """Construct sensor for Autotemp."""
 
+        name = f"Spider {description.room.capitalize()}"
+        if config_entry.data[CONF_ADVANCED_CONFIG]:
+            name = config_entry.data[CONF_CUSTOM_DEVICE_NAME] + " - " + name
+
         self._attr_device_info = DeviceInfo(
             identifiers={
                 (
                     DOMAIN,
-                    f"{config_entry.data[CONF_ADDON_TYPE]}_room_{description.room.lower()}",
+                    f"itho_wifi_addon_{get_entity_prefix(config_entry.data)}_room_{description.room.lower()}",
                 )
             },
             manufacturer=MANUFACTURER,
             model=f"{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]} Spider",
-            name=f"Spider {description.room.capitalize()}",
+            name=name,
             via_device=(DOMAIN, config_entry.data[CONF_ADDON_TYPE]),
         )
 

@@ -3,6 +3,7 @@
   - [What can be configured via this Integration](#what-can-be-configured-via-this-integration)
   - [Differences with the add-on's Home Assistant MQTT Discovery](#differences-with-the-itho-wifi-add-on-home-assistant-mqtt-discovery)
   - [Use-case](#use-case)
+  - [Advanced configuration](#advanced-configuration)
   - [Available entities](#available-entities)
   - [Why don't I see all entities?](#why-dont-i-see-all-entities)
 - [Installation](#installation)
@@ -16,8 +17,6 @@
 # Home Assistant sensor component/integration for Itho Wifi
 This integration for Home Assistant provides a simple configuration screen for the MQTT based "Itho Wifi add-on" from https://github.com/arjenhiemstra/ithowifi
 This simplifies the integration by creating the sensors for the various Itho Daalderop devices: Heatpump WPU 5G, HRU units, CVE boxes, Autotemp units for floor heating. 
-
-This integration is intended for standard domestic set ups: 1 WPU, 1 CVE or HRU unit, up to 10 rooms connected to autotemp and up to 5 CO2 remotes. More complex setups should be managed via YAML and are out of scope.  
 
 This custom component has no affiliation with the Itho Daalderop company or with Arjen Hiemstra's Itho WiFi add-on.
 
@@ -45,6 +44,14 @@ This integration should eliminate the manual creation via YAML of sensors for:
 * CO2 concencration for supported remotes
 * WPU like Pump Percentage, Boiler Temp, From / To Source Temps, Operating Mode etc
 
+
+## Advanced configuration
+The integration has an option for advanced configuration. This can be enable during setup which allows for the customization of one or more of the following settings:
+- MQTT base topic
+- Prefix used for the created entities
+- Device name
+
+This can be used to created multiple Home Assistant integration entries for the same device-type (for example, for users with multiple CVE's). Or just if you want to customize the entry to your own liking.
 
 ## Available entities
 The integration creates a device and sensors and uses a predefined MQTT state topic to distinct the devices. At first only a (by the authors) selected group of entities will be created. If you want to create all available entities for your device, you need to re-configure the integation entry:
@@ -77,7 +84,7 @@ Click `enable`
 ## Prerequisites
 1. Working WiFi add-on connected to the Itho device(s) ([buy](https://www.nrgwatch.nl/))
 2. [Official HA MQTT Integration](https://www.home-assistant.io/integrations/mqtt/) configured and connected to the MQTT broker. 
-3. In the Itho WiFi add-on under 'MQTT' the `MQTT base topic` should be configured like the table below:
+3. In the Itho WiFi add-on under 'MQTT' the `MQTT base topic` should be configured like the table below (or use the [advanced configuration](#advanced-configuration) to customize):
 
 | Device  | MQTT base topic   | 
 |---|---|
@@ -117,7 +124,7 @@ In order to keep the history from your old entities follow this process for each
 
 # Screenshots
 ## Add integration
-![image](https://github.com/user-attachments/assets/8171307a-8f36-4064-a3bb-0e0634728b86)
+![image](https://github.com/user-attachments/assets/6203c5b0-0cd4-44fe-bf8a-e6e5bec8c8c7)
 
 ## Define remotes for CO2 monitoring
 <img width="612" alt="image" src="https://github.com/user-attachments/assets/d9d2dca1-254c-450b-84a8-a71f5afee608">
@@ -136,6 +143,10 @@ In order to keep the history from your old entities follow this process for each
 
 ## Autotemp Control Unit + Connected Sensors
 <img width="322" alt="image" src="https://github.com/user-attachments/assets/bcad60cc-5635-4ef1-b792-2d08452d8b33">
+
+## Advanced configuration
+![image](https://github.com/user-attachments/assets/d8072051-5a9c-4ff8-bc7a-a26866d4b7ab)
+
 
 ### TODO:
 * Add Integration to HACS default (waiting for https://github.com/hacs/default/pull/2494)
