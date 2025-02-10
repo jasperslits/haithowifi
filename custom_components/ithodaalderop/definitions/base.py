@@ -15,41 +15,39 @@ The key is also used to define the translation_key and to setup the unique_id of
 
 from __future__ import annotations
 
-from collections.abc import Callable
 from dataclasses import dataclass
 
 from homeassistant.components.binary_sensor import BinarySensorEntityDescription
+from homeassistant.components.fan import FanEntityDescription, FanEntityFeature
 from homeassistant.components.sensor import SensorEntityDescription
-from homeassistant.const import EntityCategory
 
 
 @dataclass(frozen=False)
 class IthoBinarySensorEntityDescription(BinarySensorEntityDescription):
     """Binary Sensor entity description for Itho."""
 
-    key: str | None = None
-    state: Callable | None = None
     json_field: str | None = None
     topic: str | None = None
-    icon: str | None = None
     icon_off: str | None = None
     icon_on: str | None = None
     unique_id_template: str | None = None
-    unique_id: str | None = None
-    entity_category: EntityCategory | None = None
     is_selected_entity: bool = False
+
+
+@dataclass(frozen=False)
+class IthoFanEntityDescription(FanEntityDescription):
+    """Fan entity description for Itho."""
+
+    supported_features: FanEntityFeature | None = None
+    preset_modes: list[str] | None = None
+    topic: str | None = None
 
 
 @dataclass(frozen=False)
 class IthoSensorEntityDescription(SensorEntityDescription):
     """Sensor entity description for Itho."""
 
-    key: str | None = None
-    state: Callable | None = None
     json_field: str | None = None
     topic: str | None = None
-    icon: str | None = None
     unique_id_template: str | None = None
-    unique_id: str | None = None
-    entity_category: EntityCategory | None = None
     is_selected_entity: bool = False

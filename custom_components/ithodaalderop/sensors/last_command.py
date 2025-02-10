@@ -27,16 +27,15 @@ class IthoSensorLastCommand(IthoBaseSensor):
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
-
-        @callback
-        def message_received(message):
-            """Handle new MQTT messages."""
-            payload = json.loads(message.payload)
-            value = payload.get(self.entity_description.json_field, None)
-
-            self._attr_native_value = value
-            self.async_write_ha_state()
-
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.topic, message_received, 1
+            self.hass, self.entity_description.topic, self.message_received, 1
         )
+
+    @callback
+    def message_received(self, message):
+        """Handle new MQTT messages."""
+        payload = json.loads(message.payload)
+        value = payload.get(self.entity_description.json_field, None)
+
+        self._attr_native_value = value
+        self.async_write_ha_state()

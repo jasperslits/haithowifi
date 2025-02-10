@@ -29,13 +29,7 @@ class IthoBaseSensor(SensorEntity):
 
     _attr_has_entity_name = True
     entity_description: IthoSensorEntityDescription
-
     _extra_state_attributes: list[str] | None = None
-
-    @property
-    def extra_state_attributes(self) -> list[str] | None:
-        """Return the state attributes."""
-        return self._extra_state_attributes
 
     def __init__(
         self,
@@ -60,12 +54,15 @@ class IthoBaseSensor(SensorEntity):
                 name=model,
             )
 
-        if description.unique_id is not None:
-            self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.unique_id.lower()}"
-        else:
-            self._attr_unique_id = f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.key}"
-
+        self._attr_unique_id = (
+            f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.key}"
+        )
         self.entity_id = f"sensor.{self._attr_unique_id}"
+
+    @property
+    def extra_state_attributes(self) -> list[str] | None:
+        """Return the state attributes."""
+        return self._extra_state_attributes
 
     @property
     def icon(self) -> str | None:

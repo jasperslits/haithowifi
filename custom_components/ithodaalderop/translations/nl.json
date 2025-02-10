@@ -217,6 +217,11 @@
         "name": "Ventilatie van Thermostaat"
       }
     },
+    "fan": {
+      "fan": {
+        "name": "Ventilator"
+      }
+    },
     "sensor": {
       "absence": {
         "name": "Afwezigheid"

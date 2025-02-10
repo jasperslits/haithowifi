@@ -34,20 +34,19 @@ class IthoSensorCO2Remote(IthoBaseSensor):
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
-
-        @callback
-        def message_received(message):
-            """Handle new MQTT messages."""
-            payload = json.loads(message.payload)
-            json_field = self.entity_description.json_field
-            if json_field not in payload:
-                value = None
-            else:
-                value = payload[json_field]["co2"]
-
-            self._attr_native_value = value
-            self.async_write_ha_state()
-
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.topic, message_received, 1
+            self.hass, self.entity_description.topic, self.message_received, 1
         )
+
+    @callback
+    def message_received(self, message):
+        """Handle new MQTT messages."""
+        payload = json.loads(message.payload)
+        json_field = self.entity_description.json_field
+        if json_field not in payload:
+            value = None
+        else:
+            value = payload[json_field]["co2"]
+
+        self._attr_native_value = value
+        self.async_write_ha_state()
