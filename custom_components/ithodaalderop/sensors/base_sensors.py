@@ -18,7 +18,7 @@ from ..const import (
     NONCVE_DEVICES,
     UNITTYPE_ICONS,
 )
-from ..definitions.base import (
+from ..definitions.base_definitions import (
     IthoBinarySensorEntityDescription,
     IthoSensorEntityDescription,
 )

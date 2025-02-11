@@ -9,7 +9,7 @@ from homeassistant.core import callback
 from ..const import MQTT_STATETOPIC
 from ..definitions.last_command import LAST_CMD_SENSORS
 from ..utils import get_mqtt_base_topic
-from .base import IthoBaseSensor
+from .base_sensors import IthoBaseSensor
 
 
 def get_last_command_sensors(config_entry: ConfigEntry):

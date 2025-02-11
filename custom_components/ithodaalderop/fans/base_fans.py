@@ -5,7 +5,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.device_registry import DeviceInfo
 
 from ..const import ADDON_TYPES, CONF_ADDON_TYPE, DOMAIN
-from ..definitions.base import IthoFanEntityDescription
+from ..definitions.base_definitions import IthoFanEntityDescription
 
 
 class IthoBaseFan(FanEntity):

@@ -2,7 +2,7 @@
 
 from homeassistant.const import EntityCategory
 
-from .base import IthoSensorEntityDescription
+from .base_definitions import IthoSensorEntityDescription
 
 LAST_CMD_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(

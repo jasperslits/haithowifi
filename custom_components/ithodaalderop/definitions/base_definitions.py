@@ -40,7 +40,8 @@ class IthoFanEntityDescription(FanEntityDescription):
 
     supported_features: FanEntityFeature | None = None
     preset_modes: list[str] | None = None
-    topic: str | None = None
+    command_topic: str | None = None
+    state_topic: str | None = None
 
 
 @dataclass(frozen=False)
@@ -50,4 +51,6 @@ class IthoSensorEntityDescription(SensorEntityDescription):
     json_field: str | None = None
     topic: str | None = None
     unique_id_template: str | None = None
+    room: str | None = None
+    unique_id: str | None = None
     is_selected_entity: bool = False

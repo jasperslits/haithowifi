@@ -27,9 +27,9 @@ from ..definitions.autotemp import (
     AUTOTEMP_SENSORS,
     AUTOTEMP_VALVE_SENSOR_TEMPLATE,
 )
-from ..definitions.base import IthoSensorEntityDescription
+from ..definitions.base_definitions import IthoSensorEntityDescription
 from ..utils import get_entity_prefix, get_mqtt_state_topic
-from .base import IthoBaseSensor, IthoBinarySensor
+from .base_sensors import IthoBaseSensor, IthoBinarySensor
 
 
 def get_autotemp_binary_sensors(config_entry: ConfigEntry):

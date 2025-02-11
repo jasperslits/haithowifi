@@ -22,7 +22,7 @@ from ..definitions.hru250_300 import HRU_ECO_250_300_SENSORS
 from ..definitions.hru350 import HRU_ECO_350_BINARY_SENSORS, HRU_ECO_350_SENSORS
 from ..definitions.hrueco import HRU_ECO_BINARY_SENSORS, HRU_ECO_SENSORS
 from ..utils import get_mqtt_state_topic
-from .base import IthoBaseSensor, IthoBinarySensor
+from .base_sensors import IthoBaseSensor, IthoBinarySensor
 
 
 def get_cve_binary_sensors(config_entry: ConfigEntry):

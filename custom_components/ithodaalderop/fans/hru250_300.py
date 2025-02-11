@@ -17,27 +17,16 @@ PRESET_MODES = {
     "Medium": "medium",
     "High": "high",
     "Auto": "auto",
-    "Autonight": "autonight",
     "Timer 10": "timer1",
     "Timer 20": "timer2",
     "Timer 30": "timer3",
-    "Timer": "timer",
 }
 
-ACTUAL_MODES = {
-    1: "Low",
-    2: "Medium",
-    3: "High",
-    13: "Timer",
-    24: "Auto",
-    25: "Autonight",
-}
-
-COMMAND_KEY = "vremotecmd"
+COMMAND_KEY = "rfremotecmd"
 
 
-def get_hru350_fan(config_entry: ConfigEntry):
-    """Create fan for HRU 350 Eco."""
+def get_hru350_300_fan(config_entry: ConfigEntry):
+    """Create fan for HRU 250/300."""
     description = IthoFanEntityDescription(
         key="fan",
         supported_features=(
@@ -66,12 +55,16 @@ class IthoFanHRU350(IthoBaseFan):
         """Handle preset mode update via MQTT."""
         try:
             data = json.loads(msg.payload)
-            actual_mode = int(data.get("Actual Mode", -1))
+            speed = int(data.get("Absolute speed of the fan (%)", -1))
 
-            if actual_mode in ACTUAL_MODES:
-                self._preset_mode = ACTUAL_MODES[actual_mode]
+            if speed >= 90:
+                self._preset_mode = "High"
+            elif speed >= 40:
+                self._preset_mode = "Medium"
+            elif speed >= 20:
+                self._preset_mode = "Low"
             else:
-                _LOGGER.error("Invalid actual mode: %s", actual_mode)
+                _LOGGER.error("Invalid speed: %s", speed)
 
             self.async_write_ha_state()
         except ValueError:

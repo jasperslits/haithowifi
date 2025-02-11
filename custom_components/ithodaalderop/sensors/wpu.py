@@ -15,7 +15,7 @@ from ..definitions.wpu import (
     WPU_THERMOSTAT,
 )
 from ..utils import get_mqtt_state_topic
-from .base import IthoBaseSensor, IthoBinarySensor
+from .base_sensors import IthoBaseSensor, IthoBinarySensor
 
 
 def get_wpu_binary_sensors(config_entry: ConfigEntry):

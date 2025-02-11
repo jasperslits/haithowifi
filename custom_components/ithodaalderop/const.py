@@ -47,6 +47,8 @@ MQTT_STATETOPIC = {
     "wpu": "ithostatus",
 }
 
+MQTT_COMMAND_TOPIC = "cmd"
+
 CONF_ADDON_TYPE = "addontype"
 CONF_ENTITIES_CREATION_MODE = "entities_creation_mode"
 CONF_ADVANCED_CONFIG = "advanced_config"
