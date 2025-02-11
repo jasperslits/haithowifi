@@ -106,12 +106,9 @@ class IthoBinarySensor(BinarySensorEntity):
             name=get_device_name(config_entry.data),
         )
 
-        if description.unique_id is not None:
-            self._attr_unique_id = f"{get_entity_prefix(config_entry.data)}_{description.unique_id.lower()}"
-        else:
-            self._attr_unique_id = (
-                f"{get_entity_prefix(config_entry.data)}_{description.key}"
-            )
+        self._attr_unique_id = (
+            f"{get_entity_prefix(config_entry.data)}_{description.key}"
+        )
 
         self.entity_id = f"binary_sensor.{self._attr_unique_id}"
 
