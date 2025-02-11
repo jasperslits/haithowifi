@@ -4,7 +4,7 @@ from homeassistant.components.fan import FanEntity, FanEntityFeature
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.device_registry import DeviceInfo
 
-from ..const import ADDON_TYPES, CONF_ADDON_TYPE, DOMAIN, MANUFACTURER
+from ..const import DOMAIN, MANUFACTURER
 from ..definitions.base_definitions import IthoFanEntityDescription
 from ..utils import get_device_model, get_device_name, get_entity_prefix
 
