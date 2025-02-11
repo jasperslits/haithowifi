@@ -8,14 +8,14 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
 from ..definitions.co2_remote import REMOTE_SENSOR_TEMPLATE
-from ..utils import get_mqtt_state_topic
+from ..utils import get_mqtt_remote_topic
 from .base_sensors import IthoBaseSensor
 
 
 def get_co2_remote_sensors(config_entry: ConfigEntry):
     """Create remotes for CO2 monitoring."""
     sensors = []
-    topic = f"{get_mqtt_state_topic(config_entry.data)}"
+    topic = f"{get_mqtt_remote_topic(config_entry.data)}"
     for x in range(1, 5):
         remote = config_entry.data["remote" + str(x)]
         if remote not in ("", "Remote " + str(x)):

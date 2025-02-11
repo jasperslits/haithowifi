@@ -12,6 +12,7 @@ from .const import (
     CONF_NONCVE_MODEL,
     MQTT_COMMAND_TOPIC,
     MQTT_DEFAULT_BASETOPIC,
+    MQTT_REMOTE_TOPIC,
     MQTT_STATETOPIC,
     NONCVE_DEVICES,
 )
@@ -38,6 +39,11 @@ def get_mqtt_command_topic(config: dict[str, Any]) -> str:
 def get_mqtt_state_topic(config: dict[str, Any]) -> str:
     """Get the MQTT state topic."""
     return f"{get_mqtt_base_topic(config)}/{MQTT_STATETOPIC[config[CONF_ADDON_TYPE]]}"
+
+
+def get_mqtt_remote_topic(config: dict[str, Any]) -> str:
+    """Get the MQTT remote topic."""
+    return f"{get_mqtt_base_topic(config)}/{MQTT_REMOTE_TOPIC}"
 
 
 def get_device_model(config: dict[str, Any]) -> str:
