@@ -35,7 +35,7 @@ from .base import IthoBaseSensor, IthoBinarySensor
 def get_autotemp_binary_sensors(config_entry: ConfigEntry):
     """Create binary sensors for Autotemp."""
     sensors = []
-    topic = f"{get_mqtt_state_topic(config_entry.data)}"
+    topic = get_mqtt_state_topic(config_entry.data)
     for description in AUTOTEMP_BINARYSENSORS:
         description.topic = topic
         sensors.append(IthoBinarySensor(description, config_entry))
@@ -45,7 +45,7 @@ def get_autotemp_binary_sensors(config_entry: ConfigEntry):
 def get_autotemp_sensors(config_entry: ConfigEntry):
     """Create sensors for Autotemp."""
     sensors = []
-    topic = f"{get_mqtt_state_topic(config_entry.data)}"
+    topic = get_mqtt_state_topic(config_entry.data)
     for i in range(1, 13):
         letter = chr(i + 64)
         description = copy.deepcopy(AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE)

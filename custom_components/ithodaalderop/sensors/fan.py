@@ -29,7 +29,7 @@ def get_cve_binary_sensors(config_entry: ConfigEntry):
     """Create binary sensors for CVE."""
     sensors = []
     for description in CVE_BINARY_SENSORS:
-        description.topic = f"{get_mqtt_state_topic(config_entry.data)}"
+        description.topic = get_mqtt_state_topic(config_entry.data)
         sensors.append(IthoBinarySensor(description, config_entry))
 
     return sensors
@@ -40,7 +40,7 @@ def get_cve_sensors(config_entry: ConfigEntry):
     sensors = []
 
     for description in CVE_SENSORS:
-        description.topic = f"{get_mqtt_state_topic(config_entry.data)}"
+        description.topic = get_mqtt_state_topic(config_entry.data)
         sensors.append(IthoSensorFan(description, config_entry))
 
     return sensors
@@ -59,7 +59,7 @@ def get_noncve_binary_sensors(config_entry: ConfigEntry):
             hru_sensors = DEMAND_FLOW_BINARY_SENSORS
 
         for description in hru_sensors:
-            description.topic = f"{get_mqtt_state_topic(config_entry.data)}"
+            description.topic = get_mqtt_state_topic(config_entry.data)
             sensors.append(IthoBinarySensor(description, config_entry))
 
     return sensors
@@ -81,7 +81,7 @@ def get_noncve_sensors(config_entry: ConfigEntry):
         hru_sensors = DEMAND_FLOW_SENSORS
 
     for description in hru_sensors:
-        description.topic = f"{get_mqtt_state_topic(config_entry.data)}"
+        description.topic = get_mqtt_state_topic(config_entry.data)
         sensors.append(IthoSensorFan(description, config_entry))
 
     return sensors
