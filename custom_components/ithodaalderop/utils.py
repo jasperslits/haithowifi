@@ -11,6 +11,7 @@ from .const import (
     CONF_CUSTOM_ENTITY_PREFIX,
     CONF_NONCVE_MODEL,
     MQTT_DEFAULT_BASETOPIC,
+    MQTT_STATETOPIC,
     NONCVE_DEVICES,
 )
 
@@ -26,6 +27,11 @@ def get_mqtt_base_topic(config: dict[str, Any]) -> str:
         return config[CONF_CUSTOM_BASETOPIC]
 
     return get_default_mqtt_base_topic(config)
+
+
+def get_mqtt_state_topic(config: dict[str, Any]) -> str:
+    """Get the MQTT state topic."""
+    return f"{get_mqtt_base_topic(config)}/{MQTT_STATETOPIC[config[CONF_ADDON_TYPE]]}"
 
 
 def get_device_model(config: dict[str, Any]) -> str:
