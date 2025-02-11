@@ -1,4 +1,7 @@
-"""Fan class for HRU 350 Eco."""
+"""Fan class for CVE/HRU200.
+
+WIP - NOT IMPLEMENTED YET
+"""
 
 import json
 
@@ -16,21 +19,18 @@ PRESET_MODES = {
     "Low": "low",
     "Medium": "medium",
     "High": "high",
-    "Auto": "auto",
-    "Timer 10": "timer1",
-    "Timer 20": "timer2",
-    "Timer 30": "timer3",
 }
 
-COMMAND_KEY = "rfremotecmd"
+COMMAND_KEY = "vremotecmd"
 
 
-def get_hru250_300_fan(config_entry: ConfigEntry):
-    """Create fan for HRU 250/300."""
+def get_cve_hru200_fan(config_entry: ConfigEntry):
+    """Create fan for CVE/HRU 200."""
     description = IthoFanEntityDescription(
         key="fan",
         supported_features=(
-            FanEntityFeature.PRESET_MODE
+            FanEntityFeature.SET_SPEED
+            | FanEntityFeature.PRESET_MODE
             | FanEntityFeature.TURN_ON
             | FanEntityFeature.TURN_OFF
         ),
@@ -38,10 +38,10 @@ def get_hru250_300_fan(config_entry: ConfigEntry):
         command_topic=get_mqtt_command_topic(config_entry.data),
         state_topic=get_mqtt_state_topic(config_entry.data),
     )
-    return [IthoFanHRU250_300(description, config_entry)]
+    return [IthoFanCVE_HRU200(description, config_entry)]
 
 
-class IthoFanHRU250_300(IthoBaseFan):
+class IthoFanCVE_HRU200(IthoBaseFan):
     """Representation of an MQTT-controlled fan."""
 
     async def async_added_to_hass(self) -> None:
@@ -55,16 +55,18 @@ class IthoFanHRU250_300(IthoBaseFan):
         """Handle preset mode update via MQTT."""
         try:
             data = json.loads(msg.payload)
-            speed = int(data.get("Absolute speed of the fan (%)", -1))
+            speed = int(data.get("Ventilation level (%)", -1)) + int(
+                data.get("Ventilation setpoint (%)", -1)
+            )
 
-            if speed >= 90:
+            if speed == -2:
+                self._preset_mode = None
+            elif speed >= 90:
                 self._preset_mode = "High"
             elif speed >= 40:
                 self._preset_mode = "Medium"
-            elif speed >= 0:
-                self._preset_mode = "Low"
             else:
-                self._preset_mode = None
+                self._preset_mode = "Low"
 
             self.async_write_ha_state()
         except ValueError:

@@ -1,4 +1,4 @@
-"""Variables for Itho add-on."""
+"""Internally used utilities."""
 
 from typing import Any
 

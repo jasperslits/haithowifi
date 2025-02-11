@@ -68,10 +68,7 @@ class IthoFanHRU350(IthoBaseFan):
             data = json.loads(msg.payload)
             actual_mode = int(data.get("Actual Mode", -1))
 
-            if actual_mode in ACTUAL_MODES:
-                self._preset_mode = ACTUAL_MODES[actual_mode]
-            else:
-                _LOGGER.error("Invalid actual mode: %s", actual_mode)
+            self._preset_mode = ACTUAL_MODES.get(actual_mode)
 
             self.async_write_ha_state()
         except ValueError:
