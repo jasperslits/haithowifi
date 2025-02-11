@@ -1,4 +1,4 @@
-"""Fan class for HRU 350 Eco."""
+"""Fan class for HRU ECO 350."""
 
 import json
 
