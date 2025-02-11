@@ -1,6 +1,7 @@
 # Table of Contents
 - [Home Assistant sensor component/integration for Itho Wifi](#home-assistant-sensor-componentintegration-for-itho-wifi))
   - [What can be configured via this Integration](#what-can-be-configured-via-this-integration)
+    - [Fan entity](#fan-entity)
   - [Differences with the add-on's Home Assistant MQTT Discovery](#differences-with-the-itho-wifi-add-on-home-assistant-mqtt-discovery)
   - [Use-case](#use-case)
   - [Advanced configuration](#advanced-configuration)
@@ -27,11 +28,31 @@ This custom component has no affiliation with the Itho Daalderop company or with
 4. NON-CVE / HRU sensors
 5. Up to 5 remotes for monitoring CO2 levels for CVE/NON-CVE (HRU)
 
-## Differences with the Itho WiFi add-on Home Assistant MQTT Discovery
-This integration does not support the MQTT fan entity while this is provided via the MQTT Discovery. 
-To add this to Home Assistant enable Home Assistant MQTT Discovery in Arjen's module under MQTT settings or manually configure it in YAML.
-See the [wiki](https://github.com/arjenhiemstra/ithowifi/wiki/Home-Assistant) for details. 
+### Fan entity
+The integration creates a Fan entity for several devices which can be used to control the speed and/or mode. Currently the following devices and actions are provided:
 
+**HRU ECO 250/300**
+| HA action | Device action | 
+|---|---|
+| Turn on | Sets preset mode to `Auto` |
+| Turf off | Sets preset mode to `Off` |
+| Preset mode<sup>*</sup> | Sets to corresponding preset mode |
+
+\* Supported preset modes are `Low`, `Medium`, `High`, `Auto`, `Timer 10`, `Timer 20`, `Timer 30`
+
+**HRU ECO 350**
+| HA action | Device action | 
+|---|---|
+| Turn on | Sets preset mode to `Auto` |
+| Turf off | Sets preset mode to `Off` |
+| Preset mode<sup>*</sup> | Sets to corresponding preset mode |
+
+\* Supported preset modes are `Low`, `Medium`, `High`, `Auto`, `Autonight`, `Timer 10`, `Timer 20`, `Timer 30`
+
+> [!NOTE]
+> Only the Fan entity for the `HRU ECO 350` has been properly tested by the developers. Both developers own an `HRU ECO 350`, but no other devices. Help us by providing feedback for the `HRU ECO 250/300`. We intend to provide support for the `CVE` and `HRU200` in the (near) future, but these seem to be a bit more challanging due to the different possible control styles (commands) used.
+
+## Differences with the Itho WiFi add-on Home Assistant MQTT Discovery
 Custom autotemp roomnames and CO2 remote names are also unique to this integration.  
 
 Additional differences include the translations in Dutch, support for other Itho devices besides a fan, value translations for e.g. status. 
@@ -146,11 +167,6 @@ In order to keep the history from your old entities follow this process for each
 
 ## Advanced configuration
 ![image](https://github.com/user-attachments/assets/d8072051-5a9c-4ff8-bc7a-a26866d4b7ab)
-
-
-### TODO:
-* Add Integration to HACS default (waiting for https://github.com/hacs/default/pull/2494)
-* Explore adding Fan without autodiscovery
 
 # Help us improve!
 As we don't own all Itho devices ourselves, we don't always know the exact meaning and usage of an available sensor. You can help us improve the integration by providing feedback about:
