@@ -13,7 +13,10 @@ from homeassistant.const import (
     UnitOfVolumeFlowRate,
 )
 
-from .base import IthoBinarySensorEntityDescription, IthoSensorEntityDescription
+from .base_definitions import (
+    IthoBinarySensorEntityDescription,
+    IthoSensorEntityDescription,
+)
 
 WPU_BINARY_SENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     IthoBinarySensorEntityDescription(

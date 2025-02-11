@@ -1,4 +1,4 @@
-"""Variables for Itho add-on."""
+"""Internally used utilities."""
 
 from typing import Any
 
@@ -10,6 +10,7 @@ from .const import (
     CONF_CUSTOM_DEVICE_NAME,
     CONF_CUSTOM_ENTITY_PREFIX,
     CONF_NONCVE_MODEL,
+    MQTT_COMMAND_TOPIC,
     MQTT_DEFAULT_BASETOPIC,
     MQTT_STATETOPIC,
     NONCVE_DEVICES,
@@ -29,9 +30,19 @@ def get_mqtt_base_topic(config: dict[str, Any]) -> str:
     return get_default_mqtt_base_topic(config)
 
 
+def get_mqtt_command_topic(config: dict[str, Any]) -> str:
+    """Get the MQTT command topic."""
+    return f"{get_mqtt_base_topic(config)}/{MQTT_COMMAND_TOPIC}"
+
+
 def get_mqtt_state_topic(config: dict[str, Any]) -> str:
     """Get the MQTT state topic."""
     return f"{get_mqtt_base_topic(config)}/{MQTT_STATETOPIC[config[CONF_ADDON_TYPE]]}"
+
+
+def get_mqtt_remote_topic(config: dict[str, Any]) -> str:
+    """Get the MQTT remote topic."""
+    return f"{get_mqtt_base_topic(config)}/{MQTT_STATETOPIC["remote"]}"
 
 
 def get_device_model(config: dict[str, Any]) -> str:

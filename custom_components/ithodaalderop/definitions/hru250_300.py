@@ -12,7 +12,7 @@ from homeassistant.const import (
     UnitOfVolumeFlowRate,
 )
 
-from .base import IthoSensorEntityDescription
+from .base_definitions import IthoSensorEntityDescription
 
 HRU_ECO_250_300_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(

@@ -18,7 +18,7 @@ from ..const import (
     NONCVE_DEVICES,
     UNITTYPE_ICONS,
 )
-from ..definitions.base import (
+from ..definitions.base_definitions import (
     IthoBinarySensorEntityDescription,
     IthoSensorEntityDescription,
 )
@@ -30,13 +30,7 @@ class IthoBaseSensor(SensorEntity):
 
     _attr_has_entity_name = True
     entity_description: IthoSensorEntityDescription
-
     _extra_state_attributes: list[str] | None = None
-
-    @property
-    def extra_state_attributes(self) -> list[str] | None:
-        """Return the state attributes."""
-        return self._extra_state_attributes
 
     def __init__(
         self,
@@ -64,8 +58,12 @@ class IthoBaseSensor(SensorEntity):
             self._attr_unique_id = (
                 f"{get_entity_prefix(config_entry.data)}_{description.key}"
             )
-
         self.entity_id = f"sensor.{self._attr_unique_id}"
+
+    @property
+    def extra_state_attributes(self) -> list[str] | None:
+        """Return the state attributes."""
+        return self._extra_state_attributes
 
     @property
     def icon(self) -> str | None:

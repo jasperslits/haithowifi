@@ -1,8 +1,4 @@
-#!/usr/bin/env python3
-"""Config flow component for Itho Add-on.
-
-Author: Jasper Slits
-"""
+"""Config flow component for Itho Add-on."""
 
 from collections.abc import Mapping
 from typing import Any

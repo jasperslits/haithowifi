@@ -1,8 +1,4 @@
-#!/usr/bin/env python3
-"""Binary Sensor component for Itho.
-
-Author: Benjamin
-"""
+"""Binary Sensor component for Itho."""
 
 from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry

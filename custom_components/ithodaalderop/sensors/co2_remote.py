@@ -8,14 +8,14 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
 from ..definitions.co2_remote import REMOTE_SENSOR_TEMPLATE
-from ..utils import get_mqtt_state_topic
-from .base import IthoBaseSensor
+from ..utils import get_mqtt_remote_topic
+from .base_sensors import IthoBaseSensor
 
 
 def get_co2_remote_sensors(config_entry: ConfigEntry):
     """Create remotes for CO2 monitoring."""
     sensors = []
-    topic = get_mqtt_state_topic(config_entry.data)
+    topic = get_mqtt_remote_topic(config_entry.data)
     for x in range(1, 5):
         remote = config_entry.data["remote" + str(x)]
         if remote not in ("", "Remote " + str(x)):
@@ -34,20 +34,19 @@ class IthoSensorCO2Remote(IthoBaseSensor):
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
-
-        @callback
-        def message_received(message):
-            """Handle new MQTT messages."""
-            payload = json.loads(message.payload)
-            json_field = self.entity_description.json_field
-            if json_field not in payload:
-                value = None
-            else:
-                value = payload[json_field]["co2"]
-
-            self._attr_native_value = value
-            self.async_write_ha_state()
-
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.topic, message_received, 1
+            self.hass, self.entity_description.topic, self.message_received, 1
         )
+
+    @callback
+    def message_received(self, message):
+        """Handle new MQTT messages."""
+        payload = json.loads(message.payload)
+        json_field = self.entity_description.json_field
+        if json_field not in payload:
+            value = None
+        else:
+            value = payload[json_field]["co2"]
+
+        self._attr_native_value = value
+        self.async_write_ha_state()

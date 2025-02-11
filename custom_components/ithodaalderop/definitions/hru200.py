@@ -10,7 +10,7 @@ from homeassistant.const import (
     UnitOfTime,
 )
 
-from .base import IthoSensorEntityDescription
+from .base_definitions import IthoSensorEntityDescription
 
 HRU_ECO_200_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(

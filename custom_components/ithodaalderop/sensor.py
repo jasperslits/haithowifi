@@ -1,8 +1,4 @@
-#!/usr/bin/env python3
-"""Sensor component for Itho WiFi addon.
-
-Author: Jasper
-"""
+"""Sensor component for Itho WiFi addon."""
 
 from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry

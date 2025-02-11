@@ -22,7 +22,7 @@ from ..definitions.hru250_300 import HRU_ECO_250_300_SENSORS
 from ..definitions.hru350 import HRU_ECO_350_BINARY_SENSORS, HRU_ECO_350_SENSORS
 from ..definitions.hrueco import HRU_ECO_BINARY_SENSORS, HRU_ECO_SENSORS
 from ..utils import get_mqtt_state_topic
-from .base import IthoBaseSensor, IthoBinarySensor
+from .base_sensors import IthoBaseSensor, IthoBinarySensor
 
 
 def get_cve_binary_sensors(config_entry: ConfigEntry):
@@ -92,102 +92,101 @@ class IthoSensorFan(IthoBaseSensor):
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
-
-        @callback
-        def message_received(message):
-            """Handle new MQTT messages."""
-            payload = json.loads(message.payload)
-            json_field = self.entity_description.json_field
-            if json_field not in payload:
-                value = None
-            else:
-                value = payload[json_field]
-                # HRU ECO 350
-                if json_field == "Actual Mode":
-                    self._extra_state_attributes = {"Code": value}
-                    value = HRU_ECO_350_ACTUAL_MODE.get(value, "Unknown mode")
-
-                # HRU ECO 350
-                if json_field == "Air Quality (%)":
-                    _error_description = "Unknown error code"
-                    if isinstance(value, (int, float)) and float(value) > 100:
-                        _error_description = "Unknown error"
-                        value = None
-
-                    self._extra_state_attributes = {
-                        "Error Description": _error_description,
-                    }
-
-                # HRU ECO 350 / HRU ECO
-                if json_field in ["Airfilter counter", "Air filter counter"]:
-                    _last_maintenance = ""
-                    _next_maintenance_estimate = ""
-                    if str(value).isnumeric():
-                        _last_maintenance = (
-                            datetime.now() - timedelta(hours=int(value))
-                        ).date()
-                        _next_maintenance_estimate = (
-                            datetime.now() + timedelta(days=180, hours=-int(value))
-                        ).date()
-                    else:
-                        _last_maintenance = "Invalid value"
-
-                    self._extra_state_attributes = {
-                        "Last Maintenance": _last_maintenance,
-                        "Next Maintenance Estimate": _next_maintenance_estimate,
-                    }
-
-                # HRU ECO 250/300
-                if json_field == "Error number":
-                    _description = ""
-                    if str(value).isnumeric():
-                        _error_description = HRU_ECO_250_300_ERROR_CODE.get(
-                            int(value), _description
-                        )
-
-                    self._extra_state_attributes = {
-                        "Description": _description,
-                    }
-
-                # HRU ECO 350
-                if json_field == "Global fault code":
-                    _description = "Unknown fault code"
-                    if str(value).isnumeric():
-                        _description = HRU_ECO_350_GLOBAL_FAULT_CODE.get(
-                            int(value), _description
-                        )
-
-                    self._extra_state_attributes = {
-                        "Description": _description,
-                    }
-
-                # HRU ECO 350
-                if json_field == "Highest received RH value (%RH)":
-                    _error_description = ""
-                    if isinstance(value, (int, float)) and float(value) > 100:
-                        _error_description = HRU_ECO_350_RH_ERROR_CODE.get(
-                            int(value), "Unknown error"
-                        )
-                        value = None
-
-                    self._extra_state_attributes = {
-                        "Error Description": _error_description,
-                    }
-
-                # HRU ECO
-                if json_field == "Status":
-                    self._extra_state_attributes = {
-                        "Code": value,
-                    }
-
-                    _description = "Unknown status"
-                    if str(value).isnumeric():
-                        _description = HRU_ECO_STATUS.get(int(value), _description)
-                    value = _description
-
-            self._attr_native_value = value
-            self.async_write_ha_state()
-
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.topic, message_received, 1
+            self.hass, self.entity_description.topic, self.message_received, 1
         )
+
+    @callback
+    def message_received(self, message):
+        """Handle new MQTT messages."""
+        payload = json.loads(message.payload)
+        json_field = self.entity_description.json_field
+        if json_field not in payload:
+            value = None
+        else:
+            value = payload[json_field]
+            # HRU ECO 350
+            if json_field == "Actual Mode":
+                self._extra_state_attributes = {"Code": value}
+                value = HRU_ECO_350_ACTUAL_MODE.get(value, "Unknown mode")
+
+            # HRU ECO 350
+            if json_field == "Air Quality (%)":
+                _error_description = "Unknown error code"
+                if isinstance(value, (int, float)) and float(value) > 100:
+                    _error_description = "Unknown error"
+                    value = None
+
+                self._extra_state_attributes = {
+                    "Error Description": _error_description,
+                }
+
+            # HRU ECO 350 / HRU ECO
+            if json_field in ["Airfilter counter", "Air filter counter"]:
+                _last_maintenance = ""
+                _next_maintenance_estimate = ""
+                if str(value).isnumeric():
+                    _last_maintenance = (
+                        datetime.now() - timedelta(hours=int(value))
+                    ).date()
+                    _next_maintenance_estimate = (
+                        datetime.now() + timedelta(days=180, hours=-int(value))
+                    ).date()
+                else:
+                    _last_maintenance = "Invalid value"
+
+                self._extra_state_attributes = {
+                    "Last Maintenance": _last_maintenance,
+                    "Next Maintenance Estimate": _next_maintenance_estimate,
+                }
+
+            # HRU ECO 250/300
+            if json_field == "Error number":
+                _description = ""
+                if str(value).isnumeric():
+                    _error_description = HRU_ECO_250_300_ERROR_CODE.get(
+                        int(value), _description
+                    )
+
+                self._extra_state_attributes = {
+                    "Description": _description,
+                }
+
+            # HRU ECO 350
+            if json_field == "Global fault code":
+                _description = "Unknown fault code"
+                if str(value).isnumeric():
+                    _description = HRU_ECO_350_GLOBAL_FAULT_CODE.get(
+                        int(value), _description
+                    )
+
+                self._extra_state_attributes = {
+                    "Description": _description,
+                }
+
+            # HRU ECO 350
+            if json_field == "Highest received RH value (%RH)":
+                _error_description = ""
+                if isinstance(value, (int, float)) and float(value) > 100:
+                    _error_description = HRU_ECO_350_RH_ERROR_CODE.get(
+                        int(value), "Unknown error"
+                    )
+                    value = None
+
+                self._extra_state_attributes = {
+                    "Error Description": _error_description,
+                }
+
+            # HRU ECO
+            if json_field == "Status":
+                self._extra_state_attributes = {
+                    "Code": value,
+                }
+
+                _description = "Unknown status"
+                if str(value).isnumeric():
+                    _description = HRU_ECO_STATUS.get(int(value), _description)
+                value = _description
+
+        self._attr_native_value = value
+        self.async_write_ha_state()

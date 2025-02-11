@@ -27,9 +27,9 @@ from ..definitions.autotemp import (
     AUTOTEMP_SENSORS,
     AUTOTEMP_VALVE_SENSOR_TEMPLATE,
 )
-from ..definitions.base import IthoSensorEntityDescription
+from ..definitions.base_definitions import IthoSensorEntityDescription
 from ..utils import get_entity_prefix, get_mqtt_state_topic
-from .base import IthoBaseSensor, IthoBinarySensor
+from .base_sensors import IthoBaseSensor, IthoBinarySensor
 
 
 def get_autotemp_binary_sensors(config_entry: ConfigEntry):
@@ -115,44 +115,43 @@ class IthoSensorAutotemp(IthoBaseSensor):
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
-
-        @callback
-        def message_received(message):
-            """Handle new MQTT messages."""
-            payload = json.loads(message.payload)
-            json_field = self.entity_description.json_field
-            if json_field not in payload:
-                value = None
-            else:
-                value = payload[json_field]
-                if json_field == "Error":
-                    self._extra_state_attributes = {
-                        "Code": value,
-                    }
-                    value = AUTOTEMP_ERROR.get(value, "Unknown error")
-
-                if json_field == "Mode":
-                    self._extra_state_attributes = {
-                        "Code": value,
-                    }
-                    value = AUTOTEMP_MODE.get(value, "Unknown mode")
-
-                if json_field == "State off":
-                    if value == 1:
-                        value = "Off"
-                    if payload["State cool"] == 1:
-                        value = "Cooling"
-                    if payload["State heating"] == 1:
-                        value = "Heating"
-                    if payload["state hand"] == 1:
-                        value = "Hand"
-
-            self._attr_native_value = value
-            self.async_write_ha_state()
-
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.topic, message_received, 1
+            self.hass, self.entity_description.topic, self.message_received, 1
         )
+
+    @callback
+    def message_received(self, message):
+        """Handle new MQTT messages."""
+        payload = json.loads(message.payload)
+        json_field = self.entity_description.json_field
+        if json_field not in payload:
+            value = None
+        else:
+            value = payload[json_field]
+            if json_field == "Error":
+                self._extra_state_attributes = {
+                    "Code": value,
+                }
+                value = AUTOTEMP_ERROR.get(value, "Unknown error")
+
+            if json_field == "Mode":
+                self._extra_state_attributes = {
+                    "Code": value,
+                }
+                value = AUTOTEMP_MODE.get(value, "Unknown mode")
+
+            if json_field == "State off":
+                if value == 1:
+                    value = "Off"
+                if payload["State cool"] == 1:
+                    value = "Cooling"
+                if payload["State heating"] == 1:
+                    value = "Heating"
+                if payload["state hand"] == 1:
+                    value = "Hand"
+
+        self._attr_native_value = value
+        self.async_write_ha_state()
 
 
 class IthoSensorAutotempRoom(IthoBaseSensor):
@@ -184,16 +183,15 @@ class IthoSensorAutotempRoom(IthoBaseSensor):
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
-
-        @callback
-        def message_received(message):
-            """Handle new MQTT messages."""
-            payload = json.loads(message.payload)
-            value = payload.get(self.entity_description.json_field, None)
-
-            self._attr_native_value = value
-            self.async_write_ha_state()
-
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.topic, message_received, 1
+            self.hass, self.entity_description.topic, self.message_received, 1
         )
+
+    @callback
+    def message_received(self, message):
+        """Handle new MQTT messages."""
+        payload = json.loads(message.payload)
+        value = payload.get(self.entity_description.json_field, None)
+
+        self._attr_native_value = value
+        self.async_write_ha_state()

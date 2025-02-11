@@ -10,7 +10,10 @@ from homeassistant.const import (
     UnitOfTime,
 )
 
-from .base import IthoBinarySensorEntityDescription, IthoSensorEntityDescription
+from .base_definitions import (
+    IthoBinarySensorEntityDescription,
+    IthoSensorEntityDescription,
+)
 
 AUTOTEMP_BINARYSENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     IthoBinarySensorEntityDescription(

@@ -11,7 +11,10 @@ from homeassistant.const import (
     UnitOfTime,
 )
 
-from .base import IthoBinarySensorEntityDescription, IthoSensorEntityDescription
+from .base_definitions import (
+    IthoBinarySensorEntityDescription,
+    IthoSensorEntityDescription,
+)
 
 CVE_BINARY_SENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     IthoBinarySensorEntityDescription(

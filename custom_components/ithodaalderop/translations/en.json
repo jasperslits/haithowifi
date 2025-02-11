@@ -227,6 +227,11 @@
         "name": "Venting from Thermostat"
       }
     },
+    "fan": {
+      "fan": {
+        "name": "Fan"
+      }
+    },
     "sensor": {
       "absence": {
         "name": "Absence"
