@@ -440,7 +440,7 @@ DEMAND_FLOW_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False,
     ),
-    IthoBinarySensorEntityDescription(
+    IthoSensorEntityDescription(
         json_field="Error",
         key="error",
         entity_category=EntityCategory.DIAGNOSTIC,
