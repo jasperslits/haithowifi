@@ -22,7 +22,7 @@ from ..definitions.hru200 import HRU_ECO_200_SENSORS
 from ..definitions.hru250_300 import HRU_ECO_250_300_SENSORS
 from ..definitions.hru350 import HRU_ECO_350_BINARY_SENSORS, HRU_ECO_350_SENSORS
 from ..definitions.hrueco import HRU_ECO_BINARY_SENSORS, HRU_ECO_SENSORS
-from ..utils import get_mqtt_base_topic
+from ..utils import get_mqtt_state_topic
 from .base import IthoBaseSensor, IthoBinarySensor
 
 
@@ -30,9 +30,7 @@ def get_cve_binary_sensors(config_entry: ConfigEntry):
     """Create binary sensors for CVE."""
     sensors = []
     for description in CVE_BINARY_SENSORS:
-        description.topic = (
-            f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["cve"]}"
-        )
+        description.topic = f"{get_mqtt_state_topic(config_entry.data)}"
         sensors.append(IthoBinarySensor(description, config_entry))
 
     return sensors
@@ -43,9 +41,7 @@ def get_cve_sensors(config_entry: ConfigEntry):
     sensors = []
 
     for description in CVE_SENSORS:
-        description.topic = (
-            f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["cve"]}"
-        )
+        description.topic = f"{get_mqtt_state_topic(config_entry.data)}"
         sensors.append(IthoSensorFan(description, config_entry))
 
     return sensors
@@ -64,9 +60,7 @@ def get_noncve_binary_sensors(config_entry: ConfigEntry):
             hru_sensors = DEMAND_FLOW_BINARY_SENSORS
 
         for description in hru_sensors:
-            description.topic = (
-                f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["noncve"]}"
-            )
+            description.topic = f"{get_mqtt_state_topic(config_entry.data)}"
             sensors.append(IthoBinarySensor(description, config_entry))
 
     return sensors
@@ -88,9 +82,7 @@ def get_noncve_sensors(config_entry: ConfigEntry):
         hru_sensors = DEMAND_FLOW_SENSORS
 
     for description in hru_sensors:
-        description.topic = (
-            f"{get_mqtt_base_topic(config_entry.data)}/{MQTT_STATETOPIC["noncve"]}"
-        )
+        description.topic = f"{get_mqtt_state_topic(config_entry.data)}"
         sensors.append(IthoSensorFan(description, config_entry))
 
     return sensors
