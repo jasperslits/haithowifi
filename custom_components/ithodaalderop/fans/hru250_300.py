@@ -61,7 +61,7 @@ class IthoFanHRU350(IthoBaseFan):
                 self._preset_mode = "High"
             elif speed >= 40:
                 self._preset_mode = "Medium"
-            elif speed >= 20:
+            elif speed >= 0:
                 self._preset_mode = "Low"
             else:
                 _LOGGER.error("Invalid speed: %s", speed)
