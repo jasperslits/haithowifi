@@ -5,6 +5,15 @@
       "reconfigure_successful": "Herconfiguratie was succesvol"
     },
     "step": {
+      "advanced_config": {
+        "data": {
+          "custom_basetopic": "MQTT-basisonderwerp",
+          "custom_entity_prefix": "Entiteiten-voorvoegsel",
+          "custom_device_name": "Apparaatnaam"
+        },
+        "description": "Pas het MQTT-basisonderwerp, entiteitsvoorvoegsel en apparaatnaam aan.",
+        "title": "Geavanceerde integratie configuratie"
+      },
       "noncve_model": {
         "data": {
           "noncve_model": "Model:"
@@ -72,7 +81,8 @@
       "user": {
         "data": {
           "addontype": "Add-on type:",
-          "entities_creation_mode": "Kies de sensoren die aangemaakt worden (dit kan later aangepast worden):"
+          "entities_creation_mode": "Kies de sensoren die aangemaakt worden (dit kan later aangepast worden):",
+          "advanced_config": "Geavanceerde integratie configuratie:"
         },
         "description": "Configuratie stappen voor Itho. Herhaal deze configuratie voor iedere fysieke add-on die gebruikt wordt. Deze integratie maakt automatisch alle of de meest gebruikelijke sensors aan.",
         "title": "Voeg nieuwe Itho apparaten toe"

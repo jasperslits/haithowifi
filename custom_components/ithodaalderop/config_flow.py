@@ -15,6 +15,7 @@ from homeassistant.helpers.selector import selector
 from .const import (
     ADDON_TYPES,
     CONF_ADDON_TYPE,
+    CONF_ADVANCED_CONFIG,
     CONF_AUTOTEMP_ROOM1,
     CONF_AUTOTEMP_ROOM2,
     CONF_AUTOTEMP_ROOM3,
@@ -23,6 +24,9 @@ from .const import (
     CONF_AUTOTEMP_ROOM6,
     CONF_AUTOTEMP_ROOM7,
     CONF_AUTOTEMP_ROOM8,
+    CONF_CUSTOM_BASETOPIC,
+    CONF_CUSTOM_DEVICE_NAME,
+    CONF_CUSTOM_ENTITY_PREFIX,
     CONF_ENTITIES_CREATION_MODE,
     CONF_NONCVE_MODEL,
     CONF_REMOTE_1,
@@ -33,6 +37,12 @@ from .const import (
     DOMAIN,
     ENTITIES_CREATION_MODES,
     NONCVE_DEVICES,
+)
+from .utils import (
+    get_default_entity_prefix,
+    get_default_mqtt_base_topic,
+    get_device_model,
+    get_entity_prefix,
 )
 
 
@@ -52,6 +62,35 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return self.config[param]
         return default
 
+    async def _try_set_unique_id(self):
+        await self.async_set_unique_id(
+            f"itho_wifi_addon_{get_entity_prefix(self.config)}"
+        )
+        self._abort_if_unique_id_configured()
+
+    def _get_entry_title(self):
+        """Generete title for the entry."""
+
+        addon_type = self.config[CONF_ADDON_TYPE]
+        advanced_config = self.config[CONF_ADVANCED_CONFIG]
+
+        title = "Itho WiFi Add-on for "
+        if addon_type == "noncve":
+            title = title + ADDON_TYPES[addon_type] + " - "
+
+            if advanced_config:
+                title = title + self.config[CONF_CUSTOM_DEVICE_NAME]
+            else:
+                title = title + NONCVE_DEVICES[self.config[CONF_NONCVE_MODEL]]
+
+        elif advanced_config:
+            title = title + self.config[CONF_CUSTOM_DEVICE_NAME]
+
+        else:
+            title = title + ADDON_TYPES[addon_type]
+
+        return title
+
     async def async_step_user(self, user_input: Mapping[str, Any] | None = None):
         """Configure main step."""
         if user_input is not None:
@@ -62,14 +101,13 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 return await self.async_step_remotes()
             if user_input[CONF_ADDON_TYPE] == "noncve":
                 return await self.async_step_noncve_model()
+            if user_input.get(CONF_ADVANCED_CONFIG, False):
+                return await self.async_step_advanced_config()
 
-            await self.async_set_unique_id(
-                f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}"
-            )
-            self._abort_if_unique_id_configured()
+            await self._try_set_unique_id()
             return self.async_create_entry(
-                title=f"Itho WiFi Add-on for {ADDON_TYPES[self.config[CONF_ADDON_TYPE]]}",
-                data=user_input,
+                title=self._get_entry_title(),
+                data=self.config,
             )
 
         itho_schema = vol.Schema(
@@ -92,6 +130,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                         }
                     }
                 ),
+                vol.Required(CONF_ADVANCED_CONFIG): selector({"boolean": {}}),
             }
         )
 
@@ -101,12 +140,12 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Configure rooms for autotemp."""
         if user_input is not None:
             self.config.update(user_input)
-            await self.async_set_unique_id(
-                f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}"
-            )
-            self._abort_if_unique_id_configured()
+            if self.config[CONF_ADVANCED_CONFIG]:
+                return await self.async_step_advanced_config()
+
+            await self._try_set_unique_id()
             return self.async_create_entry(
-                title=f"Itho WiFi Add-on for {ADDON_TYPES[self.config[CONF_ADDON_TYPE]]}",
+                title=self._get_entry_title(),
                 data=self.config,
             )
 
@@ -123,7 +162,11 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             }
         )
         return self.async_show_form(
-            step_id="rooms", data_schema=itho_schema, last_step=True
+            step_id="rooms",
+            data_schema=itho_schema,
+            last_step=(
+                not self.config[CONF_ADVANCED_CONFIG]
+            ),  # Display next (False) or submit (True or empty) button in frontend
         )
 
     async def async_step_noncve_model(
@@ -148,23 +191,22 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             }
         )
 
-        return self.async_show_form(step_id="noncve_model", data_schema=itho_schema)
+        return self.async_show_form(
+            step_id="noncve_model",
+            data_schema=itho_schema,
+            last_step=False,  # Display next (False) or submit (True or empty) button in frontend
+        )
 
     async def async_step_remotes(self, user_input: Mapping[str, Any] | None = None):
         """Configure up to 5 remotes."""
         if user_input is not None:
             self.config.update(user_input)
-            await self.async_set_unique_id(
-                f"itho_wifi_addon_{self.config[CONF_ADDON_TYPE]}"
-            )
-            self._abort_if_unique_id_configured()
+            if self.config[CONF_ADVANCED_CONFIG]:
+                return await self.async_step_advanced_config()
 
-            title = "Itho WiFi Add-on for " + ADDON_TYPES[self.config[CONF_ADDON_TYPE]]
-            if self.config[CONF_ADDON_TYPE] == "noncve":
-                title = title + " - " + NONCVE_DEVICES[self.config[CONF_NONCVE_MODEL]]
-
+            await self._try_set_unique_id()
             return self.async_create_entry(
-                title=title,
+                title=self._get_entry_title(),
                 data=self.config,
             )
 
@@ -178,7 +220,46 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             }
         )
         return self.async_show_form(
-            step_id="remotes", data_schema=itho_schema, last_step=True
+            step_id="remotes",
+            data_schema=itho_schema,
+            last_step=(
+                not self.config[CONF_ADVANCED_CONFIG]
+            ),  # Display next (False) or submit (True or empty) button in frontend
+        )
+
+    async def async_step_advanced_config(
+        self, user_input: Mapping[str, Any] | None = None
+    ):
+        """Advanced configuration for multiple devices that would use the same MQTT basetopic."""
+        if user_input is not None:
+            self.config.update(user_input)
+
+            await self._try_set_unique_id()
+            return self.async_create_entry(
+                title=self._get_entry_title(),
+                data=self.config,
+            )
+
+        itho_schema = vol.Schema(
+            {
+                vol.Required(
+                    CONF_CUSTOM_BASETOPIC,
+                    default=get_default_mqtt_base_topic(self.config),
+                ): str,
+                vol.Required(
+                    CONF_CUSTOM_ENTITY_PREFIX,
+                    default=get_default_entity_prefix(self.config),
+                ): str,
+                vol.Required(
+                    CONF_CUSTOM_DEVICE_NAME,
+                    default=get_device_model(self.config),
+                ): str,
+            }
+        )
+        return self.async_show_form(
+            step_id="advanced_config",
+            data_schema=itho_schema,
+            last_step=True,  # Display next (False) or submit (True or empty) button in frontend
         )
 
     async def async_step_reconfigure(self, user_input: Mapping[str, Any] | None = None):
@@ -262,7 +343,9 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             }
         )
         return self.async_show_form(
-            step_id="rooms_reconfigure", data_schema=itho_schema, last_step=True
+            step_id="rooms_reconfigure",
+            data_schema=itho_schema,
+            last_step=True,  # Display next (False) or submit (True or empty) button in frontend
         )
 
     async def async_step_remotes_reconfigure(
@@ -300,5 +383,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             }
         )
         return self.async_show_form(
-            step_id="remotes_reconfigure", data_schema=itho_schema, last_step=True
+            step_id="remotes_reconfigure",
+            data_schema=itho_schema,
+            last_step=True,  # Display next (False) or submit (True or empty) button in frontend
         )
