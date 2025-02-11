@@ -7,7 +7,7 @@ from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from ..const import MQTT_STATETOPIC, WPU_STATUS
+from ..const import WPU_STATUS
 from ..definitions.wpu import (
     WPU_BINARY_SENSORS,
     WPU_ERROR_CODE_BYTE_TEMPLATE,

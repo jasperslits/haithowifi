@@ -14,7 +14,6 @@ from ..const import (
     HRU_ECO_350_GLOBAL_FAULT_CODE,
     HRU_ECO_350_RH_ERROR_CODE,
     HRU_ECO_STATUS,
-    MQTT_STATETOPIC,
 )
 from ..definitions.cve import CVE_BINARY_SENSORS, CVE_SENSORS
 from ..definitions.demandflow import DEMAND_FLOW_BINARY_SENSORS, DEMAND_FLOW_SENSORS
