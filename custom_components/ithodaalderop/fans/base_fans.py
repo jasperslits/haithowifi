@@ -4,8 +4,9 @@ from homeassistant.components.fan import FanEntity, FanEntityFeature
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.device_registry import DeviceInfo
 
-from ..const import ADDON_TYPES, CONF_ADDON_TYPE, DOMAIN
+from ..const import ADDON_TYPES, CONF_ADDON_TYPE, DOMAIN, MANUFACTURER
 from ..definitions.base_definitions import IthoFanEntityDescription
+from ..utils import get_device_model, get_device_name, get_entity_prefix
 
 
 class IthoBaseFan(FanEntity):
@@ -26,10 +27,15 @@ class IthoBaseFan(FanEntity):
         self.entity_description.translation_key = self.entity_description.key
 
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, config_entry.data[CONF_ADDON_TYPE])}
+            identifiers={
+                (DOMAIN, f"itho_wifi_addon_{get_entity_prefix(config_entry.data)}")
+            },
+            manufacturer=MANUFACTURER,
+            model=get_device_model(config_entry.data),
+            name=get_device_name(config_entry.data),
         )
         self._attr_unique_id = (
-            f"itho_{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]}_{description.key}"
+            f"{get_entity_prefix(config_entry.data)}_{description.key}"
         )
         self.entity_id = f"fan.{self._attr_unique_id}"
 
