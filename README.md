@@ -32,7 +32,7 @@ The integration creates a Fan entity for several devices which can be used to co
 > [!NOTE]
 > We intend to provide support for the `CVE` and `HRU200` in the (near) future, but these seem to be a bit more challanging due to the different possible control styles (commands) used. Help us by providing [feedback](https://github.com/jasperslits/haithowifi/issues)!.
 
-**HRU ECO 250/300**
+#### HRU ECO 250/300
 | HA action | Device action | 
 |---|---|
 | Preset mode<sup>*</sup> | Sets to corresponding preset mode |
@@ -40,11 +40,14 @@ The integration creates a Fan entity for several devices which can be used to co
 \* Supported preset modes are `Low`, `Medium`, `High`, `Auto`, `Timer 10`, `Timer 20`, `Timer 30`
 
 > [!NOTE]
-> **Settings Fan preset mode works as fire-and-forget**
+> **Setting Fan preset mode works as fire-and-forget**
 > 
 > The HRU ECO 250/300 don't provide information on their current preset. Setting a preset from a physical (RF)remote is currently impossible to know for the integration.
 
-**HRU ECO 350**
+#### HRU ECO 350
+> [!IMPORTANT]
+> Requires a successfully paired virtual remote
+
 | HA action | Device action | 
 |---|---|
 | Turn on | Sets preset mode to `Auto` |
