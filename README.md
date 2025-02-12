@@ -11,7 +11,6 @@
   - [Prerequisites](#prerequisites)
   - [Install via HACS (recommended)](#install-via-hacs-recommended)
   - [Manual install](#manual-install)
-  - [Upgrading from 1.4 or below (+ keeping history)](#upgrading-from-14-or-below--keeping-history)
 - [Screenshots](#screenshots)
 - [Help us improve!](#help-us-improve)
 
@@ -127,23 +126,6 @@ Click `enable`
 4. Go to Integrations
 5. Search for Itho Add-on integration
 6. Add an entry for each device
-
-## Upgrading from 1.4 or below (+ keeping history)
-Version `2.0.0` includes major improvements that changes the entity id's for all entities within a device. Due to this change old entities will no longer be provided by the integration and no longer work. You will need to reconfigure the integration:
-1. Navigate to `Settings` -> `Devices & Services` and find `Itho WiFi Add-on`.
-2. For each entry press ` ⠇ ` (three dots) and press `Delete`.
-3. Reconfigure a new entry by pressing `ADD DEVICE` for each Itho Wifi Add-on you own.
-
-In order to keep the history from your old entities follow this process for each entity:
-
-
->_According to https://www.home-assistant.io/blog/2023/04/05/release-20234/#database-scalability_:
->
->It may take a while to complete background data migration, depending on the size of your stored data. To ensure Home Assistant keeps history when renaming an entity, wait 24 hours after upgrading before renaming.
-
-1. Rename the entity to the entity-id of the old entity. (For example, change `sensor.itho_hru_actual_exhaust_fan` back to `sensor.noncve_actual_exhaust_fan`)
-2. **Wait 24 hours**
-3. Rename the entity back to the new naming scheme. The history should now be kept with your new entity-id
 
 # Screenshots
 ## Add integration
