@@ -34,11 +34,14 @@ The integration creates a Fan entity for several devices which can be used to co
 **HRU ECO 250/300**
 | HA action | Device action | 
 |---|---|
-| Turn on | Sets preset mode to `Auto` |
-| Turf off | Sets preset mode to `Off` |
 | Preset mode<sup>*</sup> | Sets to corresponding preset mode |
 
 \* Supported preset modes are `Low`, `Medium`, `High`, `Auto`, `Timer 10`, `Timer 20`, `Timer 30`
+
+> [!NOTE]
+> **Settings Fan preset mode works as fire-and-forget**
+> 
+> The HRU ECO 250/300 don't provide information on their current preset. Setting a preset from a physical (RF)remote is currently impossible to know for the integration.
 
 **HRU ECO 350**
 | HA action | Device action | 
@@ -50,7 +53,7 @@ The integration creates a Fan entity for several devices which can be used to co
 \* Supported preset modes are `Low`, `Medium`, `High`, `Auto`, `Autonight`, `Timer 10`, `Timer 20`, `Timer 30`
 
 > [!NOTE]
-> Only the Fan entity for the `HRU ECO 350` has been properly tested by the developers. Both developers own an `HRU ECO 350`, but no other devices. Help us by providing [feedback](https://github.com/jasperslits/haithowifi/issues) for the `HRU ECO 250/300`. We intend to provide support for the `CVE` and `HRU200` in the (near) future, but these seem to be a bit more challanging due to the different possible control styles (commands) used.
+> We intend to provide support for the `CVE` and `HRU200` in the (near) future, but these seem to be a bit more challanging due to the different possible control styles (commands) used. Help us by providing [feedback](https://github.com/jasperslits/haithowifi/issues)!.
 
 ## Differences with the Itho WiFi add-on Home Assistant MQTT Discovery
 Custom autotemp roomnames and CO2 remote names are also unique to this integration.  
