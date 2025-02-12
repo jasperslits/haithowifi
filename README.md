@@ -30,6 +30,8 @@ This custom component has no affiliation with the Itho Daalderop company or with
 
 ### Fan entity
 The integration creates a Fan entity for several devices which can be used to control the speed and/or mode. Currently the following devices and actions are provided:
+> [!NOTE]
+> We intend to provide support for the `CVE` and `HRU200` in the (near) future, but these seem to be a bit more challanging due to the different possible control styles (commands) used. Help us by providing [feedback](https://github.com/jasperslits/haithowifi/issues)!.
 
 **HRU ECO 250/300**
 | HA action | Device action | 
@@ -51,9 +53,6 @@ The integration creates a Fan entity for several devices which can be used to co
 | Preset mode<sup>*</sup> | Sets to corresponding preset mode |
 
 \* Supported preset modes are `Low`, `Medium`, `High`, `Auto`, `Autonight`, `Timer 10`, `Timer 20`, `Timer 30`
-
-> [!NOTE]
-> We intend to provide support for the `CVE` and `HRU200` in the (near) future, but these seem to be a bit more challanging due to the different possible control styles (commands) used. Help us by providing [feedback](https://github.com/jasperslits/haithowifi/issues)!.
 
 ## Differences with the Itho WiFi add-on Home Assistant MQTT Discovery
 Custom autotemp roomnames and CO2 remote names are also unique to this integration.  
