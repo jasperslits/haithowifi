@@ -50,16 +50,22 @@ def get_noncve_binary_sensors(config_entry: ConfigEntry):
     """Create binary sensors for NON-CVE."""
     sensors = []
 
-    if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco":
-        hru_sensors = HRU_ECO_BINARY_SENSORS
-    if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_350":
-        hru_sensors = HRU_ECO_350_BINARY_SENSORS
-    if config_entry.data[CONF_NONCVE_MODEL] == "demand_flow":
-        hru_sensors = DEMAND_FLOW_BINARY_SENSORS
+    model = config_entry.data[CONF_NONCVE_MODEL]
+    if model in [
+        "demand_flow",
+        "hru_eco",
+        "hru_eco_350",
+    ]:
+        if model == "demand_flow":
+            descriptions = DEMAND_FLOW_BINARY_SENSORS
+        if model == "hru_eco":
+            descriptions = HRU_ECO_BINARY_SENSORS
+        if model == "hru_eco_350":
+            descriptions = HRU_ECO_350_BINARY_SENSORS
 
-    for description in hru_sensors:
-        description.topic = get_mqtt_state_topic(config_entry.data)
-        sensors.append(IthoBinarySensor(description, config_entry))
+        for description in descriptions:
+            description.topic = get_mqtt_state_topic(config_entry.data)
+            sensors.append(IthoBinarySensor(description, config_entry))
 
     return sensors
 
@@ -68,18 +74,19 @@ def get_noncve_sensors(config_entry: ConfigEntry):
     """Create sensors for NON-CVE."""
     sensors = []
 
-    if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco":
-        hru_sensors = HRU_ECO_SENSORS
-    if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_200":
-        hru_sensors = HRU_ECO_200_SENSORS
-    if config_entry.data[CONF_NONCVE_MODEL] in ["hru_eco_250", "hru_eco_300"]:
-        hru_sensors = HRU_ECO_250_300_SENSORS
-    if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_350":
-        hru_sensors = HRU_ECO_350_SENSORS
-    if config_entry.data[CONF_NONCVE_MODEL] == "demand_flow":
-        hru_sensors = DEMAND_FLOW_SENSORS
+    model = config_entry.data[CONF_NONCVE_MODEL]
+    if model == "demand_flow":
+        descriptions = DEMAND_FLOW_SENSORS
+    if model == "hru_eco":
+        descriptions = HRU_ECO_SENSORS
+    if model == "hru_eco_200":
+        descriptions = HRU_ECO_200_SENSORS
+    if model in ["hru_eco_250", "hru_eco_300"]:
+        descriptions = HRU_ECO_250_300_SENSORS
+    if model == "hru_eco_350":
+        descriptions = HRU_ECO_350_SENSORS
 
-    for description in hru_sensors:
+    for description in descriptions:
         description.topic = get_mqtt_state_topic(config_entry.data)
         sensors.append(IthoSensorFan(description, config_entry))
 
