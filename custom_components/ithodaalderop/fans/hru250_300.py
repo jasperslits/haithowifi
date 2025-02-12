@@ -5,10 +5,11 @@ import json
 from homeassistant.components import mqtt
 from homeassistant.components.fan import FanEntityFeature
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import callback
 
 from ..const import _LOGGER
 from ..definitions.base_definitions import IthoFanEntityDescription
-from ..utils import get_mqtt_command_topic
+from ..utils import get_mqtt_command_topic, get_mqtt_state_topic
 from .base_fans import IthoBaseFan
 
 PRESET_MODES = {
@@ -31,6 +32,7 @@ def get_hru250_300_fan(config_entry: ConfigEntry):
         supported_features=(FanEntityFeature.PRESET_MODE),
         preset_modes=list(PRESET_MODES.keys()),
         command_topic=get_mqtt_command_topic(config_entry.data),
+        state_topic=get_mqtt_state_topic(config_entry.data),
     )
     return [IthoFanHRU250_300(description, config_entry)]
 
@@ -42,6 +44,25 @@ class IthoFanHRU250_300(IthoBaseFan):
     Setting the preset mode is done by sending a command to the fan, just like a physical remote.
     "Fire and forget"
     """
+
+    _is_on = False
+
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to MQTT events."""
+        await mqtt.async_subscribe(
+            self.hass, self.entity_description.state_topic, self._message_received, 1
+        )
+
+    @callback
+    def _message_received(self, msg):
+        """Handle preset mode update via MQTT."""
+        try:
+            data = json.loads(msg.payload)
+            speed = int(data.get("Absolute speed of the fan (%)", -1))
+
+            self._is_on = speed > 0
+        except ValueError:
+            self._is_on = None
 
     async def async_set_preset_mode(self, preset_mode):
         """Set the fan preset mode."""
@@ -56,3 +77,8 @@ class IthoFanHRU250_300(IthoBaseFan):
             )
         else:
             _LOGGER.warning("Invalid preset mode: %s", preset_mode)
+
+    @property
+    def is_on(self):
+        """Return true if the fan is on."""
+        return self._is_on
