@@ -27,15 +27,13 @@ class IthoBaseFan(FanEntity):
         self.entity_description.translation_key = self.entity_description.key
 
         self._attr_device_info = DeviceInfo(
-            identifiers={
-                (DOMAIN, f"itho_wifi_addon_{get_entity_prefix(config_entry.data)}")
-            },
+            identifiers={(DOMAIN, get_entity_prefix(config_entry.data))},
             manufacturer=MANUFACTURER,
             model=get_device_model(config_entry.data),
             name=get_device_name(config_entry.data),
         )
         self._attr_unique_id = (
-            f"{get_entity_prefix(config_entry.data)}_{description.key}"
+            f"{get_entity_prefix(config_entry.data)}_{description.key}".lower()
         )
         self.entity_id = f"fan.{self._attr_unique_id}"
 

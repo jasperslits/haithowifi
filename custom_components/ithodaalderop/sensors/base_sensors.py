@@ -45,19 +45,20 @@ class IthoBaseSensor(SensorEntity):
         if use_base_sensor_device:
             self._attr_device_info = DeviceInfo(
                 identifiers={
-                    (DOMAIN, f"itho_wifi_addon_{get_entity_prefix(config_entry.data)}"),
+                    (DOMAIN, get_entity_prefix(config_entry.data)),
                 },
                 manufacturer=MANUFACTURER,
                 model=get_device_model(config_entry.data),
                 name=get_device_name(config_entry.data),
             )
 
+        unique_id = get_entity_prefix(config_entry.data)
         if description.unique_id is not None:
-            self._attr_unique_id = f"{get_entity_prefix(config_entry.data)}_{description.unique_id.lower()}"
+            unique_id = f"{unique_id}_{description.unique_id}"
         else:
-            self._attr_unique_id = (
-                f"{get_entity_prefix(config_entry.data)}_{description.key}"
-            )
+            unique_id = f"{unique_id}_{description.key}"
+        self._attr_unique_id = unique_id.lower()
+
         self.entity_id = f"sensor.{self._attr_unique_id}"
 
     @property
@@ -97,7 +98,7 @@ class IthoBinarySensor(BinarySensorEntity):
 
         self._attr_device_info = DeviceInfo(
             identifiers={
-                (DOMAIN, f"itho_wifi_addon_{get_entity_prefix(config_entry.data)}"),
+                (DOMAIN, get_entity_prefix(config_entry.data)),
             },
             manufacturer=MANUFACTURER,
             model=get_device_model(config_entry.data),
@@ -105,7 +106,7 @@ class IthoBinarySensor(BinarySensorEntity):
         )
 
         self._attr_unique_id = (
-            f"{get_entity_prefix(config_entry.data)}_{description.key}"
+            f"{get_entity_prefix(config_entry.data)}_{description.key}".lower()
         )
 
         self.entity_id = f"binary_sensor.{self._attr_unique_id}"

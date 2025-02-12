@@ -170,7 +170,7 @@ class IthoSensorAutotempRoom(IthoBaseSensor):
             identifiers={
                 (
                     DOMAIN,
-                    f"itho_wifi_addon_{get_entity_prefix(config_entry.data)}_room_{description.room.lower()}",
+                    f"{get_entity_prefix(config_entry.data)}_room_{description.room}".lower(),
                 )
             },
             manufacturer=MANUFACTURER,
