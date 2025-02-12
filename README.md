@@ -1,5 +1,5 @@
 # Table of Contents
-- [Home Assistant sensor component/integration for Itho Wifi](#home-assistant-sensor-componentintegration-for-itho-wifi))
+- [Home Assistant sensor component/integration for Itho Wifi](#home-assistant-sensor-componentintegration-for-itho-wifi)
   - [What can be configured via this Integration](#what-can-be-configured-via-this-integration)
     - [Fan entity](#fan-entity)
   - [Differences with the add-on's Home Assistant MQTT Discovery](#differences-with-the-itho-wifi-add-on-home-assistant-mqtt-discovery)
