@@ -50,17 +50,16 @@ def get_noncve_binary_sensors(config_entry: ConfigEntry):
     """Create binary sensors for NON-CVE."""
     sensors = []
 
-    if config_entry.data[CONF_NONCVE_MODEL] in ["hru_eco", "hru_eco_350"]:
-        if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco":
-            hru_sensors = HRU_ECO_BINARY_SENSORS
-        if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_350":
-            hru_sensors = HRU_ECO_350_BINARY_SENSORS
-        if config_entry.data[CONF_NONCVE_MODEL] == "demand_flow":
-            hru_sensors = DEMAND_FLOW_BINARY_SENSORS
+    if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco":
+        hru_sensors = HRU_ECO_BINARY_SENSORS
+    if config_entry.data[CONF_NONCVE_MODEL] == "hru_eco_350":
+        hru_sensors = HRU_ECO_350_BINARY_SENSORS
+    if config_entry.data[CONF_NONCVE_MODEL] == "demand_flow":
+        hru_sensors = DEMAND_FLOW_BINARY_SENSORS
 
-        for description in hru_sensors:
-            description.topic = get_mqtt_state_topic(config_entry.data)
-            sensors.append(IthoBinarySensor(description, config_entry))
+    for description in hru_sensors:
+        description.topic = get_mqtt_state_topic(config_entry.data)
+        sensors.append(IthoBinarySensor(description, config_entry))
 
     return sensors
 
