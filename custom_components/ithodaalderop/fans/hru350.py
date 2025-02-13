@@ -88,17 +88,17 @@ class IthoFanHRU350(IthoBaseFan):
             self._preset_mode = preset_mode
             self.async_write_ha_state()
         else:
-            _LOGGER.warning("Invalid preset mode: %s", preset_mode)
+            _LOGGER.warning(f"Invalid preset mode: {preset_mode}")
 
     async def async_turn_on(self, *args, **kwargs):
         """Turn on the fan."""
-        await self.async_set_preset_mode("Auto")
+        await self.async_set_preset_mode("High")
 
     async def async_turn_off(self, **kwargs):
         """Turn off the fan."""
-        await self.async_set_preset_mode("Low")
+        await self.async_set_preset_mode("Auto")
 
     @property
     def is_on(self):
         """Return true if the fan is on."""
-        return self._preset_mode is not None and self._preset_mode != "Low"
+        return self._preset_mode == "High"

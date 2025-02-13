@@ -29,7 +29,11 @@ def get_hru250_300_fan(config_entry: ConfigEntry):
     """Create fan for HRU 250/300."""
     description = IthoFanEntityDescription(
         key="fan",
-        supported_features=(FanEntityFeature.PRESET_MODE),
+        supported_features=(
+            FanEntityFeature.PRESET_MODE
+            | FanEntityFeature.TURN_ON
+            | FanEntityFeature.TURN_OFF
+        ),
         preset_modes=list(PRESET_MODES.keys()),
         command_topic=get_mqtt_command_topic(config_entry.data),
         state_topic=get_mqtt_state_topic(config_entry.data),
@@ -76,7 +80,15 @@ class IthoFanHRU250_300(IthoBaseFan):
                 payload,
             )
         else:
-            _LOGGER.warning("Invalid preset mode: %s", preset_mode)
+            _LOGGER.warning(f"Invalid preset mode: {preset_mode}")
+
+    async def async_turn_on(self, *args, **kwargs):
+        """Turn on the fan."""
+        await self.async_set_preset_mode("High")
+
+    async def async_turn_off(self, **kwargs):
+        """Turn off the fan."""
+        await self.async_set_preset_mode("Auto")
 
     @property
     def is_on(self):

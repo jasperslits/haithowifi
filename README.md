@@ -35,6 +35,8 @@ The integration creates a Fan entity for several devices which can be used to co
 #### HRU ECO 250/300
 | HA action | Device action | 
 |---|---|
+| Turn on | Sets preset mode to `High` |
+| Turf off | Sets preset mode to `Auto` |
 | Preset mode<sup>*</sup> | Sets to corresponding preset mode |
 
 \* Supported preset modes are `Low`, `Medium`, `High`, `Auto`, `Timer 10`, `Timer 20`, `Timer 30`
@@ -50,8 +52,8 @@ The integration creates a Fan entity for several devices which can be used to co
 
 | HA action | Device action | 
 |---|---|
-| Turn on | Sets preset mode to `Auto` |
-| Turf off | Sets preset mode to `Low` |
+| Turn on | Sets preset mode to `High` |
+| Turf off | Sets preset mode to `Auto` |
 | Preset mode<sup>*</sup> | Sets to corresponding preset mode |
 
 \* Supported preset modes are `Low`, `Medium`, `High`, `Auto`, `Autonight`, `Timer 10`, `Timer 20`, `Timer 30`
