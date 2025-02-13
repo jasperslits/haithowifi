@@ -45,7 +45,7 @@ class IthoFanHRU250_300(IthoBaseFan):
     "Fire and forget"
     """
 
-    _is_on = False
+    _is_on = None
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
