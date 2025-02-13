@@ -15,7 +15,7 @@
 - [Help us improve!](#help-us-improve)
 
 # Home Assistant sensor component/integration for Itho Wifi
-This integration for Home Assistant provides a simple configuration screen for the MQTT based "Itho Wifi add-on" from https://github.com/arjenhiemstra/ithowifi
+This integration for Home Assistant provides a configuration screen for the MQTT based "Itho Wifi add-on" from https://github.com/arjenhiemstra/ithowifi
 This simplifies the integration by creating the sensors for the various Itho Daalderop devices: Heatpump WPU 5G, HRU units, CVE boxes, Autotemp units for floor heating. 
 
 This custom component has no affiliation with the Itho Daalderop company or with Arjen Hiemstra's Itho WiFi add-on.
@@ -25,7 +25,7 @@ This custom component has no affiliation with the Itho Daalderop company or with
 2. Heatpump WPU sensors
 3. CVE sensors
 4. NON-CVE / HRU sensors
-5. Up to 5 remotes for monitoring CO2 levels for CVE/NON-CVE (HRU)
+5. Up to 5 remotes for monitoring CO2 levels for CVE/NON-CVE (HRU) with custom names. 
 
 ### Fan entity
 The integration creates a Fan entity for several devices which can be used to control the speed and/or mode. Currently the following devices and actions are provided:
@@ -110,6 +110,7 @@ Click `enable`
 1. Working WiFi add-on connected to the Itho device(s) ([buy](https://www.nrgwatch.nl/))
 2. [Official HA MQTT Integration](https://www.home-assistant.io/integrations/mqtt/) configured and connected to the MQTT broker. 
 3. In the Itho WiFi add-on under 'MQTT' the `MQTT base topic` should be configured like the table below (or use the [advanced configuration](#advanced-configuration) to customize):
+4. Home Assistant MQTT Discovery under 'MQTT' configuration in the add-on should be set to Off (default) if your fan is supported via this integration. 
 
 | Device  | MQTT base topic   | 
 |---|---|
@@ -120,7 +121,7 @@ Click `enable`
 
 ## Install via HACS (recommended)
 1. Install HACS by following [these](https://www.hacs.xyz/docs/use/) steps
-2. Install the component via HACS custom repository. See [here](https://hacs.xyz/docs/faq/custom_repositories/) and use Integration in the dropdown and https://github.com/jasperslits/haithowifi/ as name 
+2. Search for "Itho wifi" and download the integration.
 
 ## Manual install
 1. Using a HA file editor like [`Studio Code Server`](https://github.com/hassio-addons/addon-vscode/blob/main/vscode/DOCS.md) or [`File Editor`](https://www.home-assistant.io/common-tasks/os/#installing-and-using-the-file-editor-add-on), create a folder /usr/share/hassio/homeassistant/custom_components/ithodaalderop
