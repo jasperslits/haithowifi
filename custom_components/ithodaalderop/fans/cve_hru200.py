@@ -78,11 +78,11 @@ class IthoFanCVE_HRU200(IthoBaseFan):
 
     async def async_turn_on(self, *args, **kwargs):
         """Turn on the fan."""
-        await self.async_set_preset_mode("Auto")
+        await self.async_set_preset_mode("High")
 
     async def async_turn_off(self, **kwargs):
         """Turn off the fan."""
-        await self.async_set_preset_mode("Low")
+        await self.async_set_preset_mode("Auto")
 
     @property
     def is_on(self):
