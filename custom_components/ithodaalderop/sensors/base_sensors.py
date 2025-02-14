@@ -52,11 +52,11 @@ class IthoBaseSensor(SensorEntity):
                 name=get_device_name(config_entry.data),
             )
 
-        unique_id = get_entity_prefix(config_entry.data)
+        prefix = get_entity_prefix(config_entry.data)
         if description.unique_id is not None:
-            unique_id = f"{unique_id}_{description.unique_id}"
+            unique_id = f"{prefix}_{description.unique_id}"
         else:
-            unique_id = f"{unique_id}_{description.key}"
+            unique_id = f"{prefix}_{description.key}"
         self._attr_unique_id = unique_id.lower()
 
         self.entity_id = f"sensor.{self._attr_unique_id}"

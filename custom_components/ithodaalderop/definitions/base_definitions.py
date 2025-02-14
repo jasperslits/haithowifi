@@ -41,6 +41,7 @@ class IthoFanEntityDescription(FanEntityDescription):
     supported_features: FanEntityFeature | None = None
     preset_modes: list[str] | None = None
     command_topic: str | None = None
+    command_key: str | None = None
     state_topic: str | None = None
 
 

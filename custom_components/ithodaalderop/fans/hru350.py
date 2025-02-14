@@ -17,7 +17,7 @@ PRESET_MODES = {
     "Medium": "medium",
     "High": "high",
     "Auto": "auto",
-    "Autonight": "autonight",
+    "Auto (night)": "autonight",
     "Timer 10": "timer1",
     "Timer 20": "timer2",
     "Timer 30": "timer3",
@@ -33,8 +33,6 @@ ACTUAL_MODES = {
     25: "Autonight",
 }
 
-COMMAND_KEY = "vremotecmd"
-
 
 def get_hru350_fan(config_entry: ConfigEntry):
     """Create fan for HRU 350 Eco."""
@@ -47,6 +45,7 @@ def get_hru350_fan(config_entry: ConfigEntry):
         ),
         preset_modes=list(PRESET_MODES.keys()),
         command_topic=get_mqtt_command_topic(config_entry.data),
+        command_key="vremotecmd",
         state_topic=get_mqtt_state_topic(config_entry.data),
     )
     return [IthoFanHRU350(description, config_entry)]
@@ -79,7 +78,7 @@ class IthoFanHRU350(IthoBaseFan):
         if preset_mode in PRESET_MODES:
             preset_command = PRESET_MODES[preset_mode]
 
-            payload = json.dumps({COMMAND_KEY: preset_command})
+            payload = json.dumps({self.entity_description.command_key: preset_command})
             await mqtt.async_publish(
                 self.hass,
                 self.entity_description.command_topic,
