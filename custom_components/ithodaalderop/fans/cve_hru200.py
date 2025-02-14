@@ -19,8 +19,6 @@ PRESET_MODES = {
     "Auto": "auto",
 }
 
-COMMAND_KEY = "vremotecmd"
-
 
 def get_cve_hru200_fan(config_entry: ConfigEntry):
     """Create fan for CVE/HRU 200."""
@@ -33,6 +31,7 @@ def get_cve_hru200_fan(config_entry: ConfigEntry):
         ),
         preset_modes=list(PRESET_MODES.keys()),
         command_topic=get_mqtt_command_topic(config_entry.data),
+        command_key="vremotecmd",
         state_topic=get_mqtt_state_topic(config_entry.data),
     )
     return [IthoFanCVE_HRU200(description, config_entry)]
@@ -67,7 +66,7 @@ class IthoFanCVE_HRU200(IthoBaseFan):
         if preset_mode in PRESET_MODES:
             preset_command = PRESET_MODES[preset_mode]
 
-            payload = json.dumps({COMMAND_KEY: preset_command})
+            payload = json.dumps({self.entity_description.command_key: preset_command})
             await mqtt.async_publish(
                 self.hass,
                 self.entity_description.command_topic,

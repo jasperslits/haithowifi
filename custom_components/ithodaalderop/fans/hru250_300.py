@@ -23,8 +23,6 @@ PRESET_MODES = {
     "Timer 30": "timer3",
 }
 
-COMMAND_KEY = "rfremotecmd"
-
 
 def get_hru250_300_fan(config_entry: ConfigEntry):
     """Create fan for HRU 250/300."""
@@ -37,6 +35,7 @@ def get_hru250_300_fan(config_entry: ConfigEntry):
         ),
         preset_modes=list(PRESET_MODES.keys()),
         command_topic=get_mqtt_command_topic(config_entry.data),
+        command_key="rfremotecmd",
         state_topic=get_mqtt_state_topic(config_entry.data),
     )
     return [IthoFanHRU250_300(description, config_entry)]
@@ -74,7 +73,7 @@ class IthoFanHRU250_300(IthoBaseFan):
         if preset_mode in PRESET_MODES:
             preset_command = PRESET_MODES[preset_mode]
 
-            payload = json.dumps({COMMAND_KEY: preset_command})
+            payload = json.dumps({self.entity_description.command_key: preset_command})
             await mqtt.async_publish(
                 self.hass,
                 self.entity_description.command_topic,
