@@ -17,6 +17,7 @@ PRESET_MODES = {
     "Medium": "medium",
     "High": "high",
     "Auto": "auto",
+    "Autonight": "autonight",
     "Timer 10": "timer1",
     "Timer 20": "timer2",
     "Timer 30": "timer3",

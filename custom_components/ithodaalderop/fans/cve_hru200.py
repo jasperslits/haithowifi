@@ -73,8 +73,6 @@ class IthoFanCVE_HRU200(IthoBaseFan):
                 self.entity_description.command_topic,
                 payload,
             )
-            self._preset_mode = preset_mode
-            self.async_write_ha_state()
         else:
             _LOGGER.warning("Invalid preset mode: %s", preset_mode)
 
