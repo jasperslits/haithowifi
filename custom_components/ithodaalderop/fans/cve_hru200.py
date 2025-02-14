@@ -1,7 +1,4 @@
-"""Fan class for CVE/HRU200.
-
-WIP - NOT IMPLEMENTED YET
-"""
+"""Fan class for CVE/HRU200."""
 
 import json
 
@@ -19,6 +16,7 @@ PRESET_MODES = {
     "Low": "low",
     "Medium": "medium",
     "High": "high",
+    "Auto": "auto",
 }
 
 COMMAND_KEY = "vremotecmd"
@@ -29,8 +27,7 @@ def get_cve_hru200_fan(config_entry: ConfigEntry):
     description = IthoFanEntityDescription(
         key="fan",
         supported_features=(
-            FanEntityFeature.SET_SPEED
-            | FanEntityFeature.PRESET_MODE
+            FanEntityFeature.PRESET_MODE
             | FanEntityFeature.TURN_ON
             | FanEntityFeature.TURN_OFF
         ),
@@ -43,6 +40,8 @@ def get_cve_hru200_fan(config_entry: ConfigEntry):
 
 class IthoFanCVE_HRU200(IthoBaseFan):
     """Representation of an MQTT-controlled fan."""
+
+    _is_on = None
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
@@ -59,18 +58,9 @@ class IthoFanCVE_HRU200(IthoBaseFan):
                 data.get("Ventilation setpoint (%)", -1)
             )
 
-            if speed == -2:
-                self._preset_mode = None
-            elif speed >= 90:
-                self._preset_mode = "High"
-            elif speed >= 40:
-                self._preset_mode = "Medium"
-            else:
-                self._preset_mode = "Low"
-
-            self.async_write_ha_state()
+            self._is_on = speed > 0
         except ValueError:
-            _LOGGER.error("Invalid JSON received for preset mode: %s", msg.payload)
+            self._is_on = None
 
     async def async_set_preset_mode(self, preset_mode):
         """Set the fan preset mode."""
@@ -99,4 +89,4 @@ class IthoFanCVE_HRU200(IthoBaseFan):
     @property
     def is_on(self):
         """Return true if the fan is on."""
-        return self._preset_mode is not None and self._preset_mode != "Low"
+        return self._is_on
