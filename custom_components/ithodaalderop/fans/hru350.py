@@ -99,4 +99,4 @@ class IthoFanHRU350(IthoBaseFan):
     @property
     def is_on(self):
         """Return true if the fan is on."""
-        return self._preset_mode == "High"
+        return self._attr_preset_mode == "High"

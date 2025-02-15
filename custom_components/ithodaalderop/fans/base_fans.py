@@ -24,6 +24,7 @@ class IthoBaseFan(FanEntity):
         self.entity_description = description
         self.entity_description.translation_key = self.entity_description.key
 
+        self._attr_supported_features = self.entity_description.supported_features
         self._attr_preset_modes = self.entity_description.preset_modes
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, get_entity_prefix(config_entry.data))},
