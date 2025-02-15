@@ -16,7 +16,9 @@ PRESET_MODES = {
     "Low": "low",
     "Medium": "medium",
     "High": "high",
-    "Auto": "auto",
+    "Timer 10": "timer1",
+    "Timer 20": "timer2",
+    "Timer 30": "timer3",
 }
 
 
@@ -25,7 +27,8 @@ def get_cve_hru200_fan(config_entry: ConfigEntry):
     description = IthoFanEntityDescription(
         key="fan",
         supported_features=(
-            FanEntityFeature.PRESET_MODE
+            FanEntityFeature.SET_SPEED
+            | FanEntityFeature.PRESET_MODE
             | FanEntityFeature.TURN_ON
             | FanEntityFeature.TURN_OFF
         ),
@@ -75,13 +78,24 @@ class IthoFanCVE_HRU200(IthoBaseFan):
         else:
             _LOGGER.warning("Invalid preset mode: %s", preset_mode)
 
+    async def async_set_percentage(self, percentage: int) -> None:
+        """Set the speed of the fan, as a percentage."""
+        payload = json.dumps({self.entity_description.command_key: percentage})
+        await mqtt.async_publish(
+            self.hass,
+            self.entity_description.command_topic,
+            payload,
+        )
+        self.percentage = percentage
+        self.async_write_ha_state()
+
     async def async_turn_on(self, *args, **kwargs):
         """Turn on the fan."""
         await self.async_set_preset_mode("High")
 
     async def async_turn_off(self, **kwargs):
         """Turn off the fan."""
-        await self.async_set_preset_mode("Auto")
+        await self.async_set_percentage(0)
 
     @property
     def is_on(self):
