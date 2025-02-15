@@ -22,32 +22,17 @@ class IthoBaseFan(FanEntity):
     ) -> None:
         """Initialize the fan."""
         self.entity_description = description
-        self._preset_mode = None
-
         self.entity_description.translation_key = self.entity_description.key
 
+        self._attr_preset_modes = self.entity_description.preset_modes
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, get_entity_prefix(config_entry.data))},
             manufacturer=MANUFACTURER,
             model=get_device_model(config_entry.data),
             name=get_device_name(config_entry.data),
         )
+
         self._attr_unique_id = (
             f"{get_entity_prefix(config_entry.data)}_{description.key}".lower()
         )
         self.entity_id = f"fan.{self._attr_unique_id}"
-
-    @property
-    def preset_modes(self):
-        """Return the available preset modes."""
-        return self.entity_description.preset_modes
-
-    @property
-    def supported_features(self) -> FanEntityFeature:
-        """Return the list of supported features."""
-        return self.entity_description.supported_features
-
-    @property
-    def preset_mode(self):
-        """Return the current preset mode."""
-        return self._preset_mode

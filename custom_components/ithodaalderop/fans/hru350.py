@@ -67,8 +67,7 @@ class IthoFanHRU350(IthoBaseFan):
             data = json.loads(msg.payload)
             actual_mode = int(data.get("Actual Mode", -1))
 
-            self._preset_mode = ACTUAL_MODES.get(actual_mode)
-
+            self._attr_preset_mode = ACTUAL_MODES.get(actual_mode)
             self.async_write_ha_state()
         except ValueError:
             _LOGGER.error("Invalid JSON received for preset mode: %s", msg.payload)
@@ -84,7 +83,7 @@ class IthoFanHRU350(IthoBaseFan):
                 self.entity_description.command_topic,
                 payload,
             )
-            self._preset_mode = preset_mode
+            self._attr_preset_mode = preset_mode
             self.async_write_ha_state()
         else:
             _LOGGER.warning(f"Invalid preset mode: {preset_mode}")

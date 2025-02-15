@@ -43,8 +43,6 @@ def get_cve_hru200_fan(config_entry: ConfigEntry):
 class IthoFanCVE_HRU200(IthoBaseFan):
     """Representation of an MQTT-controlled fan."""
 
-    _is_on = None
-
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
         await mqtt.async_subscribe(
@@ -56,20 +54,22 @@ class IthoFanCVE_HRU200(IthoBaseFan):
         """Handle preset mode update via MQTT."""
         try:
             data = json.loads(msg.payload)
-            speed = int(data.get("Ventilation level (%)", -1)) + int(
+            percentage = int(data.get("Ventilation level (%)", -1)) + int(
                 data.get("Ventilation setpoint (%)", -1)
             )
-
-            self._is_on = speed > 0
+            self._attr_percentage = percentage
         except ValueError:
-            self._is_on = None
+            self._attr_percentage = None
+
+        self.async_write_ha_state()
 
     async def async_set_preset_mode(self, preset_mode):
         """Set the fan preset mode."""
         if preset_mode in PRESET_MODES:
             preset_command = PRESET_MODES[preset_mode]
 
-            payload = json.dumps({self.entity_description.command_key: preset_command})
+            # payload = json.dumps({self.entity_description.command_key: preset_command})
+            payload = json.dumps(preset_command)
             await mqtt.async_publish(
                 self.hass,
                 self.entity_description.command_topic,
@@ -80,13 +80,14 @@ class IthoFanCVE_HRU200(IthoBaseFan):
 
     async def async_set_percentage(self, percentage: int) -> None:
         """Set the speed of the fan, as a percentage."""
-        payload = json.dumps({self.entity_description.command_key: percentage * 2.55})
+        # payload = json.dumps({self.entity_description.command_key: percentage * 2.55})
+        payload = json.dumps(int(percentage * 2.55))
         await mqtt.async_publish(
             self.hass,
             self.entity_description.command_topic,
             payload,
         )
-        self.percentage = percentage
+        self._attr_percentage = percentage
         self.async_write_ha_state()
 
     async def async_turn_on(self, *args, **kwargs):
@@ -96,8 +97,3 @@ class IthoFanCVE_HRU200(IthoBaseFan):
     async def async_turn_off(self, **kwargs):
         """Turn off the fan."""
         await self.async_set_percentage(0)
-
-    @property
-    def is_on(self):
-        """Return true if the fan is on."""
-        return self._is_on
