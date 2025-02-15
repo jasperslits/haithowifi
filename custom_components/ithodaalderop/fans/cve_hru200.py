@@ -80,7 +80,7 @@ class IthoFanCVE_HRU200(IthoBaseFan):
 
     async def async_set_percentage(self, percentage: int) -> None:
         """Set the speed of the fan, as a percentage."""
-        payload = json.dumps({self.entity_description.command_key: percentage})
+        payload = json.dumps({self.entity_description.command_key: percentage * 2.55})
         await mqtt.async_publish(
             self.hass,
             self.entity_description.command_topic,
