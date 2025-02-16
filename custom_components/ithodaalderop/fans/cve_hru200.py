@@ -34,7 +34,6 @@ def get_cve_hru200_fan(config_entry: ConfigEntry):
         ),
         preset_modes=list(PRESET_MODES.keys()),
         command_topic=get_mqtt_command_topic(config_entry.data),
-        command_key="vremotecmd",
         state_topic=get_mqtt_state_topic(config_entry.data),
     )
     return [IthoFanCVE_HRU200(description, config_entry)]
@@ -68,25 +67,21 @@ class IthoFanCVE_HRU200(IthoBaseFan):
         if preset_mode in PRESET_MODES:
             preset_command = PRESET_MODES[preset_mode]
 
-            # payload = json.dumps({self.entity_description.command_key: preset_command})
-            # payload = json.dumps(preset_command)
             await mqtt.async_publish(
                 self.hass,
                 self.entity_description.command_topic,
                 preset_command,
             )
         else:
-            _LOGGER.warning("Invalid preset mode: %s", preset_mode)
+            _LOGGER.warning(f"Invalid preset mode: {preset_mode}")
 
     async def async_set_percentage(self, percentage: int) -> None:
         """Set the speed of the fan, as a percentage."""
-        # payload = json.dumps({self.entity_description.command_key: percentage * 2.55})
-        payload = json.dumps(int(percentage * 2.55))
-        payload = int(percentage * 2.55)
+
         await mqtt.async_publish(
             self.hass,
             self.entity_description.command_topic,
-            payload,
+            int(percentage * 2.55),
         )
         self._attr_percentage = percentage
         self.async_write_ha_state()

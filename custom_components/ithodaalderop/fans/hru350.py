@@ -70,7 +70,9 @@ class IthoFanHRU350(IthoBaseFan):
             self._attr_preset_mode = ACTUAL_MODES.get(actual_mode)
             self.async_write_ha_state()
         except ValueError:
-            _LOGGER.error("Invalid JSON received for preset mode: %s", msg.payload)
+            _LOGGER.error(
+                f"Invalid JSON received for preset mode: {msg.payload}",
+            )
 
     async def async_set_preset_mode(self, preset_mode):
         """Set the fan preset mode."""
@@ -99,4 +101,10 @@ class IthoFanHRU350(IthoBaseFan):
     @property
     def is_on(self):
         """Return true if the fan is on."""
-        return self._attr_preset_mode == "High"
+        return self._attr_preset_mode in [
+            "High",
+            "Timer",
+            "Timer 10",
+            "Timer 20",
+            "Timer 30",
+        ]
