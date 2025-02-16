@@ -69,11 +69,11 @@ class IthoFanCVE_HRU200(IthoBaseFan):
             preset_command = PRESET_MODES[preset_mode]
 
             # payload = json.dumps({self.entity_description.command_key: preset_command})
-            payload = json.dumps(preset_command)
+            # payload = json.dumps(preset_command)
             await mqtt.async_publish(
                 self.hass,
                 self.entity_description.command_topic,
-                payload,
+                preset_command,
             )
         else:
             _LOGGER.warning("Invalid preset mode: %s", preset_mode)
@@ -82,6 +82,7 @@ class IthoFanCVE_HRU200(IthoBaseFan):
         """Set the speed of the fan, as a percentage."""
         # payload = json.dumps({self.entity_description.command_key: percentage * 2.55})
         payload = json.dumps(int(percentage * 2.55))
+        payload = int(percentage * 2.55)
         await mqtt.async_publish(
             self.hass,
             self.entity_description.command_topic,
