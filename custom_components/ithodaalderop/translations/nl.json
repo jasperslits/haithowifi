@@ -1326,7 +1326,7 @@
         "name": "Ventilatie Instelpunt"
       },
       "ventilation_setpoint_percentage": {
-        "name": "Insteld Ventilatie Percentage"
+        "name": "Ingesteld Ventilatie Percentage"
       },
       "ventilation_status": {
         "name": "Ventilatiestatus"

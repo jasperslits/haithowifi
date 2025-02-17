@@ -29,8 +29,22 @@ This custom component has no affiliation with the Itho Daalderop company or with
 
 ### Fan entity
 The integration creates a Fan entity for several devices which can be used to control the speed and/or mode. Currently the following devices and actions are provided:
+
+#### CVE / HRU ECO 200
+| HA action | Device action | 
+|---|---|
+| Set % | Sets % |
+| Turn on | Sets preset mode to `High` |
+| Turf off | Sets % to 0 |
+| Preset mode<sup>*</sup> | Sets to corresponding preset mode |
+
+\* Supported preset modes are `Low`, `Medium`, `High`, `Timer 10`, `Timer 20`, `Timer 30`
+
 > [!NOTE]
-> We intend to provide support for the `CVE` and `HRU200` in the (near) future, but these seem to be a bit more challanging due to the different possible control styles (commands) used. Help us by providing [feedback](https://github.com/jasperslits/haithowifi/issues)!.
+> **Setting Fan preset mode works as fire-and-forget**
+> 
+> The CVE / HRU ECO 200 don't provide information on their current preset. Setting a preset from a physical (RF)remote is currently impossible to know for the integration.
+
 
 #### HRU ECO 250/300
 | HA action | Device action | 
@@ -39,7 +53,7 @@ The integration creates a Fan entity for several devices which can be used to co
 | Turf off | Sets preset mode to `Auto` |
 | Preset mode<sup>*</sup> | Sets to corresponding preset mode |
 
-\* Supported preset modes are `Low`, `Medium`, `High`, `Auto`, `Timer 10`, `Timer 20`, `Timer 30`
+\* Supported preset modes are `Low`, `Medium`, `High`, `Auto`, `Auto (night)`, `Timer 10`, `Timer 20`, `Timer 30`
 
 > [!NOTE]
 > **Setting Fan preset mode works as fire-and-forget**
@@ -56,7 +70,7 @@ The integration creates a Fan entity for several devices which can be used to co
 | Turf off | Sets preset mode to `Auto` |
 | Preset mode<sup>*</sup> | Sets to corresponding preset mode |
 
-\* Supported preset modes are `Low`, `Medium`, `High`, `Auto`, `Autonight`, `Timer 10`, `Timer 20`, `Timer 30`
+\* Supported preset modes are `Low`, `Medium`, `High`, `Auto`, `Auto (night)`, `Timer 10`, `Timer 20`, `Timer 30`
 
 ## Differences with the Itho WiFi add-on Home Assistant MQTT Discovery
 Custom autotemp roomnames and CO2 remote names are also unique to this integration.  

@@ -17,7 +17,7 @@ PRESET_MODES = {
     "Medium": "medium",
     "High": "high",
     "Auto": "auto",
-    "Autonight": "autonight",
+    "Auto (night)": "autonight",
     "Timer 10": "timer1",
     "Timer 20": "timer2",
     "Timer 30": "timer3",
@@ -33,8 +33,6 @@ ACTUAL_MODES = {
     25: "Autonight",
 }
 
-COMMAND_KEY = "vremotecmd"
-
 
 def get_hru350_fan(config_entry: ConfigEntry):
     """Create fan for HRU 350 Eco."""
@@ -47,6 +45,7 @@ def get_hru350_fan(config_entry: ConfigEntry):
         ),
         preset_modes=list(PRESET_MODES.keys()),
         command_topic=get_mqtt_command_topic(config_entry.data),
+        command_key="vremotecmd",
         state_topic=get_mqtt_state_topic(config_entry.data),
     )
     return [IthoFanHRU350(description, config_entry)]
@@ -64,29 +63,25 @@ class IthoFanHRU350(IthoBaseFan):
     @callback
     def _message_received(self, msg):
         """Handle preset mode update via MQTT."""
-        try:
-            data = json.loads(msg.payload)
-            actual_mode = int(data.get("Actual Mode", -1))
+        data = json.loads(msg.payload)
+        actual_mode = int(data.get("Actual Mode", -1))
 
-            self._preset_mode = ACTUAL_MODES.get(actual_mode)
-
-            self.async_write_ha_state()
-        except ValueError:
-            _LOGGER.error("Invalid JSON received for preset mode: %s", msg.payload)
+        self._attr_preset_mode = ACTUAL_MODES.get(actual_mode)
+        self.async_write_ha_state()
 
     async def async_set_preset_mode(self, preset_mode):
         """Set the fan preset mode."""
         if preset_mode in PRESET_MODES:
-            preset_command = PRESET_MODES[preset_mode]
+            self._attr_preset_mode = preset_mode
+            self.async_write_ha_state()
 
-            payload = json.dumps({COMMAND_KEY: preset_command})
+            preset_command = PRESET_MODES[preset_mode]
+            payload = json.dumps({self.entity_description.command_key: preset_command})
             await mqtt.async_publish(
                 self.hass,
                 self.entity_description.command_topic,
                 payload,
             )
-            self._preset_mode = preset_mode
-            self.async_write_ha_state()
         else:
             _LOGGER.warning(f"Invalid preset mode: {preset_mode}")
 
@@ -101,4 +96,4 @@ class IthoFanHRU350(IthoBaseFan):
     @property
     def is_on(self):
         """Return true if the fan is on."""
-        return self._preset_mode == "High"
+        return self._attr_preset_mode == "High"

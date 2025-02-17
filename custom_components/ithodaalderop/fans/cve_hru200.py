@@ -1,7 +1,4 @@
-"""Fan class for CVE/HRU200.
-
-WIP - NOT IMPLEMENTED YET
-"""
+"""Fan class for CVE/HRU200."""
 
 import json
 
@@ -19,9 +16,10 @@ PRESET_MODES = {
     "Low": "low",
     "Medium": "medium",
     "High": "high",
+    "Timer 10": "timer1",
+    "Timer 20": "timer2",
+    "Timer 30": "timer3",
 }
-
-COMMAND_KEY = "vremotecmd"
 
 
 def get_cve_hru200_fan(config_entry: ConfigEntry):
@@ -53,50 +51,46 @@ class IthoFanCVE_HRU200(IthoBaseFan):
     @callback
     def _message_received(self, msg):
         """Handle preset mode update via MQTT."""
-        try:
-            data = json.loads(msg.payload)
-            speed = int(data.get("Ventilation level (%)", -1)) + int(
-                data.get("Ventilation setpoint (%)", -1)
-            )
+        data = json.loads(msg.payload)
+        percentage = (
+            int(data.get("Ventilation level (%)", -1))
+            + int(data.get("Ventilation setpoint (%)", -1))
+            + 1
+        )
+        if percentage >= 0:
+            self._attr_percentage = percentage
+        else:
+            self._attr_percentage = None
 
-            if speed == -2:
-                self._preset_mode = None
-            elif speed >= 90:
-                self._preset_mode = "High"
-            elif speed >= 40:
-                self._preset_mode = "Medium"
-            else:
-                self._preset_mode = "Low"
-
-            self.async_write_ha_state()
-        except ValueError:
-            _LOGGER.error("Invalid JSON received for preset mode: %s", msg.payload)
+        self.async_write_ha_state()
 
     async def async_set_preset_mode(self, preset_mode):
         """Set the fan preset mode."""
         if preset_mode in PRESET_MODES:
             preset_command = PRESET_MODES[preset_mode]
-
-            payload = json.dumps({COMMAND_KEY: preset_command})
             await mqtt.async_publish(
                 self.hass,
                 self.entity_description.command_topic,
-                payload,
+                preset_command,
             )
-            self._preset_mode = preset_mode
-            self.async_write_ha_state()
         else:
-            _LOGGER.warning("Invalid preset mode: %s", preset_mode)
+            _LOGGER.warning(f"Invalid preset mode: {preset_mode}")
+
+    async def async_set_percentage(self, percentage: int) -> None:
+        """Set the speed of the fan, as a percentage."""
+        self._attr_percentage = percentage
+        self.async_write_ha_state()
+
+        await mqtt.async_publish(
+            self.hass,
+            self.entity_description.command_topic,
+            int(percentage * 2.55),
+        )
 
     async def async_turn_on(self, *args, **kwargs):
         """Turn on the fan."""
-        await self.async_set_preset_mode("Auto")
+        await self.async_set_preset_mode("High")
 
     async def async_turn_off(self, **kwargs):
         """Turn off the fan."""
-        await self.async_set_preset_mode("Low")
-
-    @property
-    def is_on(self):
-        """Return true if the fan is on."""
-        return self._preset_mode is not None and self._preset_mode != "Low"
+        await self.async_set_percentage(0)
