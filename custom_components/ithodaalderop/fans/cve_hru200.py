@@ -51,13 +51,15 @@ class IthoFanCVE_HRU200(IthoBaseFan):
     @callback
     def _message_received(self, msg):
         """Handle preset mode update via MQTT."""
-        try:
-            data = json.loads(msg.payload)
-            percentage = int(data.get("Ventilation level (%)", -1)) + int(
-                data.get("Ventilation setpoint (%)", -1)
-            )
+        data = json.loads(msg.payload)
+        percentage = (
+            int(data.get("Ventilation level (%)", -1))
+            + int(data.get("Ventilation setpoint (%)", -1))
+            + 1
+        )
+        if percentage >= 0:
             self._attr_percentage = percentage
-        except ValueError:
+        else:
             self._attr_percentage = None
 
         self.async_write_ha_state()
@@ -66,7 +68,6 @@ class IthoFanCVE_HRU200(IthoBaseFan):
         """Set the fan preset mode."""
         if preset_mode in PRESET_MODES:
             preset_command = PRESET_MODES[preset_mode]
-
             await mqtt.async_publish(
                 self.hass,
                 self.entity_description.command_topic,
@@ -77,14 +78,14 @@ class IthoFanCVE_HRU200(IthoBaseFan):
 
     async def async_set_percentage(self, percentage: int) -> None:
         """Set the speed of the fan, as a percentage."""
+        self._attr_percentage = percentage
+        self.async_write_ha_state()
 
         await mqtt.async_publish(
             self.hass,
             self.entity_description.command_topic,
             int(percentage * 2.55),
         )
-        self._attr_percentage = percentage
-        self.async_write_ha_state()
 
     async def async_turn_on(self, *args, **kwargs):
         """Turn on the fan."""

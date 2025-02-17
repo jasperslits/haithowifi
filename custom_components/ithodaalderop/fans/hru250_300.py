@@ -60,19 +60,14 @@ class IthoFanHRU250_300(IthoBaseFan):
     @callback
     def _message_received(self, msg):
         """Handle preset mode update via MQTT."""
-        try:
-            data = json.loads(msg.payload)
-            speed = int(data.get("Absolute speed of the fan (%)", -1))
-
-            self._is_on = speed > 0
-        except ValueError:
-            self._is_on = None
+        data = json.loads(msg.payload)
+        speed = int(data.get("Absolute speed of the fan (%)", -1))
+        self._is_on = speed > 0
 
     async def async_set_preset_mode(self, preset_mode):
         """Set the fan preset mode."""
         if preset_mode in PRESET_MODES:
             preset_command = PRESET_MODES[preset_mode]
-
             payload = json.dumps({self.entity_description.command_key: preset_command})
             await mqtt.async_publish(
                 self.hass,
