@@ -7,6 +7,7 @@ from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
+from ..const import MQTT_DEFAULT_QOS_SUBSCRIBE
 from ..definitions.co2_remote import REMOTE_SENSOR_TEMPLATE
 from ..utils import get_mqtt_remote_topic
 from .base_sensors import IthoBaseSensor
@@ -35,7 +36,10 @@ class IthoSensorCO2Remote(IthoBaseSensor):
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.topic, self.message_received, 1
+            self.hass,
+            self.entity_description.topic,
+            self.message_received,
+            MQTT_DEFAULT_QOS_SUBSCRIBE,
         )
 
     @callback

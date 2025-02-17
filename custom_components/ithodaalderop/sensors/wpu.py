@@ -7,7 +7,7 @@ from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from ..const import WPU_STATUS
+from ..const import MQTT_DEFAULT_QOS_SUBSCRIBE, WPU_STATUS
 from ..definitions.wpu import (
     WPU_BINARY_SENSORS,
     WPU_ERROR_CODE_BYTE_TEMPLATE,
@@ -65,7 +65,10 @@ class IthoSensorWPU(IthoBaseSensor):
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.topic, self.message_received, 1
+            self.hass,
+            self.entity_description.topic,
+            self.message_received,
+            MQTT_DEFAULT_QOS_SUBSCRIBE,
         )
 
     @callback

@@ -31,6 +31,13 @@ UNITTYPE_ICONS = {
     "rpm": "mdi:speedometer",
 }
 
+
+# QoS 0 – At most once.
+# QoS 1 – At least once.
+# QoS 2 – Exactly once.
+MQTT_DEFAULT_QOS_SUBSCRIBE = 1
+MQTT_DEFAULT_QOS_PUBLISH = 1
+
 MQTT_DEFAULT_BASETOPIC = {
     "autotemp": "ithotemp",
     "cve": "ithocve",

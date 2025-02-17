@@ -14,6 +14,7 @@ from ..const import (
     HRU_ECO_350_GLOBAL_FAULT_CODE,
     HRU_ECO_350_RH_ERROR_CODE,
     HRU_ECO_STATUS,
+    MQTT_DEFAULT_QOS_SUBSCRIBE,
 )
 from ..definitions.cve import CVE_BINARY_SENSORS, CVE_SENSORS
 from ..definitions.demandflow import DEMAND_FLOW_BINARY_SENSORS, DEMAND_FLOW_SENSORS
@@ -99,7 +100,10 @@ class IthoSensorFan(IthoBaseSensor):
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.topic, self.message_received, 1
+            self.hass,
+            self.entity_description.topic,
+            self.message_received,
+            MQTT_DEFAULT_QOS_SUBSCRIBE,
         )
 
     @callback

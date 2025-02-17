@@ -15,6 +15,7 @@ from ..const import (
     CONF_NONCVE_MODEL,
     DOMAIN,
     MANUFACTURER,
+    MQTT_DEFAULT_QOS_SUBSCRIBE,
     NONCVE_DEVICES,
     UNITTYPE_ICONS,
 )
@@ -142,5 +143,8 @@ class IthoBinarySensor(BinarySensorEntity):
             self.async_write_ha_state()
 
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.topic, message_received, 1
+            self.hass,
+            self.entity_description.topic,
+            message_received,
+            MQTT_DEFAULT_QOS_SUBSCRIBE,
         )

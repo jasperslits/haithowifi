@@ -17,6 +17,7 @@ from ..const import (
     CONF_CUSTOM_DEVICE_NAME,
     DOMAIN,
     MANUFACTURER,
+    MQTT_DEFAULT_QOS_SUBSCRIBE,
 )
 from ..definitions.autotemp import (
     AUTOTEMP_BINARYSENSORS,
@@ -116,7 +117,10 @@ class IthoSensorAutotemp(IthoBaseSensor):
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.topic, self.message_received, 1
+            self.hass,
+            self.entity_description.topic,
+            self.message_received,
+            MQTT_DEFAULT_QOS_SUBSCRIBE,
         )
 
     @callback
@@ -184,7 +188,10 @@ class IthoSensorAutotempRoom(IthoBaseSensor):
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.topic, self.message_received, 1
+            self.hass,
+            self.entity_description.topic,
+            self.message_received,
+            MQTT_DEFAULT_QOS_SUBSCRIBE,
         )
 
     @callback

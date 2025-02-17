@@ -7,7 +7,7 @@ from homeassistant.components.fan import FanEntityFeature
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from ..const import _LOGGER
+from ..const import _LOGGER, MQTT_DEFAULT_QOS_PUBLISH, MQTT_DEFAULT_QOS_SUBSCRIBE
 from ..definitions.base_definitions import IthoFanEntityDescription
 from ..utils import get_mqtt_command_topic, get_mqtt_state_topic
 from .base_fans import IthoBaseFan
@@ -45,7 +45,10 @@ class IthoFanCVE_HRU200(IthoBaseFan):
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
         await mqtt.async_subscribe(
-            self.hass, self.entity_description.state_topic, self._message_received, 1
+            self.hass,
+            self.entity_description.state_topic,
+            self._message_received,
+            MQTT_DEFAULT_QOS_SUBSCRIBE,
         )
 
     @callback
@@ -72,6 +75,7 @@ class IthoFanCVE_HRU200(IthoBaseFan):
                 self.hass,
                 self.entity_description.command_topic,
                 preset_command,
+                MQTT_DEFAULT_QOS_PUBLISH,
             )
         else:
             _LOGGER.warning(f"Invalid preset mode: {preset_mode}")
