@@ -112,20 +112,6 @@ class IthoBinarySensor(BinarySensorEntity):
 
         self.entity_id = f"binary_sensor.{self._attr_unique_id}"
 
-    @property
-    def icon(self):
-        """Icon for binary sensor."""
-        if (
-            self.entity_description.icon_off is not None
-            and self.entity_description.icon_on is not None
-        ):
-            if self._attr_is_on:
-                return self.entity_description.icon_on
-            return self.entity_description.icon_off
-        if self.entity_description.icon is not None:
-            return self.entity_description.icon
-        return None
-
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
 
@@ -148,3 +134,17 @@ class IthoBinarySensor(BinarySensorEntity):
             message_received,
             MQTT_DEFAULT_QOS_SUBSCRIBE,
         )
+
+    @property
+    def icon(self):
+        """Icon for binary sensor."""
+        if (
+            self.entity_description.icon_off is not None
+            and self.entity_description.icon_on is not None
+        ):
+            if self._attr_is_on:
+                return self.entity_description.icon_on
+            return self.entity_description.icon_off
+        if self.entity_description.icon is not None:
+            return self.entity_description.icon
+        return None
