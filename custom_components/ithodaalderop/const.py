@@ -31,7 +31,6 @@ UNITTYPE_ICONS = {
     "rpm": "mdi:speedometer",
 }
 
-
 # QoS 0 – At most once.
 # QoS 1 – At least once.
 # QoS 2 – Exactly once.
