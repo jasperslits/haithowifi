@@ -1,0 +1,11 @@
+{
+  "itho_devtype": "HRU 350",
+  "itho_mfr": 0,
+  "itho_hwversion": 7,
+  "itho_fwversion": 3,
+  "add-on_hwid": "2C:BC:BB:04:23:AC",
+  "add-on_fwversion": "2.9.0-beta10",
+  "add-on_fwupdate_available": "false",
+  "add-on_latest_fw": "2.8.0",
+  "add-on_latest_beta_fw": "2.9.0-beta10"
+}
