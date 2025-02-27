@@ -7,7 +7,12 @@ from homeassistant.components.fan import FanEntityFeature
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
-from ..const import _LOGGER, MQTT_DEFAULT_QOS_PUBLISH, MQTT_DEFAULT_QOS_SUBSCRIBE
+from ..const import (
+    _LOGGER,
+    HRU_ECO_350_ACTUAL_MODE,
+    MQTT_DEFAULT_QOS_PUBLISH,
+    MQTT_DEFAULT_QOS_SUBSCRIBE,
+)
 from ..definitions.base_definitions import IthoFanEntityDescription
 from ..utils import get_mqtt_command_topic, get_mqtt_state_topic
 from .base_fans import IthoBaseFan
@@ -22,15 +27,6 @@ PRESET_MODES = {
     "Timer 20": "timer2",
     "Timer 30": "timer3",
     "Timer": "timer",
-}
-
-ACTUAL_MODES = {
-    1: "Low",
-    2: "Medium",
-    3: "High",
-    13: "Timer",
-    24: "Auto",
-    25: "Autonight",
 }
 
 
@@ -69,7 +65,7 @@ class IthoFanHRU350(IthoBaseFan):
         data = json.loads(msg.payload)
         actual_mode = int(data.get("Actual Mode", -1))
 
-        self._attr_preset_mode = ACTUAL_MODES.get(actual_mode)
+        self._attr_preset_mode = HRU_ECO_350_ACTUAL_MODE.get(actual_mode)
         self.async_write_ha_state()
 
     async def async_set_preset_mode(self, preset_mode):
