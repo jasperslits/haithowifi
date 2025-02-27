@@ -22,6 +22,7 @@ def get_default_mqtt_base_topic(config: dict[str, Any]) -> str:
     """Get the default MQTT base topic."""
     if config.get(CONF_AUTO_DETECT, False):
         return config[CONF_CUSTOM_BASETOPIC]
+
     return MQTT_DEFAULT_BASETOPIC[config[CONF_ADDON_TYPE]]
 
 

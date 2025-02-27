@@ -14,6 +14,7 @@ from homeassistant.core import callback
 from homeassistant.helpers.selector import selector
 
 from .const import (
+    _LOGGER,
     ADDON_TYPES,
     AUTODETECT_SLEEP_TIME,
     CONF_ADDON_TYPE,
@@ -74,10 +75,16 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             topic = message.topic.split("/")[0]
             payload = json.loads(message.payload)
 
-            self.auto_detected_devices[topic] = {
-                "itho_devtype": payload["itho_devtype"],
-                "itho_hwversion": payload["itho_hwversion"],
+            hwinfo = {
+                "itho_devtype": payload.get("itho_devtype", "unknown"),
+                "itho_hwversion": payload.get("itho_hwversion", -1),
             }
+            if hwinfo["itho_hwversion"] in HARDWARE_TYPES:
+                self.auto_detected_devices[topic] = hwinfo
+            else:
+                _LOGGER.warning(
+                    f"Found unknown device during auto-detect: {hwinfo['itho_hwversion']}. Please create a GitHub issue to get this device supported."
+                )
 
         self._substate = mqtt.async_prepare_subscribe_topics(
             self.hass,

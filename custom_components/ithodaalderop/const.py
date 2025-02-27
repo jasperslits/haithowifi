@@ -15,7 +15,9 @@ ADDON_TYPES = {
     "wpu": "WPU",
 }
 ENTITIES_CREATION_MODES = ["only_selected", "all"]
+
 AUTODETECT_SLEEP_TIME = 5
+
 HARDWARE_TYPES = {
     91: {"addon_type": "autotemp"},
     92: {"addon_type": "cve"},

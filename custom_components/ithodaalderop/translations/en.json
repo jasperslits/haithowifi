@@ -1414,7 +1414,7 @@
   "selector": {
     "addonselect": {
       "options": {
-        "auto_detect": "Auto-detect (requires v2.9+ of wifi addon)",
+        "auto_detect": "Auto-detect (requires fw v2.9.0 or higher of WiFi Add-on)",
         "autotemp": "Autotemp floor heating",
         "cve": "CVE (ECO box)",
         "noncve": "Non-CVE (HRU)",
