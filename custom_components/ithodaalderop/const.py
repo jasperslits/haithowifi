@@ -15,6 +15,7 @@ ADDON_TYPES = {
     "wpu": "WPU",
 }
 ENTITIES_CREATION_MODES = ["only_selected", "all"]
+AUTODETECT_SLEEP_TIME = 5
 
 NONCVE_DEVICES = {
     "hru_eco": "HRU ECO",

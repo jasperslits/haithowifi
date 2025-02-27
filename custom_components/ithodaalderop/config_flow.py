@@ -1,15 +1,21 @@
 """Config flow component for Itho Add-on."""
 
+import asyncio
 from collections.abc import Mapping
+import json
+import re
 from typing import Any
 
 import voluptuous as vol
 
 from homeassistant import config_entries
+from homeassistant.components import mqtt
+from homeassistant.core import callback
 from homeassistant.helpers.selector import selector
 
 from .const import (
     ADDON_TYPES,
+    AUTODETECT_SLEEP_TIME,
     CONF_ADDON_TYPE,
     CONF_ADVANCED_CONFIG,
     CONF_AUTOTEMP_ROOM1,
@@ -49,8 +55,41 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     def __init__(self) -> None:
         """Initialize the Itho Add-on flow."""
+
         self.config: dict[str, Any] = {}
         self.entry: config_entries.ConfigEntry
+
+        # Used for auto-detect
+        self._substate: dict[str, mqtt.EntitySubscription] = {}
+        self.auto_detected_devices: Mapping[str, Any] = {}
+
+    async def try_get_deviceinfo(self):
+        """Try to get deviceinfo."""
+
+        @callback
+        def deviceinfo_message_received(message):
+            """Handle new deviceinfo MQTT messages."""
+            topic = message.topic.split("/")[0]
+            payload = json.loads(message.payload)
+
+            self.auto_detected_devices[topic] = {
+                "itho_devtype": payload["itho_devtype"],
+                "itho_hwversion": payload["itho_hwversion"],
+            }
+
+        self._substate = mqtt.async_prepare_subscribe_topics(
+            self.hass,
+            self._substate,
+            {
+                "discovery_topic": {
+                    "topic": "+/deviceinfo",
+                    "msg_callback": deviceinfo_message_received,
+                }
+            },
+        )
+        await mqtt.async_subscribe_topics(self.hass, self._substate)
+        await asyncio.sleep(AUTODETECT_SLEEP_TIME)
+        mqtt.async_unsubscribe_topics(self.hass, self._substate)
 
     def _get_reconfigure_value(self, param, default):
         """Get reconfigure value."""
@@ -91,6 +130,8 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Configure main step."""
         if user_input is not None:
             self.config.update(user_input)
+            if user_input[CONF_ADDON_TYPE] == "auto_detect":
+                return await self.async_step_autodetect_search_popup()
             if user_input[CONF_ADDON_TYPE] == "autotemp":
                 return await self.async_step_rooms()
             if user_input[CONF_ADDON_TYPE] == "cve":
@@ -100,6 +141,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             if user_input.get(CONF_ADVANCED_CONFIG, False):
                 return await self.async_step_advanced_config()
 
+            # WPU
             await self._try_set_unique_id()
             return self.async_create_entry(
                 title=self._get_entry_title(),
@@ -111,7 +153,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 vol.Required(CONF_ADDON_TYPE): selector(
                     {
                         "select": {
-                            "options": list(ADDON_TYPES.keys()),
+                            "options": ["auto_detect", *list(ADDON_TYPES.keys())],
                             "multiple": False,
                             "translation_key": "addonselect",
                         }
@@ -131,6 +173,61 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         )
 
         return self.async_show_form(step_id="user", data_schema=itho_schema)
+
+    async def async_step_autodetect_search_popup(
+        self, user_input: Mapping[str, Any] | None = None
+    ):
+        """Show popup message to start auto-detect search."""
+        if user_input is not None:
+            await self.try_get_deviceinfo()
+            return await self.async_step_autodetect_result()
+
+        return self.async_show_form(
+            step_id="autodetect_search_popup",
+            data_schema=vol.Schema({}),
+            last_step=False,  # Display next (False) or submit (True or empty) button in frontend
+        )
+
+    async def async_step_autodetect_result(
+        self, user_input: Mapping[str, Any] | None = None
+    ):
+        """Auto-detect result."""
+        if user_input is not None:
+            topic = re.search(r"\((.*?)\)$", user_input["device_select"]).group(1)
+
+            if self.auto_detected_devices[topic]["itho_hwversion"] in [7]:
+                self.config.update(
+                    {CONF_ADDON_TYPE: "noncve", CONF_NONCVE_MODEL: "hru_eco_350"}
+                )
+                return await self.async_step_remotes()
+
+        if not self.auto_detected_devices:
+            return self.async_abort(reason="no_devices_detected")
+
+        device_list = []
+        for topic, deviceinfo in self.auto_detected_devices.items():
+            prefix = ""
+            if deviceinfo["itho_hwversion"] in [7]:
+                prefix = f"{ADDON_TYPES['noncve']} - "
+
+            device_list.append(f"{prefix}{deviceinfo['itho_devtype']} ({topic})")
+
+        itho_schema = vol.Schema(
+            {
+                vol.Required("device_select"): selector(
+                    {
+                        "select": {
+                            "options": device_list,
+                            "multiple": False,
+                            "translation_key": "device_select",
+                        }
+                    }
+                )
+            }
+        )
+        return self.async_show_form(
+            step_id="autodetect_result", data_schema=itho_schema
+        )
 
     async def async_step_rooms(self, user_input: Mapping[str, Any] | None = None):
         """Configure rooms for autotemp."""

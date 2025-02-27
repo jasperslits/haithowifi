@@ -2,6 +2,7 @@
   "config": {
     "abort": {
       "already_configured": "Itho integration is already configured",
+      "no_devices_detected": "No devices detected",
       "reconfigure_successful": "Re-configuration was successful"
     },
     "step": {
@@ -13,6 +14,17 @@
         },
         "description": "Customize the MQTT base topic, entity prefix and device name.",
         "title": "Advanced integration entry configuration"
+      },
+      "autodetect_result": {
+        "data": {
+          "device_select": "Select the device to configure:"
+        },
+        "description": "One or more devices have been detected. Select the device you want to configure.",
+        "title": "Select device"
+      },
+      "autodetect_search_popup": {
+        "description": "By pressing 'Next' we will start looking for available Itho devices. This will take a few seconds.",
+        "title": "Start search"
       },
       "noncve_model": {
         "data": {
@@ -1402,6 +1414,7 @@
   "selector": {
     "addonselect": {
       "options": {
+        "auto_detect": "Auto-detect (requires v2.9+ of wifi addon)",
         "autotemp": "Autotemp floor heating",
         "cve": "CVE (ECO box)",
         "noncve": "Non-CVE (HRU)",
