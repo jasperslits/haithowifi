@@ -18,6 +18,7 @@ from .const import (
     AUTODETECT_SLEEP_TIME,
     CONF_ADDON_TYPE,
     CONF_ADVANCED_CONFIG,
+    CONF_AUTO_DETECT,
     CONF_AUTOTEMP_ROOM1,
     CONF_AUTOTEMP_ROOM2,
     CONF_AUTOTEMP_ROOM3,
@@ -38,6 +39,7 @@ from .const import (
     CONF_REMOTE_5,
     DOMAIN,
     ENTITIES_CREATION_MODES,
+    HARDWARE_TYPES,
     NONCVE_DEVICES,
 )
 from .utils import (
@@ -194,23 +196,42 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Auto-detect result."""
         if user_input is not None:
             topic = re.search(r"\((.*?)\)$", user_input["device_select"]).group(1)
+            hwinfo = HARDWARE_TYPES[self.auto_detected_devices[topic]["itho_hwversion"]]
 
-            if self.auto_detected_devices[topic]["itho_hwversion"] in [7]:
-                self.config.update(
-                    {CONF_ADDON_TYPE: "noncve", CONF_NONCVE_MODEL: "hru_eco_350"}
-                )
+            self.config.update(
+                {
+                    CONF_AUTO_DETECT: True,
+                    CONF_ADDON_TYPE: hwinfo["addon_type"],
+                    CONF_CUSTOM_BASETOPIC: topic,
+                }
+            )
+            if hwinfo["addon_type"] == "noncve":
+                self.config.update({CONF_NONCVE_MODEL: hwinfo["model"]})
+
+            if hwinfo["addon_type"] == "autotemp":
+                return await self.async_step_rooms()
+            if hwinfo["addon_type"] in ["cve", "noncve"]:
                 return await self.async_step_remotes()
+            if user_input.get(CONF_ADVANCED_CONFIG, False):
+                return await self.async_step_advanced_config()
+
+            # WPU
+            await self._try_set_unique_id()
+            return self.async_create_entry(
+                title=self._get_entry_title(),
+                data=self.config,
+            )
 
         if not self.auto_detected_devices:
             return self.async_abort(reason="no_devices_detected")
 
         device_list = []
         for topic, deviceinfo in self.auto_detected_devices.items():
-            prefix = ""
-            if deviceinfo["itho_hwversion"] in [7]:
-                prefix = f"{ADDON_TYPES['noncve']} - "
-
-            device_list.append(f"{prefix}{deviceinfo['itho_devtype']} ({topic})")
+            hwinfo = HARDWARE_TYPES[deviceinfo["itho_hwversion"]]
+            device = ADDON_TYPES[hwinfo["addon_type"]]
+            if hwinfo["addon_type"] == "noncve":
+                device = f"{device} - {NONCVE_DEVICES[hwinfo['model']]}"
+            device_list.append(f"{device} ({topic})")
 
         itho_schema = vol.Schema(
             {
@@ -333,22 +354,28 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 data=self.config,
             )
 
-        itho_schema = vol.Schema(
-            {
-                vol.Required(
-                    CONF_CUSTOM_BASETOPIC,
-                    default=get_default_mqtt_base_topic(self.config),
-                ): str,
-                vol.Required(
-                    CONF_CUSTOM_ENTITY_PREFIX,
-                    default=get_default_entity_prefix(self.config),
-                ): str,
-                vol.Required(
-                    CONF_CUSTOM_DEVICE_NAME,
-                    default=get_device_model(self.config),
-                ): str,
-            }
-        )
+        mqtt_topic = {
+            vol.Required(
+                CONF_CUSTOM_BASETOPIC,
+                default=get_default_mqtt_base_topic(self.config),
+            ): str,
+        }
+        commond_field = {
+            vol.Required(
+                CONF_CUSTOM_ENTITY_PREFIX,
+                default=get_default_entity_prefix(self.config),
+            ): str,
+            vol.Required(
+                CONF_CUSTOM_DEVICE_NAME,
+                default=get_device_model(self.config),
+            ): str,
+        }
+
+        if self.config.get(CONF_AUTO_DETECT, False):
+            itho_schema = vol.Schema({**commond_field})
+        else:
+            itho_schema = vol.Schema({**mqtt_topic, **commond_field})
+
         return self.async_show_form(
             step_id="advanced_config",
             data_schema=itho_schema,

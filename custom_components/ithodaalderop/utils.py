@@ -6,6 +6,7 @@ from .const import (
     ADDON_TYPES,
     CONF_ADDON_TYPE,
     CONF_ADVANCED_CONFIG,
+    CONF_AUTO_DETECT,
     CONF_CUSTOM_BASETOPIC,
     CONF_CUSTOM_DEVICE_NAME,
     CONF_CUSTOM_ENTITY_PREFIX,
@@ -19,6 +20,8 @@ from .const import (
 
 def get_default_mqtt_base_topic(config: dict[str, Any]) -> str:
     """Get the default MQTT base topic."""
+    if config.get(CONF_AUTO_DETECT, False):
+        return config[CONF_CUSTOM_BASETOPIC]
     return MQTT_DEFAULT_BASETOPIC[config[CONF_ADDON_TYPE]]
 
 
@@ -42,7 +45,7 @@ def get_mqtt_state_topic(config: dict[str, Any]) -> str:
 
 def get_mqtt_remote_topic(config: dict[str, Any]) -> str:
     """Get the MQTT remote topic."""
-    return f"{get_mqtt_base_topic(config)}/{MQTT_STATETOPIC["remote"]}"
+    return f"{get_mqtt_base_topic(config)}/{MQTT_STATETOPIC['remote']}"
 
 
 def get_device_model(config: dict[str, Any]) -> str:

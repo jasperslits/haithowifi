@@ -16,6 +16,17 @@ ADDON_TYPES = {
 }
 ENTITIES_CREATION_MODES = ["only_selected", "all"]
 AUTODETECT_SLEEP_TIME = 5
+HARDWARE_TYPES = {
+    91: {"addon_type": "autotemp"},
+    92: {"addon_type": "cve"},
+    93: {"addon_type": "noncve", "model": "hru_eco"},
+    94: {"addon_type": "noncve", "model": "hru_eco_200"},
+    95: {"addon_type": "noncve", "model": "hru_eco_250"},
+    96: {"addon_type": "noncve", "model": "hru_eco_300"},
+    7: {"addon_type": "noncve", "model": "hru_eco_350"},
+    98: {"addon_type": "noncve", "model": "demand_flow"},
+    99: {"addon_type": "wpu"},
+}
 
 NONCVE_DEVICES = {
     "hru_eco": "HRU ECO",
@@ -57,6 +68,7 @@ MQTT_STATETOPIC = {
 MQTT_COMMAND_TOPIC = "cmd"
 
 CONF_ADDON_TYPE = "addontype"
+CONF_AUTO_DETECT = "auto_detect"
 CONF_ENTITIES_CREATION_MODE = "entities_creation_mode"
 CONF_ADVANCED_CONFIG = "advanced_config"
 CONF_CUSTOM_BASETOPIC = "custom_basetopic"
