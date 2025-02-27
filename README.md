@@ -63,6 +63,8 @@ The integration creates a Fan entity for several devices which can be used to co
 #### HRU ECO 350
 > [!IMPORTANT]
 > Requires a successfully paired virtual remote
+> 
+> `Medium` preset requires a virtual remote that provides this mode, for example `RFT CO2`
 
 | HA action | Device action | 
 |---|---|
