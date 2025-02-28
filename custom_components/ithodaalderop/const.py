@@ -39,6 +39,7 @@ NONCVE_DEVICES = {
     "hru_eco_350": "HRU ECO 350",
     "demand_flow": "Demand Flow",
 }
+AUTODETECT_HRU_250_300_NAME = "HRU ECO 250/300"
 
 UNITTYPE_ICONS = {
     "%": "mdi:percent-outline",

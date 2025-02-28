@@ -16,6 +16,7 @@ from homeassistant.helpers.selector import selector
 from .const import (
     _LOGGER,
     ADDON_TYPES,
+    AUTODETECT_HRU_250_300_NAME,
     AUTODETECT_SLEEP_TIME,
     CONF_ADDON_TYPE,
     CONF_ADVANCED_CONFIG,
@@ -66,6 +67,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self._substate: dict[str, mqtt.EntitySubscription] = {}
         self.auto_detected_devices: Mapping[str, str] = {}
 
+    ######################
+    ### HELPER METHODS ###
+    ######################
+
     async def try_get_deviceinfo(self):
         """Try to get deviceinfo."""
 
@@ -97,12 +102,6 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         await asyncio.sleep(AUTODETECT_SLEEP_TIME)
         mqtt.async_unsubscribe_topics(self.hass, self._substate)
 
-    def _get_reconfigure_value(self, param, default):
-        """Get reconfigure value."""
-        if param in self.config:
-            return self.config[param]
-        return default
-
     async def _try_set_unique_id(self):
         await self.async_set_unique_id(
             f"itho_wifi_addon_{get_entity_prefix(self.config)}"
@@ -121,6 +120,11 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             if advanced_config:
                 title = title + self.config[CONF_CUSTOM_DEVICE_NAME]
+            elif (
+                self.config.get(CONF_AUTO_DETECT, False)
+                and self.config[CONF_NONCVE_MODEL] == "hru_eco_250"
+            ):
+                title = title + AUTODETECT_HRU_250_300_NAME
             else:
                 title = title + NONCVE_DEVICES[self.config[CONF_NONCVE_MODEL]]
 
@@ -131,6 +135,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             title = title + ADDON_TYPES[addon_type]
 
         return title
+
+    ###########################
+    ### REGULAR CONFIG FLOW ###
+    ###########################
 
     async def async_step_user(self, user_input: Mapping[str, Any] | None = None):
         """Configure main step."""
@@ -199,6 +207,8 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     ):
         """Auto-detect result."""
         if user_input is not None:
+            # Extract the MQTT topic back from the selected device
+            # The topic is used as key in the auto_detected_devices dict
             topic = re.search(r"\((.*?)\)$", user_input["device_select"]).group(1)
             hwinfo = HARDWARE_TYPES[self.auto_detected_devices[topic]]
 
@@ -237,7 +247,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             if hwinfo["addon_type"] == "noncve":
                 # Ugly hack because the 250 and 300 identify as the same during auto-detection
                 if hwinfo["model"] == "hru_eco_250":
-                    device = f"{device} - HRU ECO 250/300"
+                    device = f"{device} - {AUTODETECT_HRU_250_300_NAME}"
                 else:
                     device = f"{device} - {NONCVE_DEVICES[hwinfo['model']]}"
 
@@ -392,6 +402,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             last_step=True,  # Display next (False) or submit (True or empty) button in frontend
         )
 
+    ########################
+    ### RECONFIGURE FLOW ###
+    ########################
+
     async def async_step_reconfigure(self, user_input: Mapping[str, Any] | None = None):
         """Reconfigure config flow."""
         entry = self.hass.config_entries.async_get_entry(self.context["entry_id"])
@@ -440,35 +454,35 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             {
                 vol.Required(
                     CONF_AUTOTEMP_ROOM1,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM1, "Room 1"),
+                    default=self.config.get(CONF_AUTOTEMP_ROOM1, "Room 1"),
                 ): str,
                 vol.Optional(
                     CONF_AUTOTEMP_ROOM2,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM2, "Room 2"),
+                    default=self.config.get(CONF_AUTOTEMP_ROOM2, "Room 2"),
                 ): str,
                 vol.Optional(
                     CONF_AUTOTEMP_ROOM3,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM3, "Room 3"),
+                    default=self.config.get(CONF_AUTOTEMP_ROOM3, "Room 3"),
                 ): str,
                 vol.Optional(
                     CONF_AUTOTEMP_ROOM4,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM4, "Room 4"),
+                    default=self.config.get(CONF_AUTOTEMP_ROOM4, "Room 4"),
                 ): str,
                 vol.Optional(
                     CONF_AUTOTEMP_ROOM5,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM5, "Room 5"),
+                    default=self.config.get(CONF_AUTOTEMP_ROOM5, "Room 5"),
                 ): str,
                 vol.Optional(
                     CONF_AUTOTEMP_ROOM6,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM6, "Room 6"),
+                    default=self.config.get(CONF_AUTOTEMP_ROOM6, "Room 6"),
                 ): str,
                 vol.Optional(
                     CONF_AUTOTEMP_ROOM7,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM7, "Room 7"),
+                    default=self.config.get(CONF_AUTOTEMP_ROOM7, "Room 7"),
                 ): str,
                 vol.Optional(
                     CONF_AUTOTEMP_ROOM8,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM8, "Room 8"),
+                    default=self.config.get(CONF_AUTOTEMP_ROOM8, "Room 8"),
                 ): str,
             }
         )
@@ -492,23 +506,23 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             {
                 vol.Required(
                     CONF_REMOTE_1,
-                    default=self._get_reconfigure_value(CONF_REMOTE_1, "Remote 1"),
+                    default=self.config.get(CONF_REMOTE_1, "Remote 1"),
                 ): str,
                 vol.Optional(
                     CONF_REMOTE_2,
-                    default=self._get_reconfigure_value(CONF_REMOTE_2, "Remote 2"),
+                    default=self.config.get(CONF_REMOTE_2, "Remote 2"),
                 ): str,
                 vol.Optional(
                     CONF_REMOTE_3,
-                    default=self._get_reconfigure_value(CONF_REMOTE_3, "Remote 3"),
+                    default=self.config.get(CONF_REMOTE_3, "Remote 3"),
                 ): str,
                 vol.Optional(
                     CONF_REMOTE_4,
-                    default=self._get_reconfigure_value(CONF_REMOTE_4, "Remote 4"),
+                    default=self.config.get(CONF_REMOTE_4, "Remote 4"),
                 ): str,
                 vol.Optional(
                     CONF_REMOTE_5,
-                    default=self._get_reconfigure_value(CONF_REMOTE_5, "Remote 5"),
+                    default=self.config.get(CONF_REMOTE_5, "Remote 5"),
                 ): str,
             }
         )

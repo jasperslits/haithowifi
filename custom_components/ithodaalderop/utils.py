@@ -4,6 +4,7 @@ from typing import Any
 
 from .const import (
     ADDON_TYPES,
+    AUTODETECT_HRU_250_300_NAME,
     CONF_ADDON_TYPE,
     CONF_ADVANCED_CONFIG,
     CONF_AUTO_DETECT,
@@ -57,7 +58,7 @@ def get_device_model(config: dict[str, Any]) -> str:
             config.get(CONF_AUTO_DETECT, False)
             and config[CONF_NONCVE_MODEL] == "hru_eco_250"
         ):
-            return "HRU ECO 250/300"
+            return AUTODETECT_HRU_250_300_NAME
         return NONCVE_DEVICES[config[CONF_NONCVE_MODEL]]
 
     return ADDON_TYPES[config[CONF_ADDON_TYPE]]
