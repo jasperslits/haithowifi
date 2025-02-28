@@ -39,9 +39,9 @@ from .const import (
     CONF_REMOTE_3,
     CONF_REMOTE_4,
     CONF_REMOTE_5,
+    DEVICE_TYPES,
     DOMAIN,
     ENTITIES_CREATION_MODES,
-    HARDWARE_TYPES,
     NONCVE_DEVICES,
 )
 from .utils import (
@@ -80,12 +80,12 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             topic = message.topic.split("/")[0]
             payload = json.loads(message.payload)
 
-            hwinfo = payload.get("itho_devtype", "unknown")
-            if hwinfo in HARDWARE_TYPES:
-                self.auto_detected_devices[topic] = hwinfo
+            devtype = payload.get("itho_devtype", "unknown")
+            if devtype in DEVICE_TYPES:
+                self.auto_detected_devices[topic] = devtype
             else:
                 _LOGGER.warning(
-                    f"Found unknown device during auto-detect: {hwinfo}. Please create a GitHub issue to get this device supported."
+                    f"Found unknown device during auto-detect: {devtype}. Please create a GitHub issue to get this device supported."
                 )
 
         self._substate = mqtt.async_prepare_subscribe_topics(
@@ -210,7 +210,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             # Extract the MQTT topic back from the selected device
             # The topic is used as key in the auto_detected_devices dict
             topic = re.search(r"\((.*?)\)$", user_input["device_select"]).group(1)
-            hwinfo = HARDWARE_TYPES[self.auto_detected_devices[topic]]
+            hwinfo = DEVICE_TYPES[self.auto_detected_devices[topic]]
 
             self.config.update(
                 {
@@ -241,7 +241,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         device_list = []
         for topic, devtype in self.auto_detected_devices.items():
-            hwinfo = HARDWARE_TYPES[devtype]
+            hwinfo = DEVICE_TYPES[devtype]
 
             device = ADDON_TYPES[hwinfo["addon_type"]]
             if hwinfo["addon_type"] == "noncve":

@@ -18,7 +18,7 @@ ENTITIES_CREATION_MODES = ["only_selected", "all"]
 
 AUTODETECT_SLEEP_TIME = 4
 
-HARDWARE_TYPES = {
+DEVICE_TYPES = {
     "AutoTemp": {"addon_type": "autotemp"},
     "AutoTemp Basic": {"addon_type": "autotemp"},
     "CVE": {"addon_type": "cve"},
