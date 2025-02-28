@@ -17,9 +17,9 @@
       },
       "autodetect_result": {
         "data": {
-          "device_select": "Select the device to configure:"
+          "device_select": "Select the device you want to configure:"
         },
-        "description": "One or more devices have been detected. Select the device you want to configure.",
+        "description": "One or more devices have been detected.",
         "title": "Select device"
       },
       "autodetect_search_popup": {
@@ -98,6 +98,33 @@
         },
         "description": "Select the Itho WiFi Add-on you want to configure. Repeat the configuration for every physical add-on present. This integration creates either all or only commonly used sensors for each device.",
         "title": "Add new Itho devices"
+      }
+    }
+  },
+  "selector": {
+    "addonselect": {
+      "options": {
+        "auto_detect": "Auto-detect (requires fw v2.9.0 or higher of WiFi Add-on)",
+        "autotemp": "Autotemp floor heating",
+        "cve": "CVE (ECO box)",
+        "noncve": "Non-CVE (HRU)",
+        "wpu": "WPU heatpump"
+      }
+    },
+    "entities_creation_modes": {
+      "options": {
+        "all": "Create all available sensors",
+        "only_selected": "Only create selected sensors (recommended for most users)"
+      }
+    },
+    "noncve_model_select": {
+      "options": {
+        "demand_flow": "Demand/Quality Flow",
+        "hru_eco": "HRU ECO",
+        "hru_eco_200": "HRU ECO 200",
+        "hru_eco_250": "HRU ECO 250",
+        "hru_eco_300": "HRU ECO 300",
+        "hru_eco_350": "HRU ECO 350"
       }
     }
   },
@@ -1408,33 +1435,6 @@
       },
       "zone_temp": {
         "name": "Zone Temperature"
-      }
-    }
-  },
-  "selector": {
-    "addonselect": {
-      "options": {
-        "auto_detect": "Auto-detect (requires fw v2.9.0 or higher of WiFi Add-on)",
-        "autotemp": "Autotemp floor heating",
-        "cve": "CVE (ECO box)",
-        "noncve": "Non-CVE (HRU)",
-        "wpu": "WPU heatpump"
-      }
-    },
-    "entities_creation_modes": {
-      "options": {
-        "all": "Create all available sensors",
-        "only_selected": "Only create selected sensors (recommended for most users)"
-      }
-    },
-    "noncve_model_select": {
-      "options": {
-        "demand_flow": "Demand/Quality Flow",
-        "hru_eco": "HRU ECO",
-        "hru_eco_200": "HRU ECO 200",
-        "hru_eco_250": "HRU ECO 250",
-        "hru_eco_300": "HRU ECO 300",
-        "hru_eco_350": "HRU ECO 350"
       }
     }
   }

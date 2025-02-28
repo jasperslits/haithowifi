@@ -52,6 +52,12 @@ def get_mqtt_remote_topic(config: dict[str, Any]) -> str:
 def get_device_model(config: dict[str, Any]) -> str:
     """Get the device model."""
     if config[CONF_ADDON_TYPE] == "noncve":
+        # Ugly hack because the 250 and 300 identify as the same during auto-detection
+        if (
+            config.get(CONF_AUTO_DETECT, False)
+            and config[CONF_NONCVE_MODEL] == "hru_eco_250"
+        ):
+            return "HRU ECO 250/300"
         return NONCVE_DEVICES[config[CONF_NONCVE_MODEL]]
 
     return ADDON_TYPES[config[CONF_ADDON_TYPE]]

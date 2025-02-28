@@ -64,7 +64,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         # Used for auto-detect
         self._substate: dict[str, mqtt.EntitySubscription] = {}
-        self.auto_detected_devices: Mapping[str, Any] = {}
+        self.auto_detected_devices: Mapping[str, str] = {}
 
     async def try_get_deviceinfo(self):
         """Try to get deviceinfo."""
@@ -75,15 +75,12 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             topic = message.topic.split("/")[0]
             payload = json.loads(message.payload)
 
-            hwinfo = {
-                "itho_devtype": payload.get("itho_devtype", "unknown"),
-                "itho_hwversion": payload.get("itho_hwversion", -1),
-            }
-            if hwinfo["itho_hwversion"] in HARDWARE_TYPES:
+            hwinfo = payload.get("itho_devtype", "unknown")
+            if hwinfo in HARDWARE_TYPES:
                 self.auto_detected_devices[topic] = hwinfo
             else:
                 _LOGGER.warning(
-                    f"Found unknown device during auto-detect: {hwinfo['itho_hwversion']}. Please create a GitHub issue to get this device supported."
+                    f"Found unknown device during auto-detect: {hwinfo}. Please create a GitHub issue to get this device supported."
                 )
 
         self._substate = mqtt.async_prepare_subscribe_topics(
@@ -203,7 +200,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Auto-detect result."""
         if user_input is not None:
             topic = re.search(r"\((.*?)\)$", user_input["device_select"]).group(1)
-            hwinfo = HARDWARE_TYPES[self.auto_detected_devices[topic]["itho_hwversion"]]
+            hwinfo = HARDWARE_TYPES[self.auto_detected_devices[topic]]
 
             self.config.update(
                 {
@@ -234,10 +231,16 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         device_list = []
         for topic, deviceinfo in self.auto_detected_devices.items():
-            hwinfo = HARDWARE_TYPES[deviceinfo["itho_hwversion"]]
+            hwinfo = HARDWARE_TYPES[deviceinfo]
+
             device = ADDON_TYPES[hwinfo["addon_type"]]
             if hwinfo["addon_type"] == "noncve":
-                device = f"{device} - {NONCVE_DEVICES[hwinfo['model']]}"
+                if hwinfo["model"] == "hru_eco_250":
+                    # Ugly hack because the 250 and 300 identify as the same during auto-detection
+                    device = f"{device} - HRU ECO 250/300"
+                else:
+                    device = f"{device} - {NONCVE_DEVICES[hwinfo['model']]}"
+
             device_list.append(f"{device} ({topic})")
 
         itho_schema = vol.Schema(

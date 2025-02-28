@@ -16,18 +16,19 @@ ADDON_TYPES = {
 }
 ENTITIES_CREATION_MODES = ["only_selected", "all"]
 
-AUTODETECT_SLEEP_TIME = 5
+AUTODETECT_SLEEP_TIME = 4
 
 HARDWARE_TYPES = {
-    91: {"addon_type": "autotemp"},
-    92: {"addon_type": "cve"},
-    93: {"addon_type": "noncve", "model": "hru_eco"},
-    94: {"addon_type": "noncve", "model": "hru_eco_200"},
-    95: {"addon_type": "noncve", "model": "hru_eco_250"},
-    96: {"addon_type": "noncve", "model": "hru_eco_300"},
-    7: {"addon_type": "noncve", "model": "hru_eco_350"},
-    98: {"addon_type": "noncve", "model": "demand_flow"},
-    99: {"addon_type": "wpu"},
+    "AutoTemp": {"addon_type": "autotemp"},
+    "AutoTemp Basic": {"addon_type": "autotemp"},
+    "CVE": {"addon_type": "cve"},
+    "CVE-Silent": {"addon_type": "cve"},
+    "HRU ECO-fan": {"addon_type": "noncve", "model": "hru_eco"},
+    "CVE-SilentExtPlus": {"addon_type": "noncve", "model": "hru_eco_200"},
+    "HRU 250-300": {"addon_type": "noncve", "model": "hru_eco_250"},
+    "HRU 350": {"addon_type": "noncve", "model": "hru_eco_350"},
+    "DemandFlow": {"addon_type": "noncve", "model": "demand_flow"},
+    "Heatpump": {"addon_type": "wpu"},
 }
 
 NONCVE_DEVICES = {
