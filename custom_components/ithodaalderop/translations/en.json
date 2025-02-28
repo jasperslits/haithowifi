@@ -15,16 +15,12 @@
         "description": "Customize the MQTT base topic, entity prefix and device name.",
         "title": "Advanced integration entry configuration"
       },
-      "autodetect_result": {
+      "autodetect": {
         "data": {
           "device_select": "Select the device you want to configure:"
         },
         "description": "One or more devices have been detected.",
         "title": "Select device"
-      },
-      "autodetect_search_popup": {
-        "description": "By pressing 'Next' we will start looking for available Itho devices. This will take a few seconds.",
-        "title": "Start search"
       },
       "noncve_model": {
         "data": {

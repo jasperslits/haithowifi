@@ -145,7 +145,8 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             self.config.update(user_input)
             if user_input[CONF_ADDON_TYPE] == "auto_detect":
-                return await self.async_step_autodetect_search_popup()
+                await self.try_get_deviceinfo()
+                return await self.async_step_autodetect()
             if user_input[CONF_ADDON_TYPE] == "autotemp":
                 return await self.async_step_rooms()
             if user_input[CONF_ADDON_TYPE] == "cve":
@@ -188,23 +189,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(step_id="user", data_schema=itho_schema)
 
-    async def async_step_autodetect_search_popup(
-        self, user_input: Mapping[str, Any] | None = None
-    ):
-        """Show popup message to start auto-detect search."""
-        if user_input is not None:
-            await self.try_get_deviceinfo()
-            return await self.async_step_autodetect_result()
-
-        return self.async_show_form(
-            step_id="autodetect_search_popup",
-            data_schema=vol.Schema({}),
-            last_step=False,  # Display next (False) or submit (True or empty) button in frontend
-        )
-
-    async def async_step_autodetect_result(
-        self, user_input: Mapping[str, Any] | None = None
-    ):
+    async def async_step_autodetect(self, user_input: Mapping[str, Any] | None = None):
         """Auto-detect result."""
         if user_input is not None:
             # Extract the MQTT topic back from the selected device
@@ -266,9 +251,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 )
             }
         )
-        return self.async_show_form(
-            step_id="autodetect_result", data_schema=itho_schema
-        )
+        return self.async_show_form(step_id="autodetect", data_schema=itho_schema)
 
     async def async_step_rooms(self, user_input: Mapping[str, Any] | None = None):
         """Configure rooms for autotemp."""

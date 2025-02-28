@@ -15,16 +15,12 @@
         "description": "Pas het MQTT-basisonderwerp, entiteitsvoorvoegsel en apparaatnaam aan.",
         "title": "Geavanceerde integratie configuratie"
       },
-      "autodetect_result": {
+      "autodetect": {
         "data": {
           "device_select": "Select het apparaat om te configuren:"
         },
         "description": "Een of meer apparaten gevonden.",
         "title": "Selecteer apparaat"
-      },
-      "autodetect_search_popup": {
-        "description": "Door op 'Volgende' te drukken, gaan we op zoek naar beschikbare Itho-apparaten. Dit duurt enkele seconden.",
-        "title": "Start zoeken"
       },
       "noncve_model": {
         "data": {
