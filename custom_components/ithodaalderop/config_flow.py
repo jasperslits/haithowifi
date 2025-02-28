@@ -230,13 +230,13 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return self.async_abort(reason="no_devices_detected")
 
         device_list = []
-        for topic, deviceinfo in self.auto_detected_devices.items():
-            hwinfo = HARDWARE_TYPES[deviceinfo]
+        for topic, devtype in self.auto_detected_devices.items():
+            hwinfo = HARDWARE_TYPES[devtype]
 
             device = ADDON_TYPES[hwinfo["addon_type"]]
             if hwinfo["addon_type"] == "noncve":
+                # Ugly hack because the 250 and 300 identify as the same during auto-detection
                 if hwinfo["model"] == "hru_eco_250":
-                    # Ugly hack because the 250 and 300 identify as the same during auto-detection
                     device = f"{device} - HRU ECO 250/300"
                 else:
                     device = f"{device} - {NONCVE_DEVICES[hwinfo['model']]}"
