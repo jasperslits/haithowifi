@@ -32,7 +32,7 @@ This custom component has no affiliation with the Itho Daalderop company or with
 >
 > The integration provides an auto-detect option for all of your Itho WiFi Add-ons. This requires:
 > - v2.9.0 or higher of the [WiFi Add-on system firmware](https://github.com/arjenhiemstra/ithowifi/releases)
-> - A MQTT message within 6 seconds of start auto-detect. By default the WiFi Add-on sends an update every 5 seconds, but if you change this to anything higher than 5, your device might not be found. The integration will start searching at the moment you start configuring a new integration entry.
+> - A MQTT message containing your device information. The integration will wait for at least 6 seconds to receive a MQTT message. By default the WiFi Add-on sends an update every 5 seconds, but if you change this to anything higher than 5, your device might not be found.
 
 ### Fan entity
 The integration creates a Fan entity for several devices which can be used to control the speed and/or mode. Currently the following devices and actions are provided:
