@@ -249,6 +249,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 device = f"{device} - {NONCVE_MODELS[hwinfo['model']]}"
 
             device_list.append(f"{device} ({topic})")
+        device_list.sort()
 
         itho_schema = vol.Schema(
             {
