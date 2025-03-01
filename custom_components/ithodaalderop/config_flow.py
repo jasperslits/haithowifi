@@ -141,6 +141,9 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             if user_input[CONF_ADDON_TYPE] == "auto_detect":
                 await self.try_get_deviceinfo()
                 return await self.async_step_autodetect()
+
+            self.config.update({CONF_AUTO_DETECT: False})
+
             if user_input[CONF_ADDON_TYPE] == "autotemp":
                 return await self.async_step_rooms()
             if user_input[CONF_ADDON_TYPE] == "cve":
@@ -370,7 +373,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             ): str,
         }
 
-        if self.config.get(CONF_AUTO_DETECT, False):
+        if self.config[CONF_AUTO_DETECT]:
             itho_schema = vol.Schema({**commond_field})
         else:
             itho_schema = vol.Schema({**mqtt_topic, **commond_field})
