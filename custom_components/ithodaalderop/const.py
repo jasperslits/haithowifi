@@ -16,7 +16,8 @@ ADDON_TYPES = {
 }
 ENTITIES_CREATION_MODES = ["only_selected", "all"]
 
-AUTODETECT_SLEEP_TIME = 4
+# Default 'Update frequency' for Wifi Addon is 5 seconds
+AUTODETECT_SLEEP_TIME = 6
 
 DEVICE_TYPES = {
     "AutoTemp": {"addon_type": "autotemp"},
@@ -25,21 +26,24 @@ DEVICE_TYPES = {
     "CVE-Silent": {"addon_type": "cve"},
     "HRU ECO-fan": {"addon_type": "noncve", "model": "hru_eco"},
     "CVE-SilentExtPlus": {"addon_type": "noncve", "model": "hru_eco_200"},
-    "HRU 250-300": {"addon_type": "noncve", "model": "hru_eco_250"},
+    "HRU 250-300": {"addon_type": "noncve", "model": "hru_eco_250_300"},
     "HRU 350": {"addon_type": "noncve", "model": "hru_eco_350"},
     "DemandFlow": {"addon_type": "noncve", "model": "demand_flow"},
     "Heatpump": {"addon_type": "wpu"},
 }
 
+# Both 'hru_eco_250' & 'hru_eco_300' and 'hru_eco_250_300'
+# are added for compatibility with both manual and auto-detect
+# 'hru_eco_250_300' is removed as manual selection in config-flow
 NONCVE_DEVICES = {
     "hru_eco": "HRU ECO",
     "hru_eco_200": "HRU ECO 200",
     "hru_eco_250": "HRU ECO 250",
     "hru_eco_300": "HRU ECO 300",
+    "hru_eco_250_300": "HRU ECO 250/300",
     "hru_eco_350": "HRU ECO 350",
     "demand_flow": "Demand Flow",
 }
-AUTODETECT_HRU_250_300_NAME = "HRU ECO 250/300"
 
 UNITTYPE_ICONS = {
     "%": "mdi:percent-outline",

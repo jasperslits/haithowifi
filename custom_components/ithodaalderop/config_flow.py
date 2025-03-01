@@ -16,7 +16,6 @@ from homeassistant.helpers.selector import selector
 from .const import (
     _LOGGER,
     ADDON_TYPES,
-    AUTODETECT_HRU_250_300_NAME,
     AUTODETECT_SLEEP_TIME,
     CONF_ADDON_TYPE,
     CONF_ADVANCED_CONFIG,
@@ -120,11 +119,6 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             if advanced_config:
                 title = title + self.config[CONF_CUSTOM_DEVICE_NAME]
-            elif (
-                self.config.get(CONF_AUTO_DETECT, False)
-                and self.config[CONF_NONCVE_MODEL] == "hru_eco_250"
-            ):
-                title = title + AUTODETECT_HRU_250_300_NAME
             else:
                 title = title + NONCVE_DEVICES[self.config[CONF_NONCVE_MODEL]]
 
@@ -168,7 +162,10 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 vol.Required(CONF_ADDON_TYPE): selector(
                     {
                         "select": {
-                            "options": ["auto_detect", *list(ADDON_TYPES.keys())],
+                            "options": [
+                                "auto_detect",
+                                *list(ADDON_TYPES.keys()),
+                            ],
                             "multiple": False,
                             "translation_key": "addonselect",
                         }
@@ -230,11 +227,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             device = ADDON_TYPES[hwinfo["addon_type"]]
             if hwinfo["addon_type"] == "noncve":
-                # Ugly hack because the 250 and 300 identify as the same during auto-detection
-                if hwinfo["model"] == "hru_eco_250":
-                    device = f"{device} - {AUTODETECT_HRU_250_300_NAME}"
-                else:
-                    device = f"{device} - {NONCVE_DEVICES[hwinfo['model']]}"
+                device = f"{device} - {NONCVE_DEVICES[hwinfo['model']]}"
 
             device_list.append(f"{device} ({topic})")
 
@@ -294,12 +287,15 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             self.config.update(user_input)
             return await self.async_step_remotes()
 
+        # The 'hru_eco_250_300' is only used for auto-detect purposes
+        models = list(NONCVE_DEVICES.keys())
+        models.remove("hru_eco_250_300")
         itho_schema = vol.Schema(
             {
                 vol.Required(CONF_NONCVE_MODEL): selector(
                     {
                         "select": {
-                            "options": list(NONCVE_DEVICES.keys()),
+                            "options": models,
                             "multiple": False,
                             "translation_key": "noncve_model_select",
                         }

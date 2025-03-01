@@ -4,7 +4,6 @@ from typing import Any
 
 from .const import (
     ADDON_TYPES,
-    AUTODETECT_HRU_250_300_NAME,
     CONF_ADDON_TYPE,
     CONF_ADVANCED_CONFIG,
     CONF_AUTO_DETECT,
@@ -21,14 +20,14 @@ from .const import (
 
 def get_default_mqtt_base_topic(config: dict[str, Any]) -> str:
     """Get the default MQTT base topic."""
-    if config.get(CONF_AUTO_DETECT, False):
-        return config[CONF_CUSTOM_BASETOPIC]
-
     return MQTT_DEFAULT_BASETOPIC[config[CONF_ADDON_TYPE]]
 
 
 def get_mqtt_base_topic(config: dict[str, Any]) -> str:
     """Get the MQTT base topic."""
+    if config.get(CONF_AUTO_DETECT, False):
+        return config[CONF_CUSTOM_BASETOPIC]
+
     if config[CONF_ADVANCED_CONFIG]:
         return config[CONF_CUSTOM_BASETOPIC]
 
@@ -53,12 +52,6 @@ def get_mqtt_remote_topic(config: dict[str, Any]) -> str:
 def get_device_model(config: dict[str, Any]) -> str:
     """Get the device model."""
     if config[CONF_ADDON_TYPE] == "noncve":
-        # Ugly hack because the 250 and 300 identify as the same during auto-detection
-        if (
-            config.get(CONF_AUTO_DETECT, False)
-            and config[CONF_NONCVE_MODEL] == "hru_eco_250"
-        ):
-            return AUTODETECT_HRU_250_300_NAME
         return NONCVE_DEVICES[config[CONF_NONCVE_MODEL]]
 
     return ADDON_TYPES[config[CONF_ADDON_TYPE]]
