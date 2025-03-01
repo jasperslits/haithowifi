@@ -4,8 +4,26 @@ import logging
 
 _LOGGER = logging.getLogger(__name__)
 
-DOMAIN = "ithodaalderop"
 
+################
+### SETTINGS ###
+################
+
+# Default 'Update frequency' for Wifi Addon is 5 seconds
+AUTODETECT_SLEEP_TIME = 6
+
+# QoS 0 – At most once.
+# QoS 1 – At least once.
+# QoS 2 – Exactly once.
+MQTT_DEFAULT_QOS_SUBSCRIBE = 1
+MQTT_DEFAULT_QOS_PUBLISH = 1
+
+
+#################
+### CONSTANTS ###
+#################
+
+DOMAIN = "ithodaalderop"
 MANUFACTURER = "Itho Daalderop"
 
 ADDON_TYPES = {
@@ -16,10 +34,20 @@ ADDON_TYPES = {
 }
 ENTITIES_CREATION_MODES = ["only_selected", "all"]
 
-# Default 'Update frequency' for Wifi Addon is 5 seconds
-AUTODETECT_SLEEP_TIME = 6
+# Both 'hru_eco_250' & 'hru_eco_300' and 'hru_eco_250_300'
+# are added for compatibility with both manual and auto-detect
+# 'hru_eco_250_300' is removed as manual selection in config-flow
+NONCVE_MODELS = {
+    "hru_eco": "HRU ECO",
+    "hru_eco_200": "HRU ECO 200",
+    "hru_eco_250": "HRU ECO 250",
+    "hru_eco_300": "HRU ECO 300",
+    "hru_eco_250_300": "HRU ECO 250/300",
+    "hru_eco_350": "HRU ECO 350",
+    "demand_flow": "Demand Flow",
+}
 
-DEVICE_TYPES = {
+AUTODETECT_DEVICE_TYPES = {
     "AutoTemp": {"addon_type": "autotemp"},
     "AutoTemp Basic": {"addon_type": "autotemp"},
     "CVE": {"addon_type": "cve"},
@@ -32,30 +60,11 @@ DEVICE_TYPES = {
     "Heatpump": {"addon_type": "wpu"},
 }
 
-# Both 'hru_eco_250' & 'hru_eco_300' and 'hru_eco_250_300'
-# are added for compatibility with both manual and auto-detect
-# 'hru_eco_250_300' is removed as manual selection in config-flow
-NONCVE_DEVICES = {
-    "hru_eco": "HRU ECO",
-    "hru_eco_200": "HRU ECO 200",
-    "hru_eco_250": "HRU ECO 250",
-    "hru_eco_300": "HRU ECO 300",
-    "hru_eco_250_300": "HRU ECO 250/300",
-    "hru_eco_350": "HRU ECO 350",
-    "demand_flow": "Demand Flow",
-}
-
 UNITTYPE_ICONS = {
     "%": "mdi:percent-outline",
     "hum": "mdi:water-percent",
     "rpm": "mdi:speedometer",
 }
-
-# QoS 0 – At most once.
-# QoS 1 – At least once.
-# QoS 2 – Exactly once.
-MQTT_DEFAULT_QOS_SUBSCRIBE = 1
-MQTT_DEFAULT_QOS_PUBLISH = 1
 
 MQTT_DEFAULT_BASETOPIC = {
     "autotemp": "ithotemp",
@@ -98,7 +107,6 @@ CONF_REMOTE_2 = "remote2"
 CONF_REMOTE_3 = "remote3"
 CONF_REMOTE_4 = "remote4"
 CONF_REMOTE_5 = "remote5"
-
 
 AUTOTEMP_ERROR = {
     0: "No errors",

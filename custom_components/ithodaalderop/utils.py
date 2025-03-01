@@ -14,7 +14,7 @@ from .const import (
     MQTT_COMMAND_TOPIC,
     MQTT_DEFAULT_BASETOPIC,
     MQTT_STATETOPIC,
-    NONCVE_DEVICES,
+    NONCVE_MODELS,
 )
 
 
@@ -52,7 +52,7 @@ def get_mqtt_remote_topic(config: dict[str, Any]) -> str:
 def get_device_model(config: dict[str, Any]) -> str:
     """Get the device model."""
     if config[CONF_ADDON_TYPE] == "noncve":
-        return NONCVE_DEVICES[config[CONF_NONCVE_MODEL]]
+        return NONCVE_MODELS[config[CONF_NONCVE_MODEL]]
 
     return ADDON_TYPES[config[CONF_ADDON_TYPE]]
 

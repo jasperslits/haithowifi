@@ -16,6 +16,7 @@ from homeassistant.helpers.selector import selector
 from .const import (
     _LOGGER,
     ADDON_TYPES,
+    AUTODETECT_DEVICE_TYPES,
     AUTODETECT_SLEEP_TIME,
     CONF_ADDON_TYPE,
     CONF_ADVANCED_CONFIG,
@@ -38,10 +39,9 @@ from .const import (
     CONF_REMOTE_3,
     CONF_REMOTE_4,
     CONF_REMOTE_5,
-    DEVICE_TYPES,
     DOMAIN,
     ENTITIES_CREATION_MODES,
-    NONCVE_DEVICES,
+    NONCVE_MODELS,
 )
 from .utils import (
     get_default_entity_prefix,
@@ -80,7 +80,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             payload = json.loads(message.payload)
 
             devtype = payload.get("itho_devtype", "unknown")
-            if devtype in DEVICE_TYPES:
+            if devtype in AUTODETECT_DEVICE_TYPES:
                 self.auto_detected_devices[topic] = devtype
             else:
                 _LOGGER.warning(
@@ -120,7 +120,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             if advanced_config:
                 title = title + self.config[CONF_CUSTOM_DEVICE_NAME]
             else:
-                title = title + NONCVE_DEVICES[self.config[CONF_NONCVE_MODEL]]
+                title = title + NONCVE_MODELS[self.config[CONF_NONCVE_MODEL]]
 
         elif advanced_config:
             title = title + self.config[CONF_CUSTOM_DEVICE_NAME]
@@ -192,7 +192,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             # Extract the MQTT topic back from the selected device
             # The topic is used as key in the auto_detected_devices dict
             topic = re.search(r"\((.*?)\)$", user_input["device_select"]).group(1)
-            hwinfo = DEVICE_TYPES[self.auto_detected_devices[topic]]
+            hwinfo = AUTODETECT_DEVICE_TYPES[self.auto_detected_devices[topic]]
 
             self.config.update(
                 {
@@ -223,11 +223,11 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         device_list = []
         for topic, devtype in self.auto_detected_devices.items():
-            hwinfo = DEVICE_TYPES[devtype]
+            hwinfo = AUTODETECT_DEVICE_TYPES[devtype]
 
             device = ADDON_TYPES[hwinfo["addon_type"]]
             if hwinfo["addon_type"] == "noncve":
-                device = f"{device} - {NONCVE_DEVICES[hwinfo['model']]}"
+                device = f"{device} - {NONCVE_MODELS[hwinfo['model']]}"
 
             device_list.append(f"{device} ({topic})")
 
@@ -288,7 +288,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return await self.async_step_remotes()
 
         # The 'hru_eco_250_300' is only used for auto-detect purposes
-        models = list(NONCVE_DEVICES.keys())
+        models = list(NONCVE_MODELS.keys())
         models.remove("hru_eco_250_300")
         itho_schema = vol.Schema(
             {
