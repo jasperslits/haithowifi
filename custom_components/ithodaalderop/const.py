@@ -9,6 +9,8 @@ _LOGGER = logging.getLogger(__name__)
 ### SETTINGS ###
 ################
 
+AUTODETECT_MIN_SUBSCRIBE_TIME = 6
+
 # QoS 0 – At most once.
 # QoS 1 – At least once.
 # QoS 2 – Exactly once.

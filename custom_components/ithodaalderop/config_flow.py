@@ -65,14 +65,14 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         # Used for auto-detect
         self._substate: dict[str, mqtt.EntitySubscription] = {}
-        self.start_subscribe: datetime | None = None
-        self.auto_detected_devices: Mapping[str, str] = {}
+        self._start_subscribe: datetime | None = None
+        self._auto_detected_devices: Mapping[str, str] = {}
 
     ######################
     ### HELPER METHODS ###
     ######################
 
-    async def subscribe_deviceinfo(self):
+    async def _subscribe_deviceinfo(self):
         """Subscribe to deviceinfo for auto-detect."""
 
         @callback
@@ -83,7 +83,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             devtype = payload.get("itho_devtype", "unknown")
             if devtype in AUTODETECT_DEVICE_TYPES:
-                self.auto_detected_devices[topic] = devtype
+                self._auto_detected_devices[topic] = devtype
             else:
                 _LOGGER.warning(
                     f"Found unknown device during auto-detect: {devtype}. Please create a GitHub issue to get this device supported."
@@ -100,15 +100,15 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             },
         )
         await mqtt.async_subscribe_topics(self.hass, self._substate)
-        self.start_subscribe = datetime.now()
+        self._start_subscribe = datetime.now()
 
-    async def sleep_for_autodetect(self):
+    async def _sleep_for_autodetect(self):
         """Sleep for auto-detect."""
-        elapsed = (datetime.now() - self.start_subscribe).total_seconds()
+        elapsed = (datetime.now() - self._start_subscribe).total_seconds()
         if elapsed < AUTODETECT_MIN_SUBSCRIBE_TIME:
             await asyncio.sleep(AUTODETECT_MIN_SUBSCRIBE_TIME - elapsed)
 
-    def unsubscribe_deviceinfo(self):
+    def _unsubscribe_deviceinfo(self):
         """Unsubscribe from deviceinfo."""
         mqtt.async_unsubscribe_topics(self.hass, self._substate)
 
@@ -151,11 +151,11 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             self.config.update(user_input)
 
             if user_input[CONF_ADDON_TYPE] == "auto_detect":
-                await self.sleep_for_autodetect()
-                self.unsubscribe_deviceinfo()
+                await self._sleep_for_autodetect()
+                self._unsubscribe_deviceinfo()
                 return await self.async_step_autodetect()
 
-            self.unsubscribe_deviceinfo()
+            self._unsubscribe_deviceinfo()
             self.config.update({CONF_AUTO_DETECT: False})
 
             if user_input[CONF_ADDON_TYPE] == "autotemp":
@@ -174,7 +174,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 data=self.config,
             )
 
-        await self.subscribe_deviceinfo()
+        await self._subscribe_deviceinfo()
 
         itho_schema = vol.Schema(
             {
@@ -211,7 +211,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             # Extract the MQTT topic back from the selected device
             # The topic is used as key in the auto_detected_devices dict
             topic = re.search(r"\((.*?)\)$", user_input["device_select"]).group(1)
-            hwinfo = AUTODETECT_DEVICE_TYPES[self.auto_detected_devices[topic]]
+            hwinfo = AUTODETECT_DEVICE_TYPES[self._auto_detected_devices[topic]]
 
             self.config.update(
                 {
@@ -237,11 +237,11 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 data=self.config,
             )
 
-        if not self.auto_detected_devices:
+        if not self._auto_detected_devices:
             return self.async_abort(reason="no_devices_detected")
 
         device_list = []
-        for topic, devtype in self.auto_detected_devices.items():
+        for topic, devtype in self._auto_detected_devices.items():
             hwinfo = AUTODETECT_DEVICE_TYPES[devtype]
 
             device = ADDON_TYPES[hwinfo["addon_type"]]
