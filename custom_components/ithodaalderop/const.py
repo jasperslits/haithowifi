@@ -9,9 +9,6 @@ _LOGGER = logging.getLogger(__name__)
 ### SETTINGS ###
 ################
 
-# Default 'Update frequency' for Wifi Addon is 5 seconds
-AUTODETECT_SLEEP_TIME = 6
-
 # QoS 0 – At most once.
 # QoS 1 – At least once.
 # QoS 2 – Exactly once.

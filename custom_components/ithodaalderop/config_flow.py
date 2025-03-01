@@ -2,6 +2,7 @@
 
 import asyncio
 from collections.abc import Mapping
+from datetime import datetime
 import json
 import re
 from typing import Any
@@ -17,7 +18,7 @@ from .const import (
     _LOGGER,
     ADDON_TYPES,
     AUTODETECT_DEVICE_TYPES,
-    AUTODETECT_SLEEP_TIME,
+    AUTODETECT_MIN_SUBSCRIBE_TIME,
     CONF_ADDON_TYPE,
     CONF_ADVANCED_CONFIG,
     CONF_AUTO_DETECT,
@@ -64,14 +65,15 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         # Used for auto-detect
         self._substate: dict[str, mqtt.EntitySubscription] = {}
+        self.start_subscribe: datetime | None = None
         self.auto_detected_devices: Mapping[str, str] = {}
 
     ######################
     ### HELPER METHODS ###
     ######################
 
-    async def try_get_deviceinfo(self):
-        """Try to get deviceinfo."""
+    async def subscribe_deviceinfo(self):
+        """Subscribe to deviceinfo for auto-detect."""
 
         @callback
         def deviceinfo_message_received(message):
@@ -98,7 +100,16 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             },
         )
         await mqtt.async_subscribe_topics(self.hass, self._substate)
-        await asyncio.sleep(AUTODETECT_SLEEP_TIME)
+        self.start_subscribe = datetime.now()
+
+    async def sleep_for_autodetect(self):
+        """Sleep for auto-detect."""
+        elapsed = (datetime.now() - self.start_subscribe).total_seconds()
+        if elapsed < AUTODETECT_MIN_SUBSCRIBE_TIME:
+            await asyncio.sleep(AUTODETECT_MIN_SUBSCRIBE_TIME - elapsed)
+
+    def unsubscribe_deviceinfo(self):
+        """Unsubscribe from deviceinfo."""
         mqtt.async_unsubscribe_topics(self.hass, self._substate)
 
     async def _try_set_unique_id(self):
@@ -138,10 +149,13 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Configure main step."""
         if user_input is not None:
             self.config.update(user_input)
+
             if user_input[CONF_ADDON_TYPE] == "auto_detect":
-                await self.try_get_deviceinfo()
+                await self.sleep_for_autodetect()
+                self.unsubscribe_deviceinfo()
                 return await self.async_step_autodetect()
 
+            self.unsubscribe_deviceinfo()
             self.config.update({CONF_AUTO_DETECT: False})
 
             if user_input[CONF_ADDON_TYPE] == "autotemp":
@@ -159,6 +173,8 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 title=self._get_entry_title(),
                 data=self.config,
             )
+
+        await self.subscribe_deviceinfo()
 
         itho_schema = vol.Schema(
             {
