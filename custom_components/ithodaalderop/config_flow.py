@@ -227,7 +227,7 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 return await self.async_step_rooms()
             if hwinfo["addon_type"] in ["cve", "noncve"]:
                 return await self.async_step_remotes()
-            if user_input.get(CONF_ADVANCED_CONFIG, False):
+            if self.config.get(CONF_ADVANCED_CONFIG, False):
                 return await self.async_step_advanced_config()
 
             # WPU
