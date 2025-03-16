@@ -88,9 +88,7 @@ class IthoFanCVE_HRU200(IthoBaseFan):
         self.async_write_ha_state()
 
         percentage_cmd = round(percentage * 2.55)
-        _LOGGER.debug(
-            f"Setting fan percentage to {percentage}% -> {percentage_cmd}/255"
-        )
+        _LOGGER.info(f"Setting fan percentage to {percentage}% -> {percentage_cmd}/255")
         await mqtt.async_publish(
             self.hass,
             self.entity_description.command_topic,
