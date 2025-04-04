@@ -55,11 +55,11 @@ class IthoFanCVE_HRU200(IthoBaseFan):
     def _message_received(self, msg):
         """Handle preset mode update via MQTT."""
         data = json.loads(msg.payload)
-        percentage = (
-            int(data.get("Ventilation level (%)", -1))
-            + int(data.get("Ventilation setpoint (%)", -1))
-            + 1
+        percentage = max(
+            int(data.get("Ventilation level (%)", -1)),
+            int(data.get("Ventilation setpoint (%)", -1)),
         )
+
         if percentage >= 0:
             self._attr_percentage = percentage
         else:
@@ -85,10 +85,11 @@ class IthoFanCVE_HRU200(IthoBaseFan):
         self._attr_percentage = percentage
         self.async_write_ha_state()
 
+        percentage_cmd = round(percentage * 2.55)
         await mqtt.async_publish(
             self.hass,
             self.entity_description.command_topic,
-            int(percentage * 2.55),
+            percentage_cmd,
         )
 
     async def async_turn_on(self, *args, **kwargs):
