@@ -161,6 +161,9 @@ HRU_ECO_STATUS = {
     2: "Decelerate Supply fan",
     3: "Accelerate Exhaust fan",
     4: "Stop supply fan",
+    5: "Heat Recovery",
+    8: "Cooling Recovery",
+    9: "Summer Bypass",
 }
 
 WPU_STATUS = {
