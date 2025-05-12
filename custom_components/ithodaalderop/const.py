@@ -163,6 +163,12 @@ HRU_ECO_STATUS = {
     4: "Stop supply fan",
 }
 
+HRU_ECO_250_300_STATUS = {
+    5: "Heat Recovery",
+    8: "Cooling Recovery",
+    9: "Summer Bypass",
+}
+
 WPU_STATUS = {
     0: "Init",
     1: "Off",

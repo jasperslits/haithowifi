@@ -97,6 +97,20 @@ def get_noncve_sensors(config_entry: ConfigEntry):
 class IthoSensorFan(IthoBaseSensor):
     """Representation of a Itho add-on sensor that is updated via MQTT."""
 
+    _non_cve_model = ""
+
+    def __init__(
+        self,
+        description: IthoBinarySensorEntityDescription,
+        config_entry: ConfigEntry,
+        use_base_sensor_device: bool = True,
+    ) -> None:
+        if config_entry.data[CONF_ADDON_TYPE] == "noncve":
+            self._non_cve_model = config_entry.data[CONF_NONCVE_MODEL]
+
+        super().__init__(description, config_entry, use_base_sensor_device)
+
+
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
         await mqtt.async_subscribe(
@@ -195,7 +209,10 @@ class IthoSensorFan(IthoBaseSensor):
 
                 _description = "Unknown status"
                 if str(value).isnumeric():
-                    _description = HRU_ECO_STATUS.get(int(value), _description)
+                    if self._non_cve_model in ["hru_eco_250", "hru_eco_300"]:
+                        _description = HRU_ECO_250_300_STATUS.get(int(value), _description)                        
+                    else:
+                        _description = HRU_ECO_STATUS.get(int(value), _description)
                 value = _description
 
         self._attr_native_value = value
