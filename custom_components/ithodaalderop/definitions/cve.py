@@ -149,6 +149,7 @@ CVE_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="hum",
         key="humidity",
+        device_class=SensorDeviceClass.HUMIDITY,
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         is_selected_entity=True,
@@ -156,6 +157,7 @@ CVE_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Internal humidity (%)",
         key="internal_humidity",
+        device_class=SensorDeviceClass.HUMIDITY,
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -229,6 +231,7 @@ CVE_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="RelativeHumidity",
         key="relative_humidity",
+        device_class=SensorDeviceClass.HUMIDITY,
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False,
