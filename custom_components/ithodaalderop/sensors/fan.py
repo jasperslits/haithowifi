@@ -9,7 +9,9 @@ from homeassistant.core import callback
 
 from ..const import (
     CONF_NONCVE_MODEL,
+    CONF_ADDON_TYPE,
     HRU_ECO_250_300_ERROR_CODE,
+    HRU_ECO_250_300_STATUS
     HRU_ECO_350_ACTUAL_MODE,
     HRU_ECO_350_GLOBAL_FAULT_CODE,
     HRU_ECO_350_RH_ERROR_CODE,
@@ -23,7 +25,7 @@ from ..definitions.hru250_300 import HRU_ECO_250_300_SENSORS
 from ..definitions.hru350 import HRU_ECO_350_BINARY_SENSORS, HRU_ECO_350_SENSORS
 from ..definitions.hrueco import HRU_ECO_BINARY_SENSORS, HRU_ECO_SENSORS
 from ..utils import get_mqtt_state_topic
-from .base_sensors import IthoBaseSensor, IthoBinarySensor
+from .base_sensors import IthoBaseSensor, IthoBinarySensor, IthoBinarySensorEntityDescription
 
 
 def get_cve_binary_sensors(config_entry: ConfigEntry):
