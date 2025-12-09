@@ -9,7 +9,6 @@ from homeassistant.core import callback
 
 from ..const import (
     CONF_NONCVE_MODEL,
-    CONF_ADDON_TYPE,
     HRU_ECO_250_300_ERROR_CODE,
     HRU_ECO_250_300_STATUS,
     HRU_ECO_350_ACTUAL_MODE,
@@ -25,7 +24,7 @@ from ..definitions.hru250_300 import HRU_ECO_250_300_SENSORS
 from ..definitions.hru350 import HRU_ECO_350_BINARY_SENSORS, HRU_ECO_350_SENSORS
 from ..definitions.hrueco import HRU_ECO_BINARY_SENSORS, HRU_ECO_SENSORS
 from ..utils import get_mqtt_state_topic
-from .base_sensors import IthoBaseSensor, IthoBinarySensor, IthoBinarySensorEntityDescription
+from .base_sensors import IthoBaseSensor, IthoBinarySensor
 
 
 def get_cve_binary_sensors(config_entry: ConfigEntry):
@@ -98,20 +97,6 @@ def get_noncve_sensors(config_entry: ConfigEntry):
 
 class IthoSensorFan(IthoBaseSensor):
     """Representation of a Itho add-on sensor that is updated via MQTT."""
-
-    _non_cve_model = ""
-
-    def __init__(
-        self,
-        description: IthoBinarySensorEntityDescription,
-        config_entry: ConfigEntry,
-        use_base_sensor_device: bool = True,
-    ) -> None:
-        if config_entry.data[CONF_ADDON_TYPE] == "noncve":
-            self._non_cve_model = config_entry.data[CONF_NONCVE_MODEL]
-
-        super().__init__(description, config_entry, use_base_sensor_device)
-
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""
@@ -211,7 +196,7 @@ class IthoSensorFan(IthoBaseSensor):
 
                 _description = "Unknown status"
                 if str(value).isnumeric():
-                    if self._non_cve_model in ["hru_eco_250", "hru_eco_300"]:
+                    if self._attr_device_info["model"] in ["hru_eco_250", "hru_eco_300"]:
                         _description = HRU_ECO_250_300_STATUS.get(int(value), _description)                        
                     else:
                         _description = HRU_ECO_STATUS.get(int(value), _description)
