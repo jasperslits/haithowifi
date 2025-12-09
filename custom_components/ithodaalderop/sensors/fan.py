@@ -9,7 +9,6 @@ from homeassistant.core import callback
 
 from ..const import (
     CONF_NONCVE_MODEL,
-    NONCVE_DEVICES,
     HRU_ECO_250_300_ERROR_CODE,
     HRU_ECO_250_300_STATUS,
     HRU_ECO_350_ACTUAL_MODE,
@@ -17,6 +16,7 @@ from ..const import (
     HRU_ECO_350_RH_ERROR_CODE,
     HRU_ECO_STATUS,
     MQTT_DEFAULT_QOS_SUBSCRIBE,
+    NONCVE_DEVICES,
 )
 from ..definitions.cve import CVE_BINARY_SENSORS, CVE_SENSORS
 from ..definitions.demandflow import DEMAND_FLOW_BINARY_SENSORS, DEMAND_FLOW_SENSORS
