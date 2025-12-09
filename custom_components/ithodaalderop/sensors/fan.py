@@ -10,11 +10,13 @@ from homeassistant.core import callback
 from ..const import (
     CONF_NONCVE_MODEL,
     HRU_ECO_250_300_ERROR_CODE,
+    HRU_ECO_250_300_STATUS,
     HRU_ECO_350_ACTUAL_MODE,
     HRU_ECO_350_GLOBAL_FAULT_CODE,
     HRU_ECO_350_RH_ERROR_CODE,
     HRU_ECO_STATUS,
     MQTT_DEFAULT_QOS_SUBSCRIBE,
+    NONCVE_DEVICES,
 )
 from ..definitions.cve import CVE_BINARY_SENSORS, CVE_SENSORS
 from ..definitions.demandflow import DEMAND_FLOW_BINARY_SENSORS, DEMAND_FLOW_SENSORS
@@ -195,7 +197,10 @@ class IthoSensorFan(IthoBaseSensor):
 
                 _description = "Unknown status"
                 if str(value).isnumeric():
-                    _description = HRU_ECO_STATUS.get(int(value), _description)
+                    if self._attr_device_info["model"] in [NONCVE_DEVICES["hru_eco_250"], NONCVE_DEVICES["hru_eco_300"]]:
+                        _description = HRU_ECO_250_300_STATUS.get(int(value), _description)
+                    else:
+                        _description = HRU_ECO_STATUS.get(int(value), _description)
                 value = _description
 
         self._attr_native_value = value
