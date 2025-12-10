@@ -476,6 +476,9 @@
       "co2_calculated": {
         "name": "CO2 calculated"
       },
+      "3_6_9_hours_demandflow_timer_sec": {
+        "name": "369 Hours Timer Seconds"
+      },
       "co2_measurement_room": {
         "name": "CO2 measurement room"
       },
