@@ -165,6 +165,7 @@ HRU_ECO_STATUS = {
 
 HRU_ECO_250_300_STATUS = {
     5: "Heat Recovery",
+    6: "Heat Recovery (Frost)",
     8: "Cooling Recovery",
     9: "Summer Bypass",
 }
