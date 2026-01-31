@@ -63,7 +63,7 @@ def get_device_name(config: dict[str, Any]) -> str:
 
 def get_default_entity_prefix(config: dict[str, Any]) -> str:
     """Get the default entity prefix."""
-    return f"itho_{ADDON_TYPES[config[CONF_ADDON_TYPE]]}".lower()
+    return f"itho_{ADDON_TYPES[config[CONF_ADDON_TYPE]]}".replace("-","-").lower()
 
 
 def get_entity_prefix(config: dict[str, Any]) -> str:
