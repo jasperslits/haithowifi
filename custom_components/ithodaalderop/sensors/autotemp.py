@@ -100,7 +100,7 @@ def get_autotemp_sensors(config_entry: ConfigEntry):
     for x in range(1, 8):
         template_sensors = copy.deepcopy(list(AUTOTEMP_ROOM_SENSORS))
         room = config_entry.data["room" + str(x)]
-        if room not in ("", "Room " + str(x)):
+        if room not in ("", "Room_" + str(x)):
             for description in template_sensors:
                 description.json_field = description.json_field.replace("X", str(x))
                 description.topic = topic
