@@ -135,6 +135,9 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_rooms(self, user_input: Mapping[str, Any] | None = None):
         """Configure rooms for autotemp."""
         if user_input is not None:
+
+            for key, value in user_input.items():
+                user_input[key] = value.replace(" ", "_")
             self.config.update(user_input)
             if self.config[CONF_ADVANCED_CONFIG]:
                 return await self.async_step_advanced_config()
@@ -196,6 +199,9 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_remotes(self, user_input: Mapping[str, Any] | None = None):
         """Configure up to 5 remotes."""
         if user_input is not None:
+            for key, value in user_input.items():
+                user_input[key] = value.replace(" ", "_")
+
             self.config.update(user_input)
             if self.config[CONF_ADVANCED_CONFIG]:
                 return await self.async_step_advanced_config()
@@ -297,6 +303,8 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     ):
         """Reconfigure rooms for autotemp."""
         if user_input is not None:
+            for key, value in user_input.items():
+                user_input[key] = value.replace(" ", "_")
             self.config.update(user_input)
             return self.async_update_reload_and_abort(
                 self.entry, data=self.config, reason="reconfigure_successful"
@@ -349,6 +357,9 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     ):
         """Reconfigure up to 5 remotes."""
         if user_input is not None:
+            for key, value in user_input.items():
+                user_input[key] = value.replace(" ", "_")
+
             self.config.update(user_input)
             return self.async_update_reload_and_abort(
                 self.entry, data=self.config, reason="reconfigure_successful"

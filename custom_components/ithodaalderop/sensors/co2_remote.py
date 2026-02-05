@@ -19,7 +19,7 @@ def get_co2_remote_sensors(config_entry: ConfigEntry):
     topic = get_mqtt_remote_topic(config_entry.data)
     for x in range(1, 5):
         remote = config_entry.data["remote" + str(x)]
-        if remote not in ("", "Remote " + str(x)):
+        if remote not in ("", "Remote_" + str(x)):
             description = copy.deepcopy(REMOTE_SENSOR_TEMPLATE)
             description.topic = topic
             description.json_field = remote
