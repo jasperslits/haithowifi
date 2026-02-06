@@ -2,6 +2,7 @@
   "config": {
     "abort": {
       "already_configured": "Itho integratie is al geconfigureerd",
+      "no_devices_detected": "Geen apparaten gevonden",
       "reconfigure_successful": "Herconfiguratie was succesvol"
     },
     "step": {
@@ -13,6 +14,13 @@
         },
         "description": "Pas het MQTT-basisonderwerp, entiteitsvoorvoegsel en apparaatnaam aan.",
         "title": "Geavanceerde integratie configuratie"
+      },
+      "autodetect": {
+        "data": {
+          "device_select": "Select het apparaat om te configuren:"
+        },
+        "description": "Een of meer apparaten gevonden.",
+        "title": "Selecteer apparaat"
       },
       "noncve_model": {
         "data": {
@@ -86,6 +94,33 @@
         },
         "description": "Configuratie stappen voor Itho. Herhaal deze configuratie voor iedere fysieke add-on die gebruikt wordt. Deze integratie maakt automatisch alle of de meest gebruikelijke sensors aan.",
         "title": "Voeg nieuwe Itho apparaten toe"
+      }
+    }
+  },
+  "selector": {
+    "addonselect": {
+      "options": {
+        "auto_detect": "Automatisch (vereist fw v2.9.0 of hoger van de WiFi Add-on)",
+        "autotemp": "Autotemp vloerverwarming",
+        "cve": "CVE (ECO box)",
+        "noncve": "Non-CVE (HRU)",
+        "wpu": "WPU Warmtepomp"
+      }
+    },
+    "entities_creation_modes": {
+      "options": {
+        "all": "Maak alle beschikbare sensoren aan",
+        "only_selected": "Maak alleen een selectie van sensoren aan (aanbevolen voor de meeste gebruikers)"
+      }
+    },
+    "noncve_model_select": {
+      "options": {
+        "demand_flow": "Demand/Quality Flow",
+        "hru_eco": "HRU ECO",
+        "hru_eco_200": "HRU ECO 200",
+        "hru_eco_250": "HRU ECO 250",
+        "hru_eco_300": "HRU ECO 300",
+        "hru_eco_350": "HRU ECO 350"
       }
     }
   },
@@ -1396,32 +1431,6 @@
       },
       "zone_temp": {
         "name": "Zonetemperatuur"
-      }
-    }
-  },
-  "selector": {
-    "addonselect": {
-      "options": {
-        "autotemp": "Autotemp vloerverwarming",
-        "cve": "CVE (ECO box)",
-        "noncve": "Non-CVE (HRU)",
-        "wpu": "WPU Warmtepomp"
-      }
-    },
-    "entities_creation_modes": {
-      "options": {
-        "all": "Maak alle beschikbare sensoren aan",
-        "only_selected": "Maak alleen een selectie van sensoren aan (aanbevolen voor de meeste gebruikers)"
-      }
-    },
-    "noncve_model_select": {
-      "options": {
-        "demand_flow": "Demand/Quality Flow",
-        "hru_eco": "HRU ECO",
-        "hru_eco_200": "HRU ECO 200",
-        "hru_eco_250": "HRU ECO 250",
-        "hru_eco_300": "HRU ECO 300",
-        "hru_eco_350": "HRU ECO 350"
       }
     }
   }
