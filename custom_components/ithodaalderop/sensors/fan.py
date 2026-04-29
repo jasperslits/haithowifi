@@ -117,6 +117,12 @@ class IthoSensorFan(IthoBaseSensor):
             value = None
         else:
             value = payload[json_field]
+            # The IthoWiFi firmware emits the string "not available" as a
+            # sentinel for sensors with no current reading. HA's strict
+            # numeric sensor validation rejects strings, so map this to
+            # None so the entity becomes "unavailable" instead of raising.
+            if isinstance(value, str) and value == "not available":
+                value = None
             # HRU ECO 350
             if json_field == "Actual Mode":
                 self._extra_state_attributes = {"Code": value}
