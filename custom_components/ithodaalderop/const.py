@@ -4,8 +4,25 @@ import logging
 
 _LOGGER = logging.getLogger(__name__)
 
-DOMAIN = "ithodaalderop"
 
+################
+### SETTINGS ###
+################
+
+AUTODETECT_MIN_SUBSCRIBE_TIME = 6
+
+# QoS 0 – At most once.
+# QoS 1 – At least once.
+# QoS 2 – Exactly once.
+MQTT_DEFAULT_QOS_SUBSCRIBE = 1
+MQTT_DEFAULT_QOS_PUBLISH = 1
+
+
+#################
+### CONSTANTS ###
+#################
+
+DOMAIN = "ithodaalderop"
 MANUFACTURER = "Itho Daalderop"
 
 ADDON_TYPES = {
@@ -16,13 +33,30 @@ ADDON_TYPES = {
 }
 ENTITIES_CREATION_MODES = ["only_selected", "all"]
 
-NONCVE_DEVICES = {
+# Both 'hru_eco_250' & 'hru_eco_300' and 'hru_eco_250_300'
+# are added for compatibility with both manual and auto-detect
+# 'hru_eco_250_300' is removed as manual selection in config-flow
+NONCVE_MODELS = {
     "hru_eco": "HRU ECO",
     "hru_eco_200": "HRU ECO 200",
     "hru_eco_250": "HRU ECO 250",
     "hru_eco_300": "HRU ECO 300",
+    "hru_eco_250_300": "HRU ECO 250/300",
     "hru_eco_350": "HRU ECO 350",
     "demand_flow": "Demand Flow",
+}
+
+AUTODETECT_DEVICE_TYPES = {
+    "AutoTemp": {"addon_type": "autotemp"},
+    "AutoTemp Basic": {"addon_type": "autotemp"},
+    "CVE": {"addon_type": "cve"},
+    "CVE-Silent": {"addon_type": "cve"},
+    "HRU ECO-fan": {"addon_type": "noncve", "model": "hru_eco"},
+    "CVE-SilentExtPlus": {"addon_type": "noncve", "model": "hru_eco_200"},
+    "HRU 250-300": {"addon_type": "noncve", "model": "hru_eco_250_300"},
+    "HRU 350": {"addon_type": "noncve", "model": "hru_eco_350"},
+    "DemandFlow": {"addon_type": "noncve", "model": "demand_flow"},
+    "Heatpump": {"addon_type": "wpu"},
 }
 
 UNITTYPE_ICONS = {
@@ -30,12 +64,6 @@ UNITTYPE_ICONS = {
     "hum": "mdi:water-percent",
     "rpm": "mdi:speedometer",
 }
-
-# QoS 0 – At most once.
-# QoS 1 – At least once.
-# QoS 2 – Exactly once.
-MQTT_DEFAULT_QOS_SUBSCRIBE = 1
-MQTT_DEFAULT_QOS_PUBLISH = 1
 
 MQTT_DEFAULT_BASETOPIC = {
     "autotemp": "ithotemp",
@@ -56,6 +84,7 @@ MQTT_STATETOPIC = {
 MQTT_COMMAND_TOPIC = "cmd"
 
 CONF_ADDON_TYPE = "addontype"
+CONF_AUTO_DETECT = "auto_detect"
 CONF_ENTITIES_CREATION_MODE = "entities_creation_mode"
 CONF_ADVANCED_CONFIG = "advanced_config"
 CONF_CUSTOM_BASETOPIC = "custom_basetopic"
@@ -77,7 +106,6 @@ CONF_REMOTE_2 = "remote2"
 CONF_REMOTE_3 = "remote3"
 CONF_REMOTE_4 = "remote4"
 CONF_REMOTE_5 = "remote5"
-
 
 AUTOTEMP_ERROR = {
     0: "No errors",

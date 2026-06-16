@@ -16,7 +16,7 @@ from ..const import (
     DOMAIN,
     MANUFACTURER,
     MQTT_DEFAULT_QOS_SUBSCRIBE,
-    NONCVE_DEVICES,
+    NONCVE_MODELS,
     UNITTYPE_ICONS,
 )
 from ..definitions.base_definitions import (
@@ -95,7 +95,7 @@ class IthoBinarySensor(BinarySensorEntity):
 
         model = ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]
         if config_entry.data[CONF_ADDON_TYPE] == "noncve":
-            model = f"{model} - {NONCVE_DEVICES[config_entry.data[CONF_NONCVE_MODEL]]}"
+            model = f"{model} - {NONCVE_MODELS[config_entry.data[CONF_NONCVE_MODEL]]}"
 
         self._attr_device_info = DeviceInfo(
             identifiers={

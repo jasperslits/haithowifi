@@ -6,6 +6,7 @@ from .const import (
     ADDON_TYPES,
     CONF_ADDON_TYPE,
     CONF_ADVANCED_CONFIG,
+    CONF_AUTO_DETECT,
     CONF_CUSTOM_BASETOPIC,
     CONF_CUSTOM_DEVICE_NAME,
     CONF_CUSTOM_ENTITY_PREFIX,
@@ -13,7 +14,7 @@ from .const import (
     MQTT_COMMAND_TOPIC,
     MQTT_DEFAULT_BASETOPIC,
     MQTT_STATETOPIC,
-    NONCVE_DEVICES,
+    NONCVE_MODELS,
 )
 
 
@@ -24,7 +25,7 @@ def get_default_mqtt_base_topic(config: dict[str, Any]) -> str:
 
 def get_mqtt_base_topic(config: dict[str, Any]) -> str:
     """Get the MQTT base topic."""
-    if config[CONF_ADVANCED_CONFIG]:
+    if config[CONF_AUTO_DETECT] or config[CONF_ADVANCED_CONFIG]:
         return config[CONF_CUSTOM_BASETOPIC]
 
     return get_default_mqtt_base_topic(config)
@@ -42,13 +43,13 @@ def get_mqtt_state_topic(config: dict[str, Any]) -> str:
 
 def get_mqtt_remote_topic(config: dict[str, Any]) -> str:
     """Get the MQTT remote topic."""
-    return f"{get_mqtt_base_topic(config)}/{MQTT_STATETOPIC["remote"]}"
+    return f"{get_mqtt_base_topic(config)}/{MQTT_STATETOPIC['remote']}"
 
 
 def get_device_model(config: dict[str, Any]) -> str:
     """Get the device model."""
     if config[CONF_ADDON_TYPE] == "noncve":
-        return NONCVE_DEVICES[config[CONF_NONCVE_MODEL]]
+        return NONCVE_MODELS[config[CONF_NONCVE_MODEL]]
 
     return ADDON_TYPES[config[CONF_ADDON_TYPE]]
 
