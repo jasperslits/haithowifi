@@ -104,15 +104,16 @@ class IthoThermostatWPU(IthoBaseSensor):
         """Handle new MQTT messages."""
         payload = json.loads(message.payload)
 
+        value = None
         if payload.get("ECO selected on thermostat", 0) == 1:
             value = "Eco"
-        if payload.get("Comfort selected on thermostat", 0) == 1:
+        elif payload.get("Comfort selected on thermostat", 0) == 1:
             value = "Comfort"
-        if payload.get("Boiler boost from thermostat", 0) == 1:
+        elif payload.get("Boiler boost from thermostat", 0) == 1:
             value = "Boost"
-        if payload.get("Boiler blocked from thermostat", 0) == 1:
+        elif payload.get("Boiler blocked from thermostat", 0) == 1:
             value = "Off"
-        if payload.get("Venting from thermostat", 0) == 1:
+        elif payload.get("Venting from thermostat", 0) == 1:
             value = "Venting"
 
         self._attr_native_value = value
