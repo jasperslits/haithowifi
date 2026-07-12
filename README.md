@@ -129,6 +129,7 @@ Click `enable`
 2. [Official HA MQTT Integration](https://www.home-assistant.io/integrations/mqtt/) configured and connected to the MQTT broker. 
 3. In the Itho WiFi add-on under 'MQTT' the `MQTT base topic` should be configured like the table below (or use the [advanced configuration](#advanced-configuration) to customize):
 4. Home Assistant MQTT Discovery under 'MQTT' configuration in the add-on should be set to Off (default) if your fan is supported via this integration. 
+5. System settings / API Settings should have Normalize Keys set to Off.
 
 | Device  | MQTT base topic   | 
 |---|---|
