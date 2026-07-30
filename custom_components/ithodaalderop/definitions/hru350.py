@@ -3,10 +3,10 @@
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import (
-    CONCENTRATION_PARTS_PER_MILLION,
     PERCENTAGE,
     REVOLUTIONS_PER_MINUTE,
     EntityCategory,
+    UnitOfRatio,
     UnitOfTemperature,
     UnitOfTime,
 )
@@ -138,7 +138,7 @@ HRU_ECO_350_SENSORS: tuple[IthoSensorEntityDescription, ...] = (
     IthoSensorEntityDescription(
         json_field="Highest received CO2 value (Ppm)",
         key="highest_received_co2_value",
-        native_unit_of_measurement=CONCENTRATION_PARTS_PER_MILLION,
+        native_unit_of_measurement=UnitOfRatio.PARTS_PER_MILLION,
         state_class=SensorStateClass.MEASUREMENT,
         entity_registry_enabled_default=False,
         icon="mdi:molecule-co2",
