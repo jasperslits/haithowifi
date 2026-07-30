@@ -60,10 +60,11 @@ class IthoFanCVE_HRU200(IthoBaseFan):
             int(data.get("Ventilation setpoint (%)", -1)),
         )
 
+        # Only handle valid messages with percentages
+        # Occasionally, the CVE/HRU200 sends messages without these keys, which should be ignored
+        # https://github.com/jasperslits/haithowifi/issues/143
         if percentage >= 0:
             self._attr_percentage = percentage
-        else:
-            self._attr_percentage = None
 
         self.async_write_ha_state()
 
