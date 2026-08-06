@@ -4,6 +4,7 @@ import copy
 import json
 
 from homeassistant.components import mqtt
+from homeassistant.components.sensor import SensorStateClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 
@@ -76,7 +77,18 @@ class IthoSensorWPU(IthoBaseSensor):
         """Handle new MQTT messages."""
         payload = json.loads(message.payload)
         json_field = self.entity_description.json_field
+
+        is_total_increasing = (
+            self.entity_description.state_class == SensorStateClass.TOTAL_INCREASING
+        )
+
         if json_field not in payload:
+            # For a monotonically increasing meter a missing field is a partial
+            # MQTT publish, not a genuine reset to unknown. Dropping to None would
+            # make Home Assistant treat the next real value as a full counter
+            # reset, corrupting long-term statistics. Keep the last known value.
+            if is_total_increasing:
+                return
             value = None
         else:
             value = payload[json_field]
@@ -85,6 +97,23 @@ class IthoSensorWPU(IthoBaseSensor):
                     "Code": value,
                 }
                 value = WPU_STATUS.get(int(value), "Unknown status")
+            elif is_total_increasing:
+                # The WPU occasionally publishes a spurious 0 (or a value below
+                # the last reading) for its lifetime energy counters. These are
+                # glitches, not real resets, so ignore them and keep the last
+                # known value to avoid corrupting long-term statistics.
+                try:
+                    new_value = float(value)
+                except (TypeError, ValueError):
+                    return
+                if new_value == 0:
+                    return
+                if self._attr_native_value is not None:
+                    try:
+                        if new_value < float(self._attr_native_value):
+                            return
+                    except (TypeError, ValueError):
+                        pass
 
         self._attr_native_value = value
         self.async_write_ha_state()
