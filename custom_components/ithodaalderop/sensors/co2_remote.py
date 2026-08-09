@@ -47,10 +47,12 @@ class IthoSensorCO2Remote(IthoBaseSensor):
         """Handle new MQTT messages."""
         payload = json.loads(message.payload)
         json_field = self.entity_description.json_field
-        if json_field not in payload:
-            value = None
+
+        remote_payload = payload.get(json_field)
+        if isinstance(remote_payload, dict):
+            value = remote_payload.get("co2")
         else:
-            value = payload[json_field]["co2"]
+            value = None
 
         self._attr_native_value = value
         self.async_write_ha_state()
