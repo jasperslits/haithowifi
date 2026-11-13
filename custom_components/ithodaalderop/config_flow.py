@@ -12,14 +12,8 @@ from .const import (
     ADDON_TYPES,
     CONF_ADDON_TYPE,
     CONF_ADVANCED_CONFIG,
-    CONF_AUTOTEMP_ROOM1,
-    CONF_AUTOTEMP_ROOM2,
-    CONF_AUTOTEMP_ROOM3,
-    CONF_AUTOTEMP_ROOM4,
-    CONF_AUTOTEMP_ROOM5,
-    CONF_AUTOTEMP_ROOM6,
-    CONF_AUTOTEMP_ROOM7,
-    CONF_AUTOTEMP_ROOM8,
+    CONF_AUTOTEMP_ROOM,
+    CONF_AUTOTEMP_SPIDER,
     CONF_CUSTOM_BASETOPIC,
     CONF_CUSTOM_DEVICE_NAME,
     CONF_CUSTOM_ENTITY_PREFIX,
@@ -32,6 +26,7 @@ from .const import (
     CONF_REMOTE_5,
     DOMAIN,
     ENTITIES_CREATION_MODES,
+    MAX_ROOMS,
     NONCVE_DEVICES,
 )
 from .utils import (
@@ -57,6 +52,17 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if param in self.config:
             return self.config[param]
         return default
+
+    def _rooms_schema(self) -> vol.Schema:
+        """Get the room and Spider name fields."""
+        fields = {}
+        for number in range(1, MAX_ROOMS + 1):
+            room = CONF_AUTOTEMP_ROOM.format(number)
+            spider = CONF_AUTOTEMP_SPIDER.format(number)
+            field = vol.Required if number == 1 else vol.Optional
+            fields[field(room, default=self.config.get(room, f"Room {number}"))] = str
+            fields[vol.Optional(spider, default=self.config.get(spider, ""))] = str
+        return vol.Schema(fields)
 
     async def _try_set_unique_id(self):
         await self.async_set_unique_id(
@@ -135,7 +141,6 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_rooms(self, user_input: Mapping[str, Any] | None = None):
         """Configure rooms for autotemp."""
         if user_input is not None:
-
             for key, value in user_input.items():
                 user_input[key] = value.replace(" ", "_")
             self.config.update(user_input)
@@ -148,21 +153,9 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 data=self.config,
             )
 
-        itho_schema = vol.Schema(
-            {
-                vol.Required(CONF_AUTOTEMP_ROOM1, default="Room 1"): str,
-                vol.Optional(CONF_AUTOTEMP_ROOM2, default="Room 2"): str,
-                vol.Optional(CONF_AUTOTEMP_ROOM3, default="Room 3"): str,
-                vol.Optional(CONF_AUTOTEMP_ROOM4, default="Room 4"): str,
-                vol.Optional(CONF_AUTOTEMP_ROOM5, default="Room 5"): str,
-                vol.Optional(CONF_AUTOTEMP_ROOM6, default="Room 6"): str,
-                vol.Optional(CONF_AUTOTEMP_ROOM7, default="Room 7"): str,
-                vol.Optional(CONF_AUTOTEMP_ROOM8, default="Room 8"): str,
-            }
-        )
         return self.async_show_form(
             step_id="rooms",
-            data_schema=itho_schema,
+            data_schema=self._rooms_schema(),
             last_step=(
                 not self.config[CONF_ADVANCED_CONFIG]
             ),  # Display next (False) or submit (True or empty) button in frontend
@@ -306,49 +299,17 @@ class IthoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             for key, value in user_input.items():
                 user_input[key] = value.replace(" ", "_")
             self.config.update(user_input)
+            # Any other entry may hold a Spider that is now linked to a room here.
+            for other in self.hass.config_entries.async_entries(DOMAIN):
+                if other.entry_id != self.entry.entry_id:
+                    self.hass.config_entries.async_schedule_reload(other.entry_id)
             return self.async_update_reload_and_abort(
                 self.entry, data=self.config, reason="reconfigure_successful"
             )
 
-        itho_schema = vol.Schema(
-            {
-                vol.Required(
-                    CONF_AUTOTEMP_ROOM1,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM1, "Room 1"),
-                ): str,
-                vol.Optional(
-                    CONF_AUTOTEMP_ROOM2,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM2, "Room 2"),
-                ): str,
-                vol.Optional(
-                    CONF_AUTOTEMP_ROOM3,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM3, "Room 3"),
-                ): str,
-                vol.Optional(
-                    CONF_AUTOTEMP_ROOM4,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM4, "Room 4"),
-                ): str,
-                vol.Optional(
-                    CONF_AUTOTEMP_ROOM5,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM5, "Room 5"),
-                ): str,
-                vol.Optional(
-                    CONF_AUTOTEMP_ROOM6,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM6, "Room 6"),
-                ): str,
-                vol.Optional(
-                    CONF_AUTOTEMP_ROOM7,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM7, "Room 7"),
-                ): str,
-                vol.Optional(
-                    CONF_AUTOTEMP_ROOM8,
-                    default=self._get_reconfigure_value(CONF_AUTOTEMP_ROOM8, "Room 8"),
-                ): str,
-            }
-        )
         return self.async_show_form(
             step_id="rooms_reconfigure",
-            data_schema=itho_schema,
+            data_schema=self._rooms_schema(),
             last_step=True,  # Display next (False) or submit (True or empty) button in frontend
         )
 

@@ -6,19 +6,8 @@ import json
 from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
-from homeassistant.helpers.device_registry import DeviceInfo
 
-from ..const import (
-    ADDON_TYPES,
-    AUTOTEMP_ERROR,
-    AUTOTEMP_MODE,
-    CONF_ADDON_TYPE,
-    CONF_ADVANCED_CONFIG,
-    CONF_CUSTOM_DEVICE_NAME,
-    DOMAIN,
-    MANUFACTURER,
-    MQTT_DEFAULT_QOS_SUBSCRIBE,
-)
+from ..const import AUTOTEMP_ERROR, AUTOTEMP_MODE, MQTT_DEFAULT_QOS_SUBSCRIBE
 from ..definitions.autotemp import (
     AUTOTEMP_BINARYSENSORS,
     AUTOTEMP_COMM_SPACE_SENSOR_TEMPLATE,
@@ -29,7 +18,7 @@ from ..definitions.autotemp import (
     AUTOTEMP_VALVE_SENSOR_TEMPLATE,
 )
 from ..definitions.base_definitions import IthoSensorEntityDescription
-from ..utils import get_entity_prefix, get_mqtt_state_topic
+from ..utils import get_mqtt_state_topic, get_room_device_info, get_rooms
 from .base_sensors import IthoBaseSensor, IthoBinarySensor
 
 
@@ -97,16 +86,13 @@ def get_autotemp_sensors(config_entry: ConfigEntry):
         sensors.append(IthoSensorAutotemp(description, config_entry))
 
     # Create Room devices
-    for x in range(1, 8):
-        template_sensors = copy.deepcopy(list(AUTOTEMP_ROOM_SENSORS))
-        room = config_entry.data["room" + str(x)]
-        if room not in ("", "Room_" + str(x)):
-            for description in template_sensors:
-                description.json_field = description.json_field.replace("X", str(x))
-                description.topic = topic
-                description.room = room
-                description.unique_id = f"{description.key}_{room}"
-                sensors.append(IthoSensorAutotempRoom(description, config_entry))
+    for number, (room, _) in get_rooms(config_entry.data).items():
+        for description in copy.deepcopy(list(AUTOTEMP_ROOM_SENSORS)):
+            description.json_field = description.json_field.replace("X", str(number))
+            description.topic = topic
+            description.room = room
+            description.unique_id = f"{description.key}_{room}"
+            sensors.append(IthoSensorAutotempRoom(description, config_entry))
 
     return sensors
 
@@ -166,20 +152,8 @@ class IthoSensorAutotempRoom(IthoBaseSensor):
     ) -> None:
         """Construct sensor for Autotemp."""
 
-        name = f"Spider {description.room.capitalize()}"
-        if config_entry.data[CONF_ADVANCED_CONFIG]:
-            name = config_entry.data[CONF_CUSTOM_DEVICE_NAME] + " - " + name
-
-        self._attr_device_info = DeviceInfo(
-            identifiers={
-                (
-                    DOMAIN,
-                    f"{get_entity_prefix(config_entry.data)}_room_{description.room}".lower(),
-                )
-            },
-            manufacturer=MANUFACTURER,
-            model=f"{ADDON_TYPES[config_entry.data[CONF_ADDON_TYPE]]} Spider",
-            name=name
+        self._attr_device_info = get_room_device_info(
+            config_entry.data, description.room
         )
 
         super().__init__(description, config_entry, use_base_sensor_device=False)
