@@ -8,6 +8,7 @@ from homeassistant.components.sensor import SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import callback
 from homeassistant.helpers.device_registry import DeviceInfo
+from homeassistant.util import slugify
 
 from ..const import (
     ADDON_TYPES,
@@ -60,7 +61,7 @@ class IthoBaseSensor(SensorEntity):
             unique_id = f"{prefix}_{description.key}"
         self._attr_unique_id = unique_id.lower()
 
-        self.entity_id = f"sensor.{self._attr_unique_id}"
+        self.entity_id = f"sensor.{slugify(self._attr_unique_id)}"
 
     @property
     def extra_state_attributes(self) -> list[str] | None:
@@ -106,11 +107,14 @@ class IthoBinarySensor(BinarySensorEntity):
             name=get_device_name(config_entry.data),
         )
 
-        self._attr_unique_id = (
-            f"{get_entity_prefix(config_entry.data)}_{description.key}".lower()
-        )
+        prefix = get_entity_prefix(config_entry.data)
+        if description.unique_id is not None:
+            unique_id = f"{prefix}_{description.unique_id}"
+        else:
+            unique_id = f"{prefix}_{description.key}"
+        self._attr_unique_id = unique_id.lower()
 
-        self.entity_id = f"binary_sensor.{self._attr_unique_id}"
+        self.entity_id = f"binary_sensor.{slugify(self._attr_unique_id)}"
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to MQTT events."""

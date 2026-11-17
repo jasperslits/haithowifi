@@ -47,7 +47,9 @@ DEMAND_FLOW_BINARY_SENSORS: tuple[IthoBinarySensorEntityDescription, ...] = (
     ),
     IthoBinarySensorEntityDescription(
         json_field="Status eco comfort",
-        key="status_eco comfort",
+        key="status_eco_comfort",
+        # Keep the original unique_id so existing entities and history are preserved
+        unique_id="status_eco comfort",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     IthoBinarySensorEntityDescription(
