@@ -3,6 +3,7 @@
 from homeassistant.components.fan import FanEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.device_registry import DeviceInfo
+from homeassistant.util import slugify
 
 from ..const import DOMAIN, MANUFACTURER
 from ..definitions.base_definitions import IthoFanEntityDescription
@@ -36,4 +37,4 @@ class IthoBaseFan(FanEntity):
         self._attr_unique_id = (
             f"{get_entity_prefix(config_entry.data)}_{description.key}".lower()
         )
-        self.entity_id = f"fan.{self._attr_unique_id}"
+        self.entity_id = f"fan.{slugify(self._attr_unique_id)}"

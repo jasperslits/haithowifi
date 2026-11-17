@@ -31,6 +31,7 @@ class IthoBinarySensorEntityDescription(BinarySensorEntityDescription):
     icon_off: str | None = None
     icon_on: str | None = None
     unique_id_template: str | None = None
+    unique_id: str | None = None
     is_selected_entity: bool = False
 
 
