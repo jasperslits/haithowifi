@@ -2,14 +2,21 @@
 
 from typing import Any
 
+from homeassistant.helpers.device_registry import DeviceInfo
+
 from .const import (
     ADDON_TYPES,
     CONF_ADDON_TYPE,
     CONF_ADVANCED_CONFIG,
+    CONF_AUTOTEMP_ROOM,
+    CONF_AUTOTEMP_SPIDER,
     CONF_CUSTOM_BASETOPIC,
     CONF_CUSTOM_DEVICE_NAME,
     CONF_CUSTOM_ENTITY_PREFIX,
     CONF_NONCVE_MODEL,
+    DOMAIN,
+    MANUFACTURER,
+    MAX_ROOMS,
     MQTT_COMMAND_TOPIC,
     MQTT_DEFAULT_BASETOPIC,
     MQTT_STATETOPIC,
@@ -72,3 +79,36 @@ def get_entity_prefix(config: dict[str, Any]) -> str:
         return config[CONF_CUSTOM_ENTITY_PREFIX].lower()
 
     return get_default_entity_prefix(config)
+
+
+def get_device_info(config: dict[str, Any]) -> DeviceInfo:
+    """Get the device of the add-on."""
+    return DeviceInfo(
+        identifiers={(DOMAIN, get_entity_prefix(config))},
+        manufacturer=MANUFACTURER,
+        model=get_device_model(config),
+        name=get_device_name(config),
+    )
+
+
+def get_room_device_info(config: dict[str, Any], room: str) -> DeviceInfo:
+    """Get the device of an autotemp room."""
+    name = f"Spider {room.capitalize()}"
+    if config[CONF_ADVANCED_CONFIG]:
+        name = f"{config[CONF_CUSTOM_DEVICE_NAME]} - {name}"
+    return DeviceInfo(
+        identifiers={(DOMAIN, f"{get_entity_prefix(config)}_room_{room}".lower())},
+        manufacturer=MANUFACTURER,
+        model=f"{ADDON_TYPES[config[CONF_ADDON_TYPE]]} Spider",
+        name=name,
+    )
+
+
+def get_rooms(config: dict[str, Any]) -> dict[int, tuple[str, str]]:
+    """Get {number: (room name, Spider name)} for the autotemp rooms in use."""
+    rooms = {}
+    for number in range(1, MAX_ROOMS + 1):
+        room = config.get(CONF_AUTOTEMP_ROOM.format(number), "")
+        if room not in ("", f"Room_{number}"):
+            rooms[number] = (room, config.get(CONF_AUTOTEMP_SPIDER.format(number), ""))
+    return rooms

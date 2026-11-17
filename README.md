@@ -21,11 +21,12 @@ This simplifies the integration by creating the sensors for the various Itho Daa
 This custom component has no affiliation with the Itho Daalderop company or with Arjen Hiemstra's Itho WiFi add-on.
 
 ## What can be configured via this Integration
-1. Autotemp sensors with up to 10 autotemp rooms using custom room names instead of Room 1, Room 2
+1. Autotemp sensors with up to 12 autotemp rooms using custom room names instead of Room 1, Room 2
 2. Heatpump WPU sensors
 3. CVE sensors
 4. NON-CVE / HRU sensors
 5. Up to 5 remotes for monitoring CO2 levels for CVE/NON-CVE (HRU) with custom names. 
+6. Thermostats (climate entities) for Itho Spiders and for every autotemp room
 
 ### Fan entity
 The integration creates a Fan entity for several devices which can be used to control the speed and/or mode. Currently the following devices and actions are provided:
@@ -153,6 +154,9 @@ Click `enable`
 # Screenshots
 ## Add integration
 ![image](https://github.com/user-attachments/assets/6203c5b0-0cd4-44fe-bf8a-e6e5bec8c8c7)
+
+### Spider thermostats
+Enter the name of a room's Spider (as defined in the add-on under 'RF devices') in the room setup to get one thermostat per room: temperature and heating/cooling status from the AutoTemp, setpoint through the Spider. A battery Spider takes a new setpoint at its next poll, so the thermostat shows it as waiting until then. Rooms without a Spider are read only, and Spiders without a room get their own thermostat. This also works without an AutoTemp, for example with a heat pump.
 
 ## Define remotes for CO2 monitoring
 <img width="612" alt="image" src="https://github.com/user-attachments/assets/d9d2dca1-254c-450b-84a8-a71f5afee608">
