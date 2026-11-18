@@ -153,12 +153,31 @@ async def async_setup_entry(
     )
 
 
+# HA 2026.11 renamed the climate temperature attributes to native_*; the old
+# names log a deprecation warning and stop working in 2027.11. Keep supporting
+# older HA versions that only know the old names.
+_NATIVE_TEMPERATURE = hasattr(ClimateEntity, "native_temperature_unit")
+_ATTR_CURRENT_TEMPERATURE = (
+    "_attr_native_current_temperature"
+    if _NATIVE_TEMPERATURE
+    else "_attr_current_temperature"
+)
+_ATTR_TARGET_TEMPERATURE = (
+    "_attr_native_target_temperature"
+    if _NATIVE_TEMPERATURE
+    else "_attr_target_temperature"
+)
+
+
 class Thermostat(ClimateEntity):
     """Thermostat of an AutoTemp room and/or the Spider that controls it."""
 
     _attr_has_entity_name = True
     _attr_should_poll = False
-    _attr_temperature_unit = UnitOfTemperature.CELSIUS
+    if _NATIVE_TEMPERATURE:
+        _attr_native_temperature_unit = UnitOfTemperature.CELSIUS
+    else:
+        _attr_temperature_unit = UnitOfTemperature.CELSIUS
     _attr_hvac_modes = [HVACMode.OFF, HVACMode.HEAT, HVACMode.COOL]
     _attr_min_temp = 5.0
     _attr_max_temp = 30.0
@@ -262,8 +281,8 @@ class Thermostat(ClimateEntity):
             if spider is None
             else ClimateEntityFeature.TARGET_TEMPERATURE
         )
-        self._attr_current_temperature = _first(room_temp, temp)
-        self._attr_target_temperature = _first(pending, active)
+        setattr(self, _ATTR_CURRENT_TEMPERATURE, _first(room_temp, temp))
+        setattr(self, _ATTR_TARGET_TEMPERATURE, _first(pending, active))
         self._attr_hvac_action = action
         self._attr_hvac_mode = MODES.get(action, HVACMode.OFF)
         self._attr_icon = None if pending is None else "mdi:timer-sand"
