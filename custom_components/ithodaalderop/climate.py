@@ -211,7 +211,7 @@ class Thermostat(ClimateEntity):
             self._attr_name = spider
             self._attr_device_info = get_device_info(data)
             self._attr_unique_id = _spider_id(data, spider)
-            self.entity_id = f"climate.{self._attr_unique_id}"
+            self.entity_id = f"climate.{slugify(self._attr_unique_id)}"
         else:
             self._attr_name = None
             self._attr_device_info = get_room_device_info(data, name)
