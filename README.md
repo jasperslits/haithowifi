@@ -7,6 +7,7 @@
   - [Advanced configuration](#advanced-configuration)
   - [Available entities](#available-entities)
   - [Why don't I see all entities?](#why-dont-i-see-all-entities)
+  - [Spider thermostats](#spider-thermostats)
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
   - [Install via HACS (recommended)](#install-via-hacs-recommended)
@@ -123,6 +124,17 @@ Click `enable`
 
 ![image](https://github.com/user-attachments/assets/64f7b234-648d-4e25-adeb-996c0d6a7ef8)
 
+## Spider thermostats
+The integration creates a thermostat for every Itho Spider the add-on knows, and one for every AutoTemp room.
+
+1. Update the add-on to firmware [3.3.0](https://github.com/arjenhiemstra/ithowifi/releases/tag/Version-3.3.0) or newer (needs the RF module).
+2. Link each Spider in the add-on under `RF devices`, preferably with `Bind as gateway`. See the [add-on](https://github.com/arjenhiemstra/ithowifi) for help.
+   Give every RF device a unique name and leave no empty slot before a Spider: the add-on reports no slot numbers, so the integration counts them.
+3. Add an entry in this integration for every add-on that has Spiders, if you haven't already.
+4. AutoTemp: open the AutoTemp entry, click `Reconfigure` and enter each room's Spider name exactly as shown in `RF devices`. Link a room on the AutoTemp that controls it.
+
+A linked room shows the AutoTemp's temperature and heating, and sets its setpoint through the Spider. Spiders without a room get their own thermostat. A new setpoint shows `Waiting for Spider` until the Spider confirms it, which can take a few minutes for a battery Spider. The mode follows the AutoTemp and cannot be set.
+
 # Installation
 
 ## Prerequisites
@@ -154,9 +166,6 @@ Click `enable`
 # Screenshots
 ## Add integration
 ![image](https://github.com/user-attachments/assets/6203c5b0-0cd4-44fe-bf8a-e6e5bec8c8c7)
-
-### Spider thermostats
-Enter the name of a room's Spider (as defined in the add-on under 'RF devices') in the room setup to get one thermostat per room: temperature and heating/cooling status from the AutoTemp, setpoint through the Spider. A battery Spider takes a new setpoint at its next poll, so the thermostat shows it as waiting until then. Rooms without a Spider are read only, and Spiders without a room get their own thermostat. This also works without an AutoTemp, for example with a heat pump.
 
 ## Define remotes for CO2 monitoring
 <img width="612" alt="image" src="https://github.com/user-attachments/assets/d9d2dca1-254c-450b-84a8-a71f5afee608">

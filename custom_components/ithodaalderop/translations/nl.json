@@ -1429,6 +1429,20 @@
       "zone_temp": {
         "name": "Zonetemperatuur"
       }
+    },
+    "climate": {
+      "thermostat": {
+        "state_attributes": {
+          "setpoint_status": {
+            "name": "Setpoint",
+            "state": {
+              "applied": "Toegepast",
+              "pending": "Wacht op Spider",
+              "read_only": "Alleen lezen"
+            }
+          }
+        }
+      }
     }
   },
   "selector": {
