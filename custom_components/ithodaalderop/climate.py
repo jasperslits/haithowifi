@@ -20,7 +20,6 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.event import async_call_later
 from homeassistant.util import slugify
 
 from .const import (
@@ -40,18 +39,16 @@ from .utils import (
     get_rooms,
 )
 
-SEND_DELAY = 3  # seconds to wait for more +/- presses before sending
-PENDING_TIMEOUT = 16 * 60  # the add-on retries a setpoint for 15 minutes
-DROP_GRACE = 30  # seconds before a different setpoint_cmd counts as dropped
-ACTION_HOLD = 3 * 60  # seconds heating/cooling stays shown; valves close slowly
+# The add-on pushes a setpoint to the Spider for 15 minutes, then gives up.
+PUSH_TIMEOUT = 15 * 60 + 30
 SYSTEM_STATES = {
     "state hand": "hand",
     "State heating": "heating",
     "State cool": "cooling",
     "State off": "off",
 }
-ACTIONS = {"heating": HVACAction.HEATING, "cooling": HVACAction.COOLING}
-MODES = {HVACAction.HEATING: HVACMode.HEAT, HVACAction.COOLING: HVACMode.COOL}
+ACTIVE = (HVACAction.HEATING, HVACAction.COOLING)  # equal to the system states
+MODES = {"heating": HVACMode.HEAT, "cooling": HVACMode.COOL, "off": HVACMode.OFF}
 
 
 @lru_cache(maxsize=8)
@@ -83,25 +80,22 @@ def _norm(name: str) -> str:
 
 
 def _is_spider(caps: Any) -> bool:
-    return isinstance(caps, dict) and "temp" in caps and "setpoint" in caps
+    return isinstance(caps, dict) and caps.get("thermostat") == 1  # set by the add-on
 
 
 def _spider_id(data: Mapping[str, Any], spider: str) -> str:
     return f"{get_entity_prefix(data)}_spider_{slugify(spider)}".lower()
 
 
-def _action(system: str | None, power, temp, setpoint, cool) -> HVACAction:
-    """Get what a room is doing: its AutoTemp power, else the temperature demand."""
+def _action(system: str | None, power: float | None) -> HVACAction:
+    """Get what a room does from its power: AutoTemp room power or Spider demand."""
     if system == "off":
         return HVACAction.OFF
-    if power is not None:
-        return ACTIONS.get(system, HVACAction.IDLE) if power > 0 else HVACAction.IDLE
-    wanted = HVACAction.IDLE
-    if None not in (temp, setpoint) and temp < setpoint:
-        wanted = HVACAction.HEATING
-    elif None not in (temp, cool) and temp > cool:
-        wanted = HVACAction.COOLING
-    return wanted if system in (None, wanted) else HVACAction.IDLE
+    if power is None or power <= 0:
+        return HVACAction.IDLE
+    if system is None:
+        return HVACAction.HEATING  # a Spider on its own only reports heat demand
+    return HVACAction(system) if system in ACTIVE else HVACAction.IDLE
 
 
 async def async_setup_entry(
@@ -173,13 +167,13 @@ class Thermostat(ClimateEntity):
     """Thermostat of an AutoTemp room and/or the Spider that controls it."""
 
     _attr_has_entity_name = True
+    _attr_translation_key = "thermostat"
     _attr_should_poll = False
     if _NATIVE_TEMPERATURE:
         _attr_native_temperature_unit = UnitOfTemperature.CELSIUS
     else:
         _attr_temperature_unit = UnitOfTemperature.CELSIUS
-    _attr_hvac_modes = [HVACMode.OFF, HVACMode.HEAT, HVACMode.COOL]
-    _attr_min_temp = 5.0
+    _attr_min_temp = 5.0  # the add-on's Spider limits
     _attr_max_temp = 30.0
     _attr_target_temperature_step = 0.5
 
@@ -203,15 +197,14 @@ class Thermostat(ClimateEntity):
         self._spider: dict | None = None
         self._topic: str | None = None  # remotesinfo topic of the Spider's add-on
         self._index = 0
-        self._held = (HVACAction.IDLE, 0.0)  # last heating/cooling and its expiry
         self._pending: float | None = None  # requested, not yet confirmed
-        self._sent: float | None = None  # monotonic time the command was sent
-        self._cancel_send = None
+        self._deadline = 0.0  # monotonic time the add-on stops pushing it
+        self._echoed = False  # the add-on reported the request as its command
         if room is None:
             self._attr_name = spider
             self._attr_device_info = get_device_info(data)
             self._attr_unique_id = _spider_id(data, spider)
-            self.entity_id = f"climate.{self._attr_unique_id}"
+            self.entity_id = f"climate.{slugify(self._attr_unique_id)}"
         else:
             self._attr_name = None
             self._attr_device_info = get_room_device_info(data, name)
@@ -236,43 +229,30 @@ class Thermostat(ClimateEntity):
                     for key in ("temp", "setp", "power % (%)", "power kW (kW)")
                 )
                 power = max((p for p in powers if p is not None), default=None)
-        temp, setpoint, cool, cmd = (
+        temp, setpoint, cool, cmd, demand = (
             _num(caps.get(key))
-            for key in ("temp", "setpoint", "setpoint_cool", "setpoint_cmd")
+            for key in ("temp", "setpoint", "setpoint_cool", "setpoint_cmd", "demand")
         )
-        active = _first(room_setp, setpoint)  # the AutoTemp's setting is in force
-        now = time.monotonic()
+        active = _first(setpoint, room_setp)  # the Spider leads, the AutoTemp follows
 
-        if spider is None:
-            self._pending = None
-        elif self._pending is not None and self._sent is not None:
-            waited = now - self._sent
-            dropped = waited > DROP_GRACE and cmd is not None
-            if (
-                _same(active, self._pending)
-                or (dropped and not _same(cmd, self._pending))
-                or waited > PENDING_TIMEOUT
-            ):
-                self._pending = None  # in force, dropped by the add-on or timed out
-
-        # The AutoTemp and Spider both lag, so keep heating/cooling for a while.
-        action = _action(
-            system, power, _first(room_temp, temp), _first(setpoint, room_setp), cool
-        )
-        if action in MODES:
-            self._held = (action, now + ACTION_HOLD)
-        elif action == HVACAction.OFF:
-            self._held = (HVACAction.IDLE, 0.0)
-        elif now < self._held[1]:
-            action = self._held[0]
-
+        # Keep a request until the Spider confirms it, another setpoint replaces
+        # it in the add-on, or the add-on stops pushing it; never resend it.
         pending = self._pending
-        if pending is None:
-            text = "read only" if spider is None else "applied"
-        elif active is None:
-            text = "waiting for Spider"
+        if pending is not None:
+            if _same(cmd, pending):
+                self._echoed = True
+            if (
+                spider is None
+                or _same(setpoint, pending)
+                or (self._echoed and not _same(cmd, pending))
+                or time.monotonic() > self._deadline
+            ):
+                pending = self._pending = None
+
+        if pending is not None:
+            setpoint_status = "pending"
         else:
-            text = f"waiting for Spider (now {active} °C)"
+            setpoint_status = "read_only" if spider is None else "applied"
         self._attr_available = spider is not None or (
             status is not None and room is not None
         )
@@ -283,18 +263,19 @@ class Thermostat(ClimateEntity):
         )
         setattr(self, _ATTR_CURRENT_TEMPERATURE, _first(room_temp, temp))
         setattr(self, _ATTR_TARGET_TEMPERATURE, _first(pending, active))
-        self._attr_hvac_action = action
-        self._attr_hvac_mode = MODES.get(action, HVACMode.OFF)
-        self._attr_icon = None if pending is None else "mdi:timer-sand"
+        self._attr_icon = None if pending is None else "mdi:sync"  # waiting for Spider
+        self._attr_hvac_action = _action(system, _first(power, demand))
+        mode = MODES.get(system, HVACMode.HEAT)  # the AutoTemp's mode, not settable
+        self._attr_hvac_mode, self._attr_hvac_modes = mode, [mode]
+        pir = _num(caps.get("pir"))
         self._attr_extra_state_attributes = {
-            "setpoint_status": text,
-            "pending_setpoint": pending,
+            "setpoint_status": setpoint_status,
             "active_setpoint": active,
-            "spider_setpoint": setpoint,
+            "autotemp_setpoint": room_setp,
             "setpoint_cool": cool,
             "system_state": system,
             "battery": _num(caps.get("battery")),
-            "presence": bool(caps["pir"]) if "pir" in caps else None,
+            "presence": None if pir is None else pir > 0,
         }
         if self.hass is not None:
             self.async_write_ha_state()
@@ -331,34 +312,19 @@ class Thermostat(ClimateEntity):
         self._refresh()
 
     async def async_set_temperature(self, **kwargs: Any) -> None:
-        """Send the setpoint once the +/- presses stop."""
+        """Send a setpoint; the frontend already waits for the last +/- press."""
         temperature = _num(kwargs.get(ATTR_TEMPERATURE))
-        if temperature is None or self._spider is None:
-            return
-        self._pending, self._sent = temperature, None
-        self._refresh()
-        if self._cancel_send:
-            self._cancel_send()
-        self._cancel_send = async_call_later(self.hass, SEND_DELAY, self._send)
-
-    async def _send(self, _now) -> None:
-        self._cancel_send = None
-        if self._pending is None or self._topic is None:
-            return
-        self._sent = time.monotonic()
+        if temperature is None or self._topic is None:
+            raise ServiceValidationError("The Spider is not available")
         await mqtt.async_publish(
             self.hass,
             self._commands[self._topic],
-            json.dumps({"rfsetpoint": self._pending, "rfremoteindex": self._index}),
+            json.dumps({"rfsetpoint": temperature, "rfremoteindex": self._index}),
             MQTT_DEFAULT_QOS_PUBLISH,
         )
+        self._pending, self._echoed = temperature, False
+        self._deadline = time.monotonic() + PUSH_TIMEOUT
         self._refresh()
 
     async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
-        """Reject mode changes; the mode follows what the room is doing."""
-        raise ServiceValidationError("The mode follows the AutoTemp and cannot be set")
-
-    async def async_will_remove_from_hass(self) -> None:
-        """Cancel a scheduled send."""
-        if self._cancel_send:
-            self._cancel_send()
+        """Do nothing: only the current mode is offered, it follows the AutoTemp."""
